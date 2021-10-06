@@ -30,9 +30,12 @@
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/backoff_policy.h"
+#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "absl/meta/type_traits.h"
+#include <chrono>
 #include <string>
 #include <vector>
 
@@ -858,6 +861,58 @@ class Table {
                 bigtable::ReadModifyWriteRule rule, Args&&... args) {
     *request.add_rules() = std::move(rule).as_proto();
     AddRules(request, std::forward<Args>(args)...);
+  }
+
+  // TODO : Darren : clean this up, figure out names. that sort of thing.
+  std::unique_ptr<google::cloud::internal::RetryPolicy> clone_retry() {
+    class CommonRetryPolicy : public google::cloud::internal::RetryPolicy {
+     public:
+      explicit CommonRetryPolicy(std::unique_ptr<RPCRetryPolicy> impl)
+          : impl_(std::move(impl)) {}
+
+      ~CommonRetryPolicy() override = default;
+
+      bool OnFailure(Status const& s) override { return impl_->OnFailure(s); }
+      // TODO : looks like the difference is that common RetryPolicy will check
+      //        if the policy has been exhausted before beginning an iteration.
+      //        I will have to ask carlos what the logic is there. I think I can
+      //        just return false here and it will be no different than before
+      bool IsExhausted() const override { return false; }
+      bool IsPermanentFailure(Status const& s) const override {
+        return RPCRetryPolicy::IsPermanentFailure(s);
+      }
+
+     private:
+      std::unique_ptr<RPCRetryPolicy> impl_;
+    };
+
+    return std::unique_ptr<google::cloud::internal::RetryPolicy>(
+        new CommonRetryPolicy(clone_rpc_retry_policy()));
+  }
+
+  // TODO : Darren : clean this up, figure out names. that sort of thing.
+  std::unique_ptr<google::cloud::internal::BackoffPolicy> clone_backoff() {
+    class CommonBackoffPolicy : public google::cloud::internal::BackoffPolicy {
+     public:
+      explicit CommonBackoffPolicy(std::unique_ptr<RPCBackoffPolicy> impl)
+          : impl_(std::move(impl)) {}
+
+      ~CommonBackoffPolicy() override = default;
+
+      std::unique_ptr<google::cloud::internal::BackoffPolicy> clone()
+          const override {
+        return absl::make_unique<CommonBackoffPolicy>(impl_->clone());
+      }
+      std::chrono::milliseconds OnCompletion() override {
+        return impl_->OnCompletion();
+      }
+
+     private:
+      std::unique_ptr<RPCBackoffPolicy> impl_;
+    };
+
+    return std::unique_ptr<google::cloud::internal::BackoffPolicy>(
+        new CommonBackoffPolicy(clone_rpc_backoff_policy()));
   }
 
   std::unique_ptr<RPCRetryPolicy> clone_rpc_retry_policy() {

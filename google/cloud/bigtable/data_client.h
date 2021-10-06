@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/row.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <string>
 
@@ -172,6 +173,12 @@ class DataClient {
                          google::bigtable::v2::MutateRowsRequest const& request,
                          grpc::CompletionQueue* cq) = 0;
   //@}
+
+  // TODO : Darren : something like this...
+  virtual std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy>
+  Auth() {
+    return nullptr;
+  }
 };
 
 /// Create a new data client configured via @p options.

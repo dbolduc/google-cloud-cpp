@@ -147,6 +147,7 @@ struct UnaryClientUtils {
       rpc_policy.Setup(client_context);
       backoff_policy.Setup(client_context);
       metadata_update_policy.Setup(client_context);
+      // TODO : Darren .... if I even want to use this....
       // Call the pointer to member function.
       status = (client.*function)(&client_context, request, &response);
       if (status.ok()) {
@@ -198,6 +199,7 @@ struct UnaryClientUtils {
     // Policies can set timeouts so allowing them to update context
     rpc_policy->Setup(client_context);
     metadata_update_policy.Setup(client_context);
+      // TODO : Darren .... if I even want to use this....
     // Call the pointer to member function.
     status = (client.*function)(&client_context, request, &response);
 

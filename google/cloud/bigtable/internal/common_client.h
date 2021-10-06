@@ -21,6 +21,7 @@
 #include "google/cloud/connection_options.h"
 #include "google/cloud/internal/absl_flat_hash_map_quiet.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -132,7 +133,19 @@ class CommonClient {
             std::make_shared<CompletionQueue>(background_threads_->cq())),
         refresh_state_(std::make_shared<ConnectionRefreshState>(
             refresh_cq_, opts_.get<MinConnectionRefreshOption>(),
-            opts_.get<MaxConnectionRefreshOption>())) {}
+            opts_.get<MaxConnectionRefreshOption>())) {
+    auth_ = [&] {
+      if (opts_.has<google::cloud::UnifiedCredentialsOption>()) {
+        // TODO : Darren : NOTE : you are just using refresh_cq_ here.
+        //        consider making new background_threads_ or renaming the CQ.
+        return google::cloud::internal::CreateAuthenticationStrategy(
+            opts_.get<google::cloud::UnifiedCredentialsOption>(),
+            background_threads_->cq(), opts_);
+      }
+      return google::cloud::internal::CreateAuthenticationStrategy(
+          opts_.get<google::cloud::GrpcCredentialOption>());
+    }();
+  }
 
   ~CommonClient() {
     // This will stop the refresh of the channels.
@@ -171,6 +184,10 @@ class CommonClient {
 
   google::cloud::BackgroundThreadsFactory BackgroundThreadsFactory() {
     return google::cloud::internal::MakeBackgroundThreadsFactory(opts_);
+  }
+
+  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> Auth() {
+    return auth_;
   }
 
  private:
@@ -215,13 +232,12 @@ class CommonClient {
   ChannelPtr CreateChannel(int idx) {
     auto args = google::cloud::internal::MakeChannelArguments(opts_);
     args.SetInt(GRPC_ARG_CHANNEL_ID, idx);
-    auto res = grpc::CreateCustomChannel(
-        Traits::Endpoint(opts_), opts_.get<GrpcCredentialOption>(), args);
+    auto c = auth_->CreateChannel(Traits::Endpoint(opts_), std::move(args));
     if (opts_.get<MaxConnectionRefreshOption>().count() == 0) {
-      return res;
+      return c;
     }
-    ScheduleChannelRefresh(refresh_cq_, refresh_state_, res);
-    return res;
+    ScheduleChannelRefresh(refresh_cq_, refresh_state_, c);
+    return c;
   }
 
   std::vector<std::shared_ptr<grpc::Channel>> CreateChannelPool() {
@@ -249,6 +265,7 @@ class CommonClient {
   std::vector<StubPtr> stubs_;
   std::size_t current_index_;
   std::unique_ptr<BackgroundThreads> background_threads_;
+  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   // Timers, which we schedule for refreshes, need to reference the completion
   // queue. We cannot make the completion queue's underlying implementation
   // become owned solely by the operations scheduled on it (because we risk a

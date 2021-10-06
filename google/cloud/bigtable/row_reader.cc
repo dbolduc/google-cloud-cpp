@@ -125,6 +125,7 @@ void RowReader::MakeRequest() {
   retry_policy_->Setup(*context_);
   backoff_policy_->Setup(*context_);
   metadata_update_policy_.Setup(*context_);
+  // TODO : Darren
   stream_ = client_->ReadRows(context_.get(), request);
   stream_is_open_ = true;
 

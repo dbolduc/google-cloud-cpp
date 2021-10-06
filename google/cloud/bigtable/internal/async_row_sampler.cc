@@ -67,6 +67,7 @@ void AsyncRowSampler::StartIteration() {
   rpc_backoff_policy_->Setup(*context);
   metadata_update_policy_.Setup(*context);
 
+  // TODO : Darren
   auto client = client_;
   auto self = this->shared_from_this();
   cq_.MakeStreamingReadRpc(

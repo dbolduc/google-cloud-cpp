@@ -18,6 +18,8 @@
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
 #include "google/cloud/internal/async_retry_unary_rpc.h"
+#include "google/cloud/internal/async_retry_loop.h"
+#include "google/cloud/completion_queue.h"
 #include <thread>
 #include <type_traits>
 
@@ -92,6 +94,8 @@ Status Table::Apply(SingleRowMutation mut) {
   grpc::Status status;
   while (true) {
     grpc::ClientContext client_context;
+    auto auth_status = client_->Auth()->ConfigureContext(client_context);
+    if (!auth_status.ok()) return auth_status;
     rpc_policy->Setup(client_context);
     backoff_policy->Setup(client_context);
     metadata_update_policy_.Setup(client_context);
@@ -133,17 +137,45 @@ future<Status> Table::AsyncApply(SingleRowMutation mut) {
   auto cq = background_threads_->cq();
   auto client = client_;
   auto metadata_update_policy = clone_metadata_update_policy();
-  return google::cloud::internal::StartRetryAsyncUnaryRpc(
-             cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-             idempotency,
-             [client, metadata_update_policy](
-                 grpc::ClientContext* context,
-                 google::bigtable::v2::MutateRowRequest const& request,
-                 grpc::CompletionQueue* cq) {
-               metadata_update_policy.Setup(*context);
-               return client->AsyncMutateRow(context, request, cq);
-             },
-             std::move(request))
+
+  // TODO : Darren - clean this up
+  auto async_stub_call =
+      [client, metadata_update_policy](
+          grpc::ClientContext* context,
+          google::bigtable::v2::MutateRowRequest const& request,
+          grpc::CompletionQueue* cq) {
+        metadata_update_policy.Setup(*context);
+        return client->AsyncMutateRow(context, request, cq);
+      };
+
+  using ReturnType = StatusOr<google::bigtable::v2::MutateRowResponse>;
+  auto auth = client_->Auth();
+
+  auto async_auth_call =
+      [async_stub_call, auth](google::cloud::CompletionQueue& cq,
+                   std::unique_ptr<grpc::ClientContext> context,
+                   google::bigtable::v2::MutateRowRequest const& request) {
+      return auth->AsyncConfigureContext(std::move(context))
+          .then([cq, request, async_stub_call](
+                    future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                        f) mutable -> future<ReturnType> {
+            auto context = f.get();
+            if (!context) {
+              return make_ready_future(ReturnType(std::move(context).status()));
+            }
+            return cq.MakeUnaryRpc(async_stub_call, request, std::move(context).value());
+          });
+      };
+
+  // TODO : Darren - clean this up
+  // AsyncRetryLoop implementation - Returns future<StatusOr<Response>>
+  // Drop the value half of the StatusOr and just return a Status.
+  return google::cloud::internal::AsyncRetryLoop(
+      // TODO : policies
+             //clone_rpc_retry_policy(), clone_rpc_backoff_policy(), idempotency,
+             //butt_retry_policy.clone(), butt_backoff_policy.clone(), idempotency,
+             clone_retry(), clone_backoff(), idempotency,
+             cq, async_auth_call, std::move(request), __func__)
       .then([](future<StatusOr<google::bigtable::v2::MutateRowResponse>> r) {
         return r.get().status();
       });
@@ -166,6 +198,7 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation mut) {
     backoff_policy->Setup(client_context);
     retry_policy->Setup(client_context);
     metadata_update_policy_.Setup(client_context);
+    // TODO : Darren
     status = mutator.MakeOneRequest(*client_, client_context);
     if (!status.ok() && !retry_policy->OnFailure(status)) {
       break;
@@ -242,6 +275,7 @@ StatusOr<MutationBranch> Table::CheckAndMutateRow(
   auto const idempotency = idempotent_mutation_policy_->is_idempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
+  // TODO : Darren - also check if this is necessary...
   auto response = ClientUtils::MakeCall(
       *client_, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
       metadata_update_policy_, &DataClient::CheckAndMutateRow, request,
@@ -273,6 +307,7 @@ future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRow(
                                : Idempotency::kNonIdempotent;
 
   auto cq = background_threads_->cq();
+  // TODO : Darren
   auto client = client_;
   auto metadata_update_policy = clone_metadata_update_policy();
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
@@ -321,6 +356,7 @@ StatusOr<std::vector<bigtable::RowKeySample>> Table::SampleRows() {
     retry_policy->Setup(client_context);
     clone_metadata_update_policy().Setup(client_context);
 
+    // TODO : Darren
     auto stream = client_->SampleRowKeys(&client_context, request);
     while (stream->Read(&response)) {
       bigtable::RowKeySample row_sample;
@@ -358,6 +394,7 @@ StatusOr<Row> Table::ReadModifyWriteRowImpl(
       request, app_profile_id_, table_name_);
 
   grpc::Status status;
+  // TODO : Darren - also check if this is necessary...
   auto response = ClientUtils::MakeNonIdempotentCall(
       *(client_), clone_rpc_retry_policy(), clone_metadata_update_policy(),
       &DataClient::ReadModifyWriteRow, request, "ReadModifyWriteRowRequest",
@@ -376,6 +413,7 @@ future<StatusOr<Row>> Table::AsyncReadModifyWriteRowImpl(
       request, app_profile_id_, table_name_);
 
   auto cq = background_threads_->cq();
+  // TODO : Darren
   auto client = client_;
   auto metadata_update_policy = clone_metadata_update_policy();
   return google::cloud::internal::StartRetryAsyncUnaryRpc(

@@ -164,6 +164,11 @@ class DefaultDataClient : public DataClient {
     return impl_.Stub()->PrepareAsyncMutateRows(context, request, cq);
   }
 
+  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> Auth()
+      override {
+    return impl_.Auth();
+  }
+
  private:
   google::cloud::BackgroundThreadsFactory BackgroundThreadsFactory() override {
     return impl_.BackgroundThreadsFactory();
