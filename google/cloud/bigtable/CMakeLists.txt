@@ -92,6 +92,8 @@ add_library(
     internal/async_retry_unary_rpc_and_poll.h
     internal/async_row_sampler.cc
     internal/async_row_sampler.h
+    internal/auth_data_client.cc
+    internal/auth_data_client.h
     internal/bulk_mutator.cc
     internal/bulk_mutator.h
     internal/client_options_defaults.h

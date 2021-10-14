@@ -33,6 +33,8 @@ class AsyncRetryBulkApply;
 class AsyncRowSampler;
 class BulkMutator;
 class LoggingDataClient;
+// TODO : Darren
+class AuthDataClient;
 }  // namespace internal
 
 /**
@@ -96,6 +98,8 @@ class DataClient {
   template <typename RowFunctor, typename FinishFunctor>
   friend class AsyncRowReader;
   friend class internal::LoggingDataClient;
+  // TODO : Darren
+  friend class internal::AuthDataClient;
 
   //@{
   /// @name the `google.bigtable.v2.Bigtable` wrappers.
