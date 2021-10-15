@@ -191,6 +191,71 @@ TEST_F(TableBulkApplyTest, CanceledStream) {
 }
 
 /// @test Verify that Table::BulkApply() reports correctly on too many errors.
+TEST_F(TableBulkApplyTest, TooManyFailures2) {
+  // Create a table with specific policies so we can test the behavior
+  // without having to depend on timers expiring.  In this case tolerate only
+  // 3 failures.
+  Table custom_table(
+      client_, "foo_table",
+      // Configure the Table to stop at 3 failures.
+      LimitedErrorCountRetryPolicy(2),
+      // Use much shorter backoff than the default to test faster.
+      ExponentialBackoffPolicy(10_us, 40_us));
+
+  auto times = 0;
+  auto create_unavail_stream = [&](grpc::ClientContext*,
+                                   btproto::MutateRowsRequest const&) {
+    std::cout << "UNAVAILABLE called: " << ++times << std::endl;
+    auto stream = absl::make_unique<MockMutateRowsReader>(
+        "google.bigtable.v2.Bigtable.MutateRows");
+    EXPECT_CALL(*stream, Read)
+        .WillOnce([](btproto::MutateRowsResponse* r) {
+          // Simulate a partial (recoverable) failure.
+          auto& e0 = *r->add_entries();
+          e0.set_index(0);
+          e0.mutable_status()->set_code(grpc::StatusCode::UNAVAILABLE);
+          auto& e1 = *r->add_entries();
+          e1.set_index(1);
+          e1.mutable_status()->set_code(grpc::StatusCode::OK);
+          return true;
+        })
+        .WillOnce(Return(false));
+    EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
+    return stream;
+  };
+
+  auto create_cancelled_stream = [&](grpc::ClientContext*,
+                                     btproto::MutateRowsRequest const&) {
+    std::cout << "cancelled called" << std::endl;
+    auto stream = absl::make_unique<MockMutateRowsReader>(
+        "google.bigtable.v2.Bigtable.MutateRows");
+    EXPECT_CALL(*stream, Read).WillOnce(Return(false));
+    EXPECT_CALL(*stream, Finish())
+        .WillOnce(Return(grpc::Status(grpc::StatusCode::ABORTED, "")));
+    return stream;
+  };
+
+  EXPECT_CALL(*client_, MutateRows)
+      .WillOnce(create_unavail_stream)
+      .WillOnce(create_unavail_stream)
+      .WillOnce(create_unavail_stream)
+      .WillOnce(create_unavail_stream)
+      .WillOnce(create_unavail_stream)
+      .WillOnce(create_unavail_stream)
+      .WillOnce(create_unavail_stream)
+      .WillOnce(create_cancelled_stream)
+      .WillOnce(create_cancelled_stream)
+      .WillOnce(create_cancelled_stream);
+
+  auto failures = custom_table.BulkApply(BulkMutation(
+      SingleRowMutation("foo", {SetCell("fam", "col", 0_ms, "baz")}),
+      SingleRowMutation("bar", {SetCell("fam", "col", 0_ms, "qux")})));
+  EXPECT_FALSE(failures.empty());
+  EXPECT_EQ(google::cloud::StatusCode::kAborted,
+            failures.front().status().code());
+}
+
+/// @test Verify that Table::BulkApply() reports correctly on too many errors.
 TEST_F(TableBulkApplyTest, TooManyFailures) {
   // Create a table with specific policies so we can test the behavior
   // without having to depend on timers expiring.  In this case tolerate only
