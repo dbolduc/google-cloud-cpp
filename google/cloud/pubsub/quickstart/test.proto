@@ -1,0 +1,7 @@
+syntax = "proto3";
+package google.cloud.pubsub.quickstart;
+
+message Test {
+  string foo = 1;
+  string bar = 2;
+}

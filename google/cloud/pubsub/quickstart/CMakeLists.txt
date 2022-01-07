@@ -30,6 +30,10 @@ else ()
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
 endif ()
 
-# Once the pubsub_client package is found, define new targets.
-add_executable(quickstart quickstart.cc)
-target_link_libraries(quickstart google-cloud-cpp::pubsub)
+
+set(PROTO ${CMAKE_CURRENT_SOURCE_DIR}/test.proto)
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
+protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${PROTO})
+
+add_executable(quickstart quickstart.cc ${PROTO_SRCS} ${PROTO_HDRS})
+target_link_libraries(quickstart google-cloud-cpp::pubsub protobuf::libprotobuf)
