@@ -24,6 +24,9 @@
 #include "google/cloud/project.h"
 #include <iterator>
 
+// OpenTelemetry
+#include "opentelemetry/trace/default_span.h"
+
 namespace {
 
 using ::google::cloud::bigtable::examples::Usage;
@@ -939,6 +942,10 @@ void RunAll(std::vector<std::string> const& argv) {
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
+  auto x = opentelemetry::trace::DefaultSpan::GetInvalid();
+  std::cout << "\n\n\n\n(Invalid)Span to string (?): " << x.ToString()
+            << "\n\n\n";
+
   namespace examples = ::google::cloud::bigtable::examples;
   examples::Example example({
       examples::MakeCommandEntry("create-instance", {"<instance-id>", "<zone>"},
