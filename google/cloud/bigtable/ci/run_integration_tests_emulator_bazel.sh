@@ -44,9 +44,9 @@ production_only_targets=(
   "//google/cloud/bigtable/tests:admin_backup_integration_test"
   "//google/cloud/bigtable/tests:admin_iam_policy_integration_test"
 )
-"${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
-  --test_tag_filters="integration-test" -- \
-  "${production_only_targets[@]}"
+#"${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
+#  --test_tag_filters="integration-test" -- \
+#  "${production_only_targets[@]}"
 
 # `start_emulators` creates unsightly *.log files in the current directory
 # (which is ${PROJECT_ROOT}) and we cannot use a subshell because we want the
@@ -68,7 +68,7 @@ done
   --test_env="BIGTABLE_EMULATOR_HOST=${BIGTABLE_EMULATOR_HOST}" \
   --test_env="BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST=${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST}" \
   --test_tag_filters="integration-test" -- \
-  "//google/cloud/bigtable/..." \
+  "//google/cloud/bigtable/examples:bigtable_instance_admin_snippets" \
   "${excluded_targets[@]}"
 exit_status=$?
 
