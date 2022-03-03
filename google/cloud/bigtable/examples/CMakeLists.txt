@@ -80,8 +80,13 @@ if (BUILD_TESTING)
         google_cloud_cpp_add_common_options(${target})
     endforeach ()
 
+    # OpenTelemetry
+    find_package(opentelemetry-cpp CONFIG REQUIRED)
+
     foreach (fname ${bigtable_examples})
         google_cloud_cpp_add_executable(target "bigtable_examples" "${fname}")
+        target_include_directories(
+            ${target} PRIVATE ${OPENTELEMETRY_CPP_INCLUDE_DIRS})
         target_link_libraries(
             ${target}
             PRIVATE bigtable_examples_common
@@ -93,7 +98,9 @@ if (BUILD_TESTING)
                     absl::time
                     gRPC::grpc++
                     gRPC::grpc
-                    protobuf::libprotobuf)
+                    protobuf::libprotobuf
+                    ${OPENTELEMETRY_CPP_LIBRARIES}
+                    )
         add_test(NAME ${target} COMMAND ${target})
         set_tests_properties(
             ${target} PROPERTIES LABELS
