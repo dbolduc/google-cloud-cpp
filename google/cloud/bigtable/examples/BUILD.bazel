@@ -58,6 +58,7 @@ load(":bigtable_examples.bzl", "bigtable_examples")
     tags = [
         "integration-test",
     ],
+    defines = ["HAVE_ABSEIL"],
     deps = [
         ":bigtable_examples_common",
         "//:bigtable",
@@ -66,5 +67,6 @@ load(":bigtable_examples.bzl", "bigtable_examples")
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_googletest//:gtest_main",
+        "@io_opentelemetry_cpp//api",
     ],
 ) for test in bigtable_examples]
