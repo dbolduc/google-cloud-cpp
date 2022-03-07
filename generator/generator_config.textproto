@@ -146,6 +146,45 @@ service {
 
 # Bigtable
 service {
+  service_proto_path: "google/bigtable/v2/bigtable.proto"
+  product_path: "google/cloud/bigtable"
+  initial_copyright_year: "2022"
+  omit_client: true
+  # TODO : We will handwrite the connection. But I decided to use it to get the
+  #        implementation started quicker.
+  #omit_connection: true
+  # TODO : In the fullness of time, we will handwrite the stub factory to
+  #        wrap several stubs in a round robin stub. Storage has a perfect
+  #        example of this. But for prototyping, we will keep it simple and
+  #        use a single stub.
+  #
+  #        Another reason we will need to handwrite the stub factory is to
+  #        implement the channel refresh. But again, this is not necessary for
+  #        prototyping.
+  #omit_stub_factory: true
+  omitted_rpcs: [
+    "ReadRows",             # streaming read
+    "SampleRowKeys",        # streaming read
+    "MutateRow",            # unary
+    "MutateRows",           # streaming read
+#   "CheckAndMutateRow",    # unary
+    "PingAndWarm",          # unary
+    "ReadModifyWriteRow"    # unary
+  ],
+  gen_async_rpcs: [
+#   "ReadRows",             # streaming read
+#   "SampleRowKeys",        # streaming read
+#   "MutateRow",            # unary
+#   "MutateRows",           # streaming read
+#   "CheckAndMutateRow",    # unary
+#   "PingAndWarm",          # unary
+#   "ReadModifyWriteRow"    # unary
+  ]
+  # TODO : Needed with the connection
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
   service_proto_path: "google/bigtable/admin/v2/bigtable_instance_admin.proto"
   product_path: "google/cloud/bigtable/admin"
   initial_copyright_year: "2021"
