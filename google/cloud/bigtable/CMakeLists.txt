@@ -45,7 +45,7 @@ target_sources(
     INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/admin/mocks/mock_bigtable_instance_admin_connection.h
         ${CMAKE_CURRENT_SOURCE_DIR}/admin/mocks/mock_bigtable_table_admin_connection.h
-)
+        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_bigtable_connection.h)
 target_link_libraries(
     google_cloud_cpp_bigtable_mocks
     INTERFACE google-cloud-cpp::bigtable GTest::gmock_main GTest::gmock
@@ -115,6 +115,11 @@ add_library(
     app_profile_config.cc
     app_profile_config.h
     async_row_reader.h
+    bigtable_connection.cc
+    bigtable_connection.h
+    bigtable_connection_idempotency_policy.cc
+    bigtable_connection_idempotency_policy.h
+    bigtable_options.h
     cell.h
     client_options.cc
     client_options.h
@@ -150,6 +155,21 @@ add_library(
     internal/async_retry_op.h
     internal/async_row_sampler.cc
     internal/async_row_sampler.h
+    internal/bigtable_auth_decorator.cc
+    internal/bigtable_auth_decorator.h
+    internal/bigtable_connection_impl.cc
+    internal/bigtable_connection_impl.h
+    internal/bigtable_logging_decorator.cc
+    internal/bigtable_logging_decorator.h
+    internal/bigtable_metadata_decorator.cc
+    internal/bigtable_metadata_decorator.h
+    internal/bigtable_option_defaults.cc
+    internal/bigtable_option_defaults.h
+    internal/bigtable_retry_traits.h
+    internal/bigtable_stub.cc
+    internal/bigtable_stub.h
+    internal/bigtable_stub_factory.cc
+    internal/bigtable_stub_factory.h
     internal/bulk_mutator.cc
     internal/bulk_mutator.h
     internal/client_options_defaults.h
