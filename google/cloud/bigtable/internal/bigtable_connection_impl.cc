@@ -21,7 +21,9 @@
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/resumable_streaming_read_rpc.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/internal/streaming_read_rpc_logging.h"
 #include <memory>
 
 namespace google {
@@ -38,6 +40,28 @@ BigtableConnectionImpl::BigtableConnectionImpl(
                                       bigtable_internal::BigtableDefaultOptions(
                                           BigtableConnection::options()))) {}
 
+StreamRange<google::bigtable::v2::SampleRowKeysResponse>
+BigtableConnectionImpl::SampleRowKeys(
+    google::bigtable::v2::SampleRowKeysRequest const& request) {
+  auto stub = stub_;
+  auto retry =
+      std::shared_ptr<bigtable::BigtableRetryPolicy const>(retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+
+  auto factory =
+      [stub](google::bigtable::v2::SampleRowKeysRequest const& request) {
+        return stub->SampleRowKeys(absl::make_unique<grpc::ClientContext>(),
+                                   request);
+      };
+  auto resumable = internal::MakeResumableStreamingReadRpc<
+      google::bigtable::v2::SampleRowKeysResponse,
+      google::bigtable::v2::SampleRowKeysRequest>(
+      retry->clone(), backoff->clone(), [](std::chrono::milliseconds) {},
+      factory, BigtableSampleRowKeysStreamingUpdater, request);
+  return internal::MakeStreamRange(
+      internal::StreamReader<google::bigtable::v2::SampleRowKeysResponse>(
+          [resumable] { return resumable->Read(); }));
+}
 StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>
 BigtableConnectionImpl::CheckAndMutateRow(
     google::bigtable::v2::CheckAndMutateRowRequest const& request) {

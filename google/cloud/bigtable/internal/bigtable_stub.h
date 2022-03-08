@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_BIGTABLE_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_BIGTABLE_STUB_H
 
+#include "google/cloud/internal/streaming_read_rpc.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
@@ -33,6 +34,11 @@ class BigtableStub {
  public:
   virtual ~BigtableStub() = 0;
 
+  virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::bigtable::v2::SampleRowKeysResponse>>
+  SampleRowKeys(std::unique_ptr<grpc::ClientContext> context,
+                google::bigtable::v2::SampleRowKeysRequest const& request) = 0;
+
   virtual StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>
   CheckAndMutateRow(
       grpc::ClientContext& context,
@@ -44,6 +50,12 @@ class DefaultBigtableStub : public BigtableStub {
   explicit DefaultBigtableStub(
       std::unique_ptr<google::bigtable::v2::Bigtable::StubInterface> grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
+
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::bigtable::v2::SampleRowKeysResponse>>
+  SampleRowKeys(
+      std::unique_ptr<grpc::ClientContext> client_context,
+      google::bigtable::v2::SampleRowKeysRequest const& request) override;
 
   StatusOr<google::bigtable::v2::CheckAndMutateRowResponse> CheckAndMutateRow(
       grpc::ClientContext& client_context,

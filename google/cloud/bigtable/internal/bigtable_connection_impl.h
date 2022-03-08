@@ -28,6 +28,7 @@
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -35,6 +36,10 @@ namespace google {
 namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+void BigtableSampleRowKeysStreamingUpdater(
+    google::bigtable::v2::SampleRowKeysResponse const& response,
+    google::bigtable::v2::SampleRowKeysRequest& request);
 
 class BigtableConnectionImpl : public bigtable::BigtableConnection {
  public:
@@ -45,6 +50,9 @@ class BigtableConnectionImpl : public bigtable::BigtableConnection {
       std::shared_ptr<bigtable_internal::BigtableStub> stub, Options options);
 
   Options options() override { return options_; }
+
+  StreamRange<google::bigtable::v2::SampleRowKeysResponse> SampleRowKeys(
+      google::bigtable::v2::SampleRowKeysRequest const& request) override;
 
   StatusOr<google::bigtable::v2::CheckAndMutateRowResponse> CheckAndMutateRow(
       google::bigtable::v2::CheckAndMutateRowRequest const& request) override;

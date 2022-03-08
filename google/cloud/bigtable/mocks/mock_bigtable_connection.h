@@ -31,6 +31,11 @@ class MockBigtableConnection : public bigtable::BigtableConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  MOCK_METHOD(StreamRange<google::bigtable::v2::SampleRowKeysResponse>,
+              SampleRowKeys,
+              (google::bigtable::v2::SampleRowKeysRequest const& request),
+              (override));
+
   MOCK_METHOD(StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>,
               CheckAndMutateRow,
               (google::bigtable::v2::CheckAndMutateRowRequest const& request),

@@ -25,6 +25,7 @@
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -49,6 +50,9 @@ class BigtableConnection {
   virtual ~BigtableConnection() = 0;
 
   virtual Options options() { return Options{}; }
+
+  virtual StreamRange<google::bigtable::v2::SampleRowKeysResponse>
+  SampleRowKeys(google::bigtable::v2::SampleRowKeysRequest const& request);
 
   virtual StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>
   CheckAndMutateRow(

@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigtable/internal/bigtable_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/streaming_read_rpc_logging.h"
 #include "google/cloud/status_or.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <memory>
@@ -33,6 +34,29 @@ BigtableLogging::BigtableLogging(std::shared_ptr<BigtableStub> child,
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
+
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::bigtable::v2::SampleRowKeysResponse>>
+BigtableLogging::SampleRowKeys(
+    std::unique_ptr<grpc::ClientContext> context,
+    google::bigtable::v2::SampleRowKeysRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](std::unique_ptr<grpc::ClientContext> context,
+             google::bigtable::v2::SampleRowKeysRequest const& request)
+          -> std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+              google::bigtable::v2::SampleRowKeysResponse>> {
+        auto stream = child_->SampleRowKeys(std::move(context), request);
+        if (components_.count("rpc-streams") > 0) {
+          stream = absl::make_unique<
+              google::cloud::internal::StreamingReadRpcLogging<
+                  google::bigtable::v2::SampleRowKeysResponse>>(
+              std::move(stream), tracing_options_,
+              google::cloud::internal::RequestIdForLogging());
+        }
+        return stream;
+      },
+      std::move(context), request, __func__, tracing_options_);
+}
 
 StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>
 BigtableLogging::CheckAndMutateRow(

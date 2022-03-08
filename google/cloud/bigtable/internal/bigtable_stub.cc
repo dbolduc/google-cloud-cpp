@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
+#include "absl/memory/memory.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <memory>
 
@@ -28,6 +29,17 @@ namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BigtableStub::~BigtableStub() = default;
+
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::bigtable::v2::SampleRowKeysResponse>>
+DefaultBigtableStub::SampleRowKeys(
+    std::unique_ptr<grpc::ClientContext> client_context,
+    google::bigtable::v2::SampleRowKeysRequest const& request) {
+  auto stream = grpc_stub_->SampleRowKeys(client_context.get(), request);
+  return absl::make_unique<google::cloud::internal::StreamingReadRpcImpl<
+      google::bigtable::v2::SampleRowKeysResponse>>(std::move(client_context),
+                                                    std::move(stream));
+}
 
 StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>
 DefaultBigtableStub::CheckAndMutateRow(

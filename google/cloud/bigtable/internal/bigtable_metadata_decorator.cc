@@ -33,6 +33,15 @@ BigtableMetadata::BigtableMetadata(std::shared_ptr<BigtableStub> child)
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::bigtable::v2::SampleRowKeysResponse>>
+BigtableMetadata::SampleRowKeys(
+    std::unique_ptr<grpc::ClientContext> context,
+    google::bigtable::v2::SampleRowKeysRequest const& request) {
+  SetMetadata(*context, "table_name=" + request.table_name());
+  return child_->SampleRowKeys(std::move(context), request);
+}
+
 StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>
 BigtableMetadata::CheckAndMutateRow(
     grpc::ClientContext& context,

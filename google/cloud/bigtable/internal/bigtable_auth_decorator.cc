@@ -30,6 +30,18 @@ BigtableAuth::BigtableAuth(
     std::shared_ptr<BigtableStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::bigtable::v2::SampleRowKeysResponse>>
+BigtableAuth::SampleRowKeys(
+    std::unique_ptr<grpc::ClientContext> context,
+    google::bigtable::v2::SampleRowKeysRequest const& request) {
+  using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
+      google::bigtable::v2::SampleRowKeysResponse>;
+  auto status = auth_->ConfigureContext(*context);
+  if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
+  return child_->SampleRowKeys(std::move(context), request);
+}
+
 StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>
 BigtableAuth::CheckAndMutateRow(
     grpc::ClientContext& context,

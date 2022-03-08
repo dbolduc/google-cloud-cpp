@@ -34,6 +34,12 @@ class BigtableMetadata : public BigtableStub {
   ~BigtableMetadata() override = default;
   explicit BigtableMetadata(std::shared_ptr<BigtableStub> child);
 
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::bigtable::v2::SampleRowKeysResponse>>
+  SampleRowKeys(
+      std::unique_ptr<grpc::ClientContext> context,
+      google::bigtable::v2::SampleRowKeysRequest const& request) override;
+
   StatusOr<google::bigtable::v2::CheckAndMutateRowResponse> CheckAndMutateRow(
       grpc::ClientContext& context,
       google::bigtable::v2::CheckAndMutateRowRequest const& request) override;

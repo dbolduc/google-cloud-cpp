@@ -33,6 +33,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BigtableConnection::~BigtableConnection() = default;
 
+StreamRange<google::bigtable::v2::SampleRowKeysResponse>
+BigtableConnection::SampleRowKeys(
+    google::bigtable::v2::SampleRowKeysRequest const&) {
+  return google::cloud::internal::MakeStreamRange<
+      google::bigtable::v2::SampleRowKeysResponse>(
+      []() -> absl::variant<Status,
+                            google::bigtable::v2::SampleRowKeysResponse> {
+        return Status(StatusCode::kUnimplemented, "not implemented");
+      });
+}
+
 StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>
 BigtableConnection::CheckAndMutateRow(
     google::bigtable::v2::CheckAndMutateRowRequest const&) {
