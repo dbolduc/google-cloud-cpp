@@ -13,10 +13,14 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/table.h"
+#include "google/cloud/bigtable/mocks/mock_bigtable_connection.h"
 #include "google/cloud/bigtable/testing/mock_async_failing_rpc_factory.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/internal/background_threads_impl.h"
+#include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
+#include "google/cloud/testing_util/status_matchers.h"
+#include "google/bigtable/v2/bigtable.pb.h"
 
 namespace google {
 namespace cloud {
@@ -25,8 +29,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 namespace btproto = ::google::bigtable::v2;
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
+using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::StatusIs;
+using ::google::protobuf::TextFormat;
 using ::testing::HasSubstr;
+using ::testing::Return;
 
 /// Define types and functions used in the tests.
 namespace {
@@ -258,6 +267,81 @@ TEST_F(ValidContextMdAsyncTest, AsyncReadModifyWriteRow) {
   FinishTest(table_->AsyncReadModifyWriteRow(
       "row_key", ReadModifyWriteRule::IncrementAmount("fam", "counter", 1),
       ReadModifyWriteRule::AppendValue("fam", "list", ";element")));
+}
+
+// TODO : Might as well add the unit tests now.
+Status FailingStatus() { return Status(StatusCode::kPermissionDenied, "fail"); }
+
+TEST_F(TableTest, CheckAndMutateRowSuccess) {
+  auto mock = std::make_shared<bigtable_mocks::MockBigtableConnection>();
+  table_.set_connection(mock);
+
+  std::string expected_raw = R"pb(
+    table_name: 'projects/foo-project/instances/bar-instance/tables/baz-table'
+    row_key: 'row-key'
+    predicate_filter { pass_all_filter: true }
+    true_mutations {
+      set_cell { family_name: 'f1' column_qualifier: 'c1' value: 'true1' }
+    }
+    true_mutations {
+      set_cell { family_name: 'f2' column_qualifier: 'c2' value: 'true2' }
+    }
+    false_mutations {
+      set_cell { family_name: 'f1' column_qualifier: 'c1' value: 'false1' }
+    }
+    false_mutations {
+      set_cell { family_name: 'f2' column_qualifier: 'c2' value: 'false2' }
+    }
+  )pb";
+  btproto::CheckAndMutateRowRequest expected;
+  EXPECT_TRUE(TextFormat::ParseFromString(expected_raw, &expected));
+
+  EXPECT_CALL(*mock, CheckAndMutateRow)
+      .WillOnce([&expected](btproto::CheckAndMutateRowRequest const& request) {
+        // TODO : Check Policies
+        // CheckPolicies(google::cloud::internal::CurrentOptions());
+        EXPECT_THAT(expected, IsProtoEqual(request));
+        btproto::CheckAndMutateRowResponse resp;
+        resp.set_predicate_matched(false);
+        return resp;
+      })
+      .WillOnce([&expected](btproto::CheckAndMutateRowRequest const& request) {
+        // TODO : Check Policies
+        // CheckPolicies(google::cloud::internal::CurrentOptions());
+        EXPECT_THAT(expected, IsProtoEqual(request));
+        btproto::CheckAndMutateRowResponse resp;
+        resp.set_predicate_matched(true);
+        return resp;
+      });
+
+  std::vector<Mutation> true_mutations = {
+      bigtable::SetCell("f1", "c1", 0_ms, "true1"),
+      bigtable::SetCell("f2", "c2", 0_ms, "true2")};
+
+  std::vector<Mutation> false_mutations = {
+      bigtable::SetCell("f1", "c1", 0_ms, "false1"),
+      bigtable::SetCell("f2", "c2", 0_ms, "false2")};
+
+  auto predicate = table_.CheckAndMutateRow("row-key", Filter::PassAllFilter(),
+                                            true_mutations, false_mutations);
+  ASSERT_STATUS_OK(predicate);
+  EXPECT_EQ(*predicate, MutationBranch::kPredicateNotMatched);
+
+  predicate = table_.CheckAndMutateRow("row-key", Filter::PassAllFilter(),
+                                       true_mutations, false_mutations);
+  ASSERT_STATUS_OK(predicate);
+  EXPECT_EQ(*predicate, MutationBranch::kPredicateMatched);
+}
+
+TEST_F(TableTest, CheckAndMutateRowFailure) {
+  auto mock = std::make_shared<bigtable_mocks::MockBigtableConnection>();
+  table_.set_connection(mock);
+
+  EXPECT_CALL(*mock, CheckAndMutateRow).WillOnce(Return(FailingStatus()));
+
+  auto predicate =
+      table_.CheckAndMutateRow("row-key", Filter::PassAllFilter(), {}, {});
+  EXPECT_THAT(predicate, StatusIs(StatusCode::kPermissionDenied));
 }
 
 }  // namespace

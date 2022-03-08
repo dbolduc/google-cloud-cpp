@@ -242,6 +242,18 @@ StatusOr<MutationBranch> Table::CheckAndMutateRow(
   auto const idempotency = idempotent_mutation_policy_->is_idempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
+
+  // TODO : prototyping how to incrementally implement this RPC.
+  if (connection_) {
+    // TODO : We would pass policies via an OptionsSpan. But for now we don'true
+    //        care. The defaults are good enough for us. This includes the
+    //        idempotency policy.
+    auto sor = connection_->CheckAndMutateRow(request);
+    if (!sor) return std::move(sor).status();
+    return sor->predicate_matched() ? MutationBranch::kPredicateMatched
+                                    : MutationBranch::kPredicateNotMatched;
+  }
+
   auto response = ClientUtils::MakeCall(
       *client_, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
       metadata_update_policy_, &DataClient::CheckAndMutateRow, request,

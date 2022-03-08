@@ -37,6 +37,9 @@
 #include <string>
 #include <vector>
 
+// TODO : Prototyping includes
+#include "google/cloud/bigtable/bigtable_connection.h"
+
 namespace google {
 namespace cloud {
 namespace bigtable {
@@ -350,6 +353,11 @@ class Table {
         std::string const& table_id, Policies&&... policies)
       : Table(std::move(client), std::move(app_profile_id), table_id) {
     ChangePolicies(std::forward<Policies>(policies)...);
+  }
+
+  // TODO : This is for prototyping.
+  void set_connection(std::shared_ptr<BigtableConnection> connection) {
+    connection_ = std::move(connection);
   }
 
   std::string const& table_name() const { return table_name_; }
@@ -971,6 +979,7 @@ class Table {
   std::string app_profile_id_;
   std::string project_id_;
   std::string instance_id_;
+  // TODO : I should switch the ordering of table_id_ and table_name_.
   std::string table_name_;
   std::string table_id_;
   std::shared_ptr<RPCRetryPolicy const> rpc_retry_policy_prototype_;
@@ -978,6 +987,9 @@ class Table {
   MetadataUpdatePolicy metadata_update_policy_;
   std::shared_ptr<IdempotentMutationPolicy> idempotent_mutation_policy_;
   std::shared_ptr<BackgroundThreads> background_threads_;
+
+  // TODO : Darren : start protoyping the connection use.
+  std::shared_ptr<BigtableConnection> connection_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
