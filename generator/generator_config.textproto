@@ -164,7 +164,7 @@ service {
   #omit_stub_factory: true
   omitted_rpcs: [
     "ReadRows",             # streaming read
-    "SampleRowKeys",        # streaming read
+#   "SampleRowKeys",        # streaming read
     "MutateRow",            # unary
     "MutateRows",           # streaming read
 #   "CheckAndMutateRow",    # unary
