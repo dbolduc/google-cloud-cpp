@@ -26,6 +26,7 @@ cc_library(
         ":__subpackages__",
         "//:__pkg__",
     ],
+    defines = ["HAVE_ABSEIL"],
     # Do not sort: grpc++ must come last
     deps = [
         "//:common",
@@ -37,6 +38,9 @@ cc_library(
         "@com_google_googleapis//google/longrunning:longrunning_cc_grpc",
         "@com_google_googleapis//google/rpc:error_details_cc_proto",
         "@com_github_grpc_grpc//:grpc++",
+        "@io_opentelemetry_cpp//api",
+        "@io_opentelemetry_cpp//exporters/ostream:ostream_span_exporter",
+        "@io_opentelemetry_cpp//sdk/src/trace",
     ],
 )
 

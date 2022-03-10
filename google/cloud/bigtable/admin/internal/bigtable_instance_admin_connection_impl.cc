@@ -26,10 +26,51 @@
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
 
+// OpenTelemetry
+#include "opentelemetry/exporters/ostream/span_exporter.h"
+#include "opentelemetry/sdk/trace/simple_processor.h"
+#include "opentelemetry/sdk/trace/tracer_provider.h"
+#include "opentelemetry/trace/provider.h"
+
+#include "opentelemetry/context/propagation/global_propagator.h"
+#include "opentelemetry/context/propagation/text_map_propagator.h"
+#include "opentelemetry/nostd/shared_ptr.h"
+#include "opentelemetry/trace/propagation/http_trace_context.h"
+#include "opentelemetry/trace/experimental_semantic_conventions.h"
+
 namespace google {
 namespace cloud {
 namespace bigtable_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+// OpenTelemetry
+class GrpcClientCarrier : public opentelemetry::context::propagation::TextMapCarrier
+{
+public:
+  explicit GrpcClientCarrier(grpc::ClientContext *context) : context_(context) {}
+  GrpcClientCarrier() = default;
+  opentelemetry::nostd::string_view Get(
+      opentelemetry::nostd::string_view key) const noexcept override
+  {
+    return "";
+  }
+
+  void Set(opentelemetry::nostd::string_view key,
+                   opentelemetry::nostd::string_view value) noexcept override
+  {
+    std::cout << " Client ::: Adding " << key << " " << value << "\n";
+    context_->AddMetadata(key.data(), value.data());
+  }
+
+  grpc::ClientContext *context_;
+};
+
+opentelemetry::nostd::shared_ptr<opentelemetry::trace::Tracer> get_tracer(
+    std::string tracer_name) {
+  auto provider = opentelemetry::trace::Provider::GetTracerProvider();
+  return provider->GetTracer(tracer_name);
+}
+}
 
 BigtableInstanceAdminConnectionImpl::BigtableInstanceAdminConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
@@ -93,7 +134,42 @@ BigtableInstanceAdminConnectionImpl::ListInstances(
       idempotency_policy()->ListInstances(request),
       [this](grpc::ClientContext& context,
              google::bigtable::admin::v2::ListInstancesRequest const& request) {
-        return stub_->ListInstances(context, request);
+        // OpenTelemetry
+        using namespace opentelemetry::trace;
+        StartSpanOptions options;
+        options.kind = SpanKind::kClient;
+
+        std::string span_name = "InstanceAdminClient/ListInstances";
+        auto span = get_tracer("grpc")->StartSpan(
+            span_name,
+            {{OTEL_GET_TRACE_ATTR(AttrRpcSystem), "grpc"},
+             {OTEL_GET_TRACE_ATTR(AttrRpcService), "InstanceAdmin"},
+             {OTEL_GET_TRACE_ATTR(AttrRpcMethod), "ListInstances"}},
+            options);
+
+        auto scope = get_tracer("grpc-client")->WithActiveSpan(span);
+
+        // inject current context to grpc metadata
+        auto current_ctx = opentelemetry::context::RuntimeContext::GetCurrent();
+        GrpcClientCarrier carrier(&context);
+        auto prop = opentelemetry::context::propagation::GlobalTextMapPropagator::
+            GetGlobalPropagator();
+        prop->Inject(carrier, current_ctx);
+
+        auto resp = stub_->ListInstances(context, request);
+        auto code = static_cast<int>(resp.status().code());
+
+        if (resp.ok()) {
+          span->SetStatus(opentelemetry::trace::StatusCode::kOk);
+          span->SetAttribute(OTEL_GET_TRACE_ATTR(AttrRpcGrpcStatusCode), code);
+        } else {
+          std::cout << resp.status() << std::endl;
+          span->SetStatus(opentelemetry::trace::StatusCode::kError);
+          span->SetAttribute(OTEL_GET_TRACE_ATTR(AttrRpcGrpcStatusCode), code);
+        }
+        // Make sure to end your spans!
+        span->End();
+        return resp;
       },
       request, __func__);
 }
