@@ -14,6 +14,7 @@
 
 // [START bigtable_quickstart]
 #include "google/cloud/bigtable/table.h"
+#include "opentelemetry/trace/default_span.h"
 
 int main(int argc, char* argv[]) try {
   if (argc != 4) {
@@ -23,6 +24,9 @@ int main(int argc, char* argv[]) try {
               << " <project_id> <instance_id> <table_id>\n";
     return 1;
   }
+
+  auto s = opentelemetry::trace::DefaultSpan::GetInvalid();
+  std::cout << "DefaultSpan: " << s.ToString() << "\n";
 
   std::string const project_id = argv[1];
   std::string const instance_id = argv[2];

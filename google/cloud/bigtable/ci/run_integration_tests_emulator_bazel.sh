@@ -67,6 +67,7 @@ done
 "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
   --test_env="BIGTABLE_EMULATOR_HOST=${BIGTABLE_EMULATOR_HOST}" \
   --test_env="BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST=${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST}" \
+  --test_output=all \
   --test_tag_filters="integration-test" -- \
   "//google/cloud/bigtable/examples:bigtable_instance_admin_snippets" \
   "${excluded_targets[@]}"

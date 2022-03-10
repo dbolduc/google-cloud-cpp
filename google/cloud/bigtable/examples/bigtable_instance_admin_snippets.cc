@@ -25,7 +25,15 @@
 #include <iterator>
 
 // OpenTelemetry
-#include "opentelemetry/trace/default_span.h"
+#include "opentelemetry/exporters/ostream/span_exporter.h"
+#include "opentelemetry/sdk/trace/simple_processor.h"
+#include "opentelemetry/sdk/trace/tracer_provider.h"
+#include "opentelemetry/trace/provider.h"
+
+#include "opentelemetry/context/propagation/global_propagator.h"
+#include "opentelemetry/context/propagation/text_map_propagator.h"
+#include "opentelemetry/nostd/shared_ptr.h"
+#include "opentelemetry/trace/propagation/http_trace_context.h"
 
 namespace {
 
@@ -939,12 +947,42 @@ void RunAll(std::vector<std::string> const& argv) {
   DeleteInstance(admin, {project_id, instance_id});
 }
 
+// OpenTelemetry stuff
+//
+// This method is copied from the OT gRPC example:
+//     https://github.com/open-telemetry/opentelemetry-cpp/blob/84394fda87e80697ee0534311021926b529c8342/examples/grpc/tracer_common.h#L71-L90
+//
+void initTracer()
+{
+  auto exporter = std::unique_ptr<opentelemetry::sdk::trace::SpanExporter>(
+      new opentelemetry::exporter::trace::OStreamSpanExporter);
+  auto processor = std::unique_ptr<opentelemetry::sdk::trace::SpanProcessor>(
+      new opentelemetry::sdk::trace::SimpleSpanProcessor(std::move(exporter)));
+  std::vector<std::unique_ptr<opentelemetry::sdk::trace::SpanProcessor>> processors;
+  processors.push_back(std::move(processor));
+  // Default is an always-on sampler.
+  auto context  = std::make_shared<opentelemetry::sdk::trace::TracerContext>(std::move(processors));
+  auto provider = opentelemetry::nostd::shared_ptr<opentelemetry::trace::TracerProvider>(
+      new opentelemetry::sdk::trace::TracerProvider(context));
+  // Set the global trace provider
+  opentelemetry::trace::Provider::SetTracerProvider(provider);
+
+  // set global propagator
+  opentelemetry::context::propagation::GlobalTextMapPropagator::SetGlobalPropagator(
+      opentelemetry::nostd::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>(
+          new opentelemetry::trace::propagation::HttpTraceContext()));
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
-  auto x = opentelemetry::trace::DefaultSpan::GetInvalid();
-  std::cout << "\n\n\n\n(Invalid)Span to string (?): " << x.ToString()
-            << "\n\n\n";
+  // OpenTelemetry
+  initTracer();
+  opentelemetry::context::propagation::GlobalTextMapPropagator::
+      SetGlobalPropagator(
+          opentelemetry::nostd::shared_ptr<
+              opentelemetry::context::propagation::TextMapPropagator>(
+              new opentelemetry::trace::propagation::HttpTraceContext()));
 
   namespace examples = ::google::cloud::bigtable::examples;
   examples::Example example({
