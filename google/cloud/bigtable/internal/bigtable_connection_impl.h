@@ -37,10 +37,6 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-void BigtableSampleRowKeysStreamingUpdater(
-    google::bigtable::v2::SampleRowKeysResponse const& response,
-    google::bigtable::v2::SampleRowKeysRequest& request);
-
 class BigtableConnectionImpl : public bigtable::BigtableConnection {
  public:
   ~BigtableConnectionImpl() override = default;
@@ -51,8 +47,12 @@ class BigtableConnectionImpl : public bigtable::BigtableConnection {
 
   Options options() override { return options_; }
 
-  StreamRange<google::bigtable::v2::SampleRowKeysResponse> SampleRowKeys(
+  // TODO : Confirm that this is the return type I want.
+  StatusOr<std::vector<google::bigtable::v2::SampleRowKeysResponse>>
+  SampleRowKeys(
       google::bigtable::v2::SampleRowKeysRequest const& request) override;
+  //  StreamRange<google::bigtable::v2::SampleRowKeysResponse> SampleRowKeys(
+  //      google::bigtable::v2::SampleRowKeysRequest const& request) override;
 
   StatusOr<google::bigtable::v2::CheckAndMutateRowResponse> CheckAndMutateRow(
       google::bigtable::v2::CheckAndMutateRowRequest const& request) override;

@@ -265,6 +265,7 @@ if (BUILD_TESTING)
         testing/inprocess_data_client.cc
         testing/inprocess_data_client.h
         testing/mock_async_failing_rpc_factory.h
+        testing/mock_bigtable_stub.h
         testing/mock_data_client.h
         testing/mock_mutate_rows_reader.h
         testing/mock_policies.h
@@ -323,6 +324,7 @@ if (BUILD_TESTING)
         internal/admin_client_params_test.cc
         internal/async_bulk_apply_test.cc
         internal/async_row_sampler_test.cc
+        internal/bigtable_connection_impl_test.cc
         internal/bulk_mutator_test.cc
         internal/common_client_test.cc
         internal/convert_policies_test.cc

@@ -24,6 +24,7 @@
 #include "google/cloud/internal/resumable_streaming_read_rpc.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/streaming_read_rpc_logging.h"
+#include <grpcpp/client_context.h>
 #include <memory>
 
 namespace google {
@@ -40,28 +41,80 @@ BigtableConnectionImpl::BigtableConnectionImpl(
                                       bigtable_internal::BigtableDefaultOptions(
                                           BigtableConnection::options()))) {}
 
-StreamRange<google::bigtable::v2::SampleRowKeysResponse>
+StatusOr<std::vector<google::bigtable::v2::SampleRowKeysResponse>>
 BigtableConnectionImpl::SampleRowKeys(
     google::bigtable::v2::SampleRowKeysRequest const& request) {
+  // TODO : function inputs
   auto stub = stub_;
-  auto retry =
-      std::shared_ptr<bigtable::BigtableRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  std::shared_ptr<bigtable::BigtableRetryPolicy> retry = retry_policy();
+  std::shared_ptr<BackoffPolicy> backoff = backoff_policy();
 
-  auto factory =
-      [stub](google::bigtable::v2::SampleRowKeysRequest const& request) {
-        return stub->SampleRowKeys(absl::make_unique<grpc::ClientContext>(),
-                                   request);
-      };
-  auto resumable = internal::MakeResumableStreamingReadRpc<
-      google::bigtable::v2::SampleRowKeysResponse,
-      google::bigtable::v2::SampleRowKeysRequest>(
-      retry->clone(), backoff->clone(), [](std::chrono::milliseconds) {},
-      factory, BigtableSampleRowKeysStreamingUpdater, request);
-  return internal::MakeStreamRange(
-      internal::StreamReader<google::bigtable::v2::SampleRowKeysResponse>(
-          [resumable] { return resumable->Read(); }));
+  // TODO : function temporaries
+  using R = google::bigtable::v2::SampleRowKeysResponse;
+  std::vector<R> samples;
+  Status status;
+
+  // NOTE TO SELF : This only saves lines if the outer loop can break.
+  //                Otherwise, it should just be inlined.
+  auto make_error = [retry, &status]() {
+    std::string message = (retry->IsExhausted() ? "Retry policy exhausted: "
+                                                : "Permanent error: ");
+    return Status(status.code(), std::move(message) + status.message());
+  };
+
+  // TODO : Old code has this as a while(true), but seems like we should check
+  //        if the retry policy is exhausted by the sleep before starting
+  //        another stream.
+  //        
+  //        Ok, thinking about this harder..... The old code (for a limited time
+  //        retry policy) would calculate the deadline outside of this loop.
+  //        Then it sets the ClientContext's deadline to this **constant** value
+  //        for each iteration of the stream. Nvm, it still breaks out of the
+  //        loop bc OnFailure will check against this constant deadline. It's
+  //        just that we lose the ability for the server to cut us off because
+  //        of the deadline. I am going to classify this as a "too bad, so sad".
+  //
+  //        If I could copy the freaking ClientContext, this wouldn't be an
+  //        issue. Thanks gRPC.
+  //
+  //        If my life depended on it, I could pass the bigtable policies into
+  //        this method somehow, and use them to call setup. But that would
+  //        defeat the purpose of modernizing, which is partially to get away
+  //        from having policies that are unique to bigtable.
+  while (!retry->IsExhausted()) {
+    // TODO : ConfigureContext occurs in helper classes. Since we are writing
+    //        the loop ourselves, we need to explicitly call it.
+    //
+    //        Hmmm.... every time I call ConfigureContext, we re-clone the
+    //        policy..... If it is a limited time policy, we will continuously
+    //        push the deadline back..... Seems like, in order to be consistent,
+    //        we might want to set up the context outside of the loop, and reuse
+    //        it for each attempt......
+    auto context = absl::make_unique<grpc::ClientContext>();
+    internal::ConfigureContext(*context, internal::CurrentOptions());
+    auto stream = stub->SampleRowKeys(std::move(context), request);
+
+    // TODO : We are looping while(true) instead of while(!retry->IsExhausted())
+    //        This matches the old behavior, where we only check the retry
+    //        policy when the stream fails, not between each Read().
+    while (true) {
+      auto response = stream->Read();
+      if (absl::holds_alternative<R>(response)) {
+        samples.emplace_back(absl::get<R>(std::move(response)));
+        continue;
+      }
+      status = absl::get<Status>(std::move(response));
+      if (status.ok()) return samples;
+      samples.clear();
+      if (!retry->OnFailure(status)) return make_error();
+      auto delay = backoff->OnCompletion();
+      std::this_thread::sleep_for(delay);
+      break;
+    }
+  }
+  return make_error();
 }
+// TODO : Generator should have added a newline here.
 StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>
 BigtableConnectionImpl::CheckAndMutateRow(
     google::bigtable::v2::CheckAndMutateRowRequest const& request) {

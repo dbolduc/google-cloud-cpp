@@ -21,6 +21,7 @@
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/bigtable/v2/bigtable.pb.h"
+#include "row_key_sample.h"
 
 namespace google {
 namespace cloud {
@@ -34,7 +35,10 @@ using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
+using ::testing::AllOf;
+using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
+using ::testing::Property;
 using ::testing::Return;
 
 /// Define types and functions used in the tests.
@@ -342,6 +346,47 @@ TEST_F(TableTest, CheckAndMutateRowFailure) {
   auto predicate =
       table_.CheckAndMutateRow("row-key", Filter::PassAllFilter(), {}, {});
   EXPECT_THAT(predicate, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST_F(TableTest, SampleRowsSuccess) {
+  auto mock = std::make_shared<bigtable_mocks::MockBigtableConnection>();
+  table_.set_connection(mock);
+
+  EXPECT_CALL(*mock, SampleRowKeys)
+      .WillOnce([](btproto::SampleRowKeysRequest const& request) {
+        // TODO : Check Policies
+        // CheckPolicies(google::cloud::internal::CurrentOptions());
+        EXPECT_EQ(kTableName, request.table_name());
+        // TODO : Check AppProfile ID?
+        std::vector<btproto::SampleRowKeysResponse> resp(2);
+        resp[0].set_row_key("r1");
+        resp[0].set_offset_bytes(1);
+        resp[1].set_row_key("r2");
+        resp[1].set_offset_bytes(2);
+        return resp;
+      });
+
+  // TODO : probably a nicer way to write this. Defining a RowKeySample matcher.
+  auto samples = table_.SampleRows();
+  ASSERT_STATUS_OK(samples);
+  auto it = samples->begin();
+  EXPECT_NE(it, samples->end());
+  EXPECT_EQ(it->row_key, "r1");
+  EXPECT_EQ(it->offset_bytes, 1);
+  EXPECT_NE(++it, samples->end());
+  EXPECT_EQ(it->row_key, "r2");
+  EXPECT_EQ(it->offset_bytes, 2);
+  EXPECT_EQ(++it, samples->end());
+}
+
+TEST_F(TableTest, SampleRowsFailure) {
+  auto mock = std::make_shared<bigtable_mocks::MockBigtableConnection>();
+  table_.set_connection(mock);
+
+  EXPECT_CALL(*mock, SampleRowKeys).WillOnce(Return(FailingStatus()));
+
+  auto resp = table_.SampleRows();
+  EXPECT_THAT(resp, StatusIs(StatusCode::kPermissionDenied));
 }
 
 }  // namespace

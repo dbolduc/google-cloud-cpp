@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
 #include "google/cloud/internal/async_retry_unary_rpc.h"
+#include <iterator>
 #include <thread>
 #include <type_traits>
 
@@ -245,7 +246,7 @@ StatusOr<MutationBranch> Table::CheckAndMutateRow(
 
   // TODO : prototyping how to incrementally implement this RPC.
   if (connection_) {
-    // TODO : We would pass policies via an OptionsSpan. But for now we don'true
+    // TODO : We would pass policies via an OptionsSpan. But for now we don't
     //        care. The defaults are good enough for us. This includes the
     //        idempotency policy.
     auto sor = connection_->CheckAndMutateRow(request);
@@ -316,16 +317,35 @@ future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRow(
 // policies in effect tell us to stop. Note that each retry must clear the
 // samples otherwise the result is an inconsistent set of sample row keys.
 StatusOr<std::vector<bigtable::RowKeySample>> Table::SampleRows() {
-  // Copy the policies in effect for this operation.
-  auto backoff_policy = clone_rpc_backoff_policy();
-  auto retry_policy = clone_rpc_retry_policy();
-  std::vector<bigtable::RowKeySample> samples;
-
   // Build the RPC request for SampleRowKeys
   btproto::SampleRowKeysRequest request;
   btproto::SampleRowKeysResponse response;
   SetCommonTableOperationRequest<btproto::SampleRowKeysRequest>(
       request, app_profile_id_, table_name_);
+
+  if (connection_) {
+    // TODO : We would pass policies via an OptionsSpan. But for now we don't
+    //        care. The defaults are good enough for us. This includes the
+    //        idempotency policy.
+    auto sor = connection_->SampleRowKeys(request);
+    if (!sor) return std::move(sor).status();
+    auto v = *std::move(sor);
+    std::vector<bigtable::RowKeySample> samples(v.size());
+    std::transform(std::make_move_iterator(v.begin()),
+                   std::make_move_iterator(v.end()), samples.begin(),
+                   [](btproto::SampleRowKeysResponse r) {
+                     bigtable::RowKeySample row_sample;
+                     row_sample.offset_bytes = r.offset_bytes();
+                     row_sample.row_key = std::move(*r.mutable_row_key());
+                     return row_sample;
+                   });
+    return samples;
+  }
+
+  // Copy the policies in effect for this operation.
+  auto backoff_policy = clone_rpc_backoff_policy();
+  auto retry_policy = clone_rpc_retry_policy();
+  std::vector<bigtable::RowKeySample> samples;
 
   while (true) {
     grpc::ClientContext client_context;

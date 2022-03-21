@@ -51,8 +51,26 @@ class BigtableConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::bigtable::v2::SampleRowKeysResponse>
+  // TODO : Confirm that this is the return type I want.
+  //        
+  //        My argument is the following:
+  //
+  //        If there is an error anywhere in the stream, it invalidates all of
+  //        the previous responses, and we must start it over. This means that
+  //        we can't return any responses to the user until we have received ALL
+  //        the responses. So a data type like a StreamRange is unnecessary for
+  //        incrementally reading. We should just pack them all up in a vector
+  //        and return that, or a Status if we encounter errors.
+  //
+  //        The other question is bigtable::RowKeySample vs. the proto type. I
+  //        think there is value in having the connection return the same exact
+  //        type as the client (Table).... But I also think we wouldn't recreate
+  //        the proto type if we were doing this again..... I think I will just
+  //        return the proto.
+  virtual StatusOr<std::vector<google::bigtable::v2::SampleRowKeysResponse>>
   SampleRowKeys(google::bigtable::v2::SampleRowKeysRequest const& request);
+  //virtual StreamRange<google::bigtable::v2::SampleRowKeysResponse>
+  //SampleRowKeys(google::bigtable::v2::SampleRowKeysRequest const& request);
 
   virtual StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>
   CheckAndMutateRow(
