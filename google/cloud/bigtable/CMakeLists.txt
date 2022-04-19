@@ -167,6 +167,8 @@ add_library(
     internal/prefix_range_end.h
     internal/readrowsparser.cc
     internal/readrowsparser.h
+    internal/row_reader.cc
+    internal/row_reader.h
     internal/rowreaderiterator.cc
     internal/rowreaderiterator.h
     internal/rpc_policy_parameters.h

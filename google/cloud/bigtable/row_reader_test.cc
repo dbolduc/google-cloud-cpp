@@ -825,6 +825,29 @@ TEST_F(RowReaderTest, FailedStreamRetryNewContext) {
   EXPECT_EQ(++it, reader.end());
 }
 
+TEST(Darren, MockRowReader) {
+  using testing_util::StatusIs;
+  Row r1("r1", {});
+  Row r2("r2", {});
+
+  std::vector<StatusOr<Row>> rows;
+  rows.emplace_back(r1);
+  rows.emplace_back(r2);
+  rows.emplace_back(Status(StatusCode::kPermissionDenied, "done"));
+
+  auto rr = bigtable_mocks::MakeMockRowReader(rows);
+
+  // TODO : There is probably a cleaner way to do a test like this.
+  auto expected_it = rows.begin();
+  for (auto const& actual_it : rr) {
+    EXPECT_EQ(actual_it.status(), expected_it->status());
+    if (actual_it) {
+      EXPECT_EQ(actual_it->row_key(), (*expected_it)->row_key());
+    }
+    expected_it++;
+  }
+}
+
 }  // anonymous namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
