@@ -93,7 +93,6 @@ class DataClient {
   friend class internal::AsyncRowSampler;
   friend class internal::BulkMutator;
   friend class RowReader;
-  template <typename RowFunctor, typename FinishFunctor>
   friend class AsyncRowReader;
   friend class internal::LoggingDataClient;
 

@@ -825,7 +825,7 @@ class Table {
   void AsyncReadRows(RowFunctor on_row, FinishFunctor on_finish, RowSet row_set,
                      Filter filter) {
     AsyncReadRows(std::move(on_row), std::move(on_finish), std::move(row_set),
-                  AsyncRowReader<RowFunctor, FinishFunctor>::NO_ROWS_LIMIT,
+                  AsyncRowReader::NO_ROWS_LIMIT,
                   std::move(filter));
   }
 
@@ -867,11 +867,23 @@ class Table {
   template <typename RowFunctor, typename FinishFunctor>
   void AsyncReadRows(RowFunctor on_row, FinishFunctor on_finish, RowSet row_set,
                      std::int64_t rows_limit, Filter filter) {
-    AsyncRowReader<RowFunctor, FinishFunctor>::Create(
+    static_assert(google::cloud::internal::is_invocable<RowFunctor, Row>::value,
+                  "RowFunctor must be invocable with Row.");
+    static_assert(
+        google::cloud::internal::is_invocable<FinishFunctor, Status>::value,
+        "FinishFunctor must be invocable with Status.");
+    static_assert(
+        std::is_same<google::cloud::internal::invoke_result_t<RowFunctor, Row>,
+                     future<bool>>::value,
+        "RowFunctor should return a future<bool>.");
+
+    auto on_row_fn = [on_row](Row r) -> future<bool> { return on_row(r); };
+    auto on_finish_fn = [on_finish](Status s) { on_finish(s); };
+    AsyncRowReader::Create(
         background_threads_->cq(), client_, app_profile_id_, table_name_,
-        std::move(on_row), std::move(on_finish), std::move(row_set), rows_limit,
-        std::move(filter), clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-        metadata_update_policy_,
+        std::move(on_row_fn), std::move(on_finish_fn), std::move(row_set),
+        rows_limit, std::move(filter), clone_rpc_retry_policy(),
+        clone_rpc_backoff_policy(), metadata_update_policy_,
         absl::make_unique<bigtable::internal::ReadRowsParserFactory>());
   }
 

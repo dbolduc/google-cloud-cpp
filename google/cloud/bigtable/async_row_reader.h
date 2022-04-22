@@ -40,13 +40,15 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+using RowFunctor = std::function<future<bool>(Row)>;
+using FinishFunctor = std::function<void(Status)>;
+
 /**
  * Objects of this class represent the state of reading rows via AsyncReadRows.
  *
  */
-template <typename RowFunctor, typename FinishFunctor>
-class AsyncRowReader : public std::enable_shared_from_this<
-                           AsyncRowReader<RowFunctor, FinishFunctor>> {
+class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
  public:
   /// Special value to be used as rows_limit indicating no limit.
   // NOLINTNEXTLINE(readability-identifier-naming)
@@ -56,16 +58,6 @@ class AsyncRowReader : public std::enable_shared_from_this<
   AsyncRowReader(AsyncRowReader const&) = delete;
 
  private:
-  static_assert(google::cloud::internal::is_invocable<RowFunctor, Row>::value,
-                "RowFunctor must be invocable with Row.");
-  static_assert(
-      google::cloud::internal::is_invocable<FinishFunctor, Status>::value,
-      "RowFunctor must be invocable with Status.");
-  static_assert(
-      std::is_same<google::cloud::internal::invoke_result_t<RowFunctor, Row>,
-                   future<bool>>::value,
-      "RowFunctor should return a future<bool>.");
-
   static std::shared_ptr<AsyncRowReader> Create(
       CompletionQueue cq, std::shared_ptr<DataClient> client,
       std::string app_profile_id, std::string table_name, RowFunctor on_row,
