@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/data_connection_impl.h"
+#include "google/cloud/bigtable/internal/darren_sampler.h"
 #include "google/cloud/bigtable/internal/default_row_reader.h"
 #include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/background_threads.h"
@@ -69,6 +70,13 @@ bigtable::RowReader DataConnectionImpl::ReadRows(
       stub_, app_profile_id, table_name, std::move(row_set), rows_limit,
       std::move(filter), retry_policy(), backoff_policy());
   return MakeRowReader(std::move(impl));
+}
+
+future<StatusOr<std::vector<bigtable::RowKeySample>>>
+DataConnectionImpl::AsyncSampleRows(std::string const& app_profile_id,
+    std::string const& table_name) {
+  return AsyncRowSampler::Create(background_->cq(), stub_, retry_policy(),
+                                 backoff_policy(), app_profile_id, table_name);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

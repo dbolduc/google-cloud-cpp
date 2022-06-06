@@ -263,7 +263,16 @@ void AsyncSampleRows(google::cloud::bigtable::Table table,
   namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::future;
   using ::google::cloud::StatusOr;
-  [](cbt::Table table) {
+  // TODO : Reset.
+  [](cbt::Table t) {
+    // TODO : For testing, we make a new table that uses a connection.
+//    auto conn = google::cloud::bigtable_internal::MakeDataConnection();
+//    auto table = google::cloud::bigtable_internal::MakeTable(
+//        std::move(conn), t.project_id(), t.instance_id(), t.app_profile_id(),
+//        t.table_id());
+    // TODO : Back to DataClient.. What should happen?
+    auto table = std::move(t);
+
     future<StatusOr<std::vector<cbt::RowKeySample>>> samples_future =
         table.AsyncSampleRows();
 
