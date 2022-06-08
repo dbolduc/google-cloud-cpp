@@ -12,25 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ASYNC_ROW_READER_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ASYNC_ROW_READER_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_DARREN_READER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_DARREN_READER_H
 
-#include "google/cloud/bigtable/completion_queue.h"
-#include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/filters.h"
+#include "google/cloud/bigtable/internal/async_streaming_read.h"
+#include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/bigtable/internal/readrowsparser.h"
-#include "google/cloud/bigtable/metadata_update_policy.h"
+#include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/row.h"
 #include "google/cloud/bigtable/row_set.h"
-#include "google/cloud/bigtable/rpc_backoff_policy.h"
-#include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
-#include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/async_streaming_read_rpc.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
-#include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <chrono>
 #include <queue>
 #include <string>
@@ -39,13 +38,20 @@ namespace google {
 namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace darren {
+
+// TODO : This should be split into header and source.
+// TODO : These belong within the class
+namespace v2 = ::google::bigtable::v2;
+using AsyncStream =
+    google::cloud::internal::AsyncStreamingReadRpc<v2::ReadRowsResponse>;
+using RowFunctor = std::function<future<bool>(bigtable::Row)>;
+using FinishFunctor = std::function<void(Status)>;
 
 /**
  * Objects of this class represent the state of reading rows via AsyncReadRows.
  */
-template <typename RowFunctor, typename FinishFunctor>
-class AsyncRowReader : public std::enable_shared_from_this<
-                           AsyncRowReader<RowFunctor, FinishFunctor>> {
+class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
  public:
   /// Special value to be used as rows_limit indicating no limit.
   // NOLINTNEXTLINE(readability-identifier-naming)
@@ -54,38 +60,31 @@ class AsyncRowReader : public std::enable_shared_from_this<
   AsyncRowReader(AsyncRowReader&&) = delete;
   AsyncRowReader(AsyncRowReader const&) = delete;
 
- private:
-  static std::shared_ptr<AsyncRowReader> Create(
-      CompletionQueue cq, std::shared_ptr<bigtable::DataClient> client,
-      std::string app_profile_id, std::string table_name, RowFunctor on_row,
-      FinishFunctor on_finish, bigtable::RowSet row_set,
-      std::int64_t rows_limit, bigtable::Filter filter,
-      std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
-      std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy,
-      bigtable::MetadataUpdatePolicy metadata_update_policy,
-      std::unique_ptr<bigtable::internal::ReadRowsParserFactory>
-          parser_factory) {
-    std::shared_ptr<AsyncRowReader> res(new AsyncRowReader(
-        std::move(cq), std::move(client), std::move(app_profile_id),
+  static void Create(CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
+                     std::string app_profile_id, std::string table_name,
+                     RowFunctor on_row, FinishFunctor on_finish,
+                     bigtable::RowSet row_set, std::int64_t rows_limit,
+                     bigtable::Filter filter,
+                     std::unique_ptr<DataRetryPolicy> retry_policy,
+                     std::unique_ptr<BackoffPolicy> backoff_policy) {
+    auto reader = std::shared_ptr<AsyncRowReader>(new AsyncRowReader(
+        std::move(cq), std::move(stub), std::move(app_profile_id),
         std::move(table_name), std::move(on_row), std::move(on_finish),
         std::move(row_set), rows_limit, std::move(filter),
-        std::move(rpc_retry_policy), std::move(rpc_backoff_policy),
-        std::move(metadata_update_policy), std::move(parser_factory)));
-    res->MakeRequest();
-    return res;
+        std::move(retry_policy), std::move(backoff_policy)));
+    reader->MakeRequest();
   }
 
-  AsyncRowReader(
-      CompletionQueue cq, std::shared_ptr<bigtable::DataClient> client,
-      std::string app_profile_id, std::string table_name, RowFunctor on_row,
-      FinishFunctor on_finish, bigtable::RowSet row_set,
-      std::int64_t rows_limit, bigtable::Filter filter,
-      std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy,
-      std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy,
-      bigtable::MetadataUpdatePolicy metadata_update_policy,
-      std::unique_ptr<bigtable::internal::ReadRowsParserFactory> parser_factory)
+ private:
+  AsyncRowReader(CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
+                 std::string app_profile_id, std::string table_name,
+                 RowFunctor on_row, FinishFunctor on_finish,
+                 bigtable::RowSet row_set, std::int64_t rows_limit,
+                 bigtable::Filter filter,
+                 std::unique_ptr<DataRetryPolicy> retry_policy,
+                 std::unique_ptr<BackoffPolicy> backoff_policy)
       : cq_(std::move(cq)),
-        client_(std::move(client)),
+        stub_(std::move(stub)),
         app_profile_id_(std::move(app_profile_id)),
         table_name_(std::move(table_name)),
         on_row_(std::move(on_row)),
@@ -93,14 +92,12 @@ class AsyncRowReader : public std::enable_shared_from_this<
         row_set_(std::move(row_set)),
         rows_limit_(rows_limit),
         filter_(std::move(filter)),
-        rpc_retry_policy_(std::move(rpc_retry_policy)),
-        rpc_backoff_policy_(std::move(rpc_backoff_policy)),
-        metadata_update_policy_(std::move(metadata_update_policy)),
-        parser_factory_(std::move(parser_factory)) {}
+        retry_policy_(std::move(retry_policy)),
+        backoff_policy_(std::move(backoff_policy)) {}
 
   void MakeRequest() {
     status_ = Status();
-    google::bigtable::v2::ReadRowsRequest request;
+    v2::ReadRowsRequest request;
 
     request.set_app_profile_id(app_profile_id_);
     request.set_table_name(table_name_);
@@ -113,23 +110,15 @@ class AsyncRowReader : public std::enable_shared_from_this<
     if (rows_limit_ != NO_ROWS_LIMIT) {
       request.set_rows_limit(rows_limit_ - rows_count_);
     }
-    parser_ = parser_factory_->Create();
+    parser_ = bigtable::internal::ReadRowsParserFactory().Create();
 
     auto context = absl::make_unique<grpc::ClientContext>();
-    rpc_retry_policy_->Setup(*context);
-    rpc_backoff_policy_->Setup(*context);
-    metadata_update_policy_.Setup(*context);
+    internal::ConfigureContext(*context, internal::CurrentOptions());
 
-    auto client = client_;
     auto self = this->shared_from_this();
-    cq_.MakeStreamingReadRpc(
-        [client](grpc::ClientContext* context,
-                 google::bigtable::v2::ReadRowsRequest const& request,
-                 grpc::CompletionQueue* cq) {
-          return client->PrepareAsyncReadRows(context, request, cq);
-        },
-        request, std::move(context),
-        [self](google::bigtable::v2::ReadRowsResponse r) {
+    PerformAsyncStreamingRead(
+        stub_->AsyncReadRows(cq_, std::move(context), request),
+        [self](v2::ReadRowsResponse r) {
           return self->OnDataReceived(std::move(r));
         },
         [self](Status s) { self->OnStreamFinished(std::move(s)); });
@@ -226,8 +215,7 @@ class AsyncRowReader : public std::enable_shared_from_this<
   }
 
   /// Called when lower layers provide us with a response chunk.
-  future<bool> OnDataReceived(
-      google::bigtable::v2::ReadRowsResponse const& response) {
+  future<bool> OnDataReceived(v2::ReadRowsResponse response) {
     // assert(!whole_op_finished_);
     // assert(!continue_reading_);
     // assert(status_.ok());
@@ -298,14 +286,14 @@ class AsyncRowReader : public std::enable_shared_from_this<
       return;
     }
 
-    if (!rpc_retry_policy_->OnFailure(status_)) {
+    if (!retry_policy_->OnFailure(status_)) {
       // Can't retry.
       whole_op_finished_ = true;
       TryGiveRowToUser();
       return;
     }
     auto self = this->shared_from_this();
-    cq_.MakeRelativeTimer(rpc_backoff_policy_->OnCompletion(status_))
+    cq_.MakeRelativeTimer(backoff_policy_->OnCompletion())
         .then([self](future<StatusOr<std::chrono::system_clock::time_point>>
                          result) {
           if (auto tp = result.get()) {
@@ -352,7 +340,7 @@ class AsyncRowReader : public std::enable_shared_from_this<
   }
 
   /// Parse the data from the response.
-  Status ConsumeResponse(google::bigtable::v2::ReadRowsResponse response) {
+  Status ConsumeResponse(v2::ReadRowsResponse response) {
     for (auto& chunk : *response.mutable_chunks()) {
       grpc::Status status;
       parser_->HandleChunk(std::move(chunk), status);
@@ -370,11 +358,9 @@ class AsyncRowReader : public std::enable_shared_from_this<
     return Status();
   }
 
-  friend class bigtable::Table;
-
   std::mutex mu_;
   CompletionQueue cq_;
-  std::shared_ptr<bigtable::DataClient> client_;
+  std::shared_ptr<BigtableStub> stub_;
   std::string app_profile_id_;
   std::string table_name_;
   RowFunctor on_row_;
@@ -382,10 +368,8 @@ class AsyncRowReader : public std::enable_shared_from_this<
   bigtable::RowSet row_set_;
   std::int64_t rows_limit_;
   bigtable::Filter filter_;
-  std::unique_ptr<bigtable::RPCRetryPolicy> rpc_retry_policy_;
-  std::unique_ptr<bigtable::RPCBackoffPolicy> rpc_backoff_policy_;
-  bigtable::MetadataUpdatePolicy metadata_update_policy_;
-  std::unique_ptr<bigtable::internal::ReadRowsParserFactory> parser_factory_;
+  std::unique_ptr<DataRetryPolicy> retry_policy_;
+  std::unique_ptr<BackoffPolicy> backoff_policy_;
   std::unique_ptr<bigtable::internal::ReadRowsParser> parser_;
   /// Number of rows read so far, used to set row_limit in retries.
   std::int64_t rows_count_ = 0;
@@ -417,9 +401,10 @@ class AsyncRowReader : public std::enable_shared_from_this<
   int recursion_level_ = 0;
 };
 
+}  // namespace darren
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ASYNC_ROW_READER_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_DARREN_READER_H

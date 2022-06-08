@@ -48,6 +48,10 @@ class DataConnectionImpl : public DataConnection {
       std::string const& app_profile_id, std::string const& table_name,
       bigtable::BulkMutation mut) override;
 
+  future<std::vector<bigtable::FailedMutation>> AsyncBulkApply(
+      std::string const& app_profile_id, std::string const& table_name,
+      bigtable::BulkMutation mut) override;
+
   bigtable::RowReader ReadRows(std::string const& app_profile_id,
                                std::string const& table_name,
                                bigtable::RowSet row_set,
@@ -64,8 +68,19 @@ class DataConnectionImpl : public DataConnection {
       std::vector<bigtable::Mutation> true_mutations,
       std::vector<bigtable::Mutation> false_mutations) override;
 
+  future<StatusOr<std::vector<bigtable::RowKeySample>>> AsyncSampleRows(
+      std::string const& app_profile_id,
+      std::string const& table_name) override;
+
   StatusOr<bigtable::Row> ReadModifyWriteRow(
       google::bigtable::v2::ReadModifyWriteRowRequest request) override;
+
+  void AsyncReadRows(std::string const& app_profile_id,
+                     std::string const& table_name,
+                     std::function<future<bool>(bigtable::Row)> on_row,
+                     std::function<void(Status)> on_finish,
+                     bigtable::RowSet row_set, std::int64_t rows_limit,
+                     bigtable::Filter filter) override;
 
  private:
   std::unique_ptr<DataRetryPolicy> retry_policy() {

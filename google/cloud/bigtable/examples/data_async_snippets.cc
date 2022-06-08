@@ -131,7 +131,10 @@ void AsyncReadRows(google::cloud::bigtable::Table table,
           }
           auto const& cell = row.cells().at(0);
           std::cout << cell.row_key() << " = [" << cell.value() << "]\n";
-          return make_ready_future(true);
+          // TODO : Test to make sure the drainage works. We should get one
+          // total row.
+          return make_ready_future(false);
+          // return make_ready_future(true);
         },
         [&stream_status_promise](Status const& stream_status) {
           stream_status_promise.set_value(stream_status);
@@ -352,20 +355,24 @@ void RunAll(std::vector<std::string> const& argv) {
   cbt::Table table(cbt::MakeDataClient(project_id, instance_id), table_id,
                    cbt::AlwaysRetryMutationPolicy());
 
+  namespace b_i = ::google::cloud::bigtable_internal;
+  auto cool_table = b_i::MakeTable(b_i::MakeDataConnection(), project_id,
+                                   instance_id, "", table_id);
+
   std::cout << "\nRunning the AsyncApply() example" << std::endl;
   AsyncApply(table, {"row-0001"});
 
   std::cout << "\nRunning the AsyncBulkApply() example" << std::endl;
-  AsyncBulkApply(table, {});
+  AsyncBulkApply(cool_table, {});
 
   std::cout << "\nRunning the AsyncSampleRows() example" << std::endl;
-  AsyncSampleRows(table, {});
+  AsyncSampleRows(cool_table, {});
 
   std::cout << "\nRunning the AsyncReadRows() example" << std::endl;
-  AsyncReadRows(table, {});
+  AsyncReadRows(cool_table, {});
 
   std::cout << "\nRunning the AsyncReadRowsWithLimit() example" << std::endl;
-  AsyncReadRowsWithLimit(table, {"5"});
+  AsyncReadRowsWithLimit(cool_table, {"5"});
 
   std::cout << "\nRunning the AsyncReadRow() example [1]" << std::endl;
   AsyncReadRow(table, {"row-0001"});

@@ -306,6 +306,42 @@ int main(int argc, char* argv[]) {
             << options->batcher_thread_count << "," << elapsed.count() << ","
             << totals.successes << "," << totals.fails << "\n";
 
+  // TODO : Clean this up... (Delete)
+  std::cout << "#\n# DataClient - SampleRows..." << std::endl;
+  auto samples = table.SampleRows();
+  if (!samples) {
+    std::cout << std::move(samples).status() << std::endl;
+    return -1;
+  }
+  for (auto const& sample : *samples) {
+    std::cout << "# key=" << sample.row_key << " - " << sample.offset_bytes
+              << std::endl;
+  }
+  std::cout << "#\n# DataClient - AsyncSampleRows..." << std::endl;
+  samples = table.AsyncSampleRows().get();
+  if (!samples) {
+    std::cout << std::move(samples).status() << std::endl;
+    return -1;
+  }
+  for (auto const& sample : *samples) {
+    std::cout << "# key=" << sample.row_key << " - " << sample.offset_bytes
+              << std::endl;
+  }
+  std::cout << "#\n# DataConnection - AsyncSampleRows..." << std::endl;
+  auto conn = google::cloud::bigtable_internal::MakeDataConnection();
+  auto table_with_conn = google::cloud::bigtable_internal::MakeTable(
+      std::move(conn), table.project_id(), table.instance_id(),
+      table.app_profile_id(), table.table_id());
+  samples = table_with_conn.AsyncSampleRows().get();
+  if (!samples) {
+    std::cout << std::move(samples).status() << std::endl;
+    return -1;
+  }
+  for (auto const& sample : *samples) {
+    std::cout << "# key=" << sample.row_key << " - " << sample.offset_bytes
+              << std::endl;
+  }
+
   // If we created a table, delete it.
   if (options->table_id.empty()) {
     std::cout << "#\n# Deleting Table\n";

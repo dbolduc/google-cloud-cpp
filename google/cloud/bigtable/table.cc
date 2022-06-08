@@ -165,6 +165,11 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation mut) {
 }
 
 future<std::vector<FailedMutation>> Table::AsyncBulkApply(BulkMutation mut) {
+  if (connection_) {
+    return connection_->AsyncBulkApply(app_profile_id_, table_name_,
+                                       std::move(mut));
+  }
+
   auto cq = background_threads_->cq();
   auto mutation_policy = clone_idempotent_mutation_policy();
   return internal::AsyncRetryBulkApply::Create(
@@ -349,6 +354,10 @@ StatusOr<std::vector<bigtable::RowKeySample>> Table::SampleRows() {
 }
 
 future<StatusOr<std::vector<bigtable::RowKeySample>>> Table::AsyncSampleRows() {
+  if (connection_) {
+    return connection_->AsyncSampleRows(app_profile_id_, table_name_);
+  }
+
   auto cq = background_threads_->cq();
   return internal::AsyncRowSampler::Create(
       cq, client_, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),

@@ -120,6 +120,15 @@ TEST_F(SampleRowsIntegrationTest, Asynchronous) {
   VerifySamples(fut.get());
 };
 
+TEST_F(SampleRowsIntegrationTest, AsynchronousWithConnection) {
+  auto table = bigtable_internal::MakeTable(
+      bigtable_internal::MakeDataConnection(),
+      TableTestEnvironment::project_id(), TableTestEnvironment::instance_id(),
+      "", TableTestEnvironment::table_id());
+  auto fut = table.AsyncSampleRows();
+  VerifySamples(fut.get());
+};
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
