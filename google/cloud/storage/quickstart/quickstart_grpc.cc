@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/grpc_plugin.h"
+#include "google/cloud/grpc_options.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) {
@@ -25,13 +26,25 @@ int main(int argc, char* argv[]) {
   std::string const bucket_name = argv[1];
 
   // Create aliases to make the code easier to read.
-  namespace gcs = ::google::cloud::storage;
+  namespace gc = ::google::cloud;
+
+  // Add the `x-cloud-trace-context` header for gRPC
+  auto trace = [](std::string const& value) {
+    return gc::Options{}.set<gc::internal::GrpcSetupOption>(
+        [&](grpc::ClientContext& context) {
+          context.AddMetadata("x-cloud-trace-context", value);
+        });
+  };
 
   // Create a client to communicate with Google Cloud Storage. This client
   // uses the default configuration for authentication and project id.
   auto client = google::cloud::storage_experimental::DefaultGrpcClient();
 
-  auto writer = client.WriteObject(bucket_name, "quickstart-grpc.txt");
+  // Add the metadata header specifically for this call. Note that there is only
+  // one tracing context for the whole write operation.
+  auto writer = client.WriteObject(bucket_name, "quickstart-grpc.txt",
+                                   // TODO : Generate a real value
+                                   trace("write/call;o=1"));
   writer << "Hello World!";
   writer.Close();
   if (writer.metadata()) {
@@ -42,7 +55,11 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  auto reader = client.ReadObject(bucket_name, "quickstart-grpc.txt");
+  // Add the metadata header specifically for this call. Note that there is only
+  // one tracing context for the whole read operation.
+  auto reader = client.ReadObject(bucket_name, "quickstart-grpc.txt",
+                                  // TODO : Generate a real value
+                                  trace("read/call;o=1"));
   if (!reader) {
     std::cerr << "Error reading object: " << reader.status() << "\n";
     return 1;
