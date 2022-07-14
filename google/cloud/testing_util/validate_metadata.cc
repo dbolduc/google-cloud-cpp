@@ -45,11 +45,10 @@ namespace {
 using ::google::protobuf::DescriptorPool;
 using ::testing::Contains;
 using ::testing::IsEmpty;
-using ::testing::Matcher;
 using ::testing::Not;
 using ::testing::NotNull;
 using ::testing::Pair;
-using ::testing::UnorderedElementsAreArray;
+using ::testing::UnorderedPointwise;
 
 using RoutingHeaders = std::map<std::string, std::string>;
 
@@ -81,15 +80,13 @@ RoutingHeaders ExtractMDFromHeader(std::string header) {
   return res;
 }
 
-/**
- * We do not use `::testing::MatchesRegex` because our Windows builds use a
- * googletest built with `GTEST_USES_SIMPLE_RE`, instead of
- * `GTEST_USES_POSIX_RE`.
- */
-MATCHER_P(MatchesGlob, glob, "matches the glob: \"" + glob + "\"") {
+MATCHER(MatchesHeader, "") {  // NOLINT(readability-redundant-string-init)
+  auto const& actual = std::get<0>(arg);
+  auto const& expected = std::get<1>(arg);
   // Translate the glob into a regex pattern.
-  std::regex regex(absl::StrReplaceAll(glob, {{"*", "[^/]+"}}));
-  return std::regex_match(arg, regex);
+  std::regex regex(absl::StrReplaceAll(expected.second, {{"*", "[^/]+"}}));
+  return actual.first == expected.first &&
+         std::regex_match(actual.second, regex);
 }
 
 // This method is recursive because dbolduc could not figure out the iterative
@@ -332,12 +329,7 @@ void ValidateMetadataFixture::IsContextMDValid(
   }
 
   // Check if the metadata in the context satisfied the expectations.
-  std::vector<Matcher<std::pair<std::string, std::string>>> matchers;
-  matchers.reserve(expected.size());
-  for (auto const& param : expected) {
-    matchers.push_back(Pair(param.first, MatchesGlob(param.second)));
-  }
-  EXPECT_THAT(actual, UnorderedElementsAreArray(matchers));
+  EXPECT_THAT(actual, UnorderedPointwise(MatchesHeader(), expected));
 }
 
 }  // namespace testing_util
