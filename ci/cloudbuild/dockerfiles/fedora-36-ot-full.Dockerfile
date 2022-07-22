@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM fedora:34 AS f34_base
+FROM fedora:36 AS f36_base
 ARG NCPU=4
 
 # Fedora includes packages for gRPC, libcurl, and OpenSSL that are recent enough
@@ -208,13 +208,13 @@ RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/relea
 #
 # ```sh
 # cd ci/cloudbuild/dockerfiles
-# docker build -t f34-ot-full \
+# docker build -t f36-ot-full \
 #              --build-arg=NCPU=$(nproc) \
-#              -f fedora-34-ot-full.Dockerfile \
+#              -f fedora-36-ot-full.Dockerfile \
 #              ../..
 # ```
 
-FROM f34_base AS f34_with_ot
+FROM f36_base AS f36_with_ot
 ARG NCPU=48
 
 # TODO : Darren : For some reason it cannot find the library which gets
@@ -247,7 +247,7 @@ RUN curl -sSL https://github.com/apache/thrift/archive/v0.14.1.tar.gz | \
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/
-RUN curl -sSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.2.0.tar.gz | \
+RUN curl -sSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.4.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
