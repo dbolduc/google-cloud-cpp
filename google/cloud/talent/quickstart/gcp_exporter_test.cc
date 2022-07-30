@@ -1,0 +1,123 @@
+/*
+ * Copyright 2021 Google
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#include "gcp_exporter.h"
+#include "google/devtools/cloudtrace/v2/tracing_mock.grpc.pb.h"
+#include "opentelemetry/common/timestamp.h"
+#include "opentelemetry/sdk/trace/simple_processor.h"
+#include "opentelemetry/sdk/trace/tracer_provider.h"
+#include "opentelemetry/trace/provider.h"
+#include <gtest/gtest.h>
+#include <cstdlib>
+
+namespace gcp = opentelemetry::exporter::gcp;
+namespace cloudtrace_v2 = google::devtools::cloudtrace::v2;
+
+OPENTELEMETRY_BEGIN_NAMESPACE
+namespace exporter {
+namespace gcp {
+
+class GcpExporterTestPeer : public ::testing::Test {
+ public:
+  std::unique_ptr<GcpExporter> GetExporter(
+      cloudtrace_v2::TraceService::StubInterface* mock_stub) {
+    return std::unique_ptr<GcpExporter>(new GcpExporter(
+        std::unique_ptr<cloudtrace_v2::TraceService::StubInterface>(mock_stub),
+        "test_project"));
+  }
+};
+
+namespace {
+
+using grpc::Status;
+using testing::_;
+using testing::AtLeast;
+using testing::Return;
+
+TEST_F(GcpExporterTestPeer, TestGeneralFunctionality) {
+  // Set up mock stub
+  auto mock_stub = new cloudtrace_v2::MockTraceServiceStub();
+  EXPECT_CALL(*mock_stub, BatchWriteSpans(_, _, _))
+      .Times(AtLeast(1))
+      .WillRepeatedly(Return(Status::OK));
+
+  auto gcp_exporter =
+      std::unique_ptr<sdk::trace::SpanExporter>(GetExporter(mock_stub));
+  auto processor = std::unique_ptr<sdk::trace::SpanProcessor>(
+      new sdk::trace::SimpleSpanProcessor(std::move(gcp_exporter)));
+  auto provider = std::shared_ptr<trace::TracerProvider>(
+      new sdk::trace::TracerProvider(std::move(processor)));
+
+  auto tracer = provider->GetTracer("Test Export");
+  // NOTE : hmm.. this works. So it is something with the GCP exporter?
+  //auto tracer = trace::Provider::GetTracerProvider()->GetTracer("Test Export");
+
+  std::cout << "here 5" << std::endl;
+  auto test_span = tracer->StartSpan("Test Span");
+  std::cout << "here 6" << std::endl;
+
+  auto span_1 = tracer->StartSpan("Span 1");
+  auto span_1_1 = tracer->StartSpan("Span 1.1");
+  auto span_1_1_1 = tracer->StartSpan("Span 1.1.1");
+  span_1_1_1->End();
+  span_1_1->End();
+  span_1->End();
+
+  auto span_2 = tracer->StartSpan("Span 2");
+  auto span_2_1 = tracer->StartSpan("Span 2.1");
+  span_2_1->End();
+  auto span_2_2 = tracer->StartSpan("Span 2.2");
+  span_2_2->End();
+  span_2->End();
+
+  test_span->End();
+}
+
+TEST_F(GcpExporterTestPeer, TestExportResults) {
+  // Set up mock stub
+  auto mock_stub = new cloudtrace_v2::MockTraceServiceStub();
+  auto gcp_exporter =
+      std::unique_ptr<sdk::trace::SpanExporter>(GetExporter(mock_stub));
+
+  // Make sample recordables
+  auto recordable_1 = gcp_exporter->MakeRecordable();
+  recordable_1->SetName("Sample span 1");
+  auto recordable_2 = gcp_exporter->MakeRecordable();
+  recordable_2->SetName("Sample span 2");
+
+  // Test Success
+  EXPECT_CALL(*mock_stub, BatchWriteSpans(_, _, _))
+      .Times(1)
+      .WillOnce(Return(Status::OK));
+  nostd::span<std::unique_ptr<sdk::trace::Recordable>> batch_1(&recordable_1,
+                                                               1);
+  auto result_1 = gcp_exporter->Export(batch_1);
+  EXPECT_EQ(sdk::common::ExportResult::kSuccess, result_1);
+
+  // Test Failure
+  EXPECT_CALL(*mock_stub, BatchWriteSpans(_, _, _))
+      .Times(1)
+      .WillOnce(Return(Status::CANCELLED));
+  nostd::span<std::unique_ptr<sdk::trace::Recordable>> batch_2(&recordable_2,
+                                                               1);
+  auto result_2 = gcp_exporter->Export(batch_2);
+  EXPECT_EQ(sdk::common::ExportResult::kFailure, result_2);
+}
+
+}  // namespace
+}  // namespace gcp
+}  // namespace exporter
+OPENTELEMETRY_END_NAMESPACE

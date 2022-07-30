@@ -14,6 +14,52 @@
 
 licenses(["notice"])  # Apache 2.0
 
+cc_library(
+    name = "recordable",
+    srcs = ["recordable.cc"],
+    hdrs = ["recordable.h"],
+    deps = [
+        "@io_opentelemetry_cpp//api",
+        "@io_opentelemetry_cpp//sdk/src/trace",
+        "@com_github_grpc_grpc//:grpc++",
+        "@com_google_googleapis//google/devtools/cloudtrace/v2:cloudtrace_cc_proto",
+        "@com_google_googleapis//google/devtools/cloudtrace/v2:cloudtrace_cc_grpc"
+    ],
+)
+
+cc_library(
+    name = "gcp_exporter",
+    srcs = ["gcp_exporter.cc"],
+    hdrs = ["gcp_exporter.h"],
+    defines = ["HAVE_ABSEIL"],
+    deps = [
+        ":recordable",
+        "@io_opentelemetry_cpp//sdk/src/trace"
+    ],
+)
+
+cc_test(
+    name = "gcp_exporter_test",
+    srcs = ["gcp_exporter_test.cc"],
+    deps = [
+        ":gcp_exporter",
+        "@io_opentelemetry_cpp//sdk/src/trace",
+        "@io_opentelemetry_cpp//api",
+        "@com_google_googletest//:gtest_main"
+    ],
+)
+
+cc_test(
+    name = "recordable_test",
+    srcs = ["recordable_test.cc"],
+    deps = [
+        ":recordable",
+        "@io_opentelemetry_cpp//sdk/src/trace",
+        "@io_opentelemetry_cpp//api",
+        "@com_google_googletest//:gtest_main"
+    ],
+)
+
 cc_binary(
     name = "quickstart",
     srcs = [

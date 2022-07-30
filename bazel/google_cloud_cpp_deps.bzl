@@ -187,9 +187,9 @@ def google_cloud_cpp_deps():
     if "io_opentelemetry_cpp" not in native.existing_rules():
         http_archive(
           name = "io_opentelemetry_cpp",
-          strip_prefix = "opentelemetry-cpp-1.2.0",
+          strip_prefix = "opentelemetry-cpp-1.4.1",
           urls = [
-              "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.2.0.tar.gz"
+              "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.4.1.tar.gz"
           ],
-          sha256 = "7a6420f9e4fa44b81a5b06e30e5e116da71decc9086e5cc4f126e1efc8a397c2",
+          sha256 = "301b1ab74a664723560f46c29f228360aff1e2d63e930b963755ea077ae67524",
         )

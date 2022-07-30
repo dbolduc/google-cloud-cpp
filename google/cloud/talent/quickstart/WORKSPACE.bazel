@@ -49,3 +49,14 @@ grpc_deps()
 load("@com_github_grpc_grpc//bazel:grpc_extra_deps.bzl", "grpc_extra_deps")
 
 grpc_extra_deps()
+
+http_archive(
+  name = "io_opentelemetry_cpp",
+  sha256 = "301b1ab74a664723560f46c29f228360aff1e2d63e930b963755ea077ae67524",
+  strip_prefix = "opentelemetry-cpp-1.4.1",
+  url = "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.4.1.tar.gz",
+)
+
+load("@io_opentelemetry_cpp//bazel:repository.bzl", "opentelemetry_cpp_deps")
+
+opentelemetry_cpp_deps()
