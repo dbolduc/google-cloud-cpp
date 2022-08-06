@@ -46,7 +46,9 @@ std::unique_ptr<google::devtools::cloudtrace::v2::TraceService::Stub> MakeServic
 }
 
 
-GcpExporter::GcpExporter() : GcpExporter(MakeServiceStub(), getenv(kGCPEnvVar)) {}
+// TODO : Darren : hardcode project_id
+//GcpExporter::GcpExporter() : GcpExporter(MakeServiceStub(), getenv(kGCPEnvVar)) {}
+GcpExporter::GcpExporter() : GcpExporter(MakeServiceStub(), "dbolduc-test") {}
 
 
 GcpExporter::GcpExporter(std::unique_ptr<google::devtools::cloudtrace::v2::TraceService::StubInterface> stub,
@@ -66,6 +68,8 @@ std::unique_ptr<sdk::trace::Recordable> GcpExporter::MakeRecordable() noexcept
 sdk::common::ExportResult GcpExporter::Export(
       const nostd::span<std::unique_ptr<sdk::trace::Recordable>> &spans) noexcept 
 {
+    std::cout << "\n\n\nExport Spans\n\n\n";
+
     // Set up gRPC request
     google::devtools::cloudtrace::v2::BatchWriteSpansRequest request;
     request.set_name(kProjectsPathStr + project_id_);

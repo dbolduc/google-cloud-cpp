@@ -62,12 +62,12 @@ TEST_F(GcpExporterTestPeer, TestGeneralFunctionality) {
       new sdk::trace::TracerProvider(std::move(processor)));
 
   auto tracer = provider->GetTracer("Test Export");
-  // NOTE : hmm.. this works. So it is something with the GCP exporter?
-  //auto tracer = trace::Provider::GetTracerProvider()->GetTracer("Test Export");
 
-  std::cout << "here 5" << std::endl;
+  // TODO : test different overloads...
+  trace::StartSpanOptions options;
+  auto test_span9 = tracer->StartSpan("Test Span9", {{"hi", "hi"}}, options);
+
   auto test_span = tracer->StartSpan("Test Span");
-  std::cout << "here 6" << std::endl;
 
   auto span_1 = tracer->StartSpan("Span 1");
   auto span_1_1 = tracer->StartSpan("Span 1.1");

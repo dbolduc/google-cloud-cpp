@@ -21,6 +21,34 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/talent/v4/company_service.grpc.pb.h>
 #include <memory>
+// TODO : OT
+#include "opentelemetry/context/propagation/global_propagator.h"
+#include "opentelemetry/trace/tracer_provider.h"
+#include "opentelemetry/trace/provider.h"
+// This seems to have moved? semantic_conventions.h -> experimental_semantic_conventions.h
+//#include "opentelemetry/trace/experimental_semantic_conventions.h"
+
+namespace {
+class GrpcClientCarrier : public opentelemetry::context::propagation::TextMapCarrier
+{
+public:
+  explicit GrpcClientCarrier(grpc::ClientContext *context) : context_(context) {}
+  GrpcClientCarrier() = default;
+  opentelemetry::nostd::string_view Get(
+      opentelemetry::nostd::string_view) const noexcept override {
+    return "";
+  }
+
+  void Set(opentelemetry::nostd::string_view key,
+                   opentelemetry::nostd::string_view value) noexcept override
+  {
+    std::cout << " Client ::: Adding " << key << " " << value << "\n";
+    context_->AddMetadata(key.data(), value.data());
+  }
+
+  grpc::ClientContext *context_;
+};
+}  // namespace
 
 namespace google {
 namespace cloud {
@@ -80,11 +108,68 @@ StatusOr<google::cloud::talent::v4::ListCompaniesResponse>
 DefaultCompanyServiceStub::ListCompanies(
     grpc::ClientContext& client_context,
     google::cloud::talent::v4::ListCompaniesRequest const& request) {
+
+  // TODO : Darren : copying gRPC example from: https://github.com/open-telemetry/opentelemetry-cpp/blob/d452e8e859a8a4fd7628871383084832f9d72379/examples/grpc/client.cc#L36
+  opentelemetry::trace::StartSpanOptions options;
+  options.kind = opentelemetry::trace::SpanKind::kClient;
+
+  // TODO : ip / port from peer.
+  std::string peer = client_context.peer();
+  //grpc_resolved_address address;
+  //if (grpc_parse_uri(peer, &address)) {
+  //  // PARSE
+  //}
+
+
+  std::string span_name = "CompanyClient/ListCompanies";
+  /*
+  // TODO : Not sure how to find the SemanticConventions resources... hardcoding...
+  auto span = get_tracer("grpc")->StartSpan(
+      span_name,
+      {{SemanticConventions::RPC_SYSTEM, "grpc"},
+       {SemanticConventions::RPC_SERVICE, "grpc-example.GreetService"},
+       {SemanticConventions::RPC_METHOD, "Greet"},
+       {SemanticConventions::NET_PEER_IP, ip},
+       {SemanticConventions::NET_PEER_PORT, port}},
+      options);
+  */
+  auto get_tracer = [](std::string tracer_name)
+      -> opentelemetry::nostd::shared_ptr<opentelemetry::trace::Tracer> {
+    auto provider = opentelemetry::trace::Provider::GetTracerProvider();
+    return provider->GetTracer(tracer_name);
+  };
+  // TODO : If I don't build the dep with "HAVE_ABSEIL", the compiler cannot
+  // resolve any of the StartSpan overloads. Weird. Ignoring and pressing on...
+  auto span = get_tracer("talent-client")->StartSpan(
+      span_name,
+      {{"rpc.system", "grpc"},
+       {"rpc.service", "google.cloud.talent.v4.CompanyService"},
+       {"rpc.method", "ListCompanies"}},
+//       {"net.peer.ip", ip},
+//       {"net.peer.port", port}},
+      options);
+
+  auto scope = get_tracer("talent-client")->WithActiveSpan(span);
+
+  // inject current context to grpc metadata
+  auto current_ctx = opentelemetry::context::RuntimeContext::GetCurrent();
+  GrpcClientCarrier carrier(&client_context);
+  auto prop =
+      opentelemetry::context::propagation::GlobalTextMapPropagator::GetGlobalPropagator();
+  prop->Inject(carrier, current_ctx);
+
+
   google::cloud::talent::v4::ListCompaniesResponse response;
   auto status = grpc_stub_->ListCompanies(&client_context, request, &response);
+  auto code = static_cast<int>(status.error_code());
+  // span->SetAttribute(OTEL_GET_TRACE_ATTR(AttrRpcGrpcStatusCode), code);
+  span->SetAttribute("rpc.grpc.status_code", code);
+
   if (!status.ok()) {
+    span->SetStatus(opentelemetry::trace::StatusCode::kError);
     return google::cloud::MakeStatusFromRpcError(status);
   }
+  span->SetStatus(opentelemetry::trace::StatusCode::kOk);
   return response;
 }
 

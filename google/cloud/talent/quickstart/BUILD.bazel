@@ -66,6 +66,8 @@ cc_binary(
         "quickstart.cc",
     ],
     deps = [
+      ":gcp_exporter",
         "@com_github_googleapis_google_cloud_cpp//:talent",
+        "@io_opentelemetry_cpp//sdk/src/trace",
     ],
 )

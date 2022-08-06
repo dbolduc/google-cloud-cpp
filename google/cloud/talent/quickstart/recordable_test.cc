@@ -183,7 +183,11 @@ TEST(Recordable, TestSetIds)
     trace::SpanContext span_context(trace_id, span_id, {}, false);
     rec.SetIdentity(span_context, parent_span_id);
 
-    EXPECT_EQ("projects/test_project/traces/00010002010301040105010603070000/spans/0102030405060708", 
+    //EXPECT_EQ(
+    //    "projects/test_project/traces/00010002010301040105010603070000/spans/"
+    //    "0102030405060708",
+    //    rec.span().name());
+    EXPECT_EQ("projects/dbolduc-test/traces/00010002010301040105010603070000/spans/0102030405060708", 
                rec.span().name());
     EXPECT_EQ("0102030405060708", rec.span().span_id());
     EXPECT_EQ("0405000101010103", rec.span().parent_span_id());
