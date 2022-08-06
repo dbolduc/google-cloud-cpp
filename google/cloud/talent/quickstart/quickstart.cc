@@ -15,7 +15,7 @@
 #include "google/cloud/talent/company_client.h"
 #include "google/cloud/project.h"
 #include "gcp_exporter.h"
-#include "opentelemetry/sdk/trace/simple_processor.h"
+#include "opentelemetry/sdk/trace/batch_span_processor.h"
 #include "opentelemetry/sdk/trace/tracer_provider.h"
 #include "opentelemetry/trace/provider.h"
 #include <iostream>
@@ -23,14 +23,14 @@
 
 namespace {
 
-// Example Trace: https://screenshot.googleplex.com/37aR8KudkDDWtnH
-// Where does the extra latency come from? I think it has to be exporting the
-// spans when the close.
+// Example Trace: https://screenshot.googleplex.com/5sNfMoeaFjk8Mg3
 void initTracer() {
   auto gcp_exporter = std::unique_ptr<opentelemetry::sdk::trace::SpanExporter>(
       new opentelemetry::exporter::gcp::GcpExporter());
   auto processor = std::unique_ptr<opentelemetry::sdk::trace::SpanProcessor>(
-      new opentelemetry::sdk::trace::SimpleSpanProcessor(std::move(gcp_exporter)));
+      new opentelemetry::sdk::trace::BatchSpanProcessor(
+          std::move(gcp_exporter),
+          opentelemetry::sdk::trace::BatchSpanProcessorOptions{}));
   auto provider = std::shared_ptr<opentelemetry::trace::TracerProvider>(
       new opentelemetry::sdk::trace::TracerProvider(std::move(processor)));
 
