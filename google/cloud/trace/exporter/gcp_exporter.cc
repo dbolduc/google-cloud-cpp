@@ -38,7 +38,7 @@ sdk::common::ExportResult GcpExporter::Export(
     auto span = std::unique_ptr<Recordable>(
         static_cast<Recordable*>(recordable.release()));
     auto proto = std::move(span->span());
-    proto.set_name("projects/" + project_id_);
+    proto.set_name("projects/" + project_id_ + proto.name());
     *request.add_spans() = std::move(proto);
   }
 
