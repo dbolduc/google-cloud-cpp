@@ -34,11 +34,13 @@ cc_library(
         include = [HEADER_GLOB],
         exclude = [MOCK_HEADER_GLOB],
     ),
+    defines = ["HAVE_ABSEIL"],
     visibility = ["//:__pkg__"],
     deps = [
         "//:common",
         "//:grpc_utils",
         "@com_google_googleapis//google/cloud/talent/v4:talent_cc_grpc",
+        "@io_opentelemetry_cpp//api",
     ],
 )
 
