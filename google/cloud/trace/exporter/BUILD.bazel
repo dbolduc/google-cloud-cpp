@@ -20,15 +20,13 @@ cc_library(
     name = "recordable",
     srcs = ["recordable.cc"],
     hdrs = ["recordable.h"],
+    defines = ["HAVE_ABSEIL"],
     deps = [
         "//:trace",
-        "@io_opentelemetry_cpp//api",
-        # TODO : sdk deps seem bad...
-        "@io_opentelemetry_cpp//sdk/src/trace",
         "@com_github_grpc_grpc//:grpc++",
-        # TODO : remove
         "@com_google_googleapis//google/devtools/cloudtrace/v2:cloudtrace_cc_proto",
-        "@com_google_googleapis//google/devtools/cloudtrace/v2:cloudtrace_cc_grpc"
+        "@io_opentelemetry_cpp//api",
+        "@io_opentelemetry_cpp//sdk/src/trace",
     ],
 )
 
@@ -39,32 +37,31 @@ cc_library(
     defines = ["HAVE_ABSEIL"],
     deps = [
         ":recordable",
-        # TODO : sdk deps seem bad...
-        "@io_opentelemetry_cpp//sdk/src/trace"
+        "@io_opentelemetry_cpp//sdk/src/trace",
     ],
 )
 
 cc_test(
     name = "gcp_exporter_test",
     srcs = ["gcp_exporter_test.cc"],
+    defines = ["HAVE_ABSEIL"],
     deps = [
         ":gcp_exporter",
         "//:trace_mocks",
-        # TODO : sdk deps seem bad...
-        "@io_opentelemetry_cpp//sdk/src/trace",
+        "@com_google_googletest//:gtest_main",
         "@io_opentelemetry_cpp//api",
-        "@com_google_googletest//:gtest_main"
+        "@io_opentelemetry_cpp//sdk/src/trace",
     ],
 )
 
 cc_test(
     name = "recordable_test",
     srcs = ["recordable_test.cc"],
+    defines = ["HAVE_ABSEIL"],
     deps = [
         ":recordable",
-        # TODO : sdk deps seem bad...
-        "@io_opentelemetry_cpp//sdk/src/trace",
+        "@com_google_googletest//:gtest_main",
         "@io_opentelemetry_cpp//api",
-        "@com_google_googletest//:gtest_main"
+        "@io_opentelemetry_cpp//sdk/src/trace",
     ],
 )

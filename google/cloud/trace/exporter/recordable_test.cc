@@ -25,11 +25,12 @@ namespace {
 namespace nostd = opentelemetry::nostd;
 namespace common = opentelemetry::common;
 
+auto constexpr kProjectId = "test-project";
 constexpr char kLongRegularString[] =
     "Some long regular string not meant to be truncated";
 
 TEST(Recordable, TruncatableStringNotEnforcedDisplayName) {
-  Recordable rec;
+  auto rec = Recordable(Project(kProjectId));
 
   // Test regular string
   rec.SetName(kLongRegularString);
@@ -47,7 +48,7 @@ TEST(Recordable, TruncatableStringNotEnforcedDisplayName) {
 }
 
 TEST(Recordable, TruncatableStringEnforcedDisplayName) {
-  Recordable rec;
+  auto rec = Recordable(Project(kProjectId));
 
   const std::string exactly_127_byte_long_string(
       "些长字符串被截断 Некоторая длинная строка, подлежащая усечению"
@@ -75,7 +76,7 @@ TEST(Recordable, TruncatableStringEnforcedDisplayName) {
 }
 
 TEST(Recordable, TruncatableStringNotEnforcedAttributeString) {
-  Recordable rec;
+  auto rec = Recordable(Project(kProjectId));
 
   // Test Regular String
   rec.SetAttribute("string_key_1", common::AttributeValue(kLongRegularString));
@@ -98,7 +99,7 @@ TEST(Recordable, TruncatableStringNotEnforcedAttributeString) {
 }
 
 TEST(Recordable, TruncatableStringEnforcedAttributeString) {
-  Recordable rec;
+  auto rec = Recordable(Project(kProjectId));
 
   const std::string exactly_255_byte_long_string(
       "些长字符串被截断 Некоторая длинная строка, подлежащая усечению"
@@ -138,7 +139,7 @@ TEST(Recordable, TruncatableStringEnforcedAttributeString) {
 }
 
 TEST(Recordable, TestSetNonIntAttribute) {
-  Recordable rec;
+  auto rec = Recordable(Project(kProjectId));
 
   // Set 'bool' type
   const nostd::string_view bool_key = "bool_key";
@@ -169,7 +170,7 @@ TYPED_TEST(IntAttributeTest, SetIntSingleAttribute) {
   IntType i = 2;
   common::AttributeValue int_val(i);
 
-  Recordable rec;
+  auto rec = Recordable(Project(kProjectId));
   rec.SetAttribute("int_key", int_val);
 
   auto attr_map = rec.span().attributes().attribute_map();
@@ -192,30 +193,28 @@ TEST(Recordable, TestSetIds) {
       std::array<const uint8_t, opentelemetry::trace::SpanId::kSize>(
           {4, 5, 0, 1, 1, 1, 1, 3}));
 
-  Recordable rec;
+  auto rec = Recordable(Project(kProjectId));
 
   opentelemetry::trace::SpanContext span_context(trace_id, span_id, {}, false);
   rec.SetIdentity(span_context, parent_span_id);
 
-  // EXPECT_EQ(
-  //     "projects/test_project/traces/00010002010301040105010603070000/spans/"
-  //     "0102030405060708",
-  //     rec.span().name());
-  EXPECT_EQ("/traces/00010002010301040105010603070000/spans/0102030405060708",
-            rec.span().name());
+  EXPECT_EQ(
+      "projects/test-project/traces/00010002010301040105010603070000/spans/"
+      "0102030405060708",
+      rec.span().name());
   EXPECT_EQ("0102030405060708", rec.span().span_id());
   EXPECT_EQ("0405000101010103", rec.span().parent_span_id());
 }
 
 TEST(Recordable, TestSetName) {
-  Recordable rec;
+  auto rec = Recordable(Project(kProjectId));
   const nostd::string_view expected_name = "Test Span";
   rec.SetName(expected_name);
   EXPECT_EQ(expected_name, rec.span().display_name().value());
 }
 
 TEST(Recordable, TestSetStartTime) {
-  Recordable rec;
+  auto rec = Recordable(Project(kProjectId));
 
   const std::chrono::system_clock::time_point start_time =
       std::chrono::system_clock::now();
@@ -241,7 +240,7 @@ TEST(Recordable, TestSetStartTime) {
 }
 
 TEST(Recordable, TestSetDuration) {
-  Recordable rec;
+  auto rec = Recordable(Project(kProjectId));
 
   const std::chrono::system_clock::time_point start_time =
       std::chrono::system_clock::now();

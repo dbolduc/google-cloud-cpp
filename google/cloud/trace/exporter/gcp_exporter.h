@@ -17,6 +17,7 @@
 
 #include "google/cloud/trace/exporter/recordable.h"
 #include "google/cloud/trace/trace_client.h"
+#include "google/cloud/project.h"
 #include "opentelemetry/sdk/trace/exporter.h"
 #include <memory>
 #include <string>
@@ -36,8 +37,8 @@ class GcpExporter final : public opentelemetry::sdk::trace::SpanExporter {
    */
   explicit GcpExporter(
       std::shared_ptr<trace::TraceServiceConnection> connection,
-      std::string project_id)
-      : client_(std::move(connection)), project_id_(std::move(project_id)) {}
+      Project project)
+      : client_(std::move(connection)), project_(std::move(project)) {}
 
   /**
    * Creates a Recordable(Span) object
@@ -61,9 +62,7 @@ class GcpExporter final : public opentelemetry::sdk::trace::SpanExporter {
 
  private:
   google::cloud::trace::TraceServiceClient client_;
-
-  /* The Id of the Google Cloud project to export the traces to */
-  const std::string project_id_;
+  google::cloud::Project project_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

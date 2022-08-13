@@ -25,21 +25,18 @@ namespace sdk = opentelemetry::sdk;
 namespace nostd = opentelemetry::nostd;
 
 std::unique_ptr<sdk::trace::Recordable> GcpExporter::MakeRecordable() noexcept {
-  return std::unique_ptr<sdk::trace::Recordable>(new Recordable);
+  return absl::make_unique<Recordable>(project_);
 }
 
 sdk::common::ExportResult GcpExporter::Export(
     nostd::span<std::unique_ptr<sdk::trace::Recordable>> const&
         spans) noexcept {
-  // Set up gRPC request
   google::devtools::cloudtrace::v2::BatchWriteSpansRequest request;
-  request.set_name(kProjectsPathStr + project_id_);
+  request.set_name(project_.FullName());
   for (auto& recordable : spans) {
     auto span = std::unique_ptr<Recordable>(
         static_cast<Recordable*>(recordable.release()));
-    auto proto = std::move(span->span());
-    proto.set_name("projects/" + project_id_ + proto.name());
-    *request.add_spans() = std::move(proto);
+    *request.add_spans() = std::move(span->span());
   }
 
   auto status = client_.BatchWriteSpans(request);

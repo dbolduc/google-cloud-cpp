@@ -22,8 +22,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace common = opentelemetry::common;
 namespace nostd = opentelemetry::nostd;
 
-constexpr size_t kAttributeStringLen = 256;
-constexpr size_t kDisplayNameStringLen = 128;
+size_t constexpr kAttributeStringLen = 256;
+size_t constexpr kDisplayNameStringLen = 128;
+auto constexpr kProjectsPathStr = "projects/";
+auto constexpr kTracesPathStr = "/traces/";
+auto constexpr kSpansPathStr = "/spans/";
 
 // Taken from the Unilib namespace
 // Link:
@@ -31,9 +34,9 @@ constexpr size_t kDisplayNameStringLen = 128;
 bool IsTrailByte(char x) { return static_cast<signed char>(x) < -0x40; }
 
 void SetTruncatableString(
-    int const limit, nostd::string_view string_name,
+    std::size_t const limit, nostd::string_view string_name,
     google::devtools::cloudtrace::v2::TruncatableString* str) {
-  if (limit < 0 || string_name.size() < limit) {
+  if (string_name.size() < limit) {
     str->set_value(string_name.data());
     str->set_truncated_byte_count(0);
     return;
@@ -41,7 +44,7 @@ void SetTruncatableString(
 
   // If limit points to beginning of utf8 character, truncate at the limit,
   // backtrack to the beginning of utf8 character otherwise.
-  int truncation_pos = limit;
+  auto truncation_pos = limit;
 
   while (truncation_pos > 0 && IsTrailByte(string_name[truncation_pos])) {
     --truncation_pos;
@@ -58,22 +61,21 @@ void Recordable::SetIdentity(
     opentelemetry::trace::SpanId parent_span_id) noexcept {
   std::array<char, 2 * opentelemetry::trace::TraceId::kSize> hex_trace_buf;
   span_context.trace_id().ToLowerBase16(hex_trace_buf);
-  const std::string hex_trace(hex_trace_buf.data(), 2 * opentelemetry::trace::TraceId::kSize);
+  const std::string hex_trace(hex_trace_buf.data(),
+                              2 * opentelemetry::trace::TraceId::kSize);
 
   std::array<char, 2 * opentelemetry::trace::SpanId::kSize> hex_span_buf;
   span_context.span_id().ToLowerBase16(hex_span_buf);
-  const std::string hex_span(hex_span_buf.data(), 2 * opentelemetry::trace::SpanId::kSize);
+  const std::string hex_span(hex_span_buf.data(),
+                             2 * opentelemetry::trace::SpanId::kSize);
 
   std::array<char, 2 * opentelemetry::trace::SpanId::kSize> hex_parent_span_buf;
   parent_span_id.ToLowerBase16(hex_parent_span_buf);
   const std::string hex_parent_span(hex_parent_span_buf.data(),
                                     2 * opentelemetry::trace::SpanId::kSize);
 
-  // TODO : we will leave off the "projects/<project-id>" and let the exporter
-  //        prepend it.
-  span_.set_name(kTracesPathStr + hex_trace + kSpansPathStr + hex_span);
-  //span_.set_name(kProjectsPathStr + std::string{"PROJECT_ID"} + kTracesPathStr +
-  //               hex_trace + kSpansPathStr + hex_span);
+  span_.set_name(project_.FullName() + kTracesPathStr + hex_trace +
+                 kSpansPathStr + hex_span);
   span_.set_span_id(hex_span);
   span_.set_parent_span_id(hex_parent_span);
 }

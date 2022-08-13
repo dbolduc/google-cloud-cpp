@@ -42,7 +42,8 @@ TEST(GcpExporterTest, TestGeneralFunctionality) {
       .Times(AtLeast(1))
       .WillRepeatedly(Return(Status()));
 
-  auto gcp_exporter = absl::make_unique<GcpExporter>(mock, "test-project");
+  auto gcp_exporter =
+      absl::make_unique<GcpExporter>(mock, Project("test-project"));
   auto processor = std::unique_ptr<sdk::trace::SpanProcessor>(
       new sdk::trace::SimpleSpanProcessor(std::move(gcp_exporter)));
   auto provider = std::shared_ptr<opentelemetry::trace::TracerProvider>(
@@ -70,12 +71,15 @@ TEST(GcpExporterTest, TestGeneralFunctionality) {
 }
 
 TEST(GcpExporterTest, TestExportResults) {
+  using Batch = nostd::span<std::unique_ptr<sdk::trace::Recordable>>;
+
   auto mock = std::make_shared<trace_mocks::MockTraceServiceConnection>();
   EXPECT_CALL(*mock, BatchWriteSpans)
       .WillOnce(Return(Status()))
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "fail")));
 
-  auto gcp_exporter = absl::make_unique<GcpExporter>(mock, "test-project");
+  auto gcp_exporter =
+      absl::make_unique<GcpExporter>(mock, Project("test-project"));
 
   // Make sample recordables
   auto recordable_1 = gcp_exporter->MakeRecordable();
@@ -84,14 +88,12 @@ TEST(GcpExporterTest, TestExportResults) {
   recordable_2->SetName("Sample span 2");
 
   // Test Success
-  nostd::span<std::unique_ptr<sdk::trace::Recordable>> batch_1(&recordable_1,
-                                                               1);
+  Batch const batch_1(&recordable_1, 1);
   auto result_1 = gcp_exporter->Export(batch_1);
   EXPECT_EQ(sdk::common::ExportResult::kSuccess, result_1);
 
   // Test Failure
-  nostd::span<std::unique_ptr<sdk::trace::Recordable>> batch_2(&recordable_2,
-                                                               1);
+  Batch const batch_2(&recordable_2, 1);
   auto result_2 = gcp_exporter->Export(batch_2);
   EXPECT_EQ(sdk::common::ExportResult::kFailure, result_2);
 }

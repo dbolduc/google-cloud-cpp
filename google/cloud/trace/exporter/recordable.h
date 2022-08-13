@@ -15,16 +15,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRACE_EXPORTER_RECORDABLE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRACE_EXPORTER_RECORDABLE_H
 
+#include "google/cloud/project.h"
 #include "google/cloud/version.h"
-#include "google/devtools/cloudtrace/v2/tracing.grpc.pb.h"
-#include "opentelemetry/nostd/variant.h"
+//#include "opentelemetry/nostd/variant.h"
+#include "google/devtools/cloudtrace/v2/tracing.pb.h"
+#include "opentelemetry/common/attribute_value.h"
 #include "opentelemetry/sdk/trace/recordable.h"
-
-// TODO : none of these
-constexpr char kProjectsPathStr[] = "projects/";
-constexpr char kTracesPathStr[] = "/traces/";
-constexpr char kSpansPathStr[] = "/spans/";
-constexpr char kGCPEnvVar[] = "GOOGLE_CLOUD_PROJECT_ID";
 
 namespace google {
 namespace cloud {
@@ -33,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class Recordable final : public opentelemetry::sdk::trace::Recordable {
  public:
+  explicit Recordable(Project project) : project_(std::move(project)) {}
+
   google::devtools::cloudtrace::v2::Span const& span() const noexcept {
     return span_;
   }
@@ -80,8 +78,9 @@ class Recordable final : public opentelemetry::sdk::trace::Recordable {
    * @param code the status code
    * @param description a description of the status
    */
-  void SetStatus(opentelemetry::trace::StatusCode code,
-                 opentelemetry::nostd::string_view description) noexcept override;
+  void SetStatus(
+      opentelemetry::trace::StatusCode code,
+      opentelemetry::nostd::string_view description) noexcept override;
 
   /**
    * Set the name of the span.
@@ -124,6 +123,7 @@ class Recordable final : public opentelemetry::sdk::trace::Recordable {
           instrumentation_library) noexcept override;
 
  private:
+  Project project_;
   google::devtools::cloudtrace::v2::Span span_;
 };
 
