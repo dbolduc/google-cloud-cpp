@@ -17,7 +17,6 @@
 
 #include "google/cloud/project.h"
 #include "google/cloud/version.h"
-//#include "opentelemetry/nostd/variant.h"
 #include "google/devtools/cloudtrace/v2/tracing.pb.h"
 #include "opentelemetry/common/attribute_value.h"
 #include "opentelemetry/sdk/trace/recordable.h"
@@ -115,12 +114,12 @@ class Recordable final : public opentelemetry::sdk::trace::Recordable {
   void SetDuration(std::chrono::nanoseconds duration) noexcept override;
 
   /**
-   * Set the instrumentation library of the span.
-   * @param instrumentation_library the instrumentation library to set
+   * Set the instrumentation scope of the span.
+   * @param instrumentation_scope the instrumentation scope to set
    */
-  void SetInstrumentationLibrary(
-      opentelemetry::sdk::instrumentationlibrary::InstrumentationLibrary const&
-          instrumentation_library) noexcept override;
+  void SetInstrumentationScope(
+      opentelemetry::sdk::instrumentationscope::InstrumentationScope const&
+          instrumentation_scope) noexcept override;
 
  private:
   Project project_;

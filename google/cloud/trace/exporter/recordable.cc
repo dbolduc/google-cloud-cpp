@@ -189,11 +189,11 @@ void Recordable::SetDuration(std::chrono::nanoseconds duration) noexcept {
       std::chrono::duration_cast<std::chrono::nanoseconds>(seconds).count());
 }
 
-void Recordable::SetInstrumentationLibrary(
-    opentelemetry::sdk::instrumentationlibrary::InstrumentationLibrary const&
-        instrumentation_library) noexcept {
+void Recordable::SetInstrumentationScope(
+    opentelemetry::sdk::instrumentationscope::InstrumentationScope const&
+        instrumentation_scope) noexcept {
   // TODO : modify span_ ?
-  (void)instrumentation_library;
+  (void)instrumentation_scope;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
