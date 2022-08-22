@@ -14,36 +14,57 @@
 
 #include "google/cloud/internal/async_connection_ready.h"
 #include "google/cloud/options.h"
+#include <chrono>
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
+// Split up any call into 1s long queries, in case we can back out early.
+auto constexpr kDeadlinePerCall = std::chrono::milliseconds(1000);
+
 AsyncConnectionReadyFuture::AsyncConnectionReadyFuture(
     std::shared_ptr<google::cloud::internal::CompletionQueueImpl> cq,
     std::shared_ptr<grpc::Channel> channel,
     std::chrono::system_clock::time_point deadline)
-    : cq_(std::move(cq)), channel_(std::move(channel)), deadline_(deadline) {}
+    : cq_(std::move(cq)),
+      channel_(std::move(channel)),
+      deadline_(deadline),
+      promise_([this] { cancelled_ = true; }),
+      state_(channel_->GetState(true)) {
+}
 
 future<Status> AsyncConnectionReadyFuture::Start() {
-  RunIteration(channel_->GetState(true));
+  RunIteration();
   return promise_.get_future();
 }
 
 void AsyncConnectionReadyFuture::Notify(bool ok) {
-  if (!ok) {
+  // Weirdly, the `NotifyOnStateChange()` call may return immediately, without
+  // the connectivity state having changed. From what I can tell this happens
+  // for "lame channels" that are no longer usable.
+  if (!ok && call_deadline_ < std::chrono::system_clock::now()) {
+    promise_.set_value(Status(StatusCode::kCancelled, "gRPC is done with us"));
+    return;
+  }
+  if (cancelled_) {
+    promise_.set_value(Status(StatusCode::kCancelled,
+                              "AsyncWaitConnectionReady cancelled by user"));
+    return;
+  }
+  if (!ok && std::chrono::system_clock::now() > deadline_) {
     promise_.set_value(
         Status(StatusCode::kDeadlineExceeded,
                "Connection couldn't connect before requested deadline"));
     return;
   }
-  auto state = channel_->GetState(true);
-  if (state == GRPC_CHANNEL_READY) {
+  state_ = channel_->GetState(true);
+  if (state_ == GRPC_CHANNEL_READY) {
     promise_.set_value(Status{});
     return;
   }
-  if (state == GRPC_CHANNEL_SHUTDOWN) {
+  if (state_ == GRPC_CHANNEL_SHUTDOWN) {
     promise_.set_value(
         Status(StatusCode::kCancelled,
                "Connection will never succeed because it's shut down."));
@@ -52,10 +73,10 @@ void AsyncConnectionReadyFuture::Notify(bool ok) {
   // If connection was idle, GetState(true) triggered an attempt to connect.
   // Otherwise it is either in state CONNECTING or TRANSIENT_FAILURE, so let's
   // register for a state change.
-  RunIteration(state);
+  RunIteration();
 }
 
-void AsyncConnectionReadyFuture::RunIteration(ChannelStateType state) {
+void AsyncConnectionReadyFuture::RunIteration() {
   class OnStateChange : public AsyncGrpcOperation {
    public:
     explicit OnStateChange(std::shared_ptr<AsyncConnectionReadyFuture> s)
@@ -72,9 +93,11 @@ void AsyncConnectionReadyFuture::RunIteration(ChannelStateType state) {
     Options options_ = CurrentOptions();
   };
 
+  call_deadline_ = (std::min)(
+      deadline_, std::chrono::system_clock::now() + kDeadlinePerCall);
   auto op = std::make_shared<OnStateChange>(shared_from_this());
-  cq_->StartOperation(op, [this, state](void* tag) {
-    channel_->NotifyOnStateChange(state, deadline_, &cq_->cq(), tag);
+  cq_->StartOperation(op, [this](void* tag) {
+    channel_->NotifyOnStateChange(state_, call_deadline_, &cq_->cq(), tag);
   });
 }
 
