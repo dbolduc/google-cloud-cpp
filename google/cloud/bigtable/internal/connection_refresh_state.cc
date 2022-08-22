@@ -71,23 +71,11 @@ void ScheduleChannelRefresh(
             }
             auto channel = weak_channel.lock();
             if (!channel) return;
+            // We don't even care what the value is.
+            (void)channel->GetState(true);
             auto cq = weak_cq.lock();
             if (!cq) return;
-            cq->AsyncWaitConnectionReady(
-                  channel,
-                  std::chrono::system_clock::now() + kConnectionReadyTimeout)
-                .then([weak_channel, weak_cq, state](future<Status> fut) {
-                  auto conn_status = fut.get();
-                  if (!conn_status.ok()) {
-                    GCP_LOG(WARNING) << "Failed to refresh connection. Error: "
-                                     << conn_status;
-                  }
-                  auto channel = weak_channel.lock();
-                  if (!channel) return;
-                  auto cq = weak_cq.lock();
-                  if (!cq) return;
-                  ScheduleChannelRefresh(cq, state, channel);
-                });
+            ScheduleChannelRefresh(cq, state, channel);
           });
   state->timers().RegisterTimer(std::move(timer_future));
 }
