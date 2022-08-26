@@ -22,6 +22,14 @@ cc_library(
     name = "bigtable_client_internal",
     srcs = google_cloud_cpp_bigtable_srcs,
     hdrs = google_cloud_cpp_bigtable_hdrs,
+    # TODO : OT define
+    defines = select({
+        ":have_open_telemetry": [
+            "GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY",
+            "HAVE_ABSEIL",
+        ],
+        "//conditions:default": [],
+    }),
     visibility = [
         ":__subpackages__",
         "//:__pkg__",
@@ -37,7 +45,24 @@ cc_library(
         "@com_google_googleapis//google/longrunning:longrunning_cc_grpc",
         "@com_google_googleapis//google/rpc:error_details_cc_proto",
         "@com_github_grpc_grpc//:grpc++",
-    ],
+    ] + select({
+        ":have_open_telemetry": [
+          "@io_opentelemetry_cpp//api"
+        ],
+        "//conditions:default": [],
+    }),
+)
+
+config_setting(
+    name = "have_open_telemetry",
+    flag_values = {":open_telemetry": "true"},
+)
+
+load("@bazel_skylib//rules:common_settings.bzl", "bool_flag")
+bool_flag(
+    name = "open_telemetry",
+    build_setting_default = False,
+    visibility = ["//visibility:public"],
 )
 
 load(":google_cloud_cpp_bigtable_mocks.bzl", "google_cloud_cpp_bigtable_mocks_hdrs", "google_cloud_cpp_bigtable_mocks_srcs")

@@ -18,10 +18,8 @@ licenses(["notice"])  # Apache 2.0
 
 cc_binary(
     name = "quickstart",
-    srcs = [
-        "quickstart.cc",
-    ],
+    srcs = ["quickstart.cc"],
     deps = [
-        "@com_github_googleapis_google_cloud_cpp//:bigtable",
+        "//:bigtable",
     ],
 )

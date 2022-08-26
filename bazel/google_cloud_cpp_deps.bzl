@@ -182,3 +182,14 @@ def google_cloud_cpp_deps():
             sha256 = "ac07840513072b7fcebda6e821068aa04889018f24e10e46181068fb214d7e56",
             build_file = "@com_github_googleapis_google_cloud_cpp//bazel:crc32c.BUILD",
         )
+
+    # Open Telemetry
+    if "io_opentelemetry_cpp" not in native.existing_rules():
+        http_archive(
+          name = "io_opentelemetry_cpp",
+          strip_prefix = "opentelemetry-cpp-1.5.0",
+          urls = [
+              "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.5.0.tar.gz"
+          ],
+          sha256 = "0d3fa768c48ed0df99dd061527ce26f2e4c42f8db7a5ba036031da60e52f4cc8",
+        )
