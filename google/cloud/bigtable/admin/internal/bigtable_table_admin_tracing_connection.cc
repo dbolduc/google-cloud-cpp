@@ -17,13 +17,11 @@
 // source: google/bigtable/admin/v2/bigtable_table_admin.proto
 
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_tracing_connection.h"
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
 #include "google/cloud/internal/scoped_span.h"
 #include "opentelemetry/common/attribute_value.h"
 #include "opentelemetry/trace/tracer_provider.h"
 #include "opentelemetry/trace/provider.h"
 #include "opentelemetry/trace/tracer.h"
-#endif
 #include <memory>
 
 namespace google {
@@ -31,18 +29,6 @@ namespace cloud {
 namespace bigtable_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<bigtable_admin::BigtableTableAdminConnection>
-MakeBigtableTableAdminTracingConnection(
-    std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> child) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
-  return std::make_shared<BigtableTableAdminTracingConnection>(
-      std::move(child));
-#else
-  return child;
-#endif
-}
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
 BigtableTableAdminTracingConnection::BigtableTableAdminTracingConnection(
     std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> child)
     : child_(std::move(child)) {}
@@ -174,7 +160,6 @@ BigtableTableAdminTracingConnection::AsyncCheckConsistency(
     google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
   return child_->AsyncCheckConsistency(request);
 }
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin_internal

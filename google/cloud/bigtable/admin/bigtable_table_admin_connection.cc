@@ -19,9 +19,9 @@
 #include "google/cloud/bigtable/admin/bigtable_table_admin_connection.h"
 #include "google/cloud/bigtable/admin/bigtable_table_admin_options.h"
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_connection_impl.h"
+#include "google/cloud/bigtable/admin/internal/bigtable_table_admin_open_telemetry.h"
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_option_defaults.h"
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_stub_factory.h"
-#include "google/cloud/bigtable/admin/internal/bigtable_table_admin_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -171,7 +171,8 @@ std::shared_ptr<BigtableTableAdminConnection> MakeBigtableTableAdminConnection(
   auto impl = std::make_shared<
       bigtable_admin_internal::BigtableTableAdminConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
-  return MakeBigtableTableAdminTracingConnection(std::move(impl));
+  return bigtable_admin_internal::MaybeMakeBigtableTableAdminTracingConnection(
+      std::move(impl));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

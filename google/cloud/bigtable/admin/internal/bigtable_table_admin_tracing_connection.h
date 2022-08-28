@@ -33,12 +33,6 @@ namespace cloud {
 namespace bigtable_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<bigtable_admin::BigtableTableAdminConnection>
-MakeBigtableTableAdminTracingConnection(
-    std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> child);
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
-// TODO : consider defining this in the source file? maybe i need to test it.
 class BigtableTableAdminTracingConnection
     : public bigtable_admin::BigtableTableAdminConnection {
  public:
@@ -116,7 +110,6 @@ class BigtableTableAdminTracingConnection
  private:
   std::shared_ptr<bigtable_admin::BigtableTableAdminConnection> child_;
 };
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin_internal
