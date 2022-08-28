@@ -22,7 +22,6 @@ cc_library(
     name = "bigtable_client_internal",
     srcs = google_cloud_cpp_bigtable_srcs,
     hdrs = google_cloud_cpp_bigtable_hdrs,
-    # TODO : OT define
     defines = select({
         "//:have_open_telemetry": [
             "GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY",
@@ -47,7 +46,8 @@ cc_library(
         "@com_github_grpc_grpc//:grpc++",
     ] + select({
         "//:have_open_telemetry": [
-          "@io_opentelemetry_cpp//api"
+          "//google/cloud:google_cloud_cpp_ot_private",
+          "@io_opentelemetry_cpp//api",
         ],
         "//conditions:default": [],
     }),

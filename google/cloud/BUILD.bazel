@@ -268,3 +268,20 @@ load(":google_cloud_cpp_rest_internal_benchmarks.bzl", "google_cloud_cpp_rest_in
         "@com_google_benchmark//:benchmark_main",
     ],
 ) for benchmark in google_cloud_cpp_rest_internal_benchmarks]
+
+# TODO : I think it will be easiest to have a separate library.
+cc_library(
+    name = "google_cloud_cpp_ot_private",
+    srcs = ["internal/scoped_span.cc"],
+    hdrs = ["internal/scoped_span.h"],
+    defines = ["HAVE_ABSEIL"],
+    visibility = [
+        ":__subpackages__",
+        "//:__pkg__",
+    ],
+    deps = [
+        "//:common",
+        "@io_opentelemetry_cpp//api",
+    ],
+)
+

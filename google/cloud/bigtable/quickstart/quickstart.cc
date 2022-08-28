@@ -31,6 +31,7 @@ int main() {
 
   std::string const project_id = "dbolduc-test";
   std::string const instance_id = "test-instance";
+  std::string const table_id = "table";
 
   namespace cbt = ::google::cloud::bigtable;
   namespace cbta = ::google::cloud::bigtable_admin;
@@ -44,11 +45,19 @@ int main() {
   for (auto& t : tables) {
     if (!t) {
      std::cout << std::move(t).status() << "\n";
-     return 1;
+     break;
     }
     std::cout << "Table: " << t->DebugString() << "\n";
   }
 
+  google::bigtable::admin::v2::GetTableRequest get_req;
+  get_req.set_name(cbt::TableName(project_id, instance_id, table_id));
+  auto table = client.GetTable(get_req);
+  if (!table) {
+    std::cout << std::move(table).status() << "\n";
+    return 0;
+  }
+  std::cout << "Table: " << table->DebugString() << "\n";
   return 0;
 }
 // [END bigtable_quickstart]
