@@ -19,7 +19,7 @@
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_open_telemetry.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_tracing_connection.h"
-//#include "google/cloud/bigtable/admin/internal/bigtable_table_admin_tracing_stub.h"
+#include "google/cloud/bigtable/admin/internal/bigtable_table_admin_tracing_stub.h"
 #endif
 
 namespace google {
@@ -40,11 +40,11 @@ MaybeMakeBigtableTableAdminTracingConnection(
 
 std::shared_ptr<BigtableTableAdminStub> MaybeMakeBigtableTableAdminTracingStub(
     std::shared_ptr<BigtableTableAdminStub> child) {
-//#ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
-//  return std::make_shared<BigtableTableAdminTracingStub>(std::move(child));
-//#else
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
+  return std::make_shared<BigtableTableAdminTracingStub>(std::move(child));
+#else
   return child;
-//#endif
+#endif
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

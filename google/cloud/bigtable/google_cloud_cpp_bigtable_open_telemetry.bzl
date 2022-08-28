@@ -16,10 +16,10 @@
 
 google_cloud_cpp_bigtable_open_telemetry_hdrs = [
     "admin/internal/bigtable_table_admin_tracing_connection.h",
-    #"admin/internal/bigtable_table_admin_tracing_stub.h",
+    "admin/internal/bigtable_table_admin_tracing_stub.h",
 ]
 
 google_cloud_cpp_bigtable_open_telemetry_srcs = [
     "admin/internal/bigtable_table_admin_tracing_connection.cc",
-    #"admin/internal/bigtable_table_admin_tracing_stub.cc",
+    "admin/internal/bigtable_table_admin_tracing_stub.cc",
 ]

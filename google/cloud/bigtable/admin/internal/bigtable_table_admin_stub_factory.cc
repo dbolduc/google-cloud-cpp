@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_auth_decorator.h"
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_logging_decorator.h"
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_metadata_decorator.h"
+#include "google/cloud/bigtable/admin/internal/bigtable_table_admin_open_telemetry.h"
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -46,7 +47,7 @@ std::shared_ptr<BigtableTableAdminStub> CreateDefaultBigtableTableAdminStub(
       std::make_shared<DefaultBigtableTableAdminStub>(
           std::move(service_grpc_stub),
           google::longrunning::Operations::NewStub(channel));
-
+  stub = MaybeMakeBigtableTableAdminTracingStub(std::move(stub));
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<BigtableTableAdminAuth>(std::move(auth),
                                                     std::move(stub));
