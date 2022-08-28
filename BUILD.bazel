@@ -282,3 +282,17 @@ cc_library(
         "//google/cloud:google_cloud_cpp_grpc_utils_private",
     ],
 )
+
+# NOTE : Flag to build libraries with open-telemetry-cpp
+load("@bazel_skylib//rules:common_settings.bzl", "bool_flag")
+
+bool_flag(
+    name = "open_telemetry",
+    build_setting_default = False,
+    visibility = ["//visibility:public"],
+)
+
+config_setting(
+    name = "have_open_telemetry",
+    flag_values = {":open_telemetry": "true"},
+)

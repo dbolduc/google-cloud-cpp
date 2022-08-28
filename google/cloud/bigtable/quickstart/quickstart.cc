@@ -18,10 +18,10 @@
 
 /*
  * Run quickstart with OT:
- * bazel run //google/cloud/bigtable/quickstart:ot-quickstart --//google/cloud/bigtable:open_telemetry=True
+ * bazel run //google/cloud/bigtable/quickstart:quickstart --//:open_telemetry=True
  *
  * Run quickstart without OT:
- * bazel run //google/cloud/bigtable/quickstart:quickstart --//google/cloud/bigtable:open_telemetry=True
+ * bazel run //google/cloud/bigtable/quickstart:quickstart
  */
 
 int main() {
