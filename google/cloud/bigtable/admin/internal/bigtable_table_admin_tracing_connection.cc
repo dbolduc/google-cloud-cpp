@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,10 +18,12 @@
 
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_tracing_connection.h"
 #include "google/cloud/internal/scoped_span.h"
-#include "opentelemetry/common/attribute_value.h"
-#include "opentelemetry/trace/tracer_provider.h"
-#include "opentelemetry/trace/provider.h"
-#include "opentelemetry/trace/tracer.h"
+#include "google/cloud/log.h"
+#include <opentelemetry/common/attribute_value.h>
+#include <opentelemetry/trace/provider.h>
+#include <opentelemetry/trace/span.h>
+#include <opentelemetry/trace/tracer.h>
+#include <opentelemetry/trace/tracer_provider.h>
 #include <memory>
 
 namespace google {
@@ -42,29 +44,15 @@ BigtableTableAdminTracingConnection::CreateTable(
 StreamRange<google::bigtable::admin::v2::Table>
 BigtableTableAdminTracingConnection::ListTables(
     google::bigtable::admin::v2::ListTablesRequest request) {
-  std::cout << "\nListTables by TracingConnection\n" << std::endl;
-  auto provider = opentelemetry::trace::Provider::GetTracerProvider();
-  auto tracer = provider->GetTracer("darren-tracer");
-  auto span = opentelemetry::trace::Scope(tracer->StartSpan(
-      "darren-test-span",
-      {{"rpc.system", "grpc"},
-       {"rpc.service", "google.cloud.bigtable.admin.v2.BigtableTableAdmin"},
-       {"rpc.method", "CreateTable"}},
-       opentelemetry::trace::StartSpanOptions{}));
   return child_->ListTables(request);
 }
 
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminTracingConnection::GetTable(
     google::bigtable::admin::v2::GetTableRequest const& request) {
-  // TODO : seems like coryan has a gRPC-specific MakeSpan() method defined in
-  // storage_span.cc
-  //
-  // I will need to update this. But this is a proof of concept that we can
-  // conditionally depend on common code.
-  auto span = google::cloud::internal::ScopedSpan::StartScopedSpan(
-      "BigtableTableAdminClient::GetTable", {});
-  return span.CaptureReturn(child_->GetTable(request));
+  GCP_LOG(DEBUG) << "TracingConnection::GetTable called";
+  auto span = internal::MakeSpan("BigtableTableAdminClient::GetTable");
+  return internal::CaptureReturn(*span, child_->GetTable(request), true);
 }
 
 Status BigtableTableAdminTracingConnection::DeleteTable(

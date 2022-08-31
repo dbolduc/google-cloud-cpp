@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/scoped_span.h"
+#include "opentelemetry/trace/span_startoptions.h"
 #include <opentelemetry/trace/provider.h>
 
 namespace google {
@@ -51,19 +52,10 @@ void CaptureStatusDetails(opentelemetry::trace::Span& span,
   if (end) span.End();
 }
 
-ScopedSpan ScopedSpan::StartScopedSpan(
-    opentelemetry::nostd::string_view name,
-    std::initializer_list<std::pair<opentelemetry::nostd::string_view,
-                                    opentelemetry::common::AttributeValue>>
-        attributes,
-    opentelemetry::trace::StartSpanOptions const& options) {
-  auto span = GetTracer()->StartSpan(name, std::move(attributes), options);
-  auto scope = opentelemetry::trace::Tracer::WithActiveSpan(span);
-  return ScopedSpan(std::move(span), std::move(scope));
-}
-
-void ScopedSpan::CaptureStatusDetails(google::cloud::Status const& status) {
-  return ::google::cloud::internal::CaptureStatusDetails(*span_, status, false);
+opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
+    opentelemetry::nostd::string_view name) {
+  return GetTracer()->StartSpan(name, {{"darren", "wuz_here"}},
+                                opentelemetry::trace::StartSpanOptions{});
 }
 
 }  // namespace internal

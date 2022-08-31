@@ -44,7 +44,8 @@ BigtableTableAdminTracingStub::ListTables(
   return child_->ListTables(context, request);
 }
 
-StatusOr<google::bigtable::admin::v2::Table> BigtableTableAdminTracingStub::GetTable(
+StatusOr<google::bigtable::admin::v2::Table>
+BigtableTableAdminTracingStub::GetTable(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::GetTableRequest const& request) {
   return child_->GetTable(context, request);
@@ -100,7 +101,8 @@ BigtableTableAdminTracingStub::AsyncCreateBackup(
   return child_->AsyncCreateBackup(cq, std::move(context), request);
 }
 
-StatusOr<google::bigtable::admin::v2::Backup> BigtableTableAdminTracingStub::GetBackup(
+StatusOr<google::bigtable::admin::v2::Backup>
+BigtableTableAdminTracingStub::GetBackup(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::GetBackupRequest const& request) {
   return child_->GetBackup(context, request);

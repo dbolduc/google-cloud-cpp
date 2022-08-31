@@ -33,8 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class BigtableTableAdminTracingStub : public BigtableTableAdminStub {
  public:
+  explicit BigtableTableAdminTracingStub(
+      std::shared_ptr<BigtableTableAdminStub> child);
   ~BigtableTableAdminTracingStub() override = default;
-  BigtableTableAdminTracingStub(std::shared_ptr<BigtableTableAdminStub> child);
 
   StatusOr<google::bigtable::admin::v2::Table> CreateTable(
       grpc::ClientContext& context,

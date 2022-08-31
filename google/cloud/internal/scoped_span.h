@@ -15,9 +15,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SCOPED_SPAN_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SCOPED_SPAN_H
 
+#include "google/cloud/future.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <opentelemetry/nostd/string_view.h>
 #include <opentelemetry/trace/span.h>
 #include <opentelemetry/trace/tracer.h>
 
@@ -44,49 +46,29 @@ inline Status CaptureReturn(opentelemetry::trace::Span& span, Status value,
   return value;
 }
 
-class ScopedSpan {
- public:
-  static ScopedSpan StartScopedSpan(
-      opentelemetry::nostd::string_view name,
-      std::initializer_list<std::pair<opentelemetry::nostd::string_view,
-                                      opentelemetry::common::AttributeValue>>
-          attributes,
-      opentelemetry::trace::StartSpanOptions const& options = {});
+// TODO(dbolduc) : I should be able to do this with future<T> but I am a dummy
+inline future<Status> CaptureReturn(opentelemetry::trace::Span& span, future<Status> fut,
+                          bool end) {
+  return fut.then([&span, end](auto f) {
+    auto status = f.get();
+    CaptureStatusDetails(span, status, end);
+    return status;
+  });
+}
 
-  ScopedSpan(ScopedSpan&&) noexcept = default;
-  ScopedSpan& operator=(ScopedSpan&&) noexcept = default;
-  ~ScopedSpan() { span_->End(); }
-
-  template <typename T>
-  StatusOr<T> CaptureReturn(StatusOr<T> value) {
-    CaptureStatusDetails(value.status());
+// TODO(dbolduc) : I should be able to do this with future<T> but I am a dummy
+template <typename T>
+future<StatusOr<T>> CaptureReturn(opentelemetry::trace::Span& span,
+                                  future<StatusOr<T>> fut, bool end) {
+  return fut.then([&span, end](auto f) {
+    auto value = f.get();
+    CaptureStatusDetails(span, value.status(), end);
     return value;
-  }
+  });
+}
 
-  Status CaptureReturn(Status value) {
-    CaptureStatusDetails(value);
-    return value;
-  }
-
-  void SetAttribute(opentelemetry::nostd::string_view key,
-                    opentelemetry::nostd::string_view value) {
-    span_->SetAttribute(key, value);
-  }
-  void SetAttribute(opentelemetry::nostd::string_view key, std::int32_t value) {
-    span_->SetAttribute(key, value);
-  }
-
- private:
-  explicit ScopedSpan(
-      opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
-      opentelemetry::trace::Scope scope)
-      : span_(std::move(span)), scope_(std::move(scope)) {}
-
-  void CaptureStatusDetails(Status const& status);
-
-  opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span_;
-  opentelemetry::trace::Scope scope_;
-};
+opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
+    opentelemetry::nostd::string_view name);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
