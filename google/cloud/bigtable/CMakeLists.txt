@@ -35,9 +35,9 @@ include(CTest)
 # Export the version information for Bazel.
 include(CreateBazelConfig)
 
-# the client library
-add_library(
-    google_cloud_cpp_bigtable # cmake-format: sort
+find_package(opentelemetry-cpp CONFIG)
+
+set(google_cloud_cpp_bigtable_source_files # cmake-format: sort
     admin/bigtable_instance_admin_client.cc
     admin/bigtable_instance_admin_client.h
     admin/bigtable_instance_admin_connection.cc
@@ -75,6 +75,8 @@ add_library(
     admin/internal/bigtable_table_admin_logging_decorator.h
     admin/internal/bigtable_table_admin_metadata_decorator.cc
     admin/internal/bigtable_table_admin_metadata_decorator.h
+    admin/internal/bigtable_table_admin_open_telemetry.cc
+    admin/internal/bigtable_table_admin_open_telemetry.h
     admin/internal/bigtable_table_admin_option_defaults.cc
     admin/internal/bigtable_table_admin_option_defaults.h
     admin/internal/bigtable_table_admin_retry_traits.h
@@ -216,6 +218,20 @@ add_library(
     version_info.h
     wait_for_consistency.cc
     wait_for_consistency.h)
+
+# Add OT source files
+# TODO : there might be a cleaner way to do this with target_sources() after defining the library
+if (opentelemetry-cpp_FOUND)
+    list(APPEND google_cloud_cpp_bigtable_source_files
+      admin/internal/bigtable_table_admin_tracing_connection.cc
+      admin/internal/bigtable_table_admin_tracing_connection.h
+      admin/internal/bigtable_table_admin_tracing_stub.cc
+      admin/internal/bigtable_table_admin_tracing_stub.h
+      )
+endif ()
+
+# the client library
+add_library(google_cloud_cpp_bigtable ${google_cloud_cpp_bigtable_source_files})
 target_link_libraries(
     google_cloud_cpp_bigtable
     PUBLIC absl::memory
@@ -233,6 +249,23 @@ target_include_directories(
            $<INSTALL_INTERFACE:include>)
 target_compile_options(google_cloud_cpp_bigtable
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+
+# TODO : Darren : OT stuff....
+if (opentelemetry-cpp_FOUND)
+    message("TODO : Darren : building bigtable with opentelemetry-cpp")
+      # TODO : can I drop this?
+    target_link_libraries(
+        google_cloud_cpp_bigtable
+        PUBLIC opentelemetry-cpp::api)
+      # TODO : can I drop this?
+    target_compile_definitions(
+        google_cloud_cpp_bigtable
+        PUBLIC # Configure OpenTelemetry to use the std:: and absl:: types
+               HAVE_ABSEIL
+               # Enable OpenTelemetry features in google-cloud-cpp
+               GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY)
+endif ()
+
 set_target_properties(
     google_cloud_cpp_bigtable
     PROPERTIES EXPORT_NAME "google-cloud-cpp::bigtable"
@@ -355,6 +388,8 @@ if (BUILD_TESTING)
         internal/legacy_bulk_mutator_test.cc
         internal/legacy_row_reader_test.cc
         internal/logging_data_client_test.cc
+        # TODO : a better way to verify OT is linked/not linked.
+        internal/open_telemetry_enabled_test.cc
         internal/prefix_range_end_test.cc
         legacy_table_test.cc
         metadata_update_policy_test.cc

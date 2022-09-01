@@ -15,6 +15,7 @@
 # ~~~
 
 find_package(OpenSSL REQUIRED)
+find_package(opentelemetry-cpp CONFIG)
 
 # Generate the version information from the CMake values.
 configure_file(internal/version_info.h.in
@@ -25,9 +26,7 @@ configure_file(internal/version_info.h.in
 string(TOUPPER "${CMAKE_BUILD_TYPE}" GOOGLE_CLOUD_CPP_BUILD_TYPE_UPPER)
 configure_file(internal/build_info.cc.in internal/build_info.cc)
 
-# the client library
-add_library(
-    google_cloud_cpp_common # cmake-format: sort
+set(google_cloud_cpp_common_source_files # cmake-format: sort
     ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
     backoff_policy.h
     common_options.h
@@ -67,8 +66,7 @@ add_library(
     internal/filesystem.h
     internal/format_time_point.cc
     internal/format_time_point.h
-    internal/future_base.h
-    internal/future_coroutines.h
+    internal/future_base.h internal/future_coroutines.h
     internal/future_fwd.h
     internal/future_impl.cc
     internal/future_impl.h
@@ -127,6 +125,17 @@ add_library(
     tracing_options.h
     version.cc
     version.h)
+
+# Add OT source files that live in common.
+# TODO : there might be a cleaner way to do this with target_sources() after defining the library
+if (opentelemetry-cpp_FOUND)
+    list(APPEND google_cloud_cpp_common_source_files
+      internal/scoped_span.cc
+      internal/scoped_span.h)
+endif ()
+
+# the client library
+add_library(google_cloud_cpp_common ${google_cloud_cpp_common_source_files})
 target_link_libraries(
     google_cloud_cpp_common
     PUBLIC absl::base
@@ -137,6 +146,21 @@ target_link_libraries(
            absl::variant
            Threads::Threads
            OpenSSL::Crypto)
+
+# TODO : Darren : OT stuff....
+if (opentelemetry-cpp_FOUND)
+    message("TODO : Darren : opentelemetry-cpp FOUND")
+    target_link_libraries(
+        google_cloud_cpp_common
+        PUBLIC opentelemetry-cpp::api)
+    target_compile_definitions(
+        google_cloud_cpp_common
+        PUBLIC # Configure OpenTelemetry to use the std:: and absl:: types
+               HAVE_ABSEIL
+               # Enable OpenTelemetry features in google-cloud-cpp
+               GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY)
+endif ()
+
 google_cloud_cpp_add_common_options(google_cloud_cpp_common)
 target_include_directories(
     google_cloud_cpp_common PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>

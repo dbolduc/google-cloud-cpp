@@ -58,6 +58,8 @@ bigtable_client_unit_tests = [
     "internal/legacy_bulk_mutator_test.cc",
     "internal/legacy_row_reader_test.cc",
     "internal/logging_data_client_test.cc",
+    # TODO : this test will fail if OT is not linked.
+    "internal/open_telemetry_enabled_test.cc",
     "internal/prefix_range_end_test.cc",
     "legacy_table_test.cc",
     "metadata_update_policy_test.cc",

@@ -30,6 +30,14 @@ include(EnableWerror)
 # Helper functions to create pkg-config(1) module files.
 include(AddPkgConfig)
 
+# TODO : cmake-install conditionally find OT
+find_package(opentelemetry-cpp CONFIG)
+  if (opentelemetry-cpp_FOUND)
+    set(MAYBE_FIND_OT "find_dependency(opentelemetry-cpp)")
+  else ()
+    set(MAYBE_FIND_OT "")
+  endif ()
+
 if (${CMAKE_VERSION} VERSION_LESS "3.12")
     # Old versions of CMake have really poor support for Doxygen generation.
     message(STATUS "Doxygen generation only enabled for cmake 3.9 and higher")
