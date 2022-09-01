@@ -80,6 +80,8 @@ set(google_cloud_cpp_common_source_files # cmake-format: sort
     internal/log_impl.cc
     internal/log_impl.h
     internal/non_constructible.h
+    internal/open_telemetry.cc
+    internal/open_telemetry.h
     internal/pagination_range.h
     internal/parse_rfc3339.cc
     internal/parse_rfc3339.h

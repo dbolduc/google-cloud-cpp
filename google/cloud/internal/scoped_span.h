@@ -46,7 +46,6 @@ inline Status CaptureReturn(opentelemetry::trace::Span& span, Status value,
   return value;
 }
 
-// TODO(dbolduc) : I should be able to do this with future<T> but I am a dummy
 inline future<Status> CaptureReturn(opentelemetry::trace::Span& span, future<Status> fut,
                           bool end) {
   return fut.then([&span, end](auto f) {
@@ -56,7 +55,6 @@ inline future<Status> CaptureReturn(opentelemetry::trace::Span& span, future<Sta
   });
 }
 
-// TODO(dbolduc) : I should be able to do this with future<T> but I am a dummy
 template <typename T>
 future<StatusOr<T>> CaptureReturn(opentelemetry::trace::Span& span,
                                   future<StatusOr<T>> fut, bool end) {

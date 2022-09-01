@@ -18,6 +18,7 @@
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/invoke_result.h"
+#include "google/cloud/internal/open_telemetry.h"
 #include "google/cloud/internal/retry_loop_helpers.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/status_or.h"
@@ -108,10 +109,10 @@ auto RetryLoop(std::unique_ptr<RetryPolicy> retry_policy,
                Request const& request, char const* location)
     -> google::cloud::internal::invoke_result_t<Functor, grpc::ClientContext&,
                                                 Request const&> {
-  return RetryLoopImpl(
-      std::move(retry_policy), std::move(backoff_policy), idempotency,
-      std::forward<Functor>(functor), request, location,
-      [](std::chrono::milliseconds p) { std::this_thread::sleep_for(p); });
+  return RetryLoopImpl(std::move(retry_policy), std::move(backoff_policy),
+                       idempotency, std::forward<Functor>(functor), request,
+                       location,
+                       MaybeMakeTracingSleeper(std::string{location}));
 }
 
 }  // namespace internal
