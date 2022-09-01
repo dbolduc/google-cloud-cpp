@@ -139,6 +139,8 @@ set(google_cloud_cpp_bigtable_source_files # cmake-format: sort
     internal/bigtable_logging_decorator.h
     internal/bigtable_metadata_decorator.cc
     internal/bigtable_metadata_decorator.h
+    internal/bigtable_open_telemetry.cc
+    internal/bigtable_open_telemetry.h
     internal/bigtable_round_robin.cc
     internal/bigtable_round_robin.h
     internal/bigtable_stub.cc
@@ -227,6 +229,10 @@ if (opentelemetry-cpp_FOUND)
       admin/internal/bigtable_table_admin_tracing_connection.h
       admin/internal/bigtable_table_admin_tracing_stub.cc
       admin/internal/bigtable_table_admin_tracing_stub.h
+      internal/data_tracing_connection.cc
+      internal/data_tracing_connection.h
+      internal/data_tracing_stub.cc
+      internal/data_tracing_stub.h
       )
 endif ()
 

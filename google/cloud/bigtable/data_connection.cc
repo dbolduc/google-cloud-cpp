@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/data_connection.h"
 #include "google/cloud/bigtable/internal/bigtable_stub_factory.h"
+#include "google/cloud/bigtable/internal/bigtable_open_telemetry.h"
 #include "google/cloud/bigtable/internal/data_connection_impl.h"
 #include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/internal/row_reader_impl.h"
@@ -148,8 +149,10 @@ std::shared_ptr<DataConnection> MakeDataConnection(Options options) {
   auto background =
       google::cloud::internal::MakeBackgroundThreadsFactory(options)();
   auto stub = bigtable_internal::CreateBigtableStub(background->cq(), options);
-  return std::make_shared<bigtable_internal::DataConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  std::shared_ptr<DataConnection> conn =
+      std::make_shared<bigtable_internal::DataConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options));
+  return bigtable_internal::MaybeMakeDataTracingConnection(std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
