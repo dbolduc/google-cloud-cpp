@@ -13,51 +13,48 @@
 // limitations under the License.
 
 // [START bigtable_quickstart]
-#include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
-#include "google/cloud/bigtable/resource_names.h"
+#include "google/cloud/bigtable/table.h"
 
-/*
- * Run quickstart with OT:
- * bazel run //google/cloud/bigtable/quickstart:quickstart --//:open_telemetry=True
- *
- * Run quickstart without OT:
- * bazel run //google/cloud/bigtable/quickstart:quickstart
- */
-
-int main() {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
-  std::cout << "GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY defined in quickstart.\n";
-#endif //  GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
-
-  std::string const project_id = "dbolduc-test";
-  std::string const instance_id = "test-instance";
-  std::string const table_id = "table";
-
-  namespace cbt = ::google::cloud::bigtable;
-  namespace cbta = ::google::cloud::bigtable_admin;
-
-  auto conn = cbta::MakeBigtableTableAdminConnection();
-  auto client = cbta::BigtableTableAdminClient(std::move(conn));
-
-  google::bigtable::admin::v2::ListTablesRequest list_req;
-  list_req.set_parent(cbt::InstanceName(project_id, instance_id));
-  auto tables = client.ListTables(list_req);
-  for (auto& t : tables) {
-    if (!t) {
-     std::cout << std::move(t).status() << "\n";
-     break;
-    }
-    std::cout << "Table: " << t->DebugString() << "\n";
+int main(int argc, char* argv[]) try {
+  if (argc != 4) {
+    std::string const cmd = argv[0];
+    auto last_slash = std::string(cmd).find_last_of('/');
+    std::cerr << "Usage: " << cmd.substr(last_slash + 1)
+              << " <project_id> <instance_id> <table_id>\n";
+    return 1;
   }
 
-  google::bigtable::admin::v2::GetTableRequest get_req;
-  get_req.set_name(cbt::TableName(project_id, instance_id, table_id));
-  auto table = client.GetTable(get_req);
-  if (!table) {
-    std::cout << std::move(table).status() << "\n";
+  std::string const project_id = argv[1];
+  std::string const instance_id = argv[2];
+  std::string const table_id = argv[3];
+
+  // Create a namespace alias to make the code easier to read.
+  namespace cbt = ::google::cloud::bigtable;
+
+  cbt::Table table(cbt::MakeDataConnection(),
+                   cbt::TableResource(project_id, instance_id, table_id));
+
+  std::string row_key = "r1";
+  std::string column_family = "cf1";
+
+  std::cout << "Getting a single row by row key:" << std::flush;
+  google::cloud::StatusOr<std::pair<bool, cbt::Row>> result =
+      table.ReadRow(row_key, cbt::Filter::FamilyRegex(column_family));
+  if (!result) throw std::runtime_error(result.status().message());
+  if (!result->first) {
+    std::cout << "Cannot find row " << row_key << " in the table: " << table_id
+              << "\n";
     return 0;
   }
-  std::cout << "Table: " << table->DebugString() << "\n";
+
+  cbt::Cell const& cell = result->second.cells().front();
+  std::cout << cell.family_name() << ":" << cell.column_qualifier() << "    @ "
+            << cell.timestamp().count() << "us\n"
+            << '"' << cell.value() << '"' << "\n";
+
   return 0;
+} catch (std::exception const& ex) {
+  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
+  return 1;
 }
 // [END bigtable_quickstart]
