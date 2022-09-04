@@ -106,7 +106,7 @@ Status DataConnectionImpl::Apply(std::string const& table_name,
              google::bigtable::v2::MutateRowRequest const& request) {
         return stub_->MutateRow(context, request);
       },
-      request, __func__);
+      request, __func__, tracing_enabled());
   if (!sor) return std::move(sor).status();
   return Status{};
 }

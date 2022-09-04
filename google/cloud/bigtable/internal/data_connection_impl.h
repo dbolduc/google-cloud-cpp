@@ -94,6 +94,10 @@ class DataConnectionImpl : public bigtable::DataConnection {
       bigtable::Filter filter) override;
 
  private:
+  bool tracing_enabled() {
+    return options_.get<internal::OpenTelemetryTracingOption>();
+  }
+
   std::unique_ptr<BackgroundThreads> background_;
   std::shared_ptr<BigtableStub> stub_;
   Options options_;

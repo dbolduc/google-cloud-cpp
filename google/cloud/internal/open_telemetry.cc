@@ -25,15 +25,16 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-std::function<void(std::chrono::milliseconds p)> MaybeMakeTracingSleeper(
-    std::string const& func) { // NOLINT(misc-unused-parameters)
-  return [](std::chrono::milliseconds p) {
+std::function<void(std::chrono::milliseconds)> MaybeMakeTracingSleeper(
+    std::string const& func,  // NOLINT(misc-unused-parameters)
+    std::function<void(std::chrono::milliseconds)> sleeper) {
+  return [&func, sleeper](std::chrono::milliseconds p) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
     // print for debugging.
     std::cout << "MakeSpan(" + func + "::backoff)\n";
     auto span = MakeSpan(func + "::backoff");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
-    std::this_thread::sleep_for(p);
+    sleeper(p);
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
     // TODO(dbolduc) - I should just use a Scope
     span->End();

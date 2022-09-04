@@ -149,9 +149,12 @@ std::shared_ptr<DataConnection> MakeDataConnection(Options options) {
   auto background =
       google::cloud::internal::MakeBackgroundThreadsFactory(options)();
   auto stub = bigtable_internal::CreateBigtableStub(background->cq(), options);
+  bool tracing =
+      options.get<google::cloud::internal::OpenTelemetryTracingOption>();
   std::shared_ptr<DataConnection> conn =
       std::make_shared<bigtable_internal::DataConnectionImpl>(
           std::move(background), std::move(stub), std::move(options));
+  if (!tracing) return conn;
   return bigtable_internal::MaybeMakeDataTracingConnection(std::move(conn));
 }
 

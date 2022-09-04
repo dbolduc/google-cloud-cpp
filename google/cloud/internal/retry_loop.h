@@ -106,13 +106,19 @@ template <typename Functor, typename Request,
 auto RetryLoop(std::unique_ptr<RetryPolicy> retry_policy,
                std::unique_ptr<BackoffPolicy> backoff_policy,
                Idempotency idempotency, Functor&& functor,
-               Request const& request, char const* location)
+               Request const& request, char const* location,
+               // TODO : don't default the tracing param.
+               bool tracing = false)
     -> google::cloud::internal::invoke_result_t<Functor, grpc::ClientContext&,
                                                 Request const&> {
+  std::function<void(std::chrono::milliseconds)> sleeper =
+      [](std::chrono::milliseconds p) {
+        return std::this_thread::sleep_for(p);
+      };
+  if (tracing) sleeper = MaybeMakeTracingSleeper(location, std::move(sleeper));
   return RetryLoopImpl(std::move(retry_policy), std::move(backoff_policy),
                        idempotency, std::forward<Functor>(functor), request,
-                       location,
-                       MaybeMakeTracingSleeper(std::string{location}));
+                       location, std::move(sleeper));
 }
 
 }  // namespace internal

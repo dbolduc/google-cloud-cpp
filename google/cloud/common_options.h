@@ -105,6 +105,34 @@ using CommonOptionList =
     OptionList<EndpointOption, UserAgentProductsOption, TracingComponentsOption,
                UserProjectOption, AuthorityOption>;
 
+namespace internal {
+
+/**
+ * Enable Tracing with [OpenTelemetry]
+ *
+ * Trace API calls to and from the remote server. The client library will create
+ * spans for interesting work that it performs. These spans can be exported to
+ * the trace visualizer backend of your choice.
+ *
+ * @note The library must be compiled with OpenTelemetry in order for this
+ * option to take effect.
+ *
+ * @see TODO : EXAMPLE to learn how to compile with OpenTelemetry.
+ *
+ * @see TODO : EXAMPLE to learn how to export spans to Cloud Trace.
+ *
+ * TODO : One downside of the stub/decorator design is that options must be
+ * supplied to `Make*Connection` in order to have an effect. We could not, for
+ * example, pass the Option for a single operation.
+ *
+ * TODO : I don't like how "TracingComponentsOption" is named...
+ * is it tracing... or logging....
+ */
+struct OpenTelemetryTracingOption {
+  using Type = bool;
+};
+
+}
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
