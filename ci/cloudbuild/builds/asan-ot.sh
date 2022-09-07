@@ -25,8 +25,7 @@ export CXX=clang++
 
 mapfile -t args < <(bazel::common_args)
 args+=("--config=asan")
-# Enable OT
-args+=("--//:open_telemetry=True")
+args+=("--//:experimental-open_telemetry")
 bazel test "${args[@]}" --test_tag_filters=-integration-test ...
 
 mapfile -t integration_args < <(integration::bazel_args)

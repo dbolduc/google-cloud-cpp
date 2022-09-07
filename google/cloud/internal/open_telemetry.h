@@ -26,8 +26,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 std::function<void(std::chrono::milliseconds)> MaybeMakeTracingSleeper(
-    std::string const& func,
-    std::function<void(std::chrono::milliseconds)> sleeper);
+    char const* location,
+    std::function<void(std::chrono::milliseconds)> const& sleeper);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/open_telemetry.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
 #include "google/cloud/internal/scoped_span.h"
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
@@ -26,20 +27,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 std::function<void(std::chrono::milliseconds)> MaybeMakeTracingSleeper(
-    std::string const& func,  // NOLINT(misc-unused-parameters)
-    std::function<void(std::chrono::milliseconds)> sleeper) {
-  return [&func, sleeper](std::chrono::milliseconds p) {
+    char const* location,  // NOLINT(misc-unused-parameters)
+    std::function<void(std::chrono::milliseconds)> const& sleeper) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
-    // print for debugging.
-    std::cout << "MakeSpan(" + func + "::backoff)\n";
-    auto span = MakeSpan(func + "::backoff");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
+  return [=](std::chrono::milliseconds p) {
+    auto span = MakeSpan(absl::StrCat(location, "::backoff"));
     sleeper(p);
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
-    // TODO(dbolduc) - I should just use a Scope
     span->End();
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
   };
+#else
+  return sleeper;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
 }
 
 }  // namespace internal

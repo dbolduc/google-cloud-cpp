@@ -129,7 +129,6 @@ set(google_cloud_cpp_common_source_files # cmake-format: sort
     version.h)
 
 # Add OT source files that live in common.
-# TODO : there might be a cleaner way to do this with target_sources() after defining the library
 if (opentelemetry-cpp_FOUND)
     list(APPEND google_cloud_cpp_common_source_files
       internal/scoped_span.cc
@@ -151,7 +150,6 @@ target_link_libraries(
 
 # TODO : Darren : OT stuff....
 if (opentelemetry-cpp_FOUND)
-    message("TODO : Darren : opentelemetry-cpp FOUND")
     target_link_libraries(
         google_cloud_cpp_common
         PUBLIC opentelemetry-cpp::api)
@@ -263,6 +261,7 @@ if (BUILD_TESTING)
         internal/group_options_test.cc
         internal/invoke_result_test.cc
         internal/log_impl_test.cc
+        internal/open_telemetry_test.cc
         internal/pagination_range_test.cc
         internal/parse_rfc3339_test.cc
         internal/populate_common_options_test.cc
@@ -298,6 +297,11 @@ if (BUILD_TESTING)
             PRIVATE google_cloud_cpp_testing google-cloud-cpp::common
                     absl::variant GTest::gmock_main GTest::gmock GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
+        if (opentelemetry-cpp_FOUND)
+            target_link_libraries(
+              ${target}
+              PRIVATE opentelemetry-cpp::in_memory_span_exporter)
+        endif ()
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
         endif ()

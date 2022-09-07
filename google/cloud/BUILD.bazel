@@ -274,7 +274,10 @@ cc_library(
     name = "google_cloud_cpp_ot_private",
     srcs = ["internal/scoped_span.cc"],
     hdrs = ["internal/scoped_span.h"],
-    defines = ["HAVE_ABSEIL"],
+    defines = [
+      "HAVE_ABSEIL",
+      "GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY",
+    ],
     visibility = [
         ":__subpackages__",
         "//:__pkg__",
@@ -285,3 +288,26 @@ cc_library(
     ],
 )
 
+# TODO : we can either keep this separate, or add selects to the other cc_tests
+cc_test(
+    name = "open_telemetry_test",
+    srcs = ["internal/open_telemetry_test.cc",
+            # TODO : I apparently need to include this in order to have the
+            # proper compiler variables.....
+            "internal/open_telemetry.cc",
+    ],
+    deps = [
+            ":google_cloud_cpp_common",
+            "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+            "@com_google_absl//absl/memory",
+            "@com_google_googletest//:gtest_main",
+    ] + select({
+        "//:have_open_telemetry": [
+            "//google/cloud:google_cloud_cpp_ot_private",
+            "@io_opentelemetry_cpp//api",
+            "@io_opentelemetry_cpp//exporters/memory:in_memory_span_exporter",
+            "@io_opentelemetry_cpp//sdk/src/trace",
+        ],
+        "//conditions:default": [],
+    }),
+)

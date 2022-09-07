@@ -150,7 +150,7 @@ RUN curl -sSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.6.0
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE \
         -DBUILD_SHARED_LIBS=ON \
-        -DWITH_API_ONLY=ON \
+        -DWITH_EXAMPLES=OFF \
         -DWITH_ABSEIL=ON \
         -DBUILD_TESTING=OFF \
         -H. -Bcmake-out -GNinja && \

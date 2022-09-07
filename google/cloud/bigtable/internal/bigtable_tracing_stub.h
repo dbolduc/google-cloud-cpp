@@ -32,7 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class BigtableTracingStub : public BigtableStub {
  public:
   ~BigtableTracingStub() override = default;
-  BigtableTracingStub(std::shared_ptr<BigtableStub> child);
+  explicit BigtableTracingStub(std::shared_ptr<BigtableStub> child);
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::bigtable::v2::ReadRowsResponse>>

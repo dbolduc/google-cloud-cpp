@@ -180,10 +180,10 @@ function integration::bazel_with_emulators() {
 #  "google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
 #    bazel "${verb}" "${args[@]}"
 #
-#  io::log_h2 "Running Spanner integration tests (with emulator)"
-#  "google/cloud/spanner/ci/${EMULATOR_SCRIPT}" \
-#    bazel "${verb}" "${args[@]}"
-#
+  io::log_h2 "Running Spanner integration tests (with emulator)"
+  "google/cloud/spanner/ci/${EMULATOR_SCRIPT}" \
+    bazel "${verb}" "${args[@]}"
+
   io::log_h2 "Running Bigtable integration tests (with emulator)"
   "google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
     bazel "${verb}" "${args[@]}"
@@ -264,13 +264,13 @@ function integration::ctest_with_emulators() {
   local cmake_out="$1"
   mapfile -t ctest_args < <(ctest::common_args)
 
-  io::log_h2 "Running Pub/Sub integration tests (with emulator)"
-  "google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
-    "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
-
-  io::log_h2 "Running Storage integration tests (with emulator)"
-  "${PROJECT_ROOT}/google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
-    "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
+#  io::log_h2 "Running Pub/Sub integration tests (with emulator)"
+#  "google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
+#    "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
+#
+#  io::log_h2 "Running Storage integration tests (with emulator)"
+#  "${PROJECT_ROOT}/google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
+#    "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
 
   io::log_h2 "Running Spanner integration tests (with emulator)"
   "${PROJECT_ROOT}/google/cloud/spanner/ci/${EMULATOR_SCRIPT}" \
@@ -280,7 +280,7 @@ function integration::ctest_with_emulators() {
   "google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
     "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
 
-  io::log_h2 "Running REST integration tests (with emulator)"
-  "google/cloud/internal/ci/${EMULATOR_SCRIPT}" \
-    "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
+#  io::log_h2 "Running REST integration tests (with emulator)"
+#  "google/cloud/internal/ci/${EMULATOR_SCRIPT}" \
+#    "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
 }

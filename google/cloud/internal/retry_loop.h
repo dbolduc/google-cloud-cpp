@@ -107,7 +107,6 @@ auto RetryLoop(std::unique_ptr<RetryPolicy> retry_policy,
                std::unique_ptr<BackoffPolicy> backoff_policy,
                Idempotency idempotency, Functor&& functor,
                Request const& request, char const* location,
-               // TODO : don't default the tracing param.
                bool tracing = false)
     -> google::cloud::internal::invoke_result_t<Functor, grpc::ClientContext&,
                                                 Request const&> {

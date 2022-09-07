@@ -35,8 +35,6 @@ include(CTest)
 # Export the version information for Bazel.
 include(CreateBazelConfig)
 
-find_package(opentelemetry-cpp CONFIG)
-
 set(google_cloud_cpp_bigtable_source_files # cmake-format: sort
     admin/bigtable_instance_admin_client.cc
     admin/bigtable_instance_admin_client.h
@@ -222,7 +220,7 @@ set(google_cloud_cpp_bigtable_source_files # cmake-format: sort
     wait_for_consistency.h)
 
 # Add OT source files
-# TODO : there might be a cleaner way to do this with target_sources() after defining the library
+find_package(opentelemetry-cpp CONFIG)
 if (opentelemetry-cpp_FOUND)
     list(APPEND google_cloud_cpp_bigtable_source_files
       admin/internal/bigtable_table_admin_tracing_connection.cc
@@ -231,9 +229,8 @@ if (opentelemetry-cpp_FOUND)
       admin/internal/bigtable_table_admin_tracing_stub.h
       internal/data_tracing_connection.cc
       internal/data_tracing_connection.h
-      internal/data_tracing_stub.cc
-      internal/data_tracing_stub.h
-      )
+      internal/bigtable_tracing_stub.cc
+      internal/bigtable_tracing_stub.h)
 endif ()
 
 # the client library

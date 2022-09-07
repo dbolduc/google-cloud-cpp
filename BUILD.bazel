@@ -283,17 +283,15 @@ cc_library(
     ],
 )
 
-# NOTE : Flag to build libraries with open-telemetry-cpp
 load("@bazel_skylib//rules:common_settings.bzl", "bool_flag")
 
-# TODO : this should be prefixed with "experimental-"
 bool_flag(
-    name = "open_telemetry",
+    name = "experimental-open_telemetry",
     build_setting_default = False,
     visibility = ["//visibility:public"],
 )
 
 config_setting(
     name = "have_open_telemetry",
-    flag_values = {":open_telemetry": "true"},
+    flag_values = {":experimental-open_telemetry": "true"},
 )
