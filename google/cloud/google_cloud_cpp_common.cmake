@@ -82,6 +82,8 @@ add_library(
     internal/log_impl.cc
     internal/log_impl.h
     internal/non_constructible.h
+    internal/open_telemetry.cc
+    internal/open_telemetry.h
     internal/pagination_range.h
     internal/parse_rfc3339.cc
     internal/parse_rfc3339.h
@@ -139,6 +141,17 @@ target_link_libraries(
            absl::variant
            Threads::Threads
            OpenSSL::Crypto)
+# Take a dependency on the OpenTelemetry API, if it is available.
+find_package(opentelemetry-cpp CONFIG)
+if (opentelemetry-cpp_FOUND)
+    target_link_libraries(google_cloud_cpp_common PUBLIC opentelemetry-cpp::api)
+    target_compile_definitions(
+        google_cloud_cpp_common
+        PUBLIC # Configure OpenTelemetry to use the std:: and absl:: types
+               HAVE_ABSEIL
+               # Enable OpenTelemetry features in google-cloud-cpp
+               GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY)
+endif ()
 google_cloud_cpp_add_common_options(google_cloud_cpp_common)
 target_include_directories(
     google_cloud_cpp_common PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -296,6 +309,7 @@ if (BUILD_TESTING)
         internal/group_options_test.cc
         internal/invoke_result_test.cc
         internal/log_impl_test.cc
+        internal/open_telemetry_test.cc
         internal/pagination_range_test.cc
         internal/parse_rfc3339_test.cc
         internal/populate_common_options_test.cc
@@ -338,6 +352,11 @@ if (BUILD_TESTING)
                     GTest::gmock
                     GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
+        if (opentelemetry-cpp_FOUND)
+            target_link_libraries(
+                ${target} # Our test uses OpenTelemetry's in-memory exporter
+                PRIVATE opentelemetry-cpp::in_memory_span_exporter)
+        endif ()
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
         endif ()
