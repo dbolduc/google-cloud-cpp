@@ -15,5 +15,13 @@
 include(CMakeFindDependencyMacro)
 find_dependency(Threads)
 find_dependency(absl)
+# We use find_package instead of find_dependency, because we do not want to
+# forward the REQUIRED flag. We manually forward the QUIET flag.
+set(cmake_fd_quiet_arg)
+if(${CMAKE_FIND_PACKAGE_NAME}_FIND_QUIETLY)
+  set(cmake_fd_quiet_arg QUIET)
+endif()
+find_package(opentelemetry-cpp CONFIG ${cmake_fd_quiet_arg})
+set(cmake_fd_quiet_arg)
 
 include("${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_common-targets.cmake")
