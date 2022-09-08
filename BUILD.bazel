@@ -294,3 +294,16 @@ cc_library(
         "//google/cloud:google_cloud_cpp_mocks",
     ],
 )
+
+load("@bazel_skylib//rules:common_settings.bzl", "bool_flag")
+
+bool_flag(
+    name = "experimental-open_telemetry",
+    build_setting_default = False,
+    visibility = ["//visibility:public"],
+)
+
+config_setting(
+    name = "have_open_telemetry",
+    flag_values = {":experimental-open_telemetry": "true"},
+)

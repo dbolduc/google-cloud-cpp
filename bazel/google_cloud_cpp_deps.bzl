@@ -186,3 +186,14 @@ def google_cloud_cpp_deps():
             patch_args = ["-p1"],
             patches = [Label("//bazel:configure_template.bzl.patch")],
         )
+
+    # Open Telemetry
+    if "io_opentelemetry_cpp" not in native.existing_rules():
+        http_archive(
+            name = "io_opentelemetry_cpp",
+            strip_prefix = "opentelemetry-cpp-1.6.0",
+            urls = [
+                "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.6.0.tar.gz",
+            ],
+            sha256 = "802cf9132ee847bd1c72b72bd8116055fd7e78f60a44bb9c10225b41f5e35bff",
+        )
