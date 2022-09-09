@@ -18,6 +18,7 @@
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/invoke_result.h"
+#include "google/cloud/internal/open_telemetry.h"
 #include "google/cloud/internal/retry_loop_helpers.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/status_or.h"
@@ -104,13 +105,18 @@ template <typename Functor, typename Request,
 auto RetryLoop(std::unique_ptr<RetryPolicy> retry_policy,
                std::unique_ptr<BackoffPolicy> backoff_policy,
                Idempotency idempotency, Functor&& functor,
-               Request const& request, char const* location)
+               Request const& request, char const* location,
+               bool tracing = false)
     -> google::cloud::internal::invoke_result_t<Functor, grpc::ClientContext&,
                                                 Request const&> {
-  return RetryLoopImpl(
-      std::move(retry_policy), std::move(backoff_policy), idempotency,
-      std::forward<Functor>(functor), request, location,
-      [](std::chrono::milliseconds p) { std::this_thread::sleep_for(p); });
+  std::function<void(std::chrono::milliseconds)> sleeper =
+      [](std::chrono::milliseconds p) {
+        return std::this_thread::sleep_for(p);
+      };
+  if (tracing) sleeper = MakeTracingSleeper(location, std::move(sleeper));
+  return RetryLoopImpl(std::move(retry_policy), std::move(backoff_policy),
+                       idempotency, std::forward<Functor>(functor), request,
+                       location, std::move(sleeper));
 }
 
 }  // namespace internal

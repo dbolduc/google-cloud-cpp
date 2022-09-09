@@ -54,6 +54,24 @@ void CaptureStatusDetails(opentelemetry::trace::Span& span,
   if (end) span.End();
 }
 
+std::function<void(std::chrono::milliseconds)> MakeTracingSleeper(
+    char const* location,
+    std::function<void(std::chrono::milliseconds)> const& sleeper) {
+  return [=](std::chrono::milliseconds p) {
+    auto span = MakeSpan(absl::StrCat(location, "::backoff"));
+    sleeper(p);
+    span->End();
+  };
+}
+
+#else
+
+std::function<void(std::chrono::milliseconds)> MakeTracingSleeper(
+    char const*,
+    std::function<void(std::chrono::milliseconds)> const& sleeper) {
+  return sleeper;
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
 
 }  // namespace internal
