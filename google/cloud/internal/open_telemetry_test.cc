@@ -22,6 +22,7 @@
 #include <opentelemetry/trace/tracer_provider.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
 #include <gmock/gmock.h>
+#include <chrono>
 #include <memory>
 #include <string>
 #include <vector>
@@ -33,8 +34,10 @@ namespace internal {
 namespace {
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
+using ms = std::chrono::milliseconds;
 using ::testing::AllOf;
 using ::testing::IsEmpty;
+using ::testing::MockFunction;
 using ::testing::Not;
 using ::testing::Pair;
 using ::testing::Pointee;
@@ -163,9 +166,32 @@ TEST_F(OpenTelemetryTest, CaptureReturn) {
                             Not(opentelemetry::trace::StatusCode::kUnset)))));
 }
 
+TEST_F(OpenTelemetryTest, MakeTracingSleeper) {
+  MockFunction<void(ms)> mock_sleeper;
+  EXPECT_CALL(mock_sleeper, Call(ms(42)));
+
+  auto sleeper = mock_sleeper.AsStdFunction();
+  auto result = MakeTracingSleeper("test::function", sleeper);
+  result(ms(42));
+
+  // Verify that a span was made.
+  auto spans = span_data_->GetSpans();
+  std::vector<opentelemetry::nostd::string_view> names;
+  names.reserve(spans.size());
+  for (auto const& span : spans) names.push_back(span->GetName());
+  EXPECT_THAT(names, UnorderedElementsAre("test::function::backoff"));
+}
+
 #else
 
-TEST(NoOpenTelemetryTest, Placeholder) {}
+TEST(NoOpenTelemetryTest, MakeTracingSleeper) {
+  MockFunction<void(ms)> mock_sleeper;
+  EXPECT_CALL(mock_sleeper, Call(ms(42)));
+
+  auto sleeper = mock_sleeper.AsStdFunction();
+  auto result = MakeTracingSleeper("test::function", sleeper);
+  result(ms(42));
+}
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
 

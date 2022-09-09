@@ -48,6 +48,10 @@ StatusOr<T> CaptureReturn(opentelemetry::trace::Span& span, StatusOr<T> value,
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
+        //
+std::function<void(std::chrono::milliseconds)> MakeTracingSleeper(
+    char const* location,
+    std::function<void(std::chrono::milliseconds)> const& sleeper);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
