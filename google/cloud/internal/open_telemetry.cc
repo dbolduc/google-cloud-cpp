@@ -16,6 +16,8 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
 #include <opentelemetry/trace/provider.h>
+#include <opentelemetry/trace/span_metadata.h>
+#include <opentelemetry/trace/span_startoptions.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
 
 namespace google {
@@ -32,7 +34,24 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Tracer> GetTracer() {
 
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
     opentelemetry::nostd::string_view name) {
-  return GetTracer()->StartSpan(name);
+  return GetTracer()->StartSpan(
+      name, {.kind = opentelemetry::trace::SpanKind::kClient});
+}
+
+void CaptureStatusDetails(opentelemetry::trace::Span& span,
+                          Status const& status, bool end) {
+  auto constexpr kMaxAttributeLen = 128;
+  if (status.ok()) {
+    span.SetStatus(opentelemetry::trace::StatusCode::kOk);
+    span.SetAttribute("gcloud.status_code", "OK");
+    if (end) span.End();
+    return;
+  }
+  span.SetStatus(opentelemetry::trace::StatusCode::kError);
+  span.SetAttribute("gcloud.status_code", StatusCodeToString(status.code()));
+  span.SetAttribute("gcloud.status_message",
+                    status.message().substr(0, kMaxAttributeLen));
+  if (end) span.End();
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
