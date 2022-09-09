@@ -113,6 +113,35 @@ using CommonOptionList =
     OptionList<EndpointOption, UserAgentProductsOption, TracingComponentsOption,
                UserProjectOption, AuthorityOption>;
 
+namespace experimental {
+
+/**
+ * Enable tracing with [OpenTelemetry]
+ *
+ * Trace API calls to and from the remote server. The client library will create
+ * spans for interesting work that it performs. These spans can be exported to
+ * the trace visualizer backend of your choice.
+ *
+ * @note Tracing has not been implemented by all libraries.
+ *
+ * @note The library must be compiled with OpenTelemetry in order for this
+ * option to take effect. The option must be supplied to `Make*Connection()` in
+ * order to take effect.
+ *
+ * @see TODO : EXAMPLE to learn how to compile with OpenTelemetry.
+ *
+ * @see TODO : EXAMPLE to learn how to export spans to Cloud Trace.
+ *
+ * TODO : Naming... I don't like how "TracingComponentsOption" is named...
+ * is it tracing... or logging....
+ *
+ * [opentelemetry]: https://opentelemetry.io/docs/instrumentation/cpp/
+ */
+struct OpenTelemetryTracingOption {
+  using Type = bool;
+};
+
+}  // namespace experimental
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
