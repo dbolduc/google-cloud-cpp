@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPEN_TELEMETRY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPEN_TELEMETRY_H
 
+#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
 #include <opentelemetry/nostd/string_view.h>
@@ -35,6 +36,16 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Tracer> GetTracer();
 
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
     opentelemetry::nostd::string_view name);
+
+void CaptureStatusDetails(opentelemetry::trace::Span& span,
+                          Status const& status, bool end);
+
+template <typename T>
+StatusOr<T> CaptureReturn(opentelemetry::trace::Span& span, StatusOr<T> value,
+                          bool end) {
+  CaptureStatusDetails(span, value.status(), end);
+  return value;
+}
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
 
