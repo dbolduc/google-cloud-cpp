@@ -61,7 +61,7 @@ CompanyServiceConnectionImpl::GetCompany(
              google::cloud::talent::v4::GetCompanyRequest const& request) {
         return stub_->GetCompany(context, request);
       },
-      request, __func__);
+      request, __func__, tracing_enabled());
 }
 
 StatusOr<google::cloud::talent::v4::Company>

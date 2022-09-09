@@ -26,6 +26,7 @@
 #include "google/cloud/talent/internal/company_stub.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -92,6 +93,10 @@ class CompanyServiceConnectionImpl : public talent::CompanyServiceConnection {
     return options_
         .get<talent::CompanyServiceConnectionIdempotencyPolicyOption>()
         ->clone();
+  }
+
+  bool tracing_enabled() {
+    return options_.get<experimental::OpenTelemetryTracingOption>();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
