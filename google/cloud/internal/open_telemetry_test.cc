@@ -11,6 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 #include "google/cloud/internal/open_telemetry.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
 #include <opentelemetry/exporters/memory/in_memory_span_exporter.h>
@@ -33,11 +34,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
 using ms = std::chrono::milliseconds;
+using ::testing::MockFunction;
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
 using ::testing::AllOf;
 using ::testing::IsEmpty;
-using ::testing::MockFunction;
 using ::testing::Not;
 using ::testing::Pair;
 using ::testing::Pointee;

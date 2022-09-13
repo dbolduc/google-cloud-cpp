@@ -16,6 +16,7 @@
 #include <grpcpp/client_context.h>
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
 #include <opentelemetry/context/propagation/global_propagator.h>
+#include <opentelemetry/trace/experimental_semantic_conventions.h>
 #include <opentelemetry/trace/provider.h>
 #include <opentelemetry/trace/tracer_provider.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
@@ -49,7 +50,10 @@ class GrpcClientCarrier
 
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeGrpcSpan(
     opentelemetry::nostd::string_view name, grpc::ClientContext& context) {
-  auto span = MakeSpan(name);
+  // Start a span, setting at least one attribute specific to grpc
+  auto span = GetTracer()->StartSpan(
+      name, {{OTEL_GET_TRACE_ATTR(AttrRpcSystem), "grpc"}},
+      {.kind = opentelemetry::trace::SpanKind::kClient});
   // TODO(dbolduc): We probably want to factor out the injection part...
   auto current = opentelemetry::context::RuntimeContext::GetCurrent();
   GrpcClientCarrier carrier(context);

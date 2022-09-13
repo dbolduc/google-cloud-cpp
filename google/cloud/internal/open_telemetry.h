@@ -21,6 +21,8 @@
 #include <opentelemetry/nostd/string_view.h>
 #include <opentelemetry/trace/span.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
+#include <chrono>
+#include <functional>
 
 namespace google {
 namespace cloud {
@@ -28,9 +30,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
-
-// I am not recommending that we put this all in one file.
-// This is just a proof of concept.
 
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Tracer> GetTracer();
 
