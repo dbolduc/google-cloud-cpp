@@ -300,10 +300,17 @@ load("@bazel_skylib//rules:common_settings.bzl", "bool_flag")
 bool_flag(
     name = "experimental-open_telemetry",
     build_setting_default = False,
-    visibility = ["//visibility:public"],
 )
 
 config_setting(
     name = "have_open_telemetry",
     flag_values = {":experimental-open_telemetry": "true"},
+)
+
+# TODO : I am leaning towards having a single //:trace library.
+cc_library(
+    name = "experimental-trace_exporter",
+    deps = [
+        "//google/cloud/trace/exporter:google_cloud_cpp_trace_exporter",
+    ],
 )

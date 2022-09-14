@@ -92,6 +92,7 @@ expected_dirs+=(
   ./include/google/cloud/spanner/mocks
   ./include/google/cloud/storage/oauth2
   ./include/google/cloud/storage/testing
+  ./include/google/cloud/trace/exporter
   # no gRPC services in google/cloud/workflows/type.
   ./include/google/cloud/workflows/type
   ./include/google/devtools/source

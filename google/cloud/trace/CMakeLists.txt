@@ -52,6 +52,8 @@ file(
     GLOB source_files
     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
     "*.h" "*.cc" "internal/*.h" "internal/*.cc")
+list(APPEND source_files "exporter/recordable.cc" "exporter/recordable.h"
+     "exporter/gcp_exporter.cc" "exporter/gcp_exporter.h")
 list(SORT source_files)
 add_library(google_cloud_cpp_trace ${source_files})
 target_include_directories(
@@ -71,6 +73,19 @@ set_target_properties(
                SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_trace
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+find_package(opentelemetry-cpp CONFIG)
+if (opentelemetry-cpp_FOUND)
+    target_link_libraries(
+        google_cloud_cpp_trace
+        PUBLIC opentelemetry-cpp::api opentelemetry-cpp::sdk
+               opentelemetry-cpp::trace)
+    target_compile_definitions(
+        google_cloud_cpp_common
+        PUBLIC # Configure OpenTelemetry to use the std:: and absl:: types
+               HAVE_ABSEIL
+               # Enable OpenTelemetry features in google-cloud-cpp
+               GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY)
+endif ()
 
 add_library(google-cloud-cpp::trace ALIAS google_cloud_cpp_trace)
 
