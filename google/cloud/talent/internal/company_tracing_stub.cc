@@ -43,10 +43,9 @@ class CompanyServiceTracingStub : public CompanyServiceStub {
   StatusOr<google::cloud::talent::v4::Company> GetCompany(
       grpc::ClientContext& context,
       google::cloud::talent::v4::GetCompanyRequest const& request) override {
-    auto span =
-        internal::MakeGrpcSpan("CompanyServiceStub::GetCompany", context);
-    return internal::CaptureReturn(*span, child_->GetCompany(context, request),
-                                   true);
+    auto span = internal::MakeSpan(context, "CompanyServiceStub::GetCompany");
+    return internal::CaptureReturn(context, *span,
+                                   child_->GetCompany(context, request), true);
   }
 
   StatusOr<google::cloud::talent::v4::Company> UpdateCompany(
