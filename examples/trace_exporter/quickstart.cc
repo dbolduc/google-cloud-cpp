@@ -17,7 +17,6 @@
 #include "google/cloud/trace/trace_connection.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/project.h"
-#include <opentelemetry/exporters/ostream/span_exporter_factory.h>
 #include <opentelemetry/sdk/trace/batch_span_processor_factory.h>
 #include <opentelemetry/sdk/trace/tracer_provider_factory.h>
 #include <opentelemetry/trace/provider.h>
@@ -51,21 +50,13 @@ int main(int argc, char* argv[]) {
 
   namespace gc = ::google::cloud;
 
-  bool export_to_cloud_trace = true;
-  if (export_to_cloud_trace) {
-    // Initialize the tracer with our Cloud Trace Exporter.
-    auto gcp_exporter =
-        absl::make_unique<google::cloud::trace_exporter::GcpExporter>(
-            gc::trace::MakeTraceServiceConnection(), gc::Project(argv[1]));
-    initTracer(std::move(gcp_exporter));
-  } else {
-    // Initialize the tracer with an exporter that prints to the command line.
-    auto ostream_exporter =
-        opentelemetry::exporter::trace::OStreamSpanExporterFactory::Create();
-    initTracer(std::move(ostream_exporter));
-  }
+  // Initialize the tracer using the Cloud Trace Exporter.
+  auto gcp_exporter =
+      absl::make_unique<google::cloud::trace_exporter::GcpExporter>(
+          gc::trace::MakeTraceServiceConnection(), gc::Project(argv[1]));
+  initTracer(std::move(gcp_exporter));
 
-  // (Optional): Start an application level span to demonstrate how customers
+  // (Optional): Start an application level span to demonstrate how a customer
   // might instrument their application.
   auto provider = opentelemetry::trace::Provider::GetTracerProvider();
   auto tracer = provider->GetTracer("application tracer");
@@ -79,8 +70,8 @@ int main(int argc, char* argv[]) {
       gc::talent::MakeCompanyServiceConnection(options));
 
   // Call the instrumented API.
-  for (int i = 0; i < 2; i++) {
-    (void)client.GetCompany("not-a-company");
-  }
+  (void)client.GetCompany("not-a-company-1");
+  (void)client.GetCompany("not-a-company-2");
+
   return 0;
 }
