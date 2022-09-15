@@ -19,6 +19,7 @@
 #include "google/cloud/version.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
 #include <opentelemetry/nostd/shared_ptr.h>
+#include <opentelemetry/trace/experimental_semantic_conventions.h>
 #include <opentelemetry/trace/span.h>
 #include <opentelemetry/trace/tracer_provider.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
@@ -39,8 +40,18 @@ namespace internal {
  * this by copying the span's attributes into the grpc::ClientContext's as
  * metadata.
  */
-opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeGrpcSpan(
-    opentelemetry::nostd::string_view name, grpc::ClientContext& context);
+opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
+    grpc::ClientContext& context, opentelemetry::nostd::string_view name);
+
+template <typename T>
+T CaptureReturn(grpc::ClientContext& context, opentelemetry::trace::Span& span,
+                T value, bool end) {
+  // TODO(dbolduc): "grpc.peer" is not a real key. We need to split it into
+  //                AttrNetPeerIp and AttrNetPeerPort.
+  // Capture at least one field from the ClientContext as a span attribute.
+  span.SetAttribute("grpc.peer", context.peer());
+  return CaptureReturn(span, std::move(value), end);
+}
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
 

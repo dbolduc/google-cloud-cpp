@@ -16,7 +16,6 @@
 #include <grpcpp/client_context.h>
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
 #include <opentelemetry/context/propagation/global_propagator.h>
-#include <opentelemetry/trace/experimental_semantic_conventions.h>
 #include <opentelemetry/trace/provider.h>
 #include <opentelemetry/trace/tracer_provider.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
@@ -41,6 +40,8 @@ class GrpcClientCarrier
 
   void Set(opentelemetry::nostd::string_view key,
            opentelemetry::nostd::string_view value) noexcept override {
+    // Send span details over the network. We can potentially associate this
+    // call with traces that Google collects on the server-side.
     context_.AddMetadata(key.data(), value.data());
   }
 
@@ -48,13 +49,13 @@ class GrpcClientCarrier
 };
 }  // namespace
 
-opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeGrpcSpan(
-    opentelemetry::nostd::string_view name, grpc::ClientContext& context) {
+opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
+    grpc::ClientContext& context, opentelemetry::nostd::string_view name) {
   // Start a span, setting at least one attribute specific to grpc
   auto span = GetTracer()->StartSpan(
       name, {{OTEL_GET_TRACE_ATTR(AttrRpcSystem), "grpc"}},
       {.kind = opentelemetry::trace::SpanKind::kClient});
-  // TODO(dbolduc): We probably want to factor out the injection part...
+  // TODO(dbolduc): Long term, we will want to factor out the injection part.
   auto current = opentelemetry::context::RuntimeContext::GetCurrent();
   GrpcClientCarrier carrier(context);
   auto prop = opentelemetry::context::propagation::GlobalTextMapPropagator::
