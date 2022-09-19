@@ -81,9 +81,7 @@ if (opentelemetry-cpp_FOUND)
                opentelemetry-cpp::trace)
     target_compile_definitions(
         google_cloud_cpp_common
-        PUBLIC # Configure OpenTelemetry to use the std:: and absl:: types
-               HAVE_ABSEIL
-               # Enable OpenTelemetry features in google-cloud-cpp
+        PUBLIC # Enable OpenTelemetry features in google-cloud-cpp
                GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY)
 endif ()
 
