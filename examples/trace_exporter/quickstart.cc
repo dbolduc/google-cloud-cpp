@@ -14,11 +14,11 @@
 
 #include "google/cloud/talent/company_client.h"
 #include "google/cloud/trace/exporter/gcp_exporter.h"
-// Include the Cloud Trace Context propagator, which is in `internal` for now, but
-// will likely move out of google-cloud-cpp later.
-#include "google/cloud/internal/open_telemetry.h"
+// Include the Cloud Trace Context propagator, which is in `internal` for now,
+// but will likely move out of google-cloud-cpp later.
 #include "google/cloud/trace/trace_connection.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/open_telemetry.h"
 #include "google/cloud/project.h"
 #include <opentelemetry/context/propagation/global_propagator.h>
 #include <opentelemetry/sdk/trace/batch_span_processor_factory.h>

@@ -18,10 +18,10 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
-#include <opentelemetry/trace/context.h>
-#include <opentelemetry/trace/default_span.h>
 #include <opentelemetry/context/propagation/text_map_propagator.h>
 #include <opentelemetry/nostd/string_view.h>
+#include <opentelemetry/trace/context.h>
+#include <opentelemetry/trace/default_span.h>
 #include <opentelemetry/trace/span.h>
 #include <opentelemetry/trace/span_context.h>
 #include <opentelemetry/trace/tracer.h>

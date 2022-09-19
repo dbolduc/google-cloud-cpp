@@ -61,7 +61,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
   return span;
 }
 
-void InjectSpanContext(grpc::ClientContext &context) {
+void InjectSpanContext(grpc::ClientContext& context) {
   auto current = opentelemetry::context::RuntimeContext::GetCurrent();
   GrpcClientCarrier carrier(context);
   auto prop = opentelemetry::context::propagation::GlobalTextMapPropagator::
