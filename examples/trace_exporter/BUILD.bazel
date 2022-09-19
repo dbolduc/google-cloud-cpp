@@ -19,9 +19,6 @@ cc_binary(
     srcs = [
         "quickstart.cc",
     ],
-    # This is needed when a customer's application has OT, but they build
-    # google-cloud-cpp without OT.
-    defines = ["HAVE_ABSEIL"],
     deps = [
         "@com_github_googleapis_google_cloud_cpp//:experimental-trace_exporter",
         "@com_github_googleapis_google_cloud_cpp//:talent",

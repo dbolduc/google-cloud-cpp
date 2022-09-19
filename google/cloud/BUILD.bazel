@@ -37,8 +37,6 @@ cc_library(
         "//:have_open_telemetry": [
             # Enable OpenTelemetry features in google-cloud-cpp
             "GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY",
-            # Configure OpenTelemetry to use the std:: and absl:: types
-            "HAVE_ABSEIL",
         ],
         "//conditions:default": [],
     }),
@@ -57,7 +55,6 @@ cc_library(
     ] + select({
         "//:have_open_telemetry": [
             "@io_opentelemetry_cpp//api",
-            "@io_opentelemetry_cpp//sdk/src/trace",
         ],
         "//conditions:default": [],
     }),
@@ -96,6 +93,7 @@ load(
     ] + select({
         "//:have_open_telemetry": [
             "@io_opentelemetry_cpp//exporters/memory:in_memory_span_exporter",
+            "@io_opentelemetry_cpp//sdk/src/trace",
         ],
         "//conditions:default": [],
     }),

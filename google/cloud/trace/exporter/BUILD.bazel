@@ -40,22 +40,28 @@ cc_library(
     name = "google_cloud_cpp_trace_exporter",
     srcs = exporter_srcs,
     hdrs = exporter_hdrs,
-    defines = ["HAVE_ABSEIL"],
     visibility = ["//:__pkg__"],
     deps = [
         "//:trace",
-    ],
+    ] + select({
+        "//:have_open_telemetry": [
+            "@io_opentelemetry_cpp//sdk/src/trace",
+        ],
+        "//conditions:default": [],
+    }),
 )
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
-    defines = ["HAVE_ABSEIL"],
     deps = [
         ":google_cloud_cpp_trace_exporter",
         "//:trace_mocks",
         "@com_google_googletest//:gtest_main",
-        "@io_opentelemetry_cpp//api",
-        "@io_opentelemetry_cpp//sdk/src/trace",
-    ],
+    ] + select({
+        "//:have_open_telemetry": [
+            "@io_opentelemetry_cpp//sdk/src/trace",
+        ],
+        "//conditions:default": [],
+    }),
 ) for test in exporter_unit_tests]

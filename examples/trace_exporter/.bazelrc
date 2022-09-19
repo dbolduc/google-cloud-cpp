@@ -31,4 +31,5 @@ build:macos --cxxopt=-std=c++14
 build --experimental_convenience_symlinks=ignore
 
 # Build google-cloud-cpp with OpenTelemetry
+build --@io_opentelemetry_cpp//api:with_abseil
 build --@com_github_googleapis_google_cloud_cpp//:experimental-open_telemetry

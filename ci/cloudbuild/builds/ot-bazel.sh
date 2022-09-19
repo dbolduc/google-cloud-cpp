@@ -25,6 +25,7 @@ export CXX=clang++
 
 mapfile -t args < <(bazel::common_args)
 args+=("--//:experimental-open_telemetry")
+args+=("--@io_opentelemetry_cpp//api:with_abseil")
 bazel test "${args[@]}" --test_tag_filters=-integration-test ...
 
 mapfile -t integration_args < <(integration::bazel_args)
