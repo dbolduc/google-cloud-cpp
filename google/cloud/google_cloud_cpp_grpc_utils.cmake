@@ -68,6 +68,8 @@ add_library(
     internal/grpc_channel_credentials_authentication.h
     internal/grpc_impersonate_service_account.cc
     internal/grpc_impersonate_service_account.h
+    internal/grpc_open_telemetry.cc
+    internal/grpc_open_telemetry.h
     internal/grpc_request_metadata.cc
     internal/grpc_request_metadata.h
     internal/grpc_service_account_authentication.cc

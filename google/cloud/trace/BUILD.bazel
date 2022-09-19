@@ -24,15 +24,23 @@ HEADER_GLOB = "**/*.h"
 
 MOCK_HEADER_GLOB = "mocks/*.h"
 
+EXPORTER_GLOB = "exporter/**"
+
 cc_library(
     name = "google_cloud_cpp_trace",
     srcs = glob(
         include = [SOURCE_GLOB],
-        exclude = [MOCK_SOURCE_GLOB],
+        exclude = [
+            MOCK_SOURCE_GLOB,
+            EXPORTER_GLOB,
+        ],
     ),
     hdrs = glob(
         include = [HEADER_GLOB],
-        exclude = [MOCK_HEADER_GLOB],
+        exclude = [
+            MOCK_HEADER_GLOB,
+            EXPORTER_GLOB,
+        ],
     ),
     visibility = ["//:__pkg__"],
     deps = [

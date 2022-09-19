@@ -1,4 +1,4 @@
-# Copyright 2018 Google LLC
+# Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,16 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include(CMakeFindDependencyMacro)
-find_dependency(Threads)
-find_dependency(absl)
-# We use find_package instead of find_dependency, because we do not want to
-# forward the REQUIRED flag. We manually forward the QUIET flag.
-set(cmake_fd_quiet_arg)
-if(${CMAKE_FIND_PACKAGE_NAME}_FIND_QUIETLY)
-  set(cmake_fd_quiet_arg QUIET)
-endif()
-find_package(opentelemetry-cpp CONFIG ${cmake_fd_quiet_arg})
-set(cmake_fd_quiet_arg)
+licenses(["notice"])  # Apache 2.0
 
-include("${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_common-targets.cmake")
+cc_binary(
+    name = "quickstart",
+    srcs = [
+        "quickstart.cc",
+    ],
+    deps = [
+        "@com_github_googleapis_google_cloud_cpp//:experimental-trace_exporter",
+        "@com_github_googleapis_google_cloud_cpp//:talent",
+        "@com_github_googleapis_google_cloud_cpp//:trace",
+        "@io_opentelemetry_cpp//api",
+        "@io_opentelemetry_cpp//exporters/ostream:ostream_span_exporter",
+    ],
+)
