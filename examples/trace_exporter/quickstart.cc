@@ -14,9 +14,13 @@
 
 #include "google/cloud/talent/company_client.h"
 #include "google/cloud/trace/exporter/gcp_exporter.h"
+// Include the Cloud Trace Context propagator, which is in `internal` for now, but
+// will likely move out of google-cloud-cpp later.
+#include "google/cloud/internal/open_telemetry.h"
 #include "google/cloud/trace/trace_connection.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/project.h"
+#include <opentelemetry/context/propagation/global_propagator.h>
 #include <opentelemetry/sdk/trace/batch_span_processor_factory.h>
 #include <opentelemetry/sdk/trace/tracer_provider_factory.h>
 #include <opentelemetry/trace/provider.h>
@@ -28,7 +32,9 @@ namespace {
 // Copy the simple example provided in the opentelemetry-cpp repo:
 // https://github.com/open-telemetry/opentelemetry-cpp/blob/b8504d978d2cff1a5255ca8f55ab76f7ce6a49f7/examples/simple/main.cc
 void initTracer(
-    std::unique_ptr<opentelemetry::sdk::trace::SpanExporter> exporter) {
+    std::unique_ptr<opentelemetry::sdk::trace::SpanExporter> exporter,
+    std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+        propagator) {
   auto processor = opentelemetry::sdk::trace::BatchSpanProcessorFactory::Create(
       std::move(exporter),
       opentelemetry::sdk::trace::BatchSpanProcessorOptions{});
@@ -37,7 +43,11 @@ void initTracer(
           std::move(processor));
 
   // Set the global trace provider
-  trace_api::Provider::SetTracerProvider(provider);
+  opentelemetry::trace::Provider::SetTracerProvider(provider);
+
+  // Set the global propagator
+  opentelemetry::context::propagation::GlobalTextMapPropagator::
+      SetGlobalPropagator(std::move(propagator));
 }
 
 }  // namespace
@@ -50,11 +60,12 @@ int main(int argc, char* argv[]) {
 
   namespace gc = ::google::cloud;
 
-  // Initialize the tracer using the Cloud Trace Exporter.
+  // Initialize the tracer using the Cloud Trace exporter and propagator.
   auto gcp_exporter =
       absl::make_unique<google::cloud::trace_exporter::GcpExporter>(
           gc::trace::MakeTraceServiceConnection(), gc::Project(argv[1]));
-  initTracer(std::move(gcp_exporter));
+  auto gcp_propagator = std::make_shared<gc::internal::CloudTraceContext>();
+  initTracer(std::move(gcp_exporter), std::move(gcp_propagator));
 
   // (Optional): Start an application level span to demonstrate how a customer
   // might instrument their application.
