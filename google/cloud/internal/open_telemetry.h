@@ -18,8 +18,13 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
+#include <opentelemetry/trace/context.h>
+#include <opentelemetry/trace/default_span.h>
+#include <opentelemetry/context/propagation/text_map_propagator.h>
 #include <opentelemetry/nostd/string_view.h>
 #include <opentelemetry/trace/span.h>
+#include <opentelemetry/trace/span_context.h>
+#include <opentelemetry/trace/tracer.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
 #include <chrono>
 #include <functional>
@@ -46,8 +51,45 @@ StatusOr<T> CaptureReturn(opentelemetry::trace::Span& span, StatusOr<T> value,
   return value;
 }
 
+// TODO(dbolduc) : I think this belongs upstream in:
+// open-telemetry/opentelemetry-cpp/api/include/opentelemetry/trace/propagation
+/**
+ * A context propagator, specifically for Google Cloud.
+ *
+ * @see https://cloud.google.com/trace/docs/setup#force-trace for the
+ * implementation specification.
+ */
+class CloudTraceContext
+    : public opentelemetry::context::propagation::TextMapPropagator {
+ public:
+  explicit CloudTraceContext() = default;
+
+  // Returns the context that is stored in the carrier with the TextMapCarrier
+  // as extractor.
+  opentelemetry::context::Context Extract(
+      opentelemetry::context::propagation::TextMapCarrier const&,
+      opentelemetry::context::Context& context) noexcept override {
+    // TODO(dbolduc): Extract the context. We can copy the jaeger propagator.
+    auto span_context = opentelemetry::trace::SpanContext::GetInvalid();
+    auto span = opentelemetry::trace::DefaultSpan::GetInvalid();
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> sp{&span};
+    return opentelemetry::trace::SetSpan(context, sp);
+  }
+
+  // Sets the context for carrier with self defined rules.
+  void Inject(opentelemetry::context::propagation::TextMapCarrier& carrier,
+              opentelemetry::context::Context const& context) noexcept override;
+
+  // Gets the fields set in the carrier by the `inject` method
+  bool Fields(opentelemetry::nostd::function_ref<
+              bool(opentelemetry::nostd::string_view)>
+                  callback) const noexcept override {
+    return callback("x-cloud-trace-context");
+  }
+};
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
-        //
+
 std::function<void(std::chrono::milliseconds)> MakeTracingSleeper(
     char const* location,
     std::function<void(std::chrono::milliseconds)> const& sleeper);
