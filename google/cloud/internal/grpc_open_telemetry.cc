@@ -16,6 +16,7 @@
 #include <grpcpp/client_context.h>
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
 #include <opentelemetry/context/propagation/global_propagator.h>
+#include <opentelemetry/context/propagation/text_map_propagator.h>
 #include <opentelemetry/trace/provider.h>
 #include <opentelemetry/trace/tracer_provider.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
@@ -27,6 +28,7 @@ namespace internal {
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
 namespace {
+
 class GrpcClientCarrier
     : public opentelemetry::context::propagation::TextMapCarrier {
  public:
@@ -40,28 +42,31 @@ class GrpcClientCarrier
 
   void Set(opentelemetry::nostd::string_view key,
            opentelemetry::nostd::string_view value) noexcept override {
-    // Send span details over the network. We can potentially associate this
-    // call with traces that Google collects on the server-side.
+    // Forward the trace context over the network. We can potentially associate
+    // this call with traces that Google collects on the server-side.
     context_.AddMetadata(key.data(), value.data());
   }
 
   grpc::ClientContext& context_;
 };
+
 }  // namespace
 
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
-    grpc::ClientContext& context, opentelemetry::nostd::string_view name) {
+    grpc::ClientContext&, opentelemetry::nostd::string_view name) {
   // Start a span, setting at least one attribute specific to grpc
   auto span = GetTracer()->StartSpan(
       name, {{OTEL_GET_TRACE_ATTR(AttrRpcSystem), "grpc"}},
       {.kind = opentelemetry::trace::SpanKind::kClient});
-  // TODO(dbolduc): Long term, we will want to factor out the injection part.
+  return span;
+}
+
+void InjectSpanContext(grpc::ClientContext &context) {
   auto current = opentelemetry::context::RuntimeContext::GetCurrent();
   GrpcClientCarrier carrier(context);
   auto prop = opentelemetry::context::propagation::GlobalTextMapPropagator::
       GetGlobalPropagator();
   prop->Inject(carrier, current);
-  return span;
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY

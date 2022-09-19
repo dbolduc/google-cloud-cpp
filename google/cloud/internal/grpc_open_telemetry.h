@@ -53,6 +53,8 @@ T CaptureReturn(grpc::ClientContext& context, opentelemetry::trace::Span& span,
   return CaptureReturn(span, std::move(value), end);
 }
 
+void InjectSpanContext(grpc::ClientContext& context);
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
 
 }  // namespace internal
