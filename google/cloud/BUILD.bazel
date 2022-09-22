@@ -331,3 +331,19 @@ load(":google_cloud_cpp_rest_protobuf_internal_unit_tests.bzl", "google_cloud_cp
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_rest_protobuf_internal_unit_tests]
+
+cc_test(
+    name = "internal_open_telemetry_defines_test",
+    srcs = select({
+        "//:have_open_telemetry": [
+            "internal/open_telemetry_enabled_test.cc",
+        ],
+        "//conditions:default": [
+            "internal/open_telemetry_disabled_test.cc",
+        ],
+    }),
+    deps = [
+        "//:common",
+        "@com_google_googletest//:gtest_main",
+    ],
+)

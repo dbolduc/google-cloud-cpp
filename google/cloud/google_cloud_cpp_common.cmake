@@ -338,6 +338,16 @@ if (BUILD_TESTING)
     export_list_to_bazel("google_cloud_cpp_common_unit_tests.bzl"
                          "google_cloud_cpp_common_unit_tests" YEAR "2018")
 
+    # Add a test to confirm GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY is set when
+    # opentelemetry-cpp is present. The same switch is done in bazel.
+    if (opentelemetry-cpp_FOUND)
+        list(APPEND google_cloud_cpp_common_unit_tests
+             internal/open_telemetry_enabled_test.cc)
+    else ()
+        list(APPEND google_cloud_cpp_common_unit_tests
+             internal/open_telemetry_disabled_test.cc)
+    endif ()
+
     foreach (fname ${google_cloud_cpp_common_unit_tests})
         google_cloud_cpp_add_executable(target "common" "${fname}")
         target_link_libraries(
