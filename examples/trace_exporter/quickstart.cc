@@ -82,7 +82,7 @@ int main(int argc, char* argv[]) {
 
   // Call the instrumented API.
   (void)client.GetCompany("not-a-company-1");
-  (void)client.GetCompany("not-a-company-2");
+  (void)client.AsyncGetCompany("not-a-company-2").get();
 
   return 0;
 }

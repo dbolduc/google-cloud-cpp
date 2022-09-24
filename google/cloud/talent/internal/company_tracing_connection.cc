@@ -47,7 +47,15 @@ class CompanyServiceTracingConnection
       google::cloud::talent::v4::GetCompanyRequest const& request) override {
     auto span = internal::MakeSpan("CompanyServiceClient::GetCompany");
     auto scope = internal::GetTracer()->WithActiveSpan(span);
-    return internal::CaptureReturn(*span, child_->GetCompany(request), false);
+    return internal::CaptureReturn(span, child_->GetCompany(request), false);
+  }
+
+  future<StatusOr<google::cloud::talent::v4::Company>> AsyncGetCompany(
+      google::cloud::talent::v4::GetCompanyRequest const& request) override {
+    auto span = internal::MakeSpan("CompanyServiceClient::AsyncGetCompany");
+    auto scope = internal::GetTracer()->WithActiveSpan(span);
+    return internal::CaptureReturn(span, child_->AsyncGetCompany(request),
+                                   true);
   }
 
   StatusOr<google::cloud::talent::v4::Company> UpdateCompany(

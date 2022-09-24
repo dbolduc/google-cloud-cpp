@@ -46,8 +46,23 @@ class CompanyServiceTracingStub : public CompanyServiceStub {
     auto span = internal::MakeSpan(context, "CompanyServiceStub::GetCompany");
     auto scope = internal::GetTracer()->WithActiveSpan(span);
     internal::InjectSpanContext(context);
-    return internal::CaptureReturn(context, *span,
+    return internal::CaptureReturn(context, span,
                                    child_->GetCompany(context, request), false);
+  }
+
+  future<StatusOr<google::cloud::talent::v4::Company>> AsyncGetCompany(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::talent::v4::GetCompanyRequest const& request) override {
+    // TODO(dbolduc): Is this allowed? Taking a ref, then moving the ptr below?
+    auto& ctx_ref = *context;
+    auto span =
+        internal::MakeSpan(ctx_ref, "CompanyServiceStub::AsyncGetCompany");
+    auto scope = internal::GetTracer()->WithActiveSpan(span);
+    internal::InjectSpanContext(ctx_ref);
+    return internal::CaptureReturn(
+        ctx_ref, span, child_->AsyncGetCompany(cq, std::move(context), request),
+        true);
   }
 
   StatusOr<google::cloud::talent::v4::Company> UpdateCompany(

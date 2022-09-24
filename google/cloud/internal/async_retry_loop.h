@@ -24,8 +24,8 @@
 #include "google/cloud/internal/open_telemetry.h"
 #include "google/cloud/internal/retry_loop_helpers.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/internal/setup_context.h"
 #include "google/cloud/internal/scope.h"
+#include "google/cloud/internal/setup_context.h"
 #include "google/cloud/version.h"
 #include "absl/meta/type_traits.h"
 // TODO(dbolduc) : Ideally, we'd stay away from ifdefs in this file. But it may
@@ -258,7 +258,7 @@ class AsyncRetryLoopImpl
                cq_.MakeRelativeTimer(backoff_policy_->OnCompletion())
                    .then([self, span](future<TimerArgType> f) {
                      auto t = f.get();
-                     internal::CaptureReturn(*span, t, true);
+                     internal::CaptureReturn(span, t, true);
                      self->OnBackoff(std::move(t));
                    }));
 #else
@@ -267,7 +267,7 @@ class AsyncRetryLoopImpl
                    .then([self](future<TimerArgType> f) {
                      self->OnBackoff(f.get());
                    }));
-#endif // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
   }
 
   void OnAttempt(T result) {

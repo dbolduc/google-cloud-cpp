@@ -152,11 +152,11 @@ TEST_F(OpenTelemetryTest, CaptureReturn) {
   auto v2 = StatusOr<int>(Status(StatusCode::kAborted, "fail"));
 
   auto s1 = MakeSpan("s1");
-  auto r1 = CaptureReturn(*s1, v1, true);
+  auto r1 = CaptureReturn(s1, v1, true);
   EXPECT_EQ(r1, v1);
 
   auto s2 = MakeSpan("s2");
-  auto r2 = CaptureReturn(*s2, v2, true);
+  auto r2 = CaptureReturn(s2, v2, true);
   EXPECT_EQ(r2, v2);
 
   // Let's confirm that the status was set for these spans.

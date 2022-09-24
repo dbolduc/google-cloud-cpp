@@ -37,20 +37,22 @@ namespace internal {
  *
  * In order to get visibility into anything happening on the server side, we
  * need to associate the requests with the spans that we export. We accomplish
- * this by copying the span's attributes into the grpc::ClientContext's as
+ * this by copying the span's attributes into the grpc::ClientContext as
  * metadata.
  */
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
     grpc::ClientContext& context, opentelemetry::nostd::string_view name);
 
 template <typename T>
-T CaptureReturn(grpc::ClientContext& context, opentelemetry::trace::Span& span,
-                T value, bool end) {
+T CaptureReturn(
+    grpc::ClientContext& context,
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span, T value,
+    bool end) {
   // TODO(dbolduc): "grpc.peer" is not a real key. We need to split it into
   //                AttrNetPeerIp and AttrNetPeerPort.
   // Capture at least one field from the ClientContext as a span attribute.
-  span.SetAttribute("grpc.peer", context.peer());
-  return CaptureReturn(span, std::move(value), end);
+  span->SetAttribute("grpc.peer", context.peer());
+  return CaptureReturn(std::move(span), std::move(value), end);
 }
 
 void InjectSpanContext(grpc::ClientContext& context);

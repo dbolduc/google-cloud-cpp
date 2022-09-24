@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPEN_TELEMETRY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPEN_TELEMETRY_H
 
+#include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
@@ -45,10 +46,22 @@ void CaptureStatusDetails(opentelemetry::trace::Span& span,
                           Status const& status, bool end);
 
 template <typename T>
-StatusOr<T> CaptureReturn(opentelemetry::trace::Span& span, StatusOr<T> value,
-                          bool end) {
-  CaptureStatusDetails(span, value.status(), end);
+StatusOr<T> CaptureReturn(
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const& span,
+    StatusOr<T> value, bool end) {
+  CaptureStatusDetails(*span, value.status(), end);
   return value;
+}
+
+template <typename T>
+future<StatusOr<T>> CaptureReturn(
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const& span,
+    future<StatusOr<T>> fut, bool end) {
+  return fut.then([=](auto f) {
+    auto value = f.get();
+    CaptureStatusDetails(*span, value.status(), end);
+    return value;
+  });
 }
 
 // TODO(dbolduc) : I think this belongs upstream in:
