@@ -345,6 +345,7 @@ Options const& CurrentOptions();
  *
  * @param opts the `Options` to install.
  */
+// TODO(dbolduc): Maybe we should rename this to OptionsScope ?
 class ABSL_MUST_USE_RESULT OptionsSpan {
  public:
   explicit OptionsSpan(Options opts);

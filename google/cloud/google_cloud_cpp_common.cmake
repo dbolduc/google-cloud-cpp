@@ -96,6 +96,7 @@ add_library(
     internal/retry_loop_helpers.h
     internal/retry_policy.cc
     internal/retry_policy.h
+    internal/scope.h
     internal/sha256_hash.cc
     internal/sha256_hash.h
     internal/status_payload_keys.cc

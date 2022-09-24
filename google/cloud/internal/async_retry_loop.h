@@ -19,12 +19,21 @@
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/invoke_result.h"
+#include "google/cloud/internal/open_telemetry.h"
 #include "google/cloud/internal/retry_loop_helpers.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/internal/setup_context.h"
+#include "google/cloud/internal/scope.h"
 #include "google/cloud/version.h"
 #include "absl/meta/type_traits.h"
+// TODO(dbolduc) : Ideally, we'd stay away from ifdefs in this file. But it may
+// actually be the cleanest way to do this.
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
+#include <opentelemetry/trace/scope.h>
+#include <opentelemetry/trace/tracer.h>
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
 #include <grpcpp/grpcpp.h>
 #include <chrono>
 
@@ -191,7 +200,7 @@ class AsyncRetryLoopImpl
     auto weak = std::weak_ptr<AsyncRetryLoopImpl>(this->shared_from_this());
     result_ = promise<T>([weak]() mutable {
       if (auto self = weak.lock()) {
-        OptionsSpan span(self->options_);
+        DarrenScope scope(self->darren_);
         self->Cancel();
       }
     });
@@ -229,7 +238,7 @@ class AsyncRetryLoopImpl
     auto state = StartOperation();
     if (state.cancelled) return;
     auto context = absl::make_unique<grpc::ClientContext>();
-    ConfigureContext(*context, options_);
+    ConfigureContext(*context, darren_.options);
     SetupContext<RetryPolicyType>::Setup(*retry_policy_, *context);
     SetPending(
         state.operation,
@@ -242,11 +251,23 @@ class AsyncRetryLoopImpl
     auto self = this->shared_from_this();
     auto state = StartOperation();
     if (state.cancelled) return;
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
+    auto span =
+        internal::GetTracer()->StartSpan(absl::StrCat(location_, "::backoff"));
+    SetPending(state.operation,
+               cq_.MakeRelativeTimer(backoff_policy_->OnCompletion())
+                   .then([self, span](future<TimerArgType> f) {
+                     auto t = f.get();
+                     internal::CaptureReturn(*span, t, true);
+                     self->OnBackoff(std::move(t));
+                   }));
+#else
     SetPending(state.operation,
                cq_.MakeRelativeTimer(backoff_policy_->OnCompletion())
                    .then([self](future<TimerArgType> f) {
                      self->OnBackoff(f.get());
                    }));
+#endif // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
   }
 
   void OnAttempt(T result) {
@@ -325,7 +346,7 @@ class AsyncRetryLoopImpl
   absl::decay_t<Functor> functor_;
   Request request_;
   char const* location_ = "unknown";
-  Options options_ = CurrentOptions();
+  CurrentDarren darren_;
   Status last_status_ = Status(StatusCode::kUnknown, "Retry policy exhausted");
   promise<T> result_;
 

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/default_completion_queue_impl.h"
+#include "google/cloud/internal/scope.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/options.h"
 #include "absl/memory/memory.h"
@@ -70,7 +71,7 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
   }
 
   void Cancel() override {
-    OptionsSpan span(options_);
+    DarrenScope scope(darren_);
     alarm_.Cancel();
   }
 
@@ -78,7 +79,7 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
   explicit AsyncTimerFuture() : promise_(null_promise_t{}) {}
 
   bool Notify(bool ok) override {
-    OptionsSpan span(options_);
+    DarrenScope scope(darren_);
     promise_.set_value(ok ? ValueType(deadline_) : Canceled());
     return true;
   }
@@ -90,7 +91,7 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
   promise<ValueType> promise_;
   std::chrono::system_clock::time_point deadline_;
   grpc::Alarm alarm_;
-  Options options_ = CurrentOptions();
+  CurrentDarren darren_;
 };
 
 }  // namespace
@@ -111,7 +112,7 @@ class DefaultCompletionQueueImpl::WakeUpRunAsyncLoop
 
  private:
   bool Notify(bool ok) override {
-    OptionsSpan span(options_);
+    DarrenScope scope(darren_);
     if (!ok) return true;  // do not run async operations on shutdown CQs
     if (auto self = weak_.lock()) self->DrainRunAsyncLoop();
     return true;
@@ -119,7 +120,7 @@ class DefaultCompletionQueueImpl::WakeUpRunAsyncLoop
 
   std::weak_ptr<DefaultCompletionQueueImpl> weak_;
   grpc::Alarm alarm_;
-  Options options_ = CurrentOptions();
+  CurrentDarren darren_;
 };
 
 // A helper class to wake up the asynchronous thread and drain the RunAsync()
@@ -138,7 +139,7 @@ class DefaultCompletionQueueImpl::WakeUpRunAsyncOnIdle
 
  private:
   bool Notify(bool ok) override {
-    OptionsSpan span(options_);
+    DarrenScope scope(darren_);
     if (!ok) return true;  // do not run async operations on shutdown CQs
     if (auto self = weak_.lock()) self->DrainRunAsyncOnIdle();
     return true;
@@ -146,7 +147,7 @@ class DefaultCompletionQueueImpl::WakeUpRunAsyncOnIdle
 
   std::weak_ptr<DefaultCompletionQueueImpl> weak_;
   grpc::Alarm alarm_;
-  Options options_ = CurrentOptions();
+  CurrentDarren darren_;
 };
 
 DefaultCompletionQueueImpl::DefaultCompletionQueueImpl()

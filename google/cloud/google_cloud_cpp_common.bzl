@@ -65,6 +65,7 @@ google_cloud_cpp_common_hdrs = [
     "internal/random.h",
     "internal/retry_loop_helpers.h",
     "internal/retry_policy.h",
+    "internal/scope.h",
     "internal/sha256_hash.h",
     "internal/status_payload_keys.h",
     "internal/strerror.h",
