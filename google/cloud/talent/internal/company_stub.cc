@@ -88,6 +88,20 @@ DefaultCompanyServiceStub::ListCompanies(
   return response;
 }
 
+future<StatusOr<google::cloud::talent::v4::Company>>
+DefaultCompanyServiceStub::AsyncGetCompany(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::talent::v4::GetCompanyRequest const& request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::cloud::talent::v4::GetCompanyRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncGetCompany(context, request, cq);
+      },
+      request, std::move(context));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_internal
 }  // namespace cloud

@@ -64,6 +64,9 @@ class CompanyServiceConnectionImpl : public talent::CompanyServiceConnection {
   StreamRange<google::cloud::talent::v4::Company> ListCompanies(
       google::cloud::talent::v4::ListCompaniesRequest request) override;
 
+  future<StatusOr<google::cloud::talent::v4::Company>> AsyncGetCompany(
+      google::cloud::talent::v4::GetCompanyRequest const& request) override;
+
  private:
   std::unique_ptr<talent::CompanyServiceRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();

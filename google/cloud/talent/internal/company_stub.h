@@ -19,6 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_INTERNAL_COMPANY_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_INTERNAL_COMPANY_STUB_H
 
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/talent/v4/company_service.grpc.pb.h>
@@ -53,6 +55,11 @@ class CompanyServiceStub {
   ListCompanies(
       grpc::ClientContext& context,
       google::cloud::talent::v4::ListCompaniesRequest const& request) = 0;
+
+  virtual future<StatusOr<google::cloud::talent::v4::Company>> AsyncGetCompany(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::talent::v4::GetCompanyRequest const& request) = 0;
 };
 
 class DefaultCompanyServiceStub : public CompanyServiceStub {
@@ -81,6 +88,11 @@ class DefaultCompanyServiceStub : public CompanyServiceStub {
   StatusOr<google::cloud::talent::v4::ListCompaniesResponse> ListCompanies(
       grpc::ClientContext& client_context,
       google::cloud::talent::v4::ListCompaniesRequest const& request) override;
+
+  future<StatusOr<google::cloud::talent::v4::Company>> AsyncGetCompany(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::talent::v4::GetCompanyRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::talent::v4::CompanyService::StubInterface>

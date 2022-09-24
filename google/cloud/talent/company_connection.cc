@@ -67,6 +67,14 @@ CompanyServiceConnection::ListCompanies(
       StreamRange<google::cloud::talent::v4::Company>>();
 }
 
+future<StatusOr<google::cloud::talent::v4::Company>>
+CompanyServiceConnection::AsyncGetCompany(
+    google::cloud::talent::v4::GetCompanyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::talent::v4::Company>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<CompanyServiceConnection> MakeCompanyServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

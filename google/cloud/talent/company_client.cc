@@ -113,6 +113,21 @@ CompanyServiceClient::ListCompanies(
   return connection_->ListCompanies(std::move(request));
 }
 
+future<StatusOr<google::cloud::talent::v4::Company>>
+CompanyServiceClient::AsyncGetCompany(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::talent::v4::GetCompanyRequest request;
+  request.set_name(name);
+  return connection_->AsyncGetCompany(request);
+}
+
+future<StatusOr<google::cloud::talent::v4::Company>>
+CompanyServiceClient::AsyncGetCompany(
+    google::cloud::talent::v4::GetCompanyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AsyncGetCompany(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent
 }  // namespace cloud

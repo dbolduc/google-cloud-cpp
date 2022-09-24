@@ -280,6 +280,45 @@ class CompanyServiceClient {
       google::cloud::talent::v4::ListCompaniesRequest request,
       Options opts = {});
 
+  ///
+  /// Retrieves specified company.
+  ///
+  /// @param name  Required. The resource name of the company to be retrieved.
+  ///  The format is
+  ///  "projects/{project_id}/tenants/{tenant_id}/companies/{company_id}", for
+  ///  example, "projects/api-test-project/tenants/foo/companies/bar".
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L32}
+  ///
+  /// [google.cloud.talent.v4.GetCompanyRequest]:
+  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L103}
+  /// [google.cloud.talent.v4.Company]:
+  /// @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
+  ///
+  future<StatusOr<google::cloud::talent::v4::Company>> AsyncGetCompany(
+      std::string const& name, Options opts = {});
+
+  ///
+  /// Retrieves specified company.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::talent::v4::GetCompanyRequest,google/cloud/talent/v4/company_service.proto#L103}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L32}
+  ///
+  /// [google.cloud.talent.v4.GetCompanyRequest]:
+  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L103}
+  /// [google.cloud.talent.v4.Company]:
+  /// @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
+  ///
+  future<StatusOr<google::cloud::talent::v4::Company>> AsyncGetCompany(
+      google::cloud::talent::v4::GetCompanyRequest const& request,
+      Options opts = {});
+
  private:
   std::shared_ptr<CompanyServiceConnection> connection_;
   Options options_;
