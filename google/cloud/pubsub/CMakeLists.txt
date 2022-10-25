@@ -389,6 +389,14 @@ install(
 google_cloud_cpp_install_headers("google_cloud_cpp_pubsub"
                                  "include/google/cloud/pubsub")
 
+# TODO : Testing if this even matters.
+install(
+  FILES "${PROJECT_SOURCE_DIR}/cmake/FindGTest.cmake"
+# TODO : Let's expect it in the mocks directory for now. If it works, we can pull it
+#        out into common.
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_pubsub_mocks"
+    COMPONENT google_cloud_cpp_development)
+
 # Export the CMake targets to make it easy to create configuration files.
 install(
     EXPORT pubsub_mocks-targets
@@ -396,9 +404,25 @@ install(
     COMPONENT google_cloud_cpp_development)
 
 install(
-    TARGETS google_cloud_cpp_pubsub_mocks
+  TARGETS google_cloud_cpp_pubsub_mocks
     EXPORT pubsub_mocks-targets
-    COMPONENT google_cloud_cpp_development)
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+            COMPONENT google_cloud_cpp_runtime
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_runtime
+            NAMELINK_SKIP
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_development)
+# With CMake-3.12 and higher we could avoid this separate command (and the
+# duplication).
+install(
+    TARGETS google_cloud_cpp_pubsub_mocks
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_development
+            NAMELINK_ONLY
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_development)
+
 install(
     FILES ${google_cloud_cpp_pubsub_mocks_hdrs}
     DESTINATION "include/google/cloud/pubsub/mocks"
@@ -431,10 +455,8 @@ install(
 google_cloud_cpp_add_pkgconfig(
     pubsub_mocks "Mocks for the Google Cloud Pub/Sub C++ Client Library"
     "Provides mock classes for the Google Cloud Pub/Sub C++ APIs."
-    "google_cloud_cpp_pubsub" " gtest")
+    "google_cloud_cpp_pubsub" " gmock")
 
-# Create and install the CMake configuration files.
-include(CMakePackageConfigHelpers)
 configure_file("config-mocks.cmake.in"
                "google_cloud_cpp_pubsub_mocks-config.cmake" @ONLY)
 write_basic_package_version_file(

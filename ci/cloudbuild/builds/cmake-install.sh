@@ -25,7 +25,8 @@ source module ci/lib/io.sh
 export CC=clang
 export CXX=clang++
 
-INSTALL_PREFIX="$(mktemp -d)"
+#INSTALL_PREFIX="$(mktemp -d)"
+INSTALL_PREFIX="${HOME}/google-cloud-cpp-installed"
 readonly INSTALL_PREFIX
 
 read -r ENABLED_FEATURES < <(features::list_full_cmake)
@@ -110,7 +111,6 @@ expected_dirs+=(
   ./lib64/cmake/google_cloud_cpp_googleapis
   ./lib64/cmake/google_cloud_cpp_grafeas
   ./lib64/cmake/google_cloud_cpp_grpc_utils
-  ./lib64/cmake/google_cloud_cpp_pubsub
   ./lib64/cmake/google_cloud_cpp_pubsub_mocks
   ./lib64/cmake/google_cloud_cpp_rest_internal
   ./lib64/cmake/google_cloud_cpp_spanner

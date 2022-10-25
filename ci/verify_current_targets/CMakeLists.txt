@@ -30,6 +30,7 @@ set(ga_libraries
     iam
     logging
     pubsub
+    pubsub_mocks
     spanner
     storage)
 
@@ -46,17 +47,31 @@ function (add_test_case name)
     add_test(NAME "${name}" COMMAND "${name}")
 endfunction ()
 
+function (add_test_case_2 name)
+    add_executable("${name}" darren_pubsub_mocks.cc)
+    target_link_libraries("${name}" PRIVATE ${ARGN})
+    add_test(NAME "${name}" COMMAND "${name}")
+endfunction ()
+
 foreach (library ${common_libraries} ${ga_libraries})
     find_package("google_cloud_cpp_${library}" REQUIRED)
 endforeach ()
 
 foreach (library ${common_libraries} ${ga_libraries})
+  if (library STREQUAL "pubsub_mocks")
+    add_test_case_2(test_cmake_${library} google-cloud-cpp::${library})
+  else()
     add_test_case(test_cmake_${library} google-cloud-cpp::${library})
+  endif()
 endforeach ()
 
 foreach (library ${common_libraries} ${ga_libraries})
     message("library=${library}")
     pkg_check_modules(${library} IMPORTED_TARGET REQUIRED
                       google_cloud_cpp_${library})
+  if (library STREQUAL "pubsub_mocks")
+    add_test_case_2(test_pc_${library} PkgConfig::${library})
+  else ()
     add_test_case(test_pc_${library} PkgConfig::${library})
+  endif ()
 endforeach ()

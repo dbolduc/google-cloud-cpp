@@ -14,8 +14,14 @@
 # limitations under the License.
 # ~~~
 
+# TODO : NOTE : This file is to be included in *.cmake.in package config files.
+#        It is not used internally.
+
+# TODO : NOTE : In CMake < 3.23, the built in FindGTest apparently creates GTest::gmock
+#        https://cmake.org/cmake/help/latest/module/FindGTest.html
+
 # GTest always requires thread support.
-find_package(Threads REQUIRED)
+find_dependency(Threads REQUIRED)
 
 # When GTest is compiled with CMake, it exports GTest::gtest, GTest::gmock,
 # GTest::gtest_main and GTest::gmock_main as link targets. On the other hand,
@@ -92,18 +98,19 @@ function (google_cloud_cpp_transfer_library_properties target source)
     endforeach ()
 endfunction ()
 
+include(CMakeFindDependencyMacro)
 include(CTest)
 if (TARGET GTest::gmock)
+    # message(FATAL_ERROR "gmock was found. I guess this file is used?")
     # GTest::gmock is already defined, do not define it again.
-elseif (NOT BUILD_TESTING)
-    # Tests are turned off via -DBUILD_TESTING, do not load the googletest or
-    # googlemock dependency.
 else ()
+  # message(FATAL_ERROR "gmock not found. wtf we do?")
     # Try to find the config package first. If that is not found
-    find_package(GTest CONFIG QUIET)
-    find_package(GMock CONFIG QUIET)
+    find_dependency(GTest CONFIG QUIET)
+    # TODO : can GMock even be found?
+    #find_dependency(GMock CONFIG QUIET)
     if (NOT GTest_FOUND)
-        find_package(GTest MODULE REQUIRED)
+        find_dependency(GTest MODULE REQUIRED)
 
         google_cloud_cpp_create_googletest_aliases()
 

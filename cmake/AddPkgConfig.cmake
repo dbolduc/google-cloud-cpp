@@ -44,7 +44,12 @@ endmacro ()
 function (google_cloud_cpp_add_pkgconfig library name description)
     set(GOOGLE_CLOUD_CPP_PC_NAME "${name}")
     set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION "${description}")
-    set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_${library}")
+    # TODO : interface libraries don't get -l's ???? maybe? Idfk. I feel so dumb.
+    if (library STREQUAL "pubsub_mocks")
+      set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgmock")
+    else ()
+      set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_${library}")
+    endif ()
     string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES ${ARGN})
     google_cloud_cpp_set_pkgconfig_paths()
 
