@@ -156,8 +156,27 @@ void Recordable::AddEvent(
 void Recordable::AddLink(
     opentelemetry::trace::SpanContext const& span_context,
     opentelemetry::common::KeyValueIterable const& attributes) noexcept {
-  (void)span_context;
-  (void)attributes;
+  char span_id[16 + 1];
+  char trace_id[32 + 1];
+  span_id[16] = '\0';
+  trace_id[32] = '\0';
+  span_context.trace_id().ToLowerBase16(
+      opentelemetry::nostd::span<char,
+                                 2 * opentelemetry::trace::TraceId::kSize>{
+          trace_id, 32});
+  span_context.span_id().ToLowerBase16(
+      opentelemetry::nostd::span<char, 2 * opentelemetry::trace::SpanId::kSize>{
+          span_id, 16});
+  auto& link = *span_.mutable_links()->add_link();
+  link.set_span_id(span_id);
+  link.set_trace_id(trace_id);
+
+  auto& map = *link.mutable_attributes()->mutable_attribute_map();
+  attributes.ForEachKeyValue(
+      [&map](nostd::string_view key, common::AttributeValue value) {
+        SetMapAttribute(map, key, value);
+        return true;
+      });
 }
 
 void Recordable::SetStatus(opentelemetry::trace::StatusCode code,
