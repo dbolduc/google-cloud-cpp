@@ -17,6 +17,7 @@
 
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
 #include <opentelemetry/context/propagation/text_map_propagator.h>
@@ -45,6 +46,10 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
 void CaptureStatusDetails(opentelemetry::trace::Span& span,
                           Status const& status, bool end);
 
+Status CaptureReturn(
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const& span,
+    Status status, bool end);
+
 template <typename T>
 StatusOr<T> CaptureReturn(
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const& span,
@@ -62,6 +67,39 @@ future<StatusOr<T>> CaptureReturn(
     CaptureStatusDetails(*span, value.status(), end);
     return value;
   });
+}
+
+template <typename T>
+class TracedStreamRange {
+ public:
+  explicit TracedStreamRange(
+      opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const& span,
+      StreamRange<T> sr, bool end)
+      : span_(span), sr_(std::move(sr)), it_(sr_.begin()), end_(end) {}
+
+  absl::variant<Status, T> Advance() {
+    if (it_ == sr_.end()) return CaptureReturn(span_, Status(), end_);
+    auto sor = *it_;
+    it_++;
+    if (!sor) return CaptureReturn(span_, std::move(sor).status(), end_);
+    return *sor;
+  }
+
+ private:
+  opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const& span_;
+  StreamRange<T> sr_;
+  typename StreamRange<T>::iterator it_;
+  bool end_;
+};
+
+template <typename T>
+StreamRange<T> CaptureReturn(
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const& span,
+    StreamRange<T> sr, bool end) {
+  // StreamRange is not copyable, but a shared ptr to one is.
+  auto impl = std::make_shared<TracedStreamRange<T>>(span, std::move(sr), end);
+  auto reader = [impl = std::move(impl)] { return impl->Advance(); };
+  return internal::MakeStreamRange<T>(std::move(reader));
 }
 
 // TODO(dbolduc) : I think this belongs upstream in:

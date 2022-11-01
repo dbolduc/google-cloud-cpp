@@ -70,7 +70,10 @@ class CompanyServiceTracingConnection
 
   StreamRange<google::cloud::talent::v4::Company> ListCompanies(
       google::cloud::talent::v4::ListCompaniesRequest request) override {
-    return child_->ListCompanies(std::move(request));
+    auto span = internal::MakeSpan("CompanyServiceClient::ListCompanies");
+    auto scope = internal::GetTracer()->WithActiveSpan(span);
+    return internal::CaptureReturn(
+        span, child_->ListCompanies(std::move(request)), true);
   }
 
  private:

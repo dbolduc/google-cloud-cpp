@@ -80,7 +80,12 @@ class CompanyServiceTracingStub : public CompanyServiceStub {
   StatusOr<google::cloud::talent::v4::ListCompaniesResponse> ListCompanies(
       grpc::ClientContext& context,
       google::cloud::talent::v4::ListCompaniesRequest const& request) override {
-    return child_->ListCompanies(context, request);
+    auto span =
+        internal::MakeSpan(context, "CompanyServiceStub::ListCompanies");
+    auto scope = internal::GetTracer()->WithActiveSpan(span);
+    internal::InjectSpanContext(context);
+    return internal::CaptureReturn(
+        context, span, child_->ListCompanies(context, request), false);
   }
 
  private:

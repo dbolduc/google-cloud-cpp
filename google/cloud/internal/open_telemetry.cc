@@ -56,6 +56,13 @@ void CaptureStatusDetails(opentelemetry::trace::Span& span,
   if (end) span.End();
 }
 
+Status CaptureReturn(
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const& span,
+    Status status, bool end) {
+  CaptureStatusDetails(*span, status, end);
+  return status;
+}
+
 void CloudTraceContext::Inject(
     opentelemetry::context::propagation::TextMapCarrier& carrier,
     opentelemetry::context::Context const& context) noexcept {
