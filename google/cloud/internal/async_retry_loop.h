@@ -20,6 +20,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/grpc_open_telemetry.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/open_telemetry.h"
 #include "google/cloud/internal/retry_loop_helpers.h"
@@ -28,12 +29,6 @@
 #include "google/cloud/internal/setup_context.h"
 #include "google/cloud/version.h"
 #include "absl/meta/type_traits.h"
-// TODO(dbolduc) : Ideally, we'd stay away from ifdefs in this file. But it may
-// actually be the cleanest way to do this.
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
-#include <opentelemetry/trace/scope.h>
-#include <opentelemetry/trace/tracer.h>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
 #include <grpcpp/grpcpp.h>
 #include <chrono>
 
@@ -251,23 +246,18 @@ class AsyncRetryLoopImpl
     auto self = this->shared_from_this();
     auto state = StartOperation();
     if (state.cancelled) return;
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
-    auto span =
-        internal::GetTracer()->StartSpan(absl::StrCat(location_, "::backoff"));
-    SetPending(state.operation,
-               cq_.MakeRelativeTimer(backoff_policy_->OnCompletion())
-                   .then([self, span](future<TimerArgType> f) {
-                     auto t = f.get();
-                     internal::CaptureReturn(span, t, true);
-                     self->OnBackoff(std::move(t));
-                   }));
-#else
-    SetPending(state.operation,
-               cq_.MakeRelativeTimer(backoff_policy_->OnCompletion())
-                   .then([self](future<TimerArgType> f) {
-                     self->OnBackoff(f.get());
-                   }));
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY
+    auto loc = std::string{location_};
+    // TODO(dbolduc) : consider whether async retry loop should have a `bool
+    // tracing_` or not. The answer is the same as whether sync retry loop
+    // has one. (which it does).
+    auto timer = TracedAsyncBackoff(loc, cq_, backoff_policy_->OnCompletion());
+    // Apparently separating the future from the `.then()` stops the span from
+    // being active into the next operation. How sure am I? not very. It could
+    // be a race or something. I should be testing this with unit tests, not
+    // integration tests.
+    SetPending(state.operation, timer.then([self](future<TimerArgType> f) {
+      self->OnBackoff(f.get());
+    }));
   }
 
   void OnAttempt(T result) {

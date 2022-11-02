@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/async_polling_loop.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/grpc_open_telemetry.h"
 #include "google/cloud/log.h"
 #include <algorithm>
 #include <mutex>
@@ -104,8 +105,12 @@ class AsyncPollingLoopImpl
     GCP_LOG(DEBUG) << location_ << "() polling loop waiting "
                    << duration.count() << "ms";
     auto self = shared_from_this();
-    cq_.MakeRelativeTimer(duration).then(
-        [self](TimerResult f) { self->OnTimer(std::move(f)); });
+    auto timer = TracedAsyncBackoff(location_, cq_, duration);
+    // Apparently separating the future from the `.then()` stops the span from
+    // being active into the next operation. How sure am I? not very. It could
+    // be a race or something. I should be testing this with unit tests, not
+    // integration tests.
+    timer.then([self](TimerResult f) { self->OnTimer(std::move(f)); });
   }
 
   void OnTimer(TimerResult f) {
