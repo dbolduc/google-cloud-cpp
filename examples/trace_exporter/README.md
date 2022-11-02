@@ -12,6 +12,7 @@ bazel run //:quickstart -- $PROJECT_ID
 
 Note that the `.bazelrc` file in this project is supplying the following
 necessary flags:
+
 - `--@io_opentelemetry_cpp//api:with_abseil`
 - `--@com_github_googleapis_google_cloud_cpp//:experimental-open_telemetry`
 

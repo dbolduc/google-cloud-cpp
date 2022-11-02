@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/talent/company_client.h"
+#include "google/cloud/talent/job_client.h"
 #include "google/cloud/trace/exporter/gcp_exporter.h"
 // Include the Cloud Trace Context propagator, which is in `internal` for now,
 // but will likely move out of google-cloud-cpp later.
@@ -82,7 +83,19 @@ int main(int argc, char* argv[]) {
 
   // Call the instrumented API.
   (void)client.GetCompany("not-a-company-1");
+
+  // Async unary
   (void)client.AsyncGetCompany("not-a-company-2").get();
 
+  // Paginated
+  auto project = gc::Project(argv[1]);
+  (void)client.ListCompanies(project.FullName());
+
+  // LRO (need to use the job client)
+  auto job_client = gc::talent::JobServiceClient(
+      gc::talent::MakeJobServiceConnection(options));
+  std::vector<google::cloud::talent::v4::Job> jobs(10);
+  for (auto i = 0; i != 10; ++i) jobs[i].set_name("Job" + std::to_string(i));
+  (void)job_client.BatchCreateJobs(project.FullName(), jobs).get();
   return 0;
 }
