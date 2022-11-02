@@ -44,7 +44,7 @@ class CompanyServiceTracingStub : public CompanyServiceStub {
       grpc::ClientContext& context,
       google::cloud::talent::v4::GetCompanyRequest const& request) override {
     auto span = internal::MakeSpan(context, "CompanyServiceStub::GetCompany");
-    auto scope = internal::GetTracer()->WithActiveSpan(span);
+    // auto scope = internal::GetTracer()->WithActiveSpan(span);
     internal::InjectSpanContext(context);
     return internal::CaptureReturn(context, span,
                                    child_->GetCompany(context, request), false);
@@ -58,7 +58,7 @@ class CompanyServiceTracingStub : public CompanyServiceStub {
     auto& ctx_ref = *context;
     auto span =
         internal::MakeSpan(ctx_ref, "CompanyServiceStub::AsyncGetCompany");
-    auto scope = internal::GetTracer()->WithActiveSpan(span);
+    // auto scope = internal::GetTracer()->WithActiveSpan(span);
     internal::InjectSpanContext(ctx_ref);
     return internal::CaptureReturn(
         ctx_ref, span, child_->AsyncGetCompany(cq, std::move(context), request),
@@ -82,7 +82,7 @@ class CompanyServiceTracingStub : public CompanyServiceStub {
       google::cloud::talent::v4::ListCompaniesRequest const& request) override {
     auto span =
         internal::MakeSpan(context, "CompanyServiceStub::ListCompanies");
-    auto scope = internal::GetTracer()->WithActiveSpan(span);
+    // auto scope = internal::GetTracer()->WithActiveSpan(span);
     internal::InjectSpanContext(context);
     return internal::CaptureReturn(
         context, span, child_->ListCompanies(context, request), false);
