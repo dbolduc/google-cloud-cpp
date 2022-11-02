@@ -63,6 +63,16 @@ Status CaptureReturn(
   return status;
 }
 
+future<Status> CaptureReturn(
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const& span,
+    future<Status> fut, bool end) {
+  return fut.then([=](auto f) {
+    auto status = f.get();
+    CaptureStatusDetails(*span, status, end);
+    return status;
+  });
+}
+
 void CloudTraceContext::Inject(
     opentelemetry::context::propagation::TextMapCarrier& carrier,
     opentelemetry::context::Context const& context) noexcept {

@@ -50,6 +50,10 @@ Status CaptureReturn(
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const& span,
     Status status, bool end);
 
+future<Status> CaptureReturn(
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const& span,
+    future<Status> fut, bool end);
+
 template <typename T>
 StatusOr<T> CaptureReturn(
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const& span,
