@@ -149,6 +149,8 @@ std::function<void(std::chrono::milliseconds)> MakeTracingSleeper(
     char const* location,
     std::function<void(std::chrono::milliseconds)> const& sleeper);
 
+void AddSpanAttribute(std::string key, std::string value);
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
