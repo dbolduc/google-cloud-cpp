@@ -150,6 +150,10 @@ if (opentelemetry-cpp_FOUND)
         google_cloud_cpp_common
         PUBLIC # Enable OpenTelemetry features in google-cloud-cpp
                GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY)
+    set(GOOGLE_CLOUD_CPP_FIND_OPTIONAL_DEPENDENCIES
+        "find_dependency(opentelemetry-cpp)")
+else ()
+    set(GOOGLE_CLOUD_CPP_FIND_OPTIONAL_DEPENDENCIES "")
 endif ()
 google_cloud_cpp_add_common_options(google_cloud_cpp_common)
 target_include_directories(
