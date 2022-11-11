@@ -102,6 +102,20 @@ message ServiceConfiguration {
   bool generate_rest_transport = 17;
 }
 
+message LibraryConfiguration {
+  string name = 1;
+  string display_name = 2;
+  string description = 3;
+  string cloud_service_root = 4;
+  string cloud_service_docs = 5;
+  string cloud_quickstart = 6;
+  bool experimental = 7;
+  repeated ServiceConfiguration service = 8;
+}
+
 message GeneratorConfiguration {
-  repeated ServiceConfiguration service = 1;
+  repeated LibraryConfiguration library = 1;
+
+  // Support standalone services, for libraries that have handwritten documentation.
+  repeated ServiceConfiguration service = 2;
 }
