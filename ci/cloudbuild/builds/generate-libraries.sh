@@ -19,6 +19,7 @@ set -euo pipefail
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/bazel.sh
 source module ci/cloudbuild/builds/lib/git.sh
+source module ci/cloudbuild/builds/lib/features.sh
 
 bazel_output_base="$(bazel info output_base)"
 
@@ -65,6 +66,41 @@ if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
 else
   io::log_red "Skipping update of protobuf lists/deps."
 fi
+
+# TODO : Darren : just run checkers pretty much, now that the generator is responsible for .md files
+# The markdown generators run last. This is useful because as part of the
+# markdown generation we insert examples (such as quickstart programs) into
+# markdown files. It is nice if those examples are properly formatted.
+printf "%-50s" "Running markdown generators:" >&2
+time {
+  declare -A -r GENERATOR_MAP=(
+    ["ci/generate-markdown/generate-readme.sh"]="/dev/null"
+    ["ci/generate-markdown/generate-packaging.sh"]="doc/packaging.md"
+  )
+  for generator in "${!GENERATOR_MAP[@]}"; do
+    "${generator}" >"${GENERATOR_MAP[${generator}]}"
+  done
+
+  mapfile -t libraries < <(features::libraries)
+  for library in "${libraries[@]}"; do
+    ci/generate-markdown/update-library-readme.sh "${library}"
+  done
+}
+
+printf "%-50s" "Running markdown formatter:" >&2
+time {
+  # See `.mdformat.toml` for the configuration parameters.
+  git ls-files -z -- '*.md' | xargs -P "$(nproc)" -n 1 -0 mdformat
+}
+
+printf "%-50s" "Running doxygen landing-page updates:" >&2
+time {
+  mapfile -t libraries < <(features::libraries)
+  for library in "${libraries[@]}"; do
+    ci/generate-markdown/update-library-landing-dox.sh "${library}"
+  done
+}
+# TODO : End todo.
 
 # This build should fail if any generated files differ from what was checked
 # in. We only look in the google/ directory so that the build doesn't fail if
