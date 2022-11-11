@@ -18,7 +18,7 @@ This repository contains idiomatic C++ client libraries for the following
 
 <!-- inject-GA-libraries-start -->
 
-- [Access Approval API](google/cloud/accessapproval/README.md)
+- [Access Approval](google/cloud/accessapproval/README.md)
   [\[quickstart\]](google/cloud/accessapproval/quickstart/README.md)
   [\[reference\]](https://googleapis.dev/cpp/google-cloud-accessapproval/latest)
 - [Access Context Manager API](google/cloud/accesscontextmanager/README.md)
