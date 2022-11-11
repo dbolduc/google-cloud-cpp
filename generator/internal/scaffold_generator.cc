@@ -176,6 +176,215 @@ include("$${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_$library$-targets.cmake")
   printer.Print(variables, kText);
 }
 
+void GenerateReadmeDarren(std::ostream& os,
+                          std::map<std::string, std::string> const& variables) {
+  auto constexpr kText = R"""(# $title$ C++ Client Library
+$construction$
+This directory contains an idiomatic C++ client library for
+[$title$][cloud-service-root], $description$
+
+$status$ note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
+
+## Supported Platforms
+
+// TODO : some libraries do not support all OS's. Update this to not be lying.
+- Windows, macOS, Linux
+- C++14 (and higher) compilers (we test with GCC >= 7.3, Clang >= 6.0, and
+  MSVC >= 2017)
+- Environments with or without exceptions
+- Bazel (>= 4.0) and CMake (>= 3.10) builds
+
+## Documentation
+
+- Official documentation about the [$title$][cloud-service-docs] service
+- [Reference doxygen documentation][doxygen-link] for each release of this
+  client library
+- Detailed header comments in our [public `.h`][source-link] files
+
+[cloud-service-docs]: $cloud_service_docs$
+[cloud-service-root]: $cloud_service_root$
+[doxygen-link]: https://googleapis.dev/cpp/google-cloud-$library$/latest/
+[source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/$library$
+
+## Quickstart
+
+The [quickstart/](quickstart/README.md) directory contains a minimal environment
+to get started using this client library in a larger project. The following
+"Hello World" program is used in this quickstart, and should give you a taste of
+this library.
+
+<!-- inject-quickstart-start -->
+<!-- inject-quickstart-end -->
+
+- Packaging maintainers or developers who prefer to install the library in a
+  fixed directory (such as `/usr/local` or `/opt`) should consult the
+  [packaging guide](/doc/packaging.md).
+- Developers that prefer using a package manager such as
+  [vcpkg](https://vcpkg.io), [Conda](https://conda.io),
+  or [Conan](https://conan.io) should follow the instructions for their package
+  manager.
+- Developers wanting to use the libraries as part of a larger CMake or Bazel
+  project should consult the [quickstart guides](#quickstart) for the library
+  or libraries they want to use.
+- Developers wanting to compile the library just to run some examples or
+  tests should read the current document.
+- Contributors and developers to `google-cloud-cpp` should consult the guide to
+  [set up a development workstation][howto-setup-dev-workstation].
+
+[howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
+
+## Contributing changes
+
+See [`CONTRIBUTING.md`](/CONTRIBUTING.md) for details on how to
+contribute to this project, including how to build and test your changes
+as well as how to properly format your code.
+
+## Licensing
+
+Apache 2.0; see [`LICENSE`](/LICENSE) for details.
+)""";
+  google::protobuf::io::OstreamOutputStream output(&os);
+  google::protobuf::io::Printer printer(&output, '$');
+  printer.Print(variables, kText);
+}
+
+void GenerateDoxygenMainPageDarren(
+    std::ostream& os, std::map<std::string, std::string> const& variables) {
+  auto constexpr kText = R"""(/*!
+
+@mainpage $title$ C++ Client Library
+
+An idiomatic C++ client library for [$title$][cloud-service-root], $description$
+
+$status$ note that the Google Cloud C++ client libraries do **not** follow
+[Semantic Versioning](https://semver.org/).
+
+This library requires a C++14 compiler. It is supported (and tested) on multiple
+Linux distributions, as well as Windows and macOS. The [README][github-readme]
+on [GitHub][github-link] provides detailed instructions to install the necessary
+dependencies, as well as how to compile the client library.
+
+@tableofcontents{HTML:2}
+
+## Setting up your repo
+
+In order to use the $title$ C++ client library from your own code,
+you'll need to configure your build system to discover and compile the Cloud
+C++ client libraries. In some cases your build system or package manager may
+need to download the libraries too. The Cloud C++ client libraries natively
+support [Bazel](https://bazel.build/) and [CMake](https://cmake.org/) as build
+systems. We've created a minimal, "Hello World", [quickstart][github-quickstart]
+that includes detailed instructions on how to compile the library for use in
+your application. You can fetch the source from [GitHub][github-link] as normal:
+
+@code{.sh}
+git clone https://github.com/googleapis/google-cloud-cpp.git
+cd google-cloud-cpp/google/cloud/$library$/quickstart
+@endcode
+
+@par Example: Quickstart
+
+The following shows the code that you'll run in the
+`google/cloud/$library$/quickstart/` directory,
+which should give you a taste of the $title$ C++ client library API.
+
+@include quickstart.cc
+
+## Environment Variables
+
+<!-- inject-endpoint-env-vars-start -->
+<!-- inject-endpoint-env-vars-end -->
+
+- `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
+  calls. The library injects an additional Stub decorator that prints each gRPC
+  request and response.  Unless you have configured your own logging backend,
+  you should also set `GOOGLE_CLOUD_CPP_ENABLE_CLOG` to produce any output on
+  the program's console.
+
+- `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc-streams` turns on tracing for streaming
+  gRPC calls. This can produce a lot of output, so use with caution!
+
+- `GOOGLE_CLOUD_CPP_TRACING_OPTIONS=...` modifies the behavior of gRPC tracing,
+  including whether messages will be output on multiple lines, or whether
+  string/bytes fields will be truncated.
+
+- `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` turns on logging in the library. Basically
+  the library always "logs" but the logging infrastructure has no backend to
+  actually print anything until the application sets a backend or it sets this
+  environment variable.
+
+## Error Handling
+
+[status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/status_or.h
+
+This library never throws exceptions to signal error, but you can use exceptions
+to detect errors in the returned objects. In general, the library returns a
+[`StatusOr<T>`][status-or-header] if an error is possible. This is an "outcome"
+type, when the operation is successful a `StatusOr<T>` converts to `true` in
+boolean context (and its `.ok()` member function returns `true`), the
+application can then use `operator->` or `operator*` to access the `T` value.
+When the operation fails a `StatusOr<T>` converts to `false` (and `.ok()`
+returns `false`). It is undefined behavior to use the value in this case.
+
+If you prefer to use exceptions on error, you can use the `.value()` accessor.
+It will return the `T` value or throw on error.
+
+For operations that do not return a value the library simply returns
+`google::cloud::Status`.
+
+## Override the default endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the `google::cloud::EndpointOption` when initializing the client
+library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+<!-- inject-endpoint-snippet-end -->
+
+## Override the authentication configuration
+
+Some applications cannot use the default authentication mechanism (known as
+[Application Default Credentials]). You can override this default using
+`google::cloud::UnifiedCredentialsOption`. The following example shows how
+to explicitly load a service account key file.
+
+<!-- inject-service-account-snippet-start -->
+<!-- inject-service-account-snippet-end -->
+
+Keep in mind that we chose this as an example because it is relatively easy to
+understand. Consult the [Best practices for managing service account keys]
+guide for more details.
+
+@see @ref guac - for more information on the factory functions to create
+`google::cloud::Credentials` objects.
+
+[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
+[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
+
+## Retry, Backoff, and Idempotency Policies.
+
+The library automatically retries requests that fail with transient errors, and
+uses [exponential backoff] to backoff between retries. Application developers
+can override the default policies.
+
+[cloud-service-root]: $cloud_service_root$
+[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
+[github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
+<!-- The ugly %2E disables auto-linking in Doxygen -->
+[github-readme]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/$library$/README%2Emd
+[github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/$library$/quickstart/README%2Emd
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+// <!-- inject-endpoint-pages-end -->
+)""";
+  google::protobuf::io::OstreamOutputStream output(&os);
+  google::protobuf::io::Printer printer(&output, '$');
+  printer.Print(variables, kText);
+}
+
 void GenerateReadme(std::ostream& os,
                     std::map<std::string, std::string> const& variables) {
   auto constexpr kText = R"""(# $title$ C++ Client Library
@@ -192,7 +401,7 @@ libraries do **not** follow [Semantic Versioning](https://semver.org/).
 * C++14 (and higher) compilers (we test with GCC >= 7.3, Clang >= 6.0, and
   MSVC >= 2017)
 * Environments with or without exceptions
-* Bazel (>= 4.0) and CMake (>= 3.5) builds
+* Bazel (>= 4.0) and CMake (>= 3.10) builds
 
 ## Documentation
 
@@ -825,7 +1034,7 @@ set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 ```
 
 [bazel-install]: https://docs.bazel.build/versions/main/install.html
-[quickstart-link]: https://cloud.google.com/$site_root$/docs/quickstart
+[quickstart-link]: $cloud_quickstart$
 [grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
 [choco-cmake-link]: https://chocolatey.org/packages/cmake
 [homebrew-cmake-link]: https://formulae.brew.sh/formula/cmake

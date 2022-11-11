@@ -87,33 +87,48 @@ int WriteInstallDirectories(
     google::cloud::cpp::generator::GeneratorConfiguration const& config,
     std::string const& output_path) {
   std::vector<std::string> install_directories{".", "./lib64", "./lib64/cmake"};
-  for (auto const& service : config.service()) {
-    if (service.product_path().empty()) {
-      GCP_LOG(ERROR) << "Empty product path in config, service="
-                     << service.DebugString() << "\n";
-      return 1;
-    }
-    if (service.service_proto_path().empty()) {
-      GCP_LOG(ERROR) << "Empty service proto path in config, service="
-                     << service.DebugString() << "\n";
-      return 1;
-    }
+  auto write_install =
+      [&](std::string const& library_name,
+          google::cloud::cpp::generator::ServiceConfiguration const& service) {
+        if (service.product_path().empty()) {
+          GCP_LOG(ERROR) << "Empty product path in config, service="
+                         << service.DebugString() << "\n";
+          return 1;
+        }
+        if (service.service_proto_path().empty()) {
+          GCP_LOG(ERROR) << "Empty service proto path in config, service="
+                         << service.DebugString() << "\n";
+          return 1;
+        }
 
-    auto const& product_path = service.product_path();
-    for (auto const& p : Parents("./include/" + product_path)) {
-      install_directories.push_back(p);
+        auto const& product_path = service.product_path();
+        for (auto const& p : Parents("./include/" + product_path)) {
+          install_directories.push_back(p);
+        }
+        install_directories.push_back("./include/" + product_path +
+                                      "/internal");
+        for (auto const& p :
+             Parents("./include/" + Dirname(service.service_proto_path()))) {
+          install_directories.push_back(p);
+        }
+        // Services without a connection do not create mocks.
+        if (!service.omit_connection()) {
+          install_directories.push_back("./include/" + product_path + "/mocks");
+        }
+        install_directories.push_back("./lib64/cmake/google_cloud_cpp_" +
+                                      library_name);
+        return 0;
+      };
+  for (auto const& library : config.library()) {
+    for (auto const& service : library.service()) {
+      auto ret = write_install(library.name(), service);
+      if (ret != 0) return ret;
     }
-    install_directories.push_back("./include/" + product_path + "/internal");
-    for (auto const& p :
-         Parents("./include/" + Dirname(service.service_proto_path()))) {
-      install_directories.push_back(p);
-    }
-    auto const lib = google::cloud::generator_internal::LibraryName(service);
-    // Services without a connection do not create mocks.
-    if (!service.omit_connection()) {
-      install_directories.push_back("./include/" + product_path + "/mocks");
-    }
-    install_directories.push_back("./lib64/cmake/google_cloud_cpp_" + lib);
+  }
+  for (auto const& service : config.service()) {
+    auto ret = write_install(
+        google::cloud::generator_internal::LibraryName(service), service);
+    if (ret != 0) return ret;
   }
   std::sort(install_directories.begin(), install_directories.end());
   auto end =
@@ -128,14 +143,11 @@ int WriteFeatureList(
     google::cloud::cpp::generator::GeneratorConfiguration const& config,
     std::string const& output_path) {
   std::vector<std::string> features;
+  for (auto const& library : config.library()) {
+    features.push_back(library.name());
+  }
   for (auto const& service : config.service()) {
-    if (service.product_path().empty()) {
-      GCP_LOG(ERROR) << "Empty product path in config, service="
-                     << service.DebugString() << "\n";
-      return 1;
-    }
-    auto feature = google::cloud::generator_internal::LibraryName(service);
-    features.push_back(std::move(feature));
+    features.push_back(google::cloud::generator_internal::LibraryName(service));
   }
   std::sort(features.begin(), features.end());
   auto const end = std::unique(features.begin(), features.end());
@@ -190,94 +202,150 @@ int main(int argc, char** argv) {
   }
 
   std::vector<std::future<google::cloud::Status>> tasks;
-  for (auto const& service : config->service()) {
-    if (service.product_path() == scaffold) {
-      google::cloud::generator_internal::GenerateScaffold(
-          googleapis_path, output_path, service, experimental_scaffold);
-    }
-    std::vector<std::string> args;
-    // empty arg prevents first real arg from being ignored.
-    args.emplace_back("");
-    args.emplace_back("--proto_path=" + proto_path);
-    args.emplace_back("--proto_path=" + googleapis_path);
-    if (!golden_path.empty()) {
-      args.emplace_back("--proto_path=" + golden_path);
-    }
-    args.emplace_back("--cpp_codegen_out=" + output_path);
-    args.emplace_back("--cpp_codegen_opt=product_path=" +
-                      service.product_path());
-    args.emplace_back("--cpp_codegen_opt=copyright_year=" +
-                      service.initial_copyright_year());
-    for (auto const& omit_service : service.omitted_services()) {
-      args.emplace_back("--cpp_codegen_opt=omit_service=" + omit_service);
-    }
-    for (auto const& omit_rpc : service.omitted_rpcs()) {
-      args.emplace_back("--cpp_codegen_opt=omit_rpc=" + omit_rpc);
-    }
-    if (service.backwards_compatibility_namespace_alias()) {
-      args.emplace_back(
-          "--cpp_codegen_opt=backwards_compatibility_namespace_alias=true");
-    }
-    for (auto const& retry_code : service.retryable_status_codes()) {
-      args.emplace_back("--cpp_codegen_opt=retry_status_code=" + retry_code);
-    }
-    if (service.omit_client()) {
-      args.emplace_back("--cpp_codegen_opt=omit_client=true");
-    }
-    if (service.omit_connection()) {
-      args.emplace_back("--cpp_codegen_opt=omit_connection=true");
-    }
-    if (service.omit_stub_factory()) {
-      args.emplace_back("--cpp_codegen_opt=omit_stub_factory=true");
-    }
-    if (service.generate_round_robin_decorator()) {
-      args.emplace_back(
-          "--cpp_codegen_opt=generate_round_robin_decorator=true");
-    }
-    args.emplace_back("--cpp_codegen_opt=service_endpoint_env_var=" +
-                      service.service_endpoint_env_var());
-    args.emplace_back("--cpp_codegen_opt=emulator_endpoint_env_var=" +
-                      service.emulator_endpoint_env_var());
-    args.emplace_back(
-        "--cpp_codegen_opt=endpoint_location_style=" +
-        google::cloud::cpp::generator::ServiceConfiguration::
-            EndpointLocationStyle_Name(service.endpoint_location_style()));
-    for (auto const& gen_async_rpc : service.gen_async_rpcs()) {
-      args.emplace_back("--cpp_codegen_opt=gen_async_rpc=" + gen_async_rpc);
-    }
-    for (auto const& additional_proto_file : service.additional_proto_files()) {
-      args.emplace_back("--cpp_codegen_opt=additional_proto_file=" +
-                        additional_proto_file);
-    }
-    if (service.generate_rest_transport()) {
-      args.emplace_back("--cpp_codegen_opt=generate_rest_transport=true");
-    }
-    args.emplace_back(service.service_proto_path());
-    for (auto const& additional_proto_file : service.additional_proto_files()) {
-      args.emplace_back(additional_proto_file);
-    }
+  auto service_gen =
+      [&](google::cloud::cpp::generator::ServiceConfiguration const& service) {
+        if (service.product_path() == scaffold) {
+          google::cloud::generator_internal::GenerateScaffold(
+              googleapis_path, output_path, service, experimental_scaffold);
+        }
+        std::vector<std::string> args;
+        // empty arg prevents first real arg from being ignored.
+        args.emplace_back("");
+        args.emplace_back("--proto_path=" + proto_path);
+        args.emplace_back("--proto_path=" + googleapis_path);
+        if (!golden_path.empty()) {
+          args.emplace_back("--proto_path=" + golden_path);
+        }
+        args.emplace_back("--cpp_codegen_out=" + output_path);
+        args.emplace_back("--cpp_codegen_opt=product_path=" +
+                          service.product_path());
+        args.emplace_back("--cpp_codegen_opt=copyright_year=" +
+                          service.initial_copyright_year());
+        for (auto const& omit_service : service.omitted_services()) {
+          args.emplace_back("--cpp_codegen_opt=omit_service=" + omit_service);
+        }
+        for (auto const& omit_rpc : service.omitted_rpcs()) {
+          args.emplace_back("--cpp_codegen_opt=omit_rpc=" + omit_rpc);
+        }
+        if (service.backwards_compatibility_namespace_alias()) {
+          args.emplace_back(
+              "--cpp_codegen_opt=backwards_compatibility_namespace_alias=true");
+        }
+        for (auto const& retry_code : service.retryable_status_codes()) {
+          args.emplace_back("--cpp_codegen_opt=retry_status_code=" +
+                            retry_code);
+        }
+        if (service.omit_client()) {
+          args.emplace_back("--cpp_codegen_opt=omit_client=true");
+        }
+        if (service.omit_connection()) {
+          args.emplace_back("--cpp_codegen_opt=omit_connection=true");
+        }
+        if (service.omit_stub_factory()) {
+          args.emplace_back("--cpp_codegen_opt=omit_stub_factory=true");
+        }
+        if (service.generate_round_robin_decorator()) {
+          args.emplace_back(
+              "--cpp_codegen_opt=generate_round_robin_decorator=true");
+        }
+        args.emplace_back("--cpp_codegen_opt=service_endpoint_env_var=" +
+                          service.service_endpoint_env_var());
+        args.emplace_back("--cpp_codegen_opt=emulator_endpoint_env_var=" +
+                          service.emulator_endpoint_env_var());
+        args.emplace_back(
+            "--cpp_codegen_opt=endpoint_location_style=" +
+            google::cloud::cpp::generator::ServiceConfiguration::
+                EndpointLocationStyle_Name(service.endpoint_location_style()));
+        for (auto const& gen_async_rpc : service.gen_async_rpcs()) {
+          args.emplace_back("--cpp_codegen_opt=gen_async_rpc=" + gen_async_rpc);
+        }
+        for (auto const& additional_proto_file :
+             service.additional_proto_files()) {
+          args.emplace_back("--cpp_codegen_opt=additional_proto_file=" +
+                            additional_proto_file);
+        }
+        if (service.generate_rest_transport()) {
+          args.emplace_back("--cpp_codegen_opt=generate_rest_transport=true");
+        }
+        args.emplace_back(service.service_proto_path());
+        for (auto const& additional_proto_file :
+             service.additional_proto_files()) {
+          args.emplace_back(additional_proto_file);
+        }
 
-    GCP_LOG(INFO) << "Generating service code using: "
-                  << absl::StrJoin(args, ";") << "\n";
+        GCP_LOG(INFO) << "Generating service code using: "
+                      << absl::StrJoin(args, ";") << "\n";
 
-    tasks.push_back(std::async(std::launch::async, [args] {
-      google::protobuf::compiler::CommandLineInterface cli;
-      google::cloud::generator::Generator generator;
-      cli.RegisterGenerator("--cpp_codegen_out", "--cpp_codegen_opt",
-                            &generator, "Codegen C++ Generator");
-      std::vector<char const*> c_args;
-      c_args.reserve(args.size());
-      for (auto const& arg : args) {
-        c_args.push_back(arg.c_str());
+        tasks.push_back(std::async(std::launch::async, [args] {
+          google::protobuf::compiler::CommandLineInterface cli;
+          google::cloud::generator::Generator generator;
+          cli.RegisterGenerator("--cpp_codegen_out", "--cpp_codegen_opt",
+                                &generator, "Codegen C++ Generator");
+          std::vector<char const*> c_args;
+          c_args.reserve(args.size());
+          for (auto const& arg : args) {
+            c_args.push_back(arg.c_str());
+          }
+
+          if (cli.Run(static_cast<int>(c_args.size()), c_args.data()) != 0)
+            return google::cloud::Status(
+                google::cloud::StatusCode::kInternal,
+                absl::StrCat("Generating service from ", c_args.back(),
+                             " failed."));
+
+          return google::cloud::Status{};
+        }));
+      };
+  for (auto const& library : config->library()) {
+    {
+      using Generator = std::function<void(
+          std::ostream&, std::map<std::string, std::string> const&)>;
+      struct Destination {
+        std::string name;
+        Generator generator;
+      } files[] = {
+          {"README.md",
+           google::cloud::generator_internal::GenerateReadmeDarren},
+          {"doc/main.dox",
+           google::cloud::generator_internal::GenerateDoxygenMainPageDarren},
+      };
+      std::map<std::string, std::string> vars = {
+          {"title", library.display_name()},
+          {"description", library.description()},
+          {"library", library.name()},
+          {"cloud_service_docs", library.cloud_service_docs()},
+          {"cloud_service_root", library.cloud_service_root()},
+          {"product_options_page",
+           "google-cloud-" + library.name() + "-options"},
+          // TODO : ? allegedly we can just use current year for all generated
+          // files.
+          {"copyright_year", "2034"},
+          {"library_prefix", library.experimental() ? "experimental-" : ""},
+          {"doxygen_version_suffix",
+           library.experimental() ? " (Experimental)" : ""},
+          {"construction", library.experimental() ? "\n:construction:\n" : ""},
+          {"status", library.experimental()
+                         ? "This library is **experimental**. Its APIs are "
+                           "subject to change without notice.\n\nPlease,"
+                         : "While this library is **GA**, please"},
+      };
+      // Probably need to factor out for golden testing?
+      // Or include in library name <- I think this one.
+      auto const output_dir = output_path + "/";
+      auto const destination =
+          output_dir + "google/cloud/" + library.name() + "/";
+      // google::cloud::generator_internal::MakeDirectory(destination);
+      for (auto const& f : files) {
+        std::ofstream os(destination + f.name);
+        f.generator(os, vars);
       }
-
-      if (cli.Run(static_cast<int>(c_args.size()), c_args.data()) != 0)
-        return google::cloud::Status(google::cloud::StatusCode::kInternal,
-                                     absl::StrCat("Generating service from ",
-                                                  c_args.back(), " failed."));
-
-      return google::cloud::Status{};
-    }));
+    }
+    for (auto const& service : library.service()) {
+      service_gen(service);
+    }
+  }
+  for (auto const& service : config->service()) {
+    service_gen(service);
   }
 
   std::string error_message;

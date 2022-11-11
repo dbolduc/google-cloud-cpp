@@ -52,12 +52,16 @@ void GenerateScaffold(
 
 void GenerateCmakeConfigIn(std::ostream& os,
                            std::map<std::string, std::string> const& variables);
+void GenerateReadmeDarren(std::ostream& os,
+                          std::map<std::string, std::string> const& variables);
 void GenerateReadme(std::ostream& os,
                     std::map<std::string, std::string> const& variables);
 void GenerateBuild(std::ostream& os,
                    std::map<std::string, std::string> const& variables);
 void GenerateCMakeLists(std::ostream& os,
                         std::map<std::string, std::string> const& variables);
+void GenerateDoxygenMainPageDarren(
+    std::ostream& os, std::map<std::string, std::string> const& variables);
 void GenerateDoxygenMainPage(
     std::ostream& os, std::map<std::string, std::string> const& variables);
 void GenerateDoxygenOptionsPage(
