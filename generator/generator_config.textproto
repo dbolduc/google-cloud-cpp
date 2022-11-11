@@ -14,12 +14,18 @@
 # proto-file: generator/generator_config.proto
 # proto-message: GeneratorConfiguration
 
-# Access Approval
-service {
-  service_proto_path: "google/cloud/accessapproval/v1/accessapproval.proto"
-  product_path: "google/cloud/accessapproval"
-  initial_copyright_year: "2022"
-  retryable_status_codes: ["kUnavailable"]
+library {
+  name: "accessapproval"
+  display_name: "Access Approval"
+  description: "a service for controlling access to data by Google personnel."
+  cloud_service_root: "https://cloud.google.com/cloud-provider-access-management/access-approval/docs/overview"
+  cloud_service_docs: "https://cloud.google.com/cloud-provider-access-management/access-approval/docs"
+  service {
+    service_proto_path: "google/cloud/accessapproval/v1/accessapproval.proto"
+    product_path: "google/cloud/accessapproval"
+    initial_copyright_year: "2022"
+    retryable_status_codes: [ "kUnavailable" ]
+  }
 }
 
 # Access Context Manager
