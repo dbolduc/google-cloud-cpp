@@ -153,7 +153,7 @@ This repository contains idiomatic C++ client libraries for the following
 - [Cloud IoT API](google/cloud/iot/README.md)
   [\[quickstart\]](google/cloud/iot/quickstart/README.md)
   [\[reference\]](https://googleapis.dev/cpp/google-cloud-iot/latest)
-- [Cloud Key Management Service (KMS) API](google/cloud/kms/README.md)
+- [Cloud Key Management Service (KMS)](google/cloud/kms/README.md)
   [\[quickstart\]](google/cloud/kms/quickstart/README.md)
   [\[reference\]](https://googleapis.dev/cpp/google-cloud-kms/latest)
 - [Cloud Natural Language API](google/cloud/language/README.md)
