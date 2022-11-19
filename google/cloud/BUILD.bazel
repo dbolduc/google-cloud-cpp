@@ -27,6 +27,21 @@ capture_build_info(
     ],
 )
 
+config_setting(
+    name = "have_open_telemetry",
+    flag_values = {
+        "//:experimental-open_telemetry": "true",
+        "@io_opentelemetry_cpp//api:with_abseil": "true",
+    },
+    visibility = ["//:__subpackages__"],
+)
+
+config_setting(
+    name = "not_have_open_telemetry",
+    flag_values = {"//:experimental-open_telemetry": "false"},
+    visibility = ["//:__subpackages__"],
+)
+
 load(":google_cloud_cpp_common.bzl", "google_cloud_cpp_common_hdrs", "google_cloud_cpp_common_srcs")
 
 cc_library(
@@ -34,7 +49,7 @@ cc_library(
     srcs = google_cloud_cpp_common_srcs + ["internal/build_info.cc"],
     hdrs = google_cloud_cpp_common_hdrs,
     defines = select({
-        "//:have_open_telemetry": [
+        ":have_open_telemetry": [
             # Enable OpenTelemetry features in google-cloud-cpp
             "GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY",
         ],
@@ -52,12 +67,15 @@ cc_library(
         "@com_google_absl//absl/types:optional",
         "@com_google_absl//absl/types:span",
         "@com_google_absl//absl/types:variant",
-    ] + select({
-        "//:have_open_telemetry": [
-            "@io_opentelemetry_cpp//api",
-        ],
-        "//conditions:default": [],
-    }),
+    ] + select(
+        {
+            ":have_open_telemetry": [
+                "@io_opentelemetry_cpp//api",
+            ],
+            ":not_have_open_telemetry": [],
+        },
+        no_match_error = "OpenTelemetry must be built with Abseil. To fix this error, supply the `--@io_opentelemetry_cpp//api:with_abseil` flag to your build command.",
+    ),
 )
 
 cc_library(
@@ -91,7 +109,7 @@ load(
         "@com_google_absl//absl/memory",
         "@com_google_googletest//:gtest_main",
     ] + select({
-        "//:have_open_telemetry": [
+        ":have_open_telemetry": [
             "@io_opentelemetry_cpp//exporters/memory:in_memory_span_exporter",
             "@io_opentelemetry_cpp//sdk/src/trace",
         ],
@@ -335,7 +353,7 @@ load(":google_cloud_cpp_rest_protobuf_internal_unit_tests.bzl", "google_cloud_cp
 cc_test(
     name = "internal_open_telemetry_defines_test",
     srcs = select({
-        "//:have_open_telemetry": [
+        ":have_open_telemetry": [
             "internal/open_telemetry_enabled_test.cc",
         ],
         "//conditions:default": [

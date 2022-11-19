@@ -44,7 +44,7 @@ cc_library(
     deps = [
         "//:trace",
     ] + select({
-        "//:have_open_telemetry": [
+        "//google/cloud:have_open_telemetry": [
             "@io_opentelemetry_cpp//sdk/src/trace",
         ],
         "//conditions:default": [],
@@ -59,7 +59,7 @@ cc_library(
         "//:trace_mocks",
         "@com_google_googletest//:gtest_main",
     ] + select({
-        "//:have_open_telemetry": [
+        "//google/cloud:have_open_telemetry": [
             "@io_opentelemetry_cpp//sdk/src/trace",
         ],
         "//conditions:default": [],

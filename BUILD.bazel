@@ -302,12 +302,6 @@ bool_flag(
     build_setting_default = False,
 )
 
-config_setting(
-    name = "have_open_telemetry",
-    flag_values = {":experimental-open_telemetry": "true"},
-    visibility = ["//:__subpackages__"],
-)
-
 # TODO : I am leaning towards having a single //:trace library.
 cc_library(
     name = "experimental-trace_exporter",
