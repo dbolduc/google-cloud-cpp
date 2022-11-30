@@ -1,0 +1,4 @@
+@com_google_googleapis//google/cloud/paymentgateway/issuerswitch/v1:common_fields.proto
+@com_google_googleapis//google/cloud/paymentgateway/issuerswitch/v1:resolutions.proto
+@com_google_googleapis//google/cloud/paymentgateway/issuerswitch/v1:rules.proto
+@com_google_googleapis//google/cloud/paymentgateway/issuerswitch/v1:transactions.proto

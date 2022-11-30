@@ -276,6 +276,11 @@
 ./include/google/cloud/oslogin/internal
 ./include/google/cloud/oslogin/mocks
 ./include/google/cloud/oslogin/v1
+./include/google/cloud/paymentgateway
+./include/google/cloud/paymentgateway/issuerswitch
+./include/google/cloud/paymentgateway/issuerswitch/v1
+./include/google/cloud/paymentgateway/issuerswitch/v1/internal
+./include/google/cloud/paymentgateway/issuerswitch/v1/mocks
 ./include/google/cloud/policytroubleshooter
 ./include/google/cloud/policytroubleshooter/internal
 ./include/google/cloud/policytroubleshooter/mocks
@@ -538,6 +543,7 @@
 ./lib64/cmake/google_cloud_cpp_orgpolicy
 ./lib64/cmake/google_cloud_cpp_osconfig
 ./lib64/cmake/google_cloud_cpp_oslogin
+./lib64/cmake/google_cloud_cpp_paymentgateway
 ./lib64/cmake/google_cloud_cpp_policytroubleshooter
 ./lib64/cmake/google_cloud_cpp_privateca
 ./lib64/cmake/google_cloud_cpp_profiler
