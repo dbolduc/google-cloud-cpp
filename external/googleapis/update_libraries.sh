@@ -156,6 +156,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/oslogin/v1:oslogin_cc_grpc" \
       "@com_google_googleapis//google/cloud/oslogin/common:common_cc_grpc"
   )"
+  ["paymentgateway"]="@com_google_googleapis//google/cloud/paymentgateway/issuerswitch/v1:issuerswitch_cc_grpc"
   ["policytroubleshooter"]="@com_google_googleapis//google/cloud/policytroubleshooter/v1:policytroubleshooter_cc_grpc"
   ["privateca"]="@com_google_googleapis//google/cloud/security/privateca/v1:privateca_cc_grpc"
   ["profiler"]="@com_google_googleapis//google/devtools/cloudprofiler/v2:cloudprofiler_cc_grpc"
