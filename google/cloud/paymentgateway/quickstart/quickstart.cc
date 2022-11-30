@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/paymentgateway/ EDIT HERE .h"
+#include "google/cloud/paymentgateway/issuerswitch/v1/issuer_switch_rules_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -22,11 +22,12 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace paymentgateway = ::google::cloud::paymentgateway;
-  auto client = paymentgateway::Client(paymentgateway::MakeConnection());
+  namespace issuerswitch = ::google::cloud::paymentgateway_issuerswitch_v1;
+  auto client = issuerswitch::IssuerSwitchRulesClient(
+      issuerswitch::MakeIssuerSwitchRulesConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  for (auto r : client.ListRules(project.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }

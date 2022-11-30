@@ -15,9 +15,8 @@
 # ~~~
 
 include(GoogleapisConfig)
-set(DOXYGEN_PROJECT_NAME "Cloud Issuer Switch Service API C++ Client")
-set(DOXYGEN_PROJECT_BRIEF
-    "A C++ Client Library for the Cloud Issuer Switch Service API")
+set(DOXYGEN_PROJECT_NAME "Payment Gateway C++ Client")
+set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Payment Gateway")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
@@ -126,11 +125,8 @@ if (BUILD_TESTING)
     google_cloud_cpp_add_common_options(paymentgateway_quickstart)
     add_test(
         NAME paymentgateway_quickstart
-        COMMAND
-            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-            $<TARGET_FILE:paymentgateway_quickstart> GOOGLE_CLOUD_PROJECT
-            # EDIT HERE
-    )
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:paymentgateway_quickstart> GOOGLE_CLOUD_PROJECT)
     set_tests_properties(paymentgateway_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()
@@ -179,8 +175,8 @@ google_cloud_cpp_install_headers("google_cloud_cpp_paymentgateway_mocks"
 
 google_cloud_cpp_add_pkgconfig(
     paymentgateway
-    "The Cloud Issuer Switch Service API C++ Client Library"
-    "Provides C++ APIs to use the Cloud Issuer Switch Service API."
+    "The Payment Gateway C++ Client Library"
+    "Provides C++ APIs to use the Payment Gateway."
     "google_cloud_cpp_grpc_utils"
     " google_cloud_cpp_common"
     " google_cloud_cpp_paymentgateway_protos")

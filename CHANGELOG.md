@@ -116,6 +116,10 @@ may elicit a deprecation warning. See [#9086] for more details.
 
 </details>
 
+## v?.?.? - TBD
+
+- [Payment Gateway](/google/cloud/paymentgateway/README.md)
+
 ## v2.5.0 - TBD
 
 ### New Libraries

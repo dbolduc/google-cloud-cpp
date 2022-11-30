@@ -87,6 +87,7 @@ GA_LIBRARIES = [
     "orgpolicy",
     "osconfig",
     "oslogin",
+    "paymentgateway",
     "policytroubleshooter",
     "privateca",
     "profiler",

@@ -1,9 +1,10 @@
 /*!
 
-@mainpage Cloud Issuer Switch Service API C++ Client Library
+@mainpage Payment Gateway C++ Client Library
 
-An idiomatic C++ client library for the [Cloud Issuer Switch Service API][cloud-service-docs], a service
-to <UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+An idiomatic C++ client library for [Payment Gateway][cloud-service-root], a
+collection of services that process API-based payments with reliability at
+Google scale.
 
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
@@ -17,7 +18,7 @@ dependencies, as well as how to compile the client library.
 
 ## Setting up your repo
 
-In order to use the Cloud Issuer Switch Service API C++ client library from your own code,
+In order to use the Payment Gateway C++ client library from your own code,
 you'll need to configure your build system to discover and compile the Cloud
 C++ client libraries. In some cases your build system or package manager may
 need to download the libraries too. The Cloud C++ client libraries natively
@@ -35,7 +36,7 @@ cd google-cloud-cpp/google/cloud/paymentgateway/quickstart
 
 The following shows the code that you'll run in the
 `google/cloud/paymentgateway/quickstart/` directory,
-which should give you a taste of the Cloud Issuer Switch Service API C++ client library API.
+which should give you a taste of the Payment Gateway C++ client library API.
 
 @include quickstart.cc
 
@@ -141,7 +142,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/paymentgateway
+[cloud-service-root]: https://cloud.google.com/payment-gateway
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->

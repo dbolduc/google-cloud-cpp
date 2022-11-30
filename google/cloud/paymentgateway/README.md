@@ -1,7 +1,8 @@
-# Cloud Issuer Switch Service API C++ Client Library
+# Payment Gateway C++ Client Library
 
-This directory contains an idiomatic C++ client library for the
-[Cloud Issuer Switch Service API][cloud-service-docs], a service to \<UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+This directory contains an idiomatic C++ client library for
+[Payment Gateway][cloud-service-docs], a collection of services that process
+API-based payments with reliability at Google scale.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -16,7 +17,7 @@ libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Documentation
 
-- Official documentation about the [Cloud Issuer Switch Service API][cloud-service-docs] service
+- Official documentation about the [Payment Gateway API][cloud-service-docs]
 - [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 - Detailed header comments in our [public `.h`][source-link] files
@@ -31,7 +32,7 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/paymentgateway/ EDIT HERE .h"
+#include "google/cloud/paymentgateway/issuerswitch/v1/issuer_switch_rules_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -41,11 +42,12 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace paymentgateway = ::google::cloud::paymentgateway;
-  auto client = paymentgateway::Client(paymentgateway::MakeConnection());
+  namespace issuerswitch = ::google::cloud::paymentgateway_issuerswitch_v1;
+  auto client = issuerswitch::IssuerSwitchRulesClient(
+      issuerswitch::MakeIssuerSwitchRulesConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  for (auto r : client.ListRules(project.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
@@ -86,7 +88,7 @@ as well as how to properly format your code.
 
 Apache 2.0; see [`LICENSE`](/LICENSE) for details.
 
-[cloud-service-docs]: https://cloud.google.com/paymentgateway
+[cloud-service-docs]: https://cloud.google.com/payment-gateway/docs/
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-paymentgateway/latest/
 [howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/paymentgateway
