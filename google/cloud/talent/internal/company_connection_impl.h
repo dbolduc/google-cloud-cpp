@@ -26,6 +26,8 @@
 #include "google/cloud/talent/internal/company_stub.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -62,6 +64,9 @@ class CompanyServiceConnectionImpl : public talent::CompanyServiceConnection {
 
   StreamRange<google::cloud::talent::v4::Company> ListCompanies(
       google::cloud::talent::v4::ListCompaniesRequest request) override;
+
+  future<StatusOr<google::cloud::talent::v4::Company>> AsyncGetCompany(
+      google::cloud::talent::v4::GetCompanyRequest const& request) override;
 
  private:
   std::unique_ptr<talent::CompanyServiceRetryPolicy> retry_policy() {

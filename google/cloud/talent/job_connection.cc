@@ -20,12 +20,14 @@
 #include "google/cloud/talent/internal/job_connection_impl.h"
 #include "google/cloud/talent/internal/job_option_defaults.h"
 #include "google/cloud/talent/internal/job_stub_factory.h"
+#include "google/cloud/talent/internal/job_tracing_connection.h"
 #include "google/cloud/talent/job_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/opentelemetry_options.h"
 #include <memory>
 
 namespace google {
@@ -107,8 +109,11 @@ std::shared_ptr<JobServiceConnection> MakeJobServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       talent_internal::CreateDefaultJobServiceStub(background->cq(), options);
-  return std::make_shared<talent_internal::JobServiceConnectionImpl>(
+  bool tracing = options.get<experimental::OpenTelemetryTracingOption>();
+  auto conn = std::make_shared<talent_internal::JobServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  if (!tracing) return conn;
+  return talent_internal::MakeJobServiceTracingConnection(std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

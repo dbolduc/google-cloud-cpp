@@ -19,7 +19,11 @@
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/call_context.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/internal/invoke_result.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/retry_loop_helpers.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/internal/setup_context.h"
@@ -191,7 +195,7 @@ class AsyncRetryLoopImpl
     auto weak = std::weak_ptr<AsyncRetryLoopImpl>(this->shared_from_this());
     result_ = promise<T>([weak]() mutable {
       if (auto self = weak.lock()) {
-        OptionsSpan span(self->options_);
+        ScopedCallContext scope(self->call_context_);
         self->Cancel();
       }
     });
@@ -229,7 +233,7 @@ class AsyncRetryLoopImpl
     auto state = StartOperation();
     if (state.cancelled) return;
     auto context = absl::make_unique<grpc::ClientContext>();
-    ConfigureContext(*context, options_);
+    ConfigureContext(*context, call_context_.options);
     SetupContext<RetryPolicyType>::Setup(*retry_policy_, *context);
     SetPending(
         state.operation,
@@ -243,7 +247,7 @@ class AsyncRetryLoopImpl
     auto state = StartOperation();
     if (state.cancelled) return;
     SetPending(state.operation,
-               cq_.MakeRelativeTimer(backoff_policy_->OnCompletion())
+               TracedAsyncBackoff(cq_, backoff_policy_->OnCompletion())
                    .then([self](future<TimerArgType> f) {
                      self->OnBackoff(f.get());
                    }));
@@ -325,7 +329,7 @@ class AsyncRetryLoopImpl
   absl::decay_t<Functor> functor_;
   Request request_;
   char const* location_ = "unknown";
-  Options options_ = CurrentOptions();
+  CallContext call_context_;
   Status last_status_ = Status(StatusCode::kUnknown, "Retry policy exhausted");
   promise<T> result_;
 

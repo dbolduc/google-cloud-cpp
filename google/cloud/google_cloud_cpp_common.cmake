@@ -55,6 +55,7 @@ add_library(
     internal/base64_transforms.h
     internal/big_endian.h
     internal/build_info.h
+    internal/call_context.h
     internal/compiler_info.cc
     internal/compiler_info.h
     internal/compute_engine_util.cc
@@ -92,6 +93,8 @@ add_library(
     internal/make_status.cc
     internal/make_status.h
     internal/non_constructible.h
+    internal/opentelemetry.cc
+    internal/opentelemetry.h
     internal/pagination_range.h
     internal/parse_rfc3339.cc
     internal/parse_rfc3339.h
@@ -125,6 +128,7 @@ add_library(
     kms_key_name.h
     log.cc
     log.h
+    opentelemetry_options.h
     optional.h
     options.cc
     options.h
@@ -371,6 +375,11 @@ if (BUILD_TESTING)
                     GTest::gmock
                     GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
+        if (opentelemetry-cpp_FOUND)
+            target_link_libraries(
+                ${target} # Our test uses OpenTelemetry's in-memory exporter
+                PRIVATE opentelemetry-cpp::in_memory_span_exporter)
+        endif ()
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
         endif ()

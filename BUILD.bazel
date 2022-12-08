@@ -303,3 +303,17 @@ bool_flag(
     build_setting_default = False,
     visibility = ["//:__subpackages__"],
 )
+
+cc_library(
+    name = "experimental-trace_exporter",
+    deps = [
+        "//google/cloud/trace/exporter:google_cloud_cpp_trace_exporter",
+    ],
+)
+
+cc_library(
+    name = "experimental-trace_propagator",
+    deps = [
+        "//google/cloud/trace/propagator:google_cloud_cpp_trace_propagator",
+    ],
+)

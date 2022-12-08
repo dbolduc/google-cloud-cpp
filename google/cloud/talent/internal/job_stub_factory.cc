@@ -21,10 +21,12 @@
 #include "google/cloud/talent/internal/job_logging_decorator.h"
 #include "google/cloud/talent/internal/job_metadata_decorator.h"
 #include "google/cloud/talent/internal/job_stub.h"
+#include "google/cloud/talent/internal/job_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/log.h"
+#include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/options.h"
 #include <google/cloud/talent/v4/job_service.grpc.pb.h>
 #include <memory>
@@ -46,6 +48,8 @@ std::shared_ptr<JobServiceStub> CreateDefaultJobServiceStub(
       std::make_shared<DefaultJobServiceStub>(
           std::move(service_grpc_stub),
           google::longrunning::Operations::NewStub(channel));
+  // TODO(dbolduc): Always include tracing stub?
+  stub = MakeJobServiceTracingStub(std::move(stub));
 
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<JobServiceAuth>(std::move(auth), std::move(stub));

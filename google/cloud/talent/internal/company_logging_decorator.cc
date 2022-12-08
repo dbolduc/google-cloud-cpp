@@ -92,6 +92,20 @@ CompanyServiceLogging::ListCompanies(
       context, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::cloud::talent::v4::Company>>
+CompanyServiceLogging::AsyncGetCompany(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::talent::v4::GetCompanyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::talent::v4::GetCompanyRequest const& request) {
+        return child_->AsyncGetCompany(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_internal
 }  // namespace cloud

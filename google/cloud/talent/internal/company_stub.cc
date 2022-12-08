@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/talent/v4/company_service.grpc.pb.h>
 #include <memory>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -86,6 +87,29 @@ DefaultCompanyServiceStub::ListCompanies(
     return google::cloud::MakeStatusFromRpcError(status);
   }
   return response;
+}
+
+int unavail = 0;
+future<StatusOr<google::cloud::talent::v4::Company>>
+DefaultCompanyServiceStub::AsyncGetCompany(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::talent::v4::GetCompanyRequest const& request) {
+  if (unavail++ == 0) {
+    return cq.MakeRelativeTimer(std::chrono::milliseconds(100))
+        .then([](auto f) -> StatusOr<google::cloud::talent::v4::Company> {
+          auto t = f.get();
+          if (!t) return std::move(t).status();
+          return Status(StatusCode::kUnavailable, "try again");
+        });
+  }
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::cloud::talent::v4::GetCompanyRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncGetCompany(context, request, cq);
+      },
+      request, std::move(context));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

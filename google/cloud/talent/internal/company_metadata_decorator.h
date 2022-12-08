@@ -54,6 +54,11 @@ class CompanyServiceMetadata : public CompanyServiceStub {
       grpc::ClientContext& context,
       google::cloud::talent::v4::ListCompaniesRequest const& request) override;
 
+  future<StatusOr<google::cloud::talent::v4::Company>> AsyncGetCompany(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::talent::v4::GetCompanyRequest const& request) override;
+
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);

@@ -58,6 +58,11 @@ class CompanyServiceAuth : public CompanyServiceStub {
       grpc::ClientContext& context,
       google::cloud::talent::v4::ListCompaniesRequest const& request) override;
 
+  future<StatusOr<google::cloud::talent::v4::Company>> AsyncGetCompany(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::talent::v4::GetCompanyRequest const& request) override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<CompanyServiceStub> child_;

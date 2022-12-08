@@ -21,6 +21,7 @@
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
@@ -120,6 +121,20 @@ CompanyServiceConnectionImpl::ListCompanies(
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
+}
+
+future<StatusOr<google::cloud::talent::v4::Company>>
+CompanyServiceConnectionImpl::AsyncGetCompany(
+    google::cloud::talent::v4::GetCompanyRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncRetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetCompany(request), background_->cq(),
+      [stub](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::talent::v4::GetCompanyRequest const& request) {
+        return stub->AsyncGetCompany(cq, std::move(context), request);
+      },
+      request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

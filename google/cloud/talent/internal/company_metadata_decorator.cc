@@ -72,6 +72,15 @@ CompanyServiceMetadata::ListCompanies(
   return child_->ListCompanies(context, request);
 }
 
+future<StatusOr<google::cloud::talent::v4::Company>>
+CompanyServiceMetadata::AsyncGetCompany(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::talent::v4::GetCompanyRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncGetCompany(cq, std::move(context), request);
+}
+
 void CompanyServiceMetadata::SetMetadata(grpc::ClientContext& context,
                                          std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);

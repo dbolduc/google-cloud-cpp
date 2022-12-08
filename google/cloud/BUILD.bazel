@@ -121,7 +121,13 @@ load(
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_absl//absl/memory",
         "@com_google_googletest//:gtest_main",
-    ],
+    ] + select({
+        ":enable_opentelemetry_valid": [
+            "@io_opentelemetry_cpp//exporters/memory:in_memory_span_exporter",
+            "@io_opentelemetry_cpp//sdk/src/trace",
+        ],
+        "//conditions:default": [],
+    }),
 ) for test in google_cloud_cpp_common_unit_tests]
 
 load(":google_cloud_cpp_common_benchmarks.bzl", "google_cloud_cpp_common_benchmarks")

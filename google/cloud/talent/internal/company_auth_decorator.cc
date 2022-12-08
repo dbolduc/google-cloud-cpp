@@ -71,6 +71,25 @@ CompanyServiceAuth::ListCompanies(
   return child_->ListCompanies(context, request);
 }
 
+future<StatusOr<google::cloud::talent::v4::Company>>
+CompanyServiceAuth::AsyncGetCompany(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::talent::v4::GetCompanyRequest const& request) {
+  using ReturnType = StatusOr<google::cloud::talent::v4::Company>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncGetCompany(cq, *std::move(context), request);
+      });
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_internal
 }  // namespace cloud

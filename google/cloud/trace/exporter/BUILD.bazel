@@ -1,0 +1,61 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+package(default_visibility = ["//visibility:private"])
+
+licenses(["notice"])  # Apache 2.0
+
+# TODO : use globs and file_groups.
+exporter_srcs = [
+    "gcp_exporter.cc",
+    "recordable.cc",
+]
+
+exporter_hdrs = [
+    "gcp_exporter.h",
+    "recordable.h",
+]
+
+exporter_unit_tests = [
+    "gcp_exporter_test.cc",
+    "recordable_test.cc",
+]
+
+# Note: I am on the fence about having this as a separate target. Maybe that
+# helps discoverability, but part of me thinks it will be most convenient baked
+# into google_cloud_cpp_trace.
+cc_library(
+    name = "google_cloud_cpp_trace_exporter",
+    srcs = exporter_srcs,
+    hdrs = exporter_hdrs,
+    visibility = ["//:__pkg__"],
+    deps = [
+        "//:trace",
+    ] + select({
+        "//google/cloud:enable_opentelemetry_valid": [
+            "@io_opentelemetry_cpp//sdk/src/trace",
+        ],
+        "//conditions:default": [],
+    }),
+)
+
+[cc_test(
+    name = test.replace("/", "_").replace(".cc", ""),
+    srcs = [test],
+    deps = [
+        ":google_cloud_cpp_trace_exporter",
+        "//:trace_mocks",
+        "@com_google_googletest//:gtest_main",
+    ],
+) for test in exporter_unit_tests]

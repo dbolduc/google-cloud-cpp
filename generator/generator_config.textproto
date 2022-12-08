@@ -1446,6 +1446,7 @@ service {
   product_path: "google/cloud/talent"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  gen_async_rpcs: ["GetCompany"]
 }
 
 service {

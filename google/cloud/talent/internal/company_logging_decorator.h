@@ -58,6 +58,11 @@ class CompanyServiceLogging : public CompanyServiceStub {
       grpc::ClientContext& context,
       google::cloud::talent::v4::ListCompaniesRequest const& request) override;
 
+  future<StatusOr<google::cloud::talent::v4::Company>> AsyncGetCompany(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::talent::v4::GetCompanyRequest const& request) override;
+
  private:
   std::shared_ptr<CompanyServiceStub> child_;
   TracingOptions tracing_options_;

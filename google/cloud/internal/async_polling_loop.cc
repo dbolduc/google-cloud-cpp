@@ -14,6 +14,8 @@
 
 #include "google/cloud/internal/async_polling_loop.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/call_context.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/log.h"
 #include <algorithm>
 #include <mutex>
@@ -44,10 +46,9 @@ class AsyncPollingLoopImpl
   future<StatusOr<Operation>> Start(future<StatusOr<Operation>> op) {
     auto self = shared_from_this();
     auto w = WeakFromThis();
-    auto const& options = CurrentOptions();
-    promise_ = promise<StatusOr<Operation>>([w, options]() mutable {
+    promise_ = promise<StatusOr<Operation>>([w]() mutable {
       if (auto self = w.lock()) {
-        OptionsSpan span(std::move(options));
+        ScopedCallContext scope(self->call_context_);
         self->DoCancel();
       }
     });
@@ -89,6 +90,7 @@ class AsyncPollingLoopImpl
     if (!op || op->done()) return promise_.set_value(std::move(op));
     GCP_LOG(DEBUG) << location_ << "() polling loop starting for "
                    << op->name();
+    AddSpanAttribute("gcloud.LRO_name", op->name());
     bool do_cancel = false;
     {
       std::unique_lock<std::mutex> lk(mu_);
@@ -104,8 +106,9 @@ class AsyncPollingLoopImpl
     GCP_LOG(DEBUG) << location_ << "() polling loop waiting "
                    << duration.count() << "ms";
     auto self = shared_from_this();
-    cq_.MakeRelativeTimer(duration).then(
-        [self](TimerResult f) { self->OnTimer(std::move(f)); });
+    TracedAsyncBackoff(cq_, duration).then([self](TimerResult f) {
+      self->OnTimer(std::move(f));
+    });
   }
 
   void OnTimer(TimerResult f) {
@@ -160,6 +163,7 @@ class AsyncPollingLoopImpl
   std::unique_ptr<PollingPolicy> polling_policy_;
   std::string location_;
   promise<StatusOr<Operation>> promise_;
+  CallContext call_context_;
 
   // `delayed_cancel_` and `op_name_`, in contrast, are also used from
   // `DoCancel()`, which is called asynchronously, so they need locking.

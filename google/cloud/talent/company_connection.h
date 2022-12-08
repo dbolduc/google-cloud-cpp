@@ -78,6 +78,9 @@ class CompanyServiceConnection {
 
   virtual StreamRange<google::cloud::talent::v4::Company> ListCompanies(
       google::cloud::talent::v4::ListCompaniesRequest request);
+
+  virtual future<StatusOr<google::cloud::talent::v4::Company>> AsyncGetCompany(
+      google::cloud::talent::v4::GetCompanyRequest const& request);
 };
 
 /**

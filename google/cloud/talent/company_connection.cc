@@ -21,11 +21,13 @@
 #include "google/cloud/talent/internal/company_connection_impl.h"
 #include "google/cloud/talent/internal/company_option_defaults.h"
 #include "google/cloud/talent/internal/company_stub_factory.h"
+#include "google/cloud/talent/internal/company_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
+#include "google/cloud/opentelemetry_options.h"
 #include <memory>
 
 namespace google {
@@ -66,6 +68,14 @@ CompanyServiceConnection::ListCompanies(
       StreamRange<google::cloud::talent::v4::Company>>();
 }
 
+future<StatusOr<google::cloud::talent::v4::Company>>
+CompanyServiceConnection::AsyncGetCompany(
+    google::cloud::talent::v4::GetCompanyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::talent::v4::Company>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<CompanyServiceConnection> MakeCompanyServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
@@ -76,8 +86,11 @@ std::shared_ptr<CompanyServiceConnection> MakeCompanyServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = talent_internal::CreateDefaultCompanyServiceStub(background->cq(),
                                                                options);
-  return std::make_shared<talent_internal::CompanyServiceConnectionImpl>(
+  bool tracing = options.get<experimental::OpenTelemetryTracingOption>();
+  auto conn = std::make_shared<talent_internal::CompanyServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  if (!tracing) return conn;
+  return talent_internal::MakeCompanyServiceTracingConnection(std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -62,8 +62,8 @@ namespace internal {
  * can cancel the operation if needed.
  *
  * @note Sub-classes of `AsyncGrpcOperation` should snapshot the prevailing
- *     `Options` during construction, and restore them using an `OptionsSpan`
- *     during `Notify()` and `Cancel()` callbacks.
+ *     `CallContext` during construction, and restore them using a
+ *     `ScopedCallContext` during `Notify()` and `Cancel()` callbacks.
  */
 class AsyncGrpcOperation : public AsyncOperation {
  public:
