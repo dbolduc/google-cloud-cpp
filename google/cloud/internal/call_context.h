@@ -89,4 +89,51 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
+namespace google {
+namespace cloud {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace internal {
+namespace alternative {
+
+// would exist in google/cloud/internal/opentelemetry.h
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+using Span = opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>;
+using ScopedSpan = opentelemetry::trace::Scope;
+#else
+using Span = std::nullptr_t;
+using ScopedSpan = std::nullptr_t;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+Span CurrentSpan() {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  opentelemetry::trace::Tracer::GetCurrentSpan();
+#else
+  return nullptr;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+}
+
+// would exist in google/cloud/internal/call_context.h
+struct CallContext {
+  Options options = CurrentOptions();
+  Span span = CurrentSpan();
+};
+
+class ScopedCallContext {
+ public:
+  explicit ScopedCallContext(CallContext call_context)
+      : options_(std::move(call_context.options)),
+        span_(std::move(call_context.span)) {}
+
+ private:
+  using ScopedOptions = OptionsSpan;
+  ScopedOptions options_;
+  ScopedSpan span_;
+};
+
+}  // namespace alternative
+}  // namespace internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace cloud
+}  // namespace google
+
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_CALL_CONTEXT_H
