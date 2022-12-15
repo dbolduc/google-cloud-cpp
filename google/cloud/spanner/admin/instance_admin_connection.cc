@@ -28,6 +28,7 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -122,6 +123,33 @@ StatusOr<google::iam::v1::Policy> InstanceAdminConnection::SetIamPolicy(
 StatusOr<google::iam::v1::Policy> InstanceAdminConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::iam::v1::Policy> InstanceAdminConnection::SetIamPolicy(
+    std::string const& resource, IamUpdater const& updater) {
+  google::iam::v1::GetIamPolicyRequest get_request;
+  get_request.set_resource(resource);
+  google::iam::v1::SetIamPolicyRequest set_request;
+  set_request.set_resource(resource);
+  auto backoff_policy =
+      internal::CurrentOptions().get<InstanceAdminBackoffPolicyOption>();
+  for (;;) {
+    auto recent = GetIamPolicy(get_request);
+    if (!recent) {
+      return recent.status();
+    }
+    auto policy = updater(*std::move(recent));
+    if (!policy) {
+      return Status(StatusCode::kCancelled, "updater did not yield a policy");
+    }
+    *set_request.mutable_policy() = *std::move(policy);
+    auto result = SetIamPolicy(set_request);
+    if (result || result.status().code() != StatusCode::kAborted ||
+        backoff_policy == nullptr) {
+      return result;
+    }
+    std::this_thread::sleep_for(backoff_policy->OnCompletion());
+  }
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>

@@ -19,7 +19,6 @@
 #include "google/cloud/spanner/admin/instance_admin_client.h"
 #include "google/cloud/spanner/admin/instance_admin_options.h"
 #include <memory>
-#include <thread>
 
 namespace google {
 namespace cloud {
@@ -246,32 +245,7 @@ StatusOr<google::iam::v1::Policy> InstanceAdminClient::SetIamPolicy(
   internal::CheckExpectedOptions<InstanceAdminBackoffPolicyOption>(opts,
                                                                    __func__);
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::iam::v1::GetIamPolicyRequest get_request;
-  get_request.set_resource(resource);
-  google::iam::v1::SetIamPolicyRequest set_request;
-  set_request.set_resource(resource);
-  auto backoff_policy =
-      internal::CurrentOptions().get<InstanceAdminBackoffPolicyOption>();
-  if (backoff_policy != nullptr) {
-    backoff_policy = backoff_policy->clone();
-  }
-  for (;;) {
-    auto recent = connection_->GetIamPolicy(get_request);
-    if (!recent) {
-      return recent.status();
-    }
-    auto policy = updater(*std::move(recent));
-    if (!policy) {
-      return Status(StatusCode::kCancelled, "updater did not yield a policy");
-    }
-    *set_request.mutable_policy() = *std::move(policy);
-    auto result = connection_->SetIamPolicy(set_request);
-    if (result || result.status().code() != StatusCode::kAborted ||
-        backoff_policy == nullptr) {
-      return result;
-    }
-    std::this_thread::sleep_for(backoff_policy->OnCompletion());
-  }
+  return connection_->SetIamPolicy(resource, updater);
 }
 
 StatusOr<google::iam::v1::Policy> InstanceAdminClient::SetIamPolicy(

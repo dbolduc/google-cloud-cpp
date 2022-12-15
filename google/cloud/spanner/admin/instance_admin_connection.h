@@ -24,6 +24,7 @@
 #include "google/cloud/spanner/admin/internal/instance_admin_stub.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
+#include "google/cloud/iam_updater.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -121,6 +122,9 @@ class InstanceAdminConnection {
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      std::string const& resource, IamUpdater const& updater);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
