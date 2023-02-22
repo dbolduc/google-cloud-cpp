@@ -19,51 +19,22 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_EXPERIMENTS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_EXPERIMENTS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/dialogflow/cx/v3/experiment.grpc.pb.h>
-#include <memory>
+#include "google/cloud/dialogflow_cx/v3/experiments_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ExperimentsConnectionIdempotencyPolicy {
- public:
-  virtual ~ExperimentsConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// dialogflow_cx_v3::MakeDefaultExperimentsConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::
+    MakeDefaultExperimentsConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<ExperimentsConnectionIdempotencyPolicy> clone() const;
-
-  virtual google::cloud::Idempotency ListExperiments(
-      google::cloud::dialogflow::cx::v3::ListExperimentsRequest request);
-
-  virtual google::cloud::Idempotency GetExperiment(
-      google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request);
-
-  virtual google::cloud::Idempotency CreateExperiment(
-      google::cloud::dialogflow::cx::v3::CreateExperimentRequest const&
-          request);
-
-  virtual google::cloud::Idempotency UpdateExperiment(
-      google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const&
-          request);
-
-  virtual google::cloud::Idempotency DeleteExperiment(
-      google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const&
-          request);
-
-  virtual google::cloud::Idempotency StartExperiment(
-      google::cloud::dialogflow::cx::v3::StartExperimentRequest const& request);
-
-  virtual google::cloud::Idempotency StopExperiment(
-      google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request);
-};
-
-std::unique_ptr<ExperimentsConnectionIdempotencyPolicy>
-MakeDefaultExperimentsConnectionIdempotencyPolicy();
+/// @deprecated Use dialogflow_cx_v3::ExperimentsConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::ExperimentsConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

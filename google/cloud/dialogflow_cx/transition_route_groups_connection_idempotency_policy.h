@@ -19,48 +19,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_TRANSITION_ROUTE_GROUPS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_TRANSITION_ROUTE_GROUPS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/dialogflow/cx/v3/transition_route_group.grpc.pb.h>
-#include <memory>
+#include "google/cloud/dialogflow_cx/v3/transition_route_groups_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class TransitionRouteGroupsConnectionIdempotencyPolicy {
- public:
-  virtual ~TransitionRouteGroupsConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// dialogflow_cx_v3::MakeDefaultTransitionRouteGroupsConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::
+    MakeDefaultTransitionRouteGroupsConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<TransitionRouteGroupsConnectionIdempotencyPolicy>
-  clone() const;
-
-  virtual google::cloud::Idempotency ListTransitionRouteGroups(
-      google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest
-          request);
-
-  virtual google::cloud::Idempotency GetTransitionRouteGroup(
-      google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const&
-          request);
-
-  virtual google::cloud::Idempotency CreateTransitionRouteGroup(
-      google::cloud::dialogflow::cx::v3::
-          CreateTransitionRouteGroupRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateTransitionRouteGroup(
-      google::cloud::dialogflow::cx::v3::
-          UpdateTransitionRouteGroupRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteTransitionRouteGroup(
-      google::cloud::dialogflow::cx::v3::
-          DeleteTransitionRouteGroupRequest const& request);
-};
-
-std::unique_ptr<TransitionRouteGroupsConnectionIdempotencyPolicy>
-MakeDefaultTransitionRouteGroupsConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// dialogflow_cx_v3::TransitionRouteGroupsConnectionIdempotencyPolicy directly.
+using ::google::cloud::dialogflow_cx_v3::
+    TransitionRouteGroupsConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

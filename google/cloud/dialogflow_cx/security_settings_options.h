@@ -21,53 +21,33 @@
 
 #include "google/cloud/dialogflow_cx/security_settings_connection.h"
 #include "google/cloud/dialogflow_cx/security_settings_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/dialogflow_cx/v3/security_settings_options.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct SecuritySettingsServiceRetryPolicyOption {
-  using Type = std::shared_ptr<SecuritySettingsServiceRetryPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::SecuritySettingsServiceBackoffPolicyOption
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::
+    SecuritySettingsServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct SecuritySettingsServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// dialogflow_cx_v3::SecuritySettingsServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::
+    SecuritySettingsServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct SecuritySettingsServiceConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<SecuritySettingsServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::SecuritySettingsServicePolicyOptionList
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::
+    SecuritySettingsServicePolicyOptionList;
 
-/**
- * The options applicable to SecuritySettingsService.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-using SecuritySettingsServicePolicyOptionList =
-    OptionList<SecuritySettingsServiceRetryPolicyOption,
-               SecuritySettingsServiceBackoffPolicyOption,
-               SecuritySettingsServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use dialogflow_cx_v3::SecuritySettingsServiceRetryPolicyOption
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::
+    SecuritySettingsServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

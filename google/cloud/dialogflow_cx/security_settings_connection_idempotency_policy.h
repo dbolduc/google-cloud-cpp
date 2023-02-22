@@ -19,47 +19,24 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_SECURITY_SETTINGS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_SECURITY_SETTINGS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/dialogflow/cx/v3/security_settings.grpc.pb.h>
-#include <memory>
+#include "google/cloud/dialogflow_cx/v3/security_settings_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class SecuritySettingsServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~SecuritySettingsServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// dialogflow_cx_v3::MakeDefaultSecuritySettingsServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::
+    MakeDefaultSecuritySettingsServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<SecuritySettingsServiceConnectionIdempotencyPolicy>
-  clone() const;
-
-  virtual google::cloud::Idempotency CreateSecuritySettings(
-      google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const&
-          request);
-
-  virtual google::cloud::Idempotency GetSecuritySettings(
-      google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const&
-          request);
-
-  virtual google::cloud::Idempotency UpdateSecuritySettings(
-      google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const&
-          request);
-
-  virtual google::cloud::Idempotency ListSecuritySettings(
-      google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest request);
-
-  virtual google::cloud::Idempotency DeleteSecuritySettings(
-      google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const&
-          request);
-};
-
-std::unique_ptr<SecuritySettingsServiceConnectionIdempotencyPolicy>
-MakeDefaultSecuritySettingsServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// dialogflow_cx_v3::SecuritySettingsServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::
+    SecuritySettingsServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

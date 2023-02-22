@@ -21,51 +21,25 @@
 
 #include "google/cloud/dialogflow_cx/pages_connection.h"
 #include "google/cloud/dialogflow_cx/pages_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/dialogflow_cx/v3/pages_options.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct PagesRetryPolicyOption {
-  using Type = std::shared_ptr<PagesRetryPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::PagesBackoffPolicyOption directly.
+using ::google::cloud::dialogflow_cx_v3::PagesBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct PagesBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::PagesConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::PagesConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct PagesConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<PagesConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::PagesPolicyOptionList directly.
+using ::google::cloud::dialogflow_cx_v3::PagesPolicyOptionList;
 
-/**
- * The options applicable to Pages.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-using PagesPolicyOptionList =
-    OptionList<PagesRetryPolicyOption, PagesBackoffPolicyOption,
-               PagesConnectionIdempotencyPolicyOption>;
+/// @deprecated Use dialogflow_cx_v3::PagesRetryPolicyOption directly.
+using ::google::cloud::dialogflow_cx_v3::PagesRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

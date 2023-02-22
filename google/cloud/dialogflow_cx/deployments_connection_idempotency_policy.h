@@ -19,33 +19,22 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_DEPLOYMENTS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_DEPLOYMENTS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/dialogflow/cx/v3/deployment.grpc.pb.h>
-#include <memory>
+#include "google/cloud/dialogflow_cx/v3/deployments_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class DeploymentsConnectionIdempotencyPolicy {
- public:
-  virtual ~DeploymentsConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// dialogflow_cx_v3::MakeDefaultDeploymentsConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::
+    MakeDefaultDeploymentsConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<DeploymentsConnectionIdempotencyPolicy> clone() const;
-
-  virtual google::cloud::Idempotency ListDeployments(
-      google::cloud::dialogflow::cx::v3::ListDeploymentsRequest request);
-
-  virtual google::cloud::Idempotency GetDeployment(
-      google::cloud::dialogflow::cx::v3::GetDeploymentRequest const& request);
-};
-
-std::unique_ptr<DeploymentsConnectionIdempotencyPolicy>
-MakeDefaultDeploymentsConnectionIdempotencyPolicy();
+/// @deprecated Use dialogflow_cx_v3::DeploymentsConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::DeploymentsConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

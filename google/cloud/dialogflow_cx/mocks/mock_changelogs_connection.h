@@ -20,42 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_MOCKS_MOCK_CHANGELOGS_CONNECTION_H
 
 #include "google/cloud/dialogflow_cx/changelogs_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/dialogflow_cx/v3/mocks/mock_changelogs_connection.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `ChangelogsConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `ChangelogsClient`. To do so,
- * construct an object of type `ChangelogsClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockChangelogsConnection : public dialogflow_cx::ChangelogsConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::dialogflow::cx::v3::Changelog>, ListChangelogs,
-      (google::cloud::dialogflow::cx::v3::ListChangelogsRequest request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Changelog>, GetChangelog,
-      (google::cloud::dialogflow::cx::v3::GetChangelogRequest const& request),
-      (override));
-};
+/// @deprecated Use dialogflow_cx_v3_mocks::MockChangelogsConnection directly.
+using ::google::cloud::dialogflow_cx_v3_mocks::MockChangelogsConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_mocks

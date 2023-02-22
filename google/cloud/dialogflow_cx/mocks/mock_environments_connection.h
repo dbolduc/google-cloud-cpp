@@ -20,92 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_MOCKS_MOCK_ENVIRONMENTS_CONNECTION_H
 
 #include "google/cloud/dialogflow_cx/environments_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/dialogflow_cx/v3/mocks/mock_environments_connection.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `EnvironmentsConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `EnvironmentsClient`. To do so,
- * construct an object of type `EnvironmentsClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockEnvironmentsConnection
-    : public dialogflow_cx::EnvironmentsConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::dialogflow::cx::v3::Environment>,
-      ListEnvironments,
-      (google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Environment>, GetEnvironment,
-      (google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>,
-      CreateEnvironment,
-      (google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>,
-      UpdateEnvironment,
-      (google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      Status, DeleteEnvironment,
-      (google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::dialogflow::cx::v3::Environment>,
-      LookupEnvironmentHistory,
-      (google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest
-           request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>,
-      RunContinuousTest,
-      (google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::dialogflow::cx::v3::ContinuousTestResult>,
-      ListContinuousTestResults,
-      (google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest
-           request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>,
-      DeployFlow,
-      (google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request),
-      (override));
-};
+/// @deprecated Use dialogflow_cx_v3_mocks::MockEnvironmentsConnection directly.
+using ::google::cloud::dialogflow_cx_v3_mocks::MockEnvironmentsConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_mocks

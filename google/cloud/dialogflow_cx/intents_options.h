@@ -21,51 +21,26 @@
 
 #include "google/cloud/dialogflow_cx/intents_connection.h"
 #include "google/cloud/dialogflow_cx/intents_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/dialogflow_cx/v3/intents_options.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct IntentsRetryPolicyOption {
-  using Type = std::shared_ptr<IntentsRetryPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::IntentsBackoffPolicyOption directly.
+using ::google::cloud::dialogflow_cx_v3::IntentsBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct IntentsBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::IntentsConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::
+    IntentsConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct IntentsConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<IntentsConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::IntentsPolicyOptionList directly.
+using ::google::cloud::dialogflow_cx_v3::IntentsPolicyOptionList;
 
-/**
- * The options applicable to Intents.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-using IntentsPolicyOptionList =
-    OptionList<IntentsRetryPolicyOption, IntentsBackoffPolicyOption,
-               IntentsConnectionIdempotencyPolicyOption>;
+/// @deprecated Use dialogflow_cx_v3::IntentsRetryPolicyOption directly.
+using ::google::cloud::dialogflow_cx_v3::IntentsRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

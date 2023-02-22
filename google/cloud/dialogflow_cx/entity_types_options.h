@@ -21,51 +21,26 @@
 
 #include "google/cloud/dialogflow_cx/entity_types_connection.h"
 #include "google/cloud/dialogflow_cx/entity_types_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/dialogflow_cx/v3/entity_types_options.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct EntityTypesRetryPolicyOption {
-  using Type = std::shared_ptr<EntityTypesRetryPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::EntityTypesBackoffPolicyOption directly.
+using ::google::cloud::dialogflow_cx_v3::EntityTypesBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct EntityTypesBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// dialogflow_cx_v3::EntityTypesConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::dialogflow_cx_v3::
+    EntityTypesConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct EntityTypesConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<EntityTypesConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::EntityTypesPolicyOptionList directly.
+using ::google::cloud::dialogflow_cx_v3::EntityTypesPolicyOptionList;
 
-/**
- * The options applicable to EntityTypes.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-using EntityTypesPolicyOptionList =
-    OptionList<EntityTypesRetryPolicyOption, EntityTypesBackoffPolicyOption,
-               EntityTypesConnectionIdempotencyPolicyOption>;
+/// @deprecated Use dialogflow_cx_v3::EntityTypesRetryPolicyOption directly.
+using ::google::cloud::dialogflow_cx_v3::EntityTypesRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

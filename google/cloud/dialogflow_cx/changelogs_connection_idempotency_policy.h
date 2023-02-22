@@ -19,33 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_CHANGELOGS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_CHANGELOGS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/dialogflow/cx/v3/changelog.grpc.pb.h>
-#include <memory>
+#include "google/cloud/dialogflow_cx/v3/changelogs_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ChangelogsConnectionIdempotencyPolicy {
- public:
-  virtual ~ChangelogsConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// dialogflow_cx_v3::MakeDefaultChangelogsConnectionIdempotencyPolicy directly.
+using ::google::cloud::dialogflow_cx_v3::
+    MakeDefaultChangelogsConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<ChangelogsConnectionIdempotencyPolicy> clone() const;
-
-  virtual google::cloud::Idempotency ListChangelogs(
-      google::cloud::dialogflow::cx::v3::ListChangelogsRequest request);
-
-  virtual google::cloud::Idempotency GetChangelog(
-      google::cloud::dialogflow::cx::v3::GetChangelogRequest const& request);
-};
-
-std::unique_ptr<ChangelogsConnectionIdempotencyPolicy>
-MakeDefaultChangelogsConnectionIdempotencyPolicy();
+/// @deprecated Use dialogflow_cx_v3::ChangelogsConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::ChangelogsConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

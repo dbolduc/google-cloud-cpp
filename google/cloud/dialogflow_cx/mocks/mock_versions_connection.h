@@ -19,71 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_MOCKS_MOCK_VERSIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_MOCKS_MOCK_VERSIONS_CONNECTION_H
 
+#include "google/cloud/dialogflow_cx/v3/mocks/mock_versions_connection.h"
 #include "google/cloud/dialogflow_cx/versions_connection.h"
-#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `VersionsConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `VersionsClient`. To do so,
- * construct an object of type `VersionsClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockVersionsConnection : public dialogflow_cx::VersionsConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::dialogflow::cx::v3::Version>,
-              ListVersions,
-              (google::cloud::dialogflow::cx::v3::ListVersionsRequest request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Version>, GetVersion,
-      (google::cloud::dialogflow::cx::v3::GetVersionRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>,
-      CreateVersion,
-      (google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Version>, UpdateVersion,
-      (google::cloud::dialogflow::cx::v3::UpdateVersionRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      Status, DeleteVersion,
-      (google::cloud::dialogflow::cx::v3::DeleteVersionRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::protobuf::Struct>>, LoadVersion,
-      (google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>,
-      CompareVersions,
-      (google::cloud::dialogflow::cx::v3::CompareVersionsRequest const&
-           request),
-      (override));
-};
+/// @deprecated Use dialogflow_cx_v3_mocks::MockVersionsConnection directly.
+using ::google::cloud::dialogflow_cx_v3_mocks::MockVersionsConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_mocks

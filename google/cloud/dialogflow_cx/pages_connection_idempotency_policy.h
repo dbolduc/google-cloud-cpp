@@ -19,42 +19,20 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_PAGES_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_PAGES_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/dialogflow/cx/v3/page.grpc.pb.h>
-#include <memory>
+#include "google/cloud/dialogflow_cx/v3/pages_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class PagesConnectionIdempotencyPolicy {
- public:
-  virtual ~PagesConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// dialogflow_cx_v3::MakeDefaultPagesConnectionIdempotencyPolicy directly.
+using ::google::cloud::dialogflow_cx_v3::
+    MakeDefaultPagesConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<PagesConnectionIdempotencyPolicy> clone() const;
-
-  virtual google::cloud::Idempotency ListPages(
-      google::cloud::dialogflow::cx::v3::ListPagesRequest request);
-
-  virtual google::cloud::Idempotency GetPage(
-      google::cloud::dialogflow::cx::v3::GetPageRequest const& request);
-
-  virtual google::cloud::Idempotency CreatePage(
-      google::cloud::dialogflow::cx::v3::CreatePageRequest const& request);
-
-  virtual google::cloud::Idempotency UpdatePage(
-      google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request);
-
-  virtual google::cloud::Idempotency DeletePage(
-      google::cloud::dialogflow::cx::v3::DeletePageRequest const& request);
-};
-
-std::unique_ptr<PagesConnectionIdempotencyPolicy>
-MakeDefaultPagesConnectionIdempotencyPolicy();
+/// @deprecated Use dialogflow_cx_v3::PagesConnectionIdempotencyPolicy directly.
+using ::google::cloud::dialogflow_cx_v3::PagesConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

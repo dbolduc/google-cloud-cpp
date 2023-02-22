@@ -21,51 +21,26 @@
 
 #include "google/cloud/dialogflow_cx/sessions_connection.h"
 #include "google/cloud/dialogflow_cx/sessions_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/dialogflow_cx/v3/sessions_options.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct SessionsRetryPolicyOption {
-  using Type = std::shared_ptr<SessionsRetryPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::SessionsBackoffPolicyOption directly.
+using ::google::cloud::dialogflow_cx_v3::SessionsBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct SessionsBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::SessionsConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::
+    SessionsConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct SessionsConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<SessionsConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::SessionsPolicyOptionList directly.
+using ::google::cloud::dialogflow_cx_v3::SessionsPolicyOptionList;
 
-/**
- * The options applicable to Sessions.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-using SessionsPolicyOptionList =
-    OptionList<SessionsRetryPolicyOption, SessionsBackoffPolicyOption,
-               SessionsConnectionIdempotencyPolicyOption>;
+/// @deprecated Use dialogflow_cx_v3::SessionsRetryPolicyOption directly.
+using ::google::cloud::dialogflow_cx_v3::SessionsRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

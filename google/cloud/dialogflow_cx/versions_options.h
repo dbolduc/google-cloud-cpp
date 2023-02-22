@@ -19,64 +19,31 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_VERSIONS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_VERSIONS_OPTIONS_H
 
+#include "google/cloud/dialogflow_cx/v3/versions_options.h"
 #include "google/cloud/dialogflow_cx/versions_connection.h"
 #include "google/cloud/dialogflow_cx/versions_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct VersionsRetryPolicyOption {
-  using Type = std::shared_ptr<VersionsRetryPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::VersionsPollingPolicyOption directly.
+using ::google::cloud::dialogflow_cx_v3::VersionsPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct VersionsBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::VersionsBackoffPolicyOption directly.
+using ::google::cloud::dialogflow_cx_v3::VersionsBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct VersionsConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<VersionsConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::VersionsConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::
+    VersionsConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct VersionsPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::VersionsPolicyOptionList directly.
+using ::google::cloud::dialogflow_cx_v3::VersionsPolicyOptionList;
 
-/**
- * The options applicable to Versions.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-using VersionsPolicyOptionList =
-    OptionList<VersionsRetryPolicyOption, VersionsBackoffPolicyOption,
-               VersionsPollingPolicyOption,
-               VersionsConnectionIdempotencyPolicyOption>;
+/// @deprecated Use dialogflow_cx_v3::VersionsRetryPolicyOption directly.
+using ::google::cloud::dialogflow_cx_v3::VersionsRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

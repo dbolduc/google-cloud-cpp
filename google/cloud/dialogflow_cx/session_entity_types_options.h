@@ -21,52 +21,30 @@
 
 #include "google/cloud/dialogflow_cx/session_entity_types_connection.h"
 #include "google/cloud/dialogflow_cx/session_entity_types_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/dialogflow_cx/v3/session_entity_types_options.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct SessionEntityTypesRetryPolicyOption {
-  using Type = std::shared_ptr<SessionEntityTypesRetryPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::SessionEntityTypesBackoffPolicyOption
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::SessionEntityTypesBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct SessionEntityTypesBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// dialogflow_cx_v3::SessionEntityTypesConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::
+    SessionEntityTypesConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct SessionEntityTypesConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<SessionEntityTypesConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::SessionEntityTypesPolicyOptionList
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::SessionEntityTypesPolicyOptionList;
 
-/**
- * The options applicable to SessionEntityTypes.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-using SessionEntityTypesPolicyOptionList =
-    OptionList<SessionEntityTypesRetryPolicyOption,
-               SessionEntityTypesBackoffPolicyOption,
-               SessionEntityTypesConnectionIdempotencyPolicyOption>;
+/// @deprecated Use dialogflow_cx_v3::SessionEntityTypesRetryPolicyOption
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::SessionEntityTypesRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

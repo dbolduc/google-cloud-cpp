@@ -21,62 +21,29 @@
 
 #include "google/cloud/dialogflow_cx/test_cases_connection.h"
 #include "google/cloud/dialogflow_cx/test_cases_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/dialogflow_cx/v3/test_cases_options.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct TestCasesRetryPolicyOption {
-  using Type = std::shared_ptr<TestCasesRetryPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::TestCasesPollingPolicyOption directly.
+using ::google::cloud::dialogflow_cx_v3::TestCasesPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct TestCasesBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::TestCasesBackoffPolicyOption directly.
+using ::google::cloud::dialogflow_cx_v3::TestCasesBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct TestCasesConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<TestCasesConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::TestCasesConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::
+    TestCasesConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct TestCasesPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::TestCasesPolicyOptionList directly.
+using ::google::cloud::dialogflow_cx_v3::TestCasesPolicyOptionList;
 
-/**
- * The options applicable to TestCases.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-using TestCasesPolicyOptionList =
-    OptionList<TestCasesRetryPolicyOption, TestCasesBackoffPolicyOption,
-               TestCasesPollingPolicyOption,
-               TestCasesConnectionIdempotencyPolicyOption>;
+/// @deprecated Use dialogflow_cx_v3::TestCasesRetryPolicyOption directly.
+using ::google::cloud::dialogflow_cx_v3::TestCasesRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

@@ -20,124 +20,28 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_FLOWS_CONNECTION_H
 
 #include "google/cloud/dialogflow_cx/flows_connection_idempotency_policy.h"
-#include "google/cloud/dialogflow_cx/internal/flows_retry_traits.h"
-#include "google/cloud/dialogflow_cx/internal/flows_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
-#include <string>
+#include "google/cloud/dialogflow_cx/v3/flows_connection.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using FlowsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    dialogflow_cx_internal::FlowsRetryTraits>;
+/// @deprecated Use dialogflow_cx_v3::MakeFlowsConnection directly.
+using ::google::cloud::dialogflow_cx_v3::MakeFlowsConnection;
 
-using FlowsLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dialogflow_cx_internal::FlowsRetryTraits>;
+/// @deprecated Use dialogflow_cx_v3::FlowsConnection directly.
+using ::google::cloud::dialogflow_cx_v3::FlowsConnection;
 
-using FlowsLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dialogflow_cx_internal::FlowsRetryTraits>;
+/// @deprecated Use dialogflow_cx_v3::FlowsLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::FlowsLimitedErrorCountRetryPolicy;
 
-/**
- * The `FlowsConnection` object for `FlowsClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `FlowsClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `FlowsClient`.
- *
- * To create a concrete instance, see `MakeFlowsConnection()`.
- *
- * For mocking, see `dialogflow_cx_mocks::MockFlowsConnection`.
- */
-class FlowsConnection {
- public:
-  virtual ~FlowsConnection() = 0;
+/// @deprecated Use dialogflow_cx_v3::FlowsLimitedTimeRetryPolicy directly.
+using ::google::cloud::dialogflow_cx_v3::FlowsLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Flow> CreateFlow(
-      google::cloud::dialogflow::cx::v3::CreateFlowRequest const& request);
-
-  virtual Status DeleteFlow(
-      google::cloud::dialogflow::cx::v3::DeleteFlowRequest const& request);
-
-  virtual StreamRange<google::cloud::dialogflow::cx::v3::Flow> ListFlows(
-      google::cloud::dialogflow::cx::v3::ListFlowsRequest request);
-
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Flow> GetFlow(
-      google::cloud::dialogflow::cx::v3::GetFlowRequest const& request);
-
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Flow> UpdateFlow(
-      google::cloud::dialogflow::cx::v3::UpdateFlowRequest const& request);
-
-  virtual future<StatusOr<google::protobuf::Struct>> TrainFlow(
-      google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request);
-
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
-  ValidateFlow(
-      google::cloud::dialogflow::cx::v3::ValidateFlowRequest const& request);
-
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
-  GetFlowValidationResult(
-      google::cloud::dialogflow::cx::v3::GetFlowValidationResultRequest const&
-          request);
-
-  virtual future<
-      StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>
-  ImportFlow(
-      google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request);
-
-  virtual future<
-      StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
-  ExportFlow(
-      google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type `FlowsConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of FlowsClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `FlowsConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dialogflow_cx::FlowsPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `FlowsConnection` created by
- * this function.
- */
-std::shared_ptr<FlowsConnection> MakeFlowsConnection(
-    std::string const& location, Options options = {});
-
-/**
- * A backwards-compatible version of the previous factory function.  Unless
- * the service also offers a global endpoint, the default value of the
- * `EndpointOption` may be useless, in which case it must be overridden.
- *
- * @deprecated Please use the `location` overload instead.
- */
-std::shared_ptr<FlowsConnection> MakeFlowsConnection(Options options = {});
+/// @deprecated Use dialogflow_cx_v3::FlowsRetryPolicy directly.
+using ::google::cloud::dialogflow_cx_v3::FlowsRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

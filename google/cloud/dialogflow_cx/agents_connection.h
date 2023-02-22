@@ -20,119 +20,28 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_AGENTS_CONNECTION_H
 
 #include "google/cloud/dialogflow_cx/agents_connection_idempotency_policy.h"
-#include "google/cloud/dialogflow_cx/internal/agents_retry_traits.h"
-#include "google/cloud/dialogflow_cx/internal/agents_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
-#include <string>
+#include "google/cloud/dialogflow_cx/v3/agents_connection.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using AgentsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    dialogflow_cx_internal::AgentsRetryTraits>;
+/// @deprecated Use dialogflow_cx_v3::MakeAgentsConnection directly.
+using ::google::cloud::dialogflow_cx_v3::MakeAgentsConnection;
 
-using AgentsLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dialogflow_cx_internal::AgentsRetryTraits>;
+/// @deprecated Use dialogflow_cx_v3::AgentsConnection directly.
+using ::google::cloud::dialogflow_cx_v3::AgentsConnection;
 
-using AgentsLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dialogflow_cx_internal::AgentsRetryTraits>;
+/// @deprecated Use dialogflow_cx_v3::AgentsLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::AgentsLimitedErrorCountRetryPolicy;
 
-/**
- * The `AgentsConnection` object for `AgentsClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `AgentsClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `AgentsClient`.
- *
- * To create a concrete instance, see `MakeAgentsConnection()`.
- *
- * For mocking, see `dialogflow_cx_mocks::MockAgentsConnection`.
- */
-class AgentsConnection {
- public:
-  virtual ~AgentsConnection() = 0;
+/// @deprecated Use dialogflow_cx_v3::AgentsLimitedTimeRetryPolicy directly.
+using ::google::cloud::dialogflow_cx_v3::AgentsLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::cloud::dialogflow::cx::v3::Agent> ListAgents(
-      google::cloud::dialogflow::cx::v3::ListAgentsRequest request);
-
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Agent> GetAgent(
-      google::cloud::dialogflow::cx::v3::GetAgentRequest const& request);
-
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Agent> CreateAgent(
-      google::cloud::dialogflow::cx::v3::CreateAgentRequest const& request);
-
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Agent> UpdateAgent(
-      google::cloud::dialogflow::cx::v3::UpdateAgentRequest const& request);
-
-  virtual Status DeleteAgent(
-      google::cloud::dialogflow::cx::v3::DeleteAgentRequest const& request);
-
-  virtual future<
-      StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>
-  ExportAgent(
-      google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request);
-
-  virtual future<StatusOr<google::protobuf::Struct>> RestoreAgent(
-      google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request);
-
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
-  ValidateAgent(
-      google::cloud::dialogflow::cx::v3::ValidateAgentRequest const& request);
-
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
-  GetAgentValidationResult(
-      google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const&
-          request);
-};
-
-/**
- * A factory function to construct an object of type `AgentsConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of AgentsClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `AgentsConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dialogflow_cx::AgentsPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `AgentsConnection` created by
- * this function.
- */
-std::shared_ptr<AgentsConnection> MakeAgentsConnection(
-    std::string const& location, Options options = {});
-
-/**
- * A backwards-compatible version of the previous factory function.  Unless
- * the service also offers a global endpoint, the default value of the
- * `EndpointOption` may be useless, in which case it must be overridden.
- *
- * @deprecated Please use the `location` overload instead.
- */
-std::shared_ptr<AgentsConnection> MakeAgentsConnection(Options options = {});
+/// @deprecated Use dialogflow_cx_v3::AgentsRetryPolicy directly.
+using ::google::cloud::dialogflow_cx_v3::AgentsRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

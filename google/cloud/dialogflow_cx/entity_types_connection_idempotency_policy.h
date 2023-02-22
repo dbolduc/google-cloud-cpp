@@ -19,45 +19,22 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_ENTITY_TYPES_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_ENTITY_TYPES_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/dialogflow/cx/v3/entity_type.grpc.pb.h>
-#include <memory>
+#include "google/cloud/dialogflow_cx/v3/entity_types_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class EntityTypesConnectionIdempotencyPolicy {
- public:
-  virtual ~EntityTypesConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// dialogflow_cx_v3::MakeDefaultEntityTypesConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::
+    MakeDefaultEntityTypesConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<EntityTypesConnectionIdempotencyPolicy> clone() const;
-
-  virtual google::cloud::Idempotency ListEntityTypes(
-      google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request);
-
-  virtual google::cloud::Idempotency GetEntityType(
-      google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request);
-
-  virtual google::cloud::Idempotency CreateEntityType(
-      google::cloud::dialogflow::cx::v3::CreateEntityTypeRequest const&
-          request);
-
-  virtual google::cloud::Idempotency UpdateEntityType(
-      google::cloud::dialogflow::cx::v3::UpdateEntityTypeRequest const&
-          request);
-
-  virtual google::cloud::Idempotency DeleteEntityType(
-      google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const&
-          request);
-};
-
-std::unique_ptr<EntityTypesConnectionIdempotencyPolicy>
-MakeDefaultEntityTypesConnectionIdempotencyPolicy();
+/// @deprecated Use dialogflow_cx_v3::EntityTypesConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::EntityTypesConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

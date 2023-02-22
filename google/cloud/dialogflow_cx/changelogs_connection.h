@@ -20,92 +20,28 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_CHANGELOGS_CONNECTION_H
 
 #include "google/cloud/dialogflow_cx/changelogs_connection_idempotency_policy.h"
-#include "google/cloud/dialogflow_cx/internal/changelogs_retry_traits.h"
-#include "google/cloud/dialogflow_cx/internal/changelogs_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <memory>
-#include <string>
+#include "google/cloud/dialogflow_cx/v3/changelogs_connection.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ChangelogsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    dialogflow_cx_internal::ChangelogsRetryTraits>;
+/// @deprecated Use dialogflow_cx_v3::MakeChangelogsConnection directly.
+using ::google::cloud::dialogflow_cx_v3::MakeChangelogsConnection;
 
-using ChangelogsLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dialogflow_cx_internal::ChangelogsRetryTraits>;
+/// @deprecated Use dialogflow_cx_v3::ChangelogsConnection directly.
+using ::google::cloud::dialogflow_cx_v3::ChangelogsConnection;
 
-using ChangelogsLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dialogflow_cx_internal::ChangelogsRetryTraits>;
+/// @deprecated Use dialogflow_cx_v3::ChangelogsLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::ChangelogsLimitedErrorCountRetryPolicy;
 
-/**
- * The `ChangelogsConnection` object for `ChangelogsClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `ChangelogsClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `ChangelogsClient`.
- *
- * To create a concrete instance, see `MakeChangelogsConnection()`.
- *
- * For mocking, see `dialogflow_cx_mocks::MockChangelogsConnection`.
- */
-class ChangelogsConnection {
- public:
-  virtual ~ChangelogsConnection() = 0;
+/// @deprecated Use dialogflow_cx_v3::ChangelogsLimitedTimeRetryPolicy directly.
+using ::google::cloud::dialogflow_cx_v3::ChangelogsLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::cloud::dialogflow::cx::v3::Changelog>
-  ListChangelogs(
-      google::cloud::dialogflow::cx::v3::ListChangelogsRequest request);
-
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Changelog> GetChangelog(
-      google::cloud::dialogflow::cx::v3::GetChangelogRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type `ChangelogsConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of ChangelogsClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `ChangelogsConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dialogflow_cx::ChangelogsPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `ChangelogsConnection` created by
- * this function.
- */
-std::shared_ptr<ChangelogsConnection> MakeChangelogsConnection(
-    std::string const& location, Options options = {});
-
-/**
- * A backwards-compatible version of the previous factory function.  Unless
- * the service also offers a global endpoint, the default value of the
- * `EndpointOption` may be useless, in which case it must be overridden.
- *
- * @deprecated Please use the `location` overload instead.
- */
-std::shared_ptr<ChangelogsConnection> MakeChangelogsConnection(
-    Options options = {});
+/// @deprecated Use dialogflow_cx_v3::ChangelogsRetryPolicy directly.
+using ::google::cloud::dialogflow_cx_v3::ChangelogsRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

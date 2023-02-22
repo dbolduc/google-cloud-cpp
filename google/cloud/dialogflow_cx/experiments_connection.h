@@ -20,114 +20,30 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_EXPERIMENTS_CONNECTION_H
 
 #include "google/cloud/dialogflow_cx/experiments_connection_idempotency_policy.h"
-#include "google/cloud/dialogflow_cx/internal/experiments_retry_traits.h"
-#include "google/cloud/dialogflow_cx/internal/experiments_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <memory>
-#include <string>
+#include "google/cloud/dialogflow_cx/v3/experiments_connection.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ExperimentsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    dialogflow_cx_internal::ExperimentsRetryTraits>;
+/// @deprecated Use dialogflow_cx_v3::MakeExperimentsConnection directly.
+using ::google::cloud::dialogflow_cx_v3::MakeExperimentsConnection;
 
-using ExperimentsLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dialogflow_cx_internal::ExperimentsRetryTraits>;
+/// @deprecated Use dialogflow_cx_v3::ExperimentsConnection directly.
+using ::google::cloud::dialogflow_cx_v3::ExperimentsConnection;
 
-using ExperimentsLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dialogflow_cx_internal::ExperimentsRetryTraits>;
+/// @deprecated Use dialogflow_cx_v3::ExperimentsLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::
+    ExperimentsLimitedErrorCountRetryPolicy;
 
-/**
- * The `ExperimentsConnection` object for `ExperimentsClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `ExperimentsClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `ExperimentsClient`.
- *
- * To create a concrete instance, see `MakeExperimentsConnection()`.
- *
- * For mocking, see `dialogflow_cx_mocks::MockExperimentsConnection`.
- */
-class ExperimentsConnection {
- public:
-  virtual ~ExperimentsConnection() = 0;
+/// @deprecated Use dialogflow_cx_v3::ExperimentsLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::ExperimentsLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::cloud::dialogflow::cx::v3::Experiment>
-  ListExperiments(
-      google::cloud::dialogflow::cx::v3::ListExperimentsRequest request);
-
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Experiment> GetExperiment(
-      google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request);
-
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
-  CreateExperiment(
-      google::cloud::dialogflow::cx::v3::CreateExperimentRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
-  UpdateExperiment(
-      google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const&
-          request);
-
-  virtual Status DeleteExperiment(
-      google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
-  StartExperiment(
-      google::cloud::dialogflow::cx::v3::StartExperimentRequest const& request);
-
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
-  StopExperiment(
-      google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type `ExperimentsConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of ExperimentsClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `ExperimentsConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dialogflow_cx::ExperimentsPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `ExperimentsConnection` created by
- * this function.
- */
-std::shared_ptr<ExperimentsConnection> MakeExperimentsConnection(
-    std::string const& location, Options options = {});
-
-/**
- * A backwards-compatible version of the previous factory function.  Unless
- * the service also offers a global endpoint, the default value of the
- * `EndpointOption` may be useless, in which case it must be overridden.
- *
- * @deprecated Please use the `location` overload instead.
- */
-std::shared_ptr<ExperimentsConnection> MakeExperimentsConnection(
-    Options options = {});
+/// @deprecated Use dialogflow_cx_v3::ExperimentsRetryPolicy directly.
+using ::google::cloud::dialogflow_cx_v3::ExperimentsRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

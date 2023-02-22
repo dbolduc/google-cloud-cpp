@@ -19,61 +19,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_ENVIRONMENTS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_ENVIRONMENTS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/dialogflow/cx/v3/environment.grpc.pb.h>
-#include <memory>
+#include "google/cloud/dialogflow_cx/v3/environments_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class EnvironmentsConnectionIdempotencyPolicy {
- public:
-  virtual ~EnvironmentsConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// dialogflow_cx_v3::MakeDefaultEnvironmentsConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::
+    MakeDefaultEnvironmentsConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency ListEnvironments(
-      google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest request);
-
-  virtual google::cloud::Idempotency GetEnvironment(
-      google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const& request);
-
-  virtual google::cloud::Idempotency CreateEnvironment(
-      google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
-          request);
-
-  virtual google::cloud::Idempotency UpdateEnvironment(
-      google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
-          request);
-
-  virtual google::cloud::Idempotency DeleteEnvironment(
-      google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const&
-          request);
-
-  virtual google::cloud::Idempotency LookupEnvironmentHistory(
-      google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest
-          request);
-
-  virtual google::cloud::Idempotency RunContinuousTest(
-      google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
-          request);
-
-  virtual google::cloud::Idempotency ListContinuousTestResults(
-      google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest
-          request);
-
-  virtual google::cloud::Idempotency DeployFlow(
-      google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request);
-};
-
-std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy>
-MakeDefaultEnvironmentsConnectionIdempotencyPolicy();
+/// @deprecated Use dialogflow_cx_v3::EnvironmentsConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::
+    EnvironmentsConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

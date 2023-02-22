@@ -20,60 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_MOCKS_MOCK_ENTITY_TYPES_CONNECTION_H
 
 #include "google/cloud/dialogflow_cx/entity_types_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/dialogflow_cx/v3/mocks/mock_entity_types_connection.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `EntityTypesConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `EntityTypesClient`. To do so,
- * construct an object of type `EntityTypesClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockEntityTypesConnection : public dialogflow_cx::EntityTypesConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::dialogflow::cx::v3::EntityType>,
-      ListEntityTypes,
-      (google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::EntityType>, GetEntityType,
-      (google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::EntityType>,
-              CreateEntityType,
-              (google::cloud::dialogflow::cx::v3::CreateEntityTypeRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::EntityType>,
-              UpdateEntityType,
-              (google::cloud::dialogflow::cx::v3::UpdateEntityTypeRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(Status, DeleteEntityType,
-              (google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const&
-                   request),
-              (override));
-};
+/// @deprecated Use dialogflow_cx_v3_mocks::MockEntityTypesConnection directly.
+using ::google::cloud::dialogflow_cx_v3_mocks::MockEntityTypesConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_mocks

@@ -19,47 +19,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_SESSION_ENTITY_TYPES_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_SESSION_ENTITY_TYPES_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/dialogflow/cx/v3/session_entity_type.grpc.pb.h>
-#include <memory>
+#include "google/cloud/dialogflow_cx/v3/session_entity_types_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class SessionEntityTypesConnectionIdempotencyPolicy {
- public:
-  virtual ~SessionEntityTypesConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// dialogflow_cx_v3::MakeDefaultSessionEntityTypesConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::
+    MakeDefaultSessionEntityTypesConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<SessionEntityTypesConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency ListSessionEntityTypes(
-      google::cloud::dialogflow::cx::v3::ListSessionEntityTypesRequest request);
-
-  virtual google::cloud::Idempotency GetSessionEntityType(
-      google::cloud::dialogflow::cx::v3::GetSessionEntityTypeRequest const&
-          request);
-
-  virtual google::cloud::Idempotency CreateSessionEntityType(
-      google::cloud::dialogflow::cx::v3::CreateSessionEntityTypeRequest const&
-          request);
-
-  virtual google::cloud::Idempotency UpdateSessionEntityType(
-      google::cloud::dialogflow::cx::v3::UpdateSessionEntityTypeRequest const&
-          request);
-
-  virtual google::cloud::Idempotency DeleteSessionEntityType(
-      google::cloud::dialogflow::cx::v3::DeleteSessionEntityTypeRequest const&
-          request);
-};
-
-std::unique_ptr<SessionEntityTypesConnectionIdempotencyPolicy>
-MakeDefaultSessionEntityTypesConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// dialogflow_cx_v3::SessionEntityTypesConnectionIdempotencyPolicy directly.
+using ::google::cloud::dialogflow_cx_v3::
+    SessionEntityTypesConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

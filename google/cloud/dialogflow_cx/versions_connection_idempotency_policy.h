@@ -19,48 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_VERSIONS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_VERSIONS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/dialogflow/cx/v3/version.grpc.pb.h>
-#include <memory>
+#include "google/cloud/dialogflow_cx/v3/versions_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class VersionsConnectionIdempotencyPolicy {
- public:
-  virtual ~VersionsConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// dialogflow_cx_v3::MakeDefaultVersionsConnectionIdempotencyPolicy directly.
+using ::google::cloud::dialogflow_cx_v3::
+    MakeDefaultVersionsConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<VersionsConnectionIdempotencyPolicy> clone() const;
-
-  virtual google::cloud::Idempotency ListVersions(
-      google::cloud::dialogflow::cx::v3::ListVersionsRequest request);
-
-  virtual google::cloud::Idempotency GetVersion(
-      google::cloud::dialogflow::cx::v3::GetVersionRequest const& request);
-
-  virtual google::cloud::Idempotency CreateVersion(
-      google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateVersion(
-      google::cloud::dialogflow::cx::v3::UpdateVersionRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteVersion(
-      google::cloud::dialogflow::cx::v3::DeleteVersionRequest const& request);
-
-  virtual google::cloud::Idempotency LoadVersion(
-      google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request);
-
-  virtual google::cloud::Idempotency CompareVersions(
-      google::cloud::dialogflow::cx::v3::CompareVersionsRequest const& request);
-};
-
-std::unique_ptr<VersionsConnectionIdempotencyPolicy>
-MakeDefaultVersionsConnectionIdempotencyPolicy();
+/// @deprecated Use dialogflow_cx_v3::VersionsConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::VersionsConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

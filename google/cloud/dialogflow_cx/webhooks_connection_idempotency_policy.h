@@ -19,42 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_WEBHOOKS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_WEBHOOKS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/dialogflow/cx/v3/webhook.grpc.pb.h>
-#include <memory>
+#include "google/cloud/dialogflow_cx/v3/webhooks_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class WebhooksConnectionIdempotencyPolicy {
- public:
-  virtual ~WebhooksConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// dialogflow_cx_v3::MakeDefaultWebhooksConnectionIdempotencyPolicy directly.
+using ::google::cloud::dialogflow_cx_v3::
+    MakeDefaultWebhooksConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<WebhooksConnectionIdempotencyPolicy> clone() const;
-
-  virtual google::cloud::Idempotency ListWebhooks(
-      google::cloud::dialogflow::cx::v3::ListWebhooksRequest request);
-
-  virtual google::cloud::Idempotency GetWebhook(
-      google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request);
-
-  virtual google::cloud::Idempotency CreateWebhook(
-      google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateWebhook(
-      google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteWebhook(
-      google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request);
-};
-
-std::unique_ptr<WebhooksConnectionIdempotencyPolicy>
-MakeDefaultWebhooksConnectionIdempotencyPolicy();
+/// @deprecated Use dialogflow_cx_v3::WebhooksConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::WebhooksConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

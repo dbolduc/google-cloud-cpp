@@ -21,62 +21,29 @@
 
 #include "google/cloud/dialogflow_cx/agents_connection.h"
 #include "google/cloud/dialogflow_cx/agents_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/dialogflow_cx/v3/agents_options.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct AgentsRetryPolicyOption {
-  using Type = std::shared_ptr<AgentsRetryPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::AgentsPollingPolicyOption directly.
+using ::google::cloud::dialogflow_cx_v3::AgentsPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct AgentsBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::AgentsBackoffPolicyOption directly.
+using ::google::cloud::dialogflow_cx_v3::AgentsBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct AgentsConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<AgentsConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::AgentsConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::
+    AgentsConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct AgentsPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::AgentsPolicyOptionList directly.
+using ::google::cloud::dialogflow_cx_v3::AgentsPolicyOptionList;
 
-/**
- * The options applicable to Agents.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-using AgentsPolicyOptionList =
-    OptionList<AgentsRetryPolicyOption, AgentsBackoffPolicyOption,
-               AgentsPollingPolicyOption,
-               AgentsConnectionIdempotencyPolicyOption>;
+/// @deprecated Use dialogflow_cx_v3::AgentsRetryPolicyOption directly.
+using ::google::cloud::dialogflow_cx_v3::AgentsRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

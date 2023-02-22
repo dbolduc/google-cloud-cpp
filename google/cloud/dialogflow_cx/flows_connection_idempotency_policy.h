@@ -19,58 +19,20 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_FLOWS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_FLOWS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/dialogflow/cx/v3/flow.grpc.pb.h>
-#include <memory>
+#include "google/cloud/dialogflow_cx/v3/flows_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class FlowsConnectionIdempotencyPolicy {
- public:
-  virtual ~FlowsConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// dialogflow_cx_v3::MakeDefaultFlowsConnectionIdempotencyPolicy directly.
+using ::google::cloud::dialogflow_cx_v3::
+    MakeDefaultFlowsConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<FlowsConnectionIdempotencyPolicy> clone() const;
-
-  virtual google::cloud::Idempotency CreateFlow(
-      google::cloud::dialogflow::cx::v3::CreateFlowRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteFlow(
-      google::cloud::dialogflow::cx::v3::DeleteFlowRequest const& request);
-
-  virtual google::cloud::Idempotency ListFlows(
-      google::cloud::dialogflow::cx::v3::ListFlowsRequest request);
-
-  virtual google::cloud::Idempotency GetFlow(
-      google::cloud::dialogflow::cx::v3::GetFlowRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateFlow(
-      google::cloud::dialogflow::cx::v3::UpdateFlowRequest const& request);
-
-  virtual google::cloud::Idempotency TrainFlow(
-      google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request);
-
-  virtual google::cloud::Idempotency ValidateFlow(
-      google::cloud::dialogflow::cx::v3::ValidateFlowRequest const& request);
-
-  virtual google::cloud::Idempotency GetFlowValidationResult(
-      google::cloud::dialogflow::cx::v3::GetFlowValidationResultRequest const&
-          request);
-
-  virtual google::cloud::Idempotency ImportFlow(
-      google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request);
-
-  virtual google::cloud::Idempotency ExportFlow(
-      google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request);
-};
-
-std::unique_ptr<FlowsConnectionIdempotencyPolicy>
-MakeDefaultFlowsConnectionIdempotencyPolicy();
+/// @deprecated Use dialogflow_cx_v3::FlowsConnectionIdempotencyPolicy directly.
+using ::google::cloud::dialogflow_cx_v3::FlowsConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

@@ -19,112 +19,29 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_VERSIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_VERSIONS_CONNECTION_H
 
-#include "google/cloud/dialogflow_cx/internal/versions_retry_traits.h"
-#include "google/cloud/dialogflow_cx/internal/versions_stub.h"
+#include "google/cloud/dialogflow_cx/v3/versions_connection.h"
 #include "google/cloud/dialogflow_cx/versions_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
-#include <string>
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using VersionsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    dialogflow_cx_internal::VersionsRetryTraits>;
+/// @deprecated Use dialogflow_cx_v3::MakeVersionsConnection directly.
+using ::google::cloud::dialogflow_cx_v3::MakeVersionsConnection;
 
-using VersionsLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dialogflow_cx_internal::VersionsRetryTraits>;
+/// @deprecated Use dialogflow_cx_v3::VersionsConnection directly.
+using ::google::cloud::dialogflow_cx_v3::VersionsConnection;
 
-using VersionsLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dialogflow_cx_internal::VersionsRetryTraits>;
+/// @deprecated Use dialogflow_cx_v3::VersionsLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::VersionsLimitedErrorCountRetryPolicy;
 
-/**
- * The `VersionsConnection` object for `VersionsClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `VersionsClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `VersionsClient`.
- *
- * To create a concrete instance, see `MakeVersionsConnection()`.
- *
- * For mocking, see `dialogflow_cx_mocks::MockVersionsConnection`.
- */
-class VersionsConnection {
- public:
-  virtual ~VersionsConnection() = 0;
+/// @deprecated Use dialogflow_cx_v3::VersionsLimitedTimeRetryPolicy directly.
+using ::google::cloud::dialogflow_cx_v3::VersionsLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::cloud::dialogflow::cx::v3::Version> ListVersions(
-      google::cloud::dialogflow::cx::v3::ListVersionsRequest request);
-
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Version> GetVersion(
-      google::cloud::dialogflow::cx::v3::GetVersionRequest const& request);
-
-  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>
-  CreateVersion(
-      google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request);
-
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Version> UpdateVersion(
-      google::cloud::dialogflow::cx::v3::UpdateVersionRequest const& request);
-
-  virtual Status DeleteVersion(
-      google::cloud::dialogflow::cx::v3::DeleteVersionRequest const& request);
-
-  virtual future<StatusOr<google::protobuf::Struct>> LoadVersion(
-      google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request);
-
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>
-  CompareVersions(
-      google::cloud::dialogflow::cx::v3::CompareVersionsRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type `VersionsConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of VersionsClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `VersionsConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dialogflow_cx::VersionsPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `VersionsConnection` created by
- * this function.
- */
-std::shared_ptr<VersionsConnection> MakeVersionsConnection(
-    std::string const& location, Options options = {});
-
-/**
- * A backwards-compatible version of the previous factory function.  Unless
- * the service also offers a global endpoint, the default value of the
- * `EndpointOption` may be useless, in which case it must be overridden.
- *
- * @deprecated Please use the `location` overload instead.
- */
-std::shared_ptr<VersionsConnection> MakeVersionsConnection(
-    Options options = {});
+/// @deprecated Use dialogflow_cx_v3::VersionsRetryPolicy directly.
+using ::google::cloud::dialogflow_cx_v3::VersionsRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

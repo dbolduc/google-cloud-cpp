@@ -19,36 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_SESSIONS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_SESSIONS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/dialogflow/cx/v3/session.grpc.pb.h>
-#include <memory>
+#include "google/cloud/dialogflow_cx/v3/sessions_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class SessionsConnectionIdempotencyPolicy {
- public:
-  virtual ~SessionsConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// dialogflow_cx_v3::MakeDefaultSessionsConnectionIdempotencyPolicy directly.
+using ::google::cloud::dialogflow_cx_v3::
+    MakeDefaultSessionsConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<SessionsConnectionIdempotencyPolicy> clone() const;
-
-  virtual google::cloud::Idempotency DetectIntent(
-      google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request);
-
-  virtual google::cloud::Idempotency MatchIntent(
-      google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request);
-
-  virtual google::cloud::Idempotency FulfillIntent(
-      google::cloud::dialogflow::cx::v3::FulfillIntentRequest const& request);
-};
-
-std::unique_ptr<SessionsConnectionIdempotencyPolicy>
-MakeDefaultSessionsConnectionIdempotencyPolicy();
+/// @deprecated Use dialogflow_cx_v3::SessionsConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::SessionsConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

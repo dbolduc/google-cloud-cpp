@@ -21,51 +21,26 @@
 
 #include "google/cloud/dialogflow_cx/experiments_connection.h"
 #include "google/cloud/dialogflow_cx/experiments_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/dialogflow_cx/v3/experiments_options.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct ExperimentsRetryPolicyOption {
-  using Type = std::shared_ptr<ExperimentsRetryPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::ExperimentsBackoffPolicyOption directly.
+using ::google::cloud::dialogflow_cx_v3::ExperimentsBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct ExperimentsBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// dialogflow_cx_v3::ExperimentsConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::dialogflow_cx_v3::
+    ExperimentsConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct ExperimentsConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<ExperimentsConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::ExperimentsPolicyOptionList directly.
+using ::google::cloud::dialogflow_cx_v3::ExperimentsPolicyOptionList;
 
-/**
- * The options applicable to Experiments.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-using ExperimentsPolicyOptionList =
-    OptionList<ExperimentsRetryPolicyOption, ExperimentsBackoffPolicyOption,
-               ExperimentsConnectionIdempotencyPolicyOption>;
+/// @deprecated Use dialogflow_cx_v3::ExperimentsRetryPolicyOption directly.
+using ::google::cloud::dialogflow_cx_v3::ExperimentsRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

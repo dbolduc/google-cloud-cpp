@@ -20,80 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_MOCKS_MOCK_AGENTS_CONNECTION_H
 
 #include "google/cloud/dialogflow_cx/agents_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/dialogflow_cx/v3/mocks/mock_agents_connection.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `AgentsConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `AgentsClient`. To do so,
- * construct an object of type `AgentsClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockAgentsConnection : public dialogflow_cx::AgentsConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::dialogflow::cx::v3::Agent>, ListAgents,
-              (google::cloud::dialogflow::cx::v3::ListAgentsRequest request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Agent>, GetAgent,
-      (google::cloud::dialogflow::cx::v3::GetAgentRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Agent>, CreateAgent,
-      (google::cloud::dialogflow::cx::v3::CreateAgentRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Agent>, UpdateAgent,
-      (google::cloud::dialogflow::cx::v3::UpdateAgentRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      Status, DeleteAgent,
-      (google::cloud::dialogflow::cx::v3::DeleteAgentRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>,
-      ExportAgent,
-      (google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::protobuf::Struct>>, RestoreAgent,
-      (google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>,
-      ValidateAgent,
-      (google::cloud::dialogflow::cx::v3::ValidateAgentRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>,
-      GetAgentValidationResult,
-      (google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const&
-           request),
-      (override));
-};
+/// @deprecated Use dialogflow_cx_v3_mocks::MockAgentsConnection directly.
+using ::google::cloud::dialogflow_cx_v3_mocks::MockAgentsConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_mocks

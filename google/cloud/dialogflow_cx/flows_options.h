@@ -21,62 +21,28 @@
 
 #include "google/cloud/dialogflow_cx/flows_connection.h"
 #include "google/cloud/dialogflow_cx/flows_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/dialogflow_cx/v3/flows_options.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct FlowsRetryPolicyOption {
-  using Type = std::shared_ptr<FlowsRetryPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::FlowsPollingPolicyOption directly.
+using ::google::cloud::dialogflow_cx_v3::FlowsPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct FlowsBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::FlowsBackoffPolicyOption directly.
+using ::google::cloud::dialogflow_cx_v3::FlowsBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct FlowsConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<FlowsConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::FlowsConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::FlowsConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct FlowsPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::FlowsPolicyOptionList directly.
+using ::google::cloud::dialogflow_cx_v3::FlowsPolicyOptionList;
 
-/**
- * The options applicable to Flows.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-using FlowsPolicyOptionList =
-    OptionList<FlowsRetryPolicyOption, FlowsBackoffPolicyOption,
-               FlowsPollingPolicyOption,
-               FlowsConnectionIdempotencyPolicyOption>;
+/// @deprecated Use dialogflow_cx_v3::FlowsRetryPolicyOption directly.
+using ::google::cloud::dialogflow_cx_v3::FlowsRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

@@ -20,99 +20,28 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_INTENTS_CONNECTION_H
 
 #include "google/cloud/dialogflow_cx/intents_connection_idempotency_policy.h"
-#include "google/cloud/dialogflow_cx/internal/intents_retry_traits.h"
-#include "google/cloud/dialogflow_cx/internal/intents_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <memory>
-#include <string>
+#include "google/cloud/dialogflow_cx/v3/intents_connection.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using IntentsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    dialogflow_cx_internal::IntentsRetryTraits>;
+/// @deprecated Use dialogflow_cx_v3::MakeIntentsConnection directly.
+using ::google::cloud::dialogflow_cx_v3::MakeIntentsConnection;
 
-using IntentsLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dialogflow_cx_internal::IntentsRetryTraits>;
+/// @deprecated Use dialogflow_cx_v3::IntentsConnection directly.
+using ::google::cloud::dialogflow_cx_v3::IntentsConnection;
 
-using IntentsLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dialogflow_cx_internal::IntentsRetryTraits>;
+/// @deprecated Use dialogflow_cx_v3::IntentsLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::IntentsLimitedErrorCountRetryPolicy;
 
-/**
- * The `IntentsConnection` object for `IntentsClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `IntentsClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `IntentsClient`.
- *
- * To create a concrete instance, see `MakeIntentsConnection()`.
- *
- * For mocking, see `dialogflow_cx_mocks::MockIntentsConnection`.
- */
-class IntentsConnection {
- public:
-  virtual ~IntentsConnection() = 0;
+/// @deprecated Use dialogflow_cx_v3::IntentsLimitedTimeRetryPolicy directly.
+using ::google::cloud::dialogflow_cx_v3::IntentsLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::cloud::dialogflow::cx::v3::Intent> ListIntents(
-      google::cloud::dialogflow::cx::v3::ListIntentsRequest request);
-
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Intent> GetIntent(
-      google::cloud::dialogflow::cx::v3::GetIntentRequest const& request);
-
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Intent> CreateIntent(
-      google::cloud::dialogflow::cx::v3::CreateIntentRequest const& request);
-
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Intent> UpdateIntent(
-      google::cloud::dialogflow::cx::v3::UpdateIntentRequest const& request);
-
-  virtual Status DeleteIntent(
-      google::cloud::dialogflow::cx::v3::DeleteIntentRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type `IntentsConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of IntentsClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `IntentsConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dialogflow_cx::IntentsPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `IntentsConnection` created by
- * this function.
- */
-std::shared_ptr<IntentsConnection> MakeIntentsConnection(
-    std::string const& location, Options options = {});
-
-/**
- * A backwards-compatible version of the previous factory function.  Unless
- * the service also offers a global endpoint, the default value of the
- * `EndpointOption` may be useless, in which case it must be overridden.
- *
- * @deprecated Please use the `location` overload instead.
- */
-std::shared_ptr<IntentsConnection> MakeIntentsConnection(Options options = {});
+/// @deprecated Use dialogflow_cx_v3::IntentsRetryPolicy directly.
+using ::google::cloud::dialogflow_cx_v3::IntentsRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

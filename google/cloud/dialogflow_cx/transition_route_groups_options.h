@@ -21,53 +21,31 @@
 
 #include "google/cloud/dialogflow_cx/transition_route_groups_connection.h"
 #include "google/cloud/dialogflow_cx/transition_route_groups_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/dialogflow_cx/v3/transition_route_groups_options.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct TransitionRouteGroupsRetryPolicyOption {
-  using Type = std::shared_ptr<TransitionRouteGroupsRetryPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::TransitionRouteGroupsBackoffPolicyOption
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::
+    TransitionRouteGroupsBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct TransitionRouteGroupsBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// dialogflow_cx_v3::TransitionRouteGroupsConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::
+    TransitionRouteGroupsConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct TransitionRouteGroupsConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<TransitionRouteGroupsConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::TransitionRouteGroupsPolicyOptionList
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::TransitionRouteGroupsPolicyOptionList;
 
-/**
- * The options applicable to TransitionRouteGroups.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-using TransitionRouteGroupsPolicyOptionList =
-    OptionList<TransitionRouteGroupsRetryPolicyOption,
-               TransitionRouteGroupsBackoffPolicyOption,
-               TransitionRouteGroupsConnectionIdempotencyPolicyOption>;
+/// @deprecated Use dialogflow_cx_v3::TransitionRouteGroupsRetryPolicyOption
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::TransitionRouteGroupsRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

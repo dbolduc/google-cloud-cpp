@@ -203,8 +203,10 @@
 ./include/google/cloud/dialogflow/cx/v3
 ./include/google/cloud/dialogflow/v2
 ./include/google/cloud/dialogflow_cx
-./include/google/cloud/dialogflow_cx/internal
 ./include/google/cloud/dialogflow_cx/mocks
+./include/google/cloud/dialogflow_cx/v3
+./include/google/cloud/dialogflow_cx/v3/internal
+./include/google/cloud/dialogflow_cx/v3/mocks
 ./include/google/cloud/dialogflow_es
 ./include/google/cloud/dialogflow_es/internal
 ./include/google/cloud/dialogflow_es/mocks

@@ -21,51 +21,26 @@
 
 #include "google/cloud/dialogflow_cx/changelogs_connection.h"
 #include "google/cloud/dialogflow_cx/changelogs_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/dialogflow_cx/v3/changelogs_options.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct ChangelogsRetryPolicyOption {
-  using Type = std::shared_ptr<ChangelogsRetryPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::ChangelogsBackoffPolicyOption directly.
+using ::google::cloud::dialogflow_cx_v3::ChangelogsBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct ChangelogsBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// dialogflow_cx_v3::ChangelogsConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::dialogflow_cx_v3::
+    ChangelogsConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct ChangelogsConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<ChangelogsConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::ChangelogsPolicyOptionList directly.
+using ::google::cloud::dialogflow_cx_v3::ChangelogsPolicyOptionList;
 
-/**
- * The options applicable to Changelogs.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-using ChangelogsPolicyOptionList =
-    OptionList<ChangelogsRetryPolicyOption, ChangelogsBackoffPolicyOption,
-               ChangelogsConnectionIdempotencyPolicyOption>;
+/// @deprecated Use dialogflow_cx_v3::ChangelogsRetryPolicyOption directly.
+using ::google::cloud::dialogflow_cx_v3::ChangelogsRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

@@ -20,57 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_MOCKS_MOCK_INTENTS_CONNECTION_H
 
 #include "google/cloud/dialogflow_cx/intents_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/dialogflow_cx/v3/mocks/mock_intents_connection.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `IntentsConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `IntentsClient`. To do so,
- * construct an object of type `IntentsClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockIntentsConnection : public dialogflow_cx::IntentsConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::dialogflow::cx::v3::Intent>,
-              ListIntents,
-              (google::cloud::dialogflow::cx::v3::ListIntentsRequest request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Intent>, GetIntent,
-      (google::cloud::dialogflow::cx::v3::GetIntentRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Intent>, CreateIntent,
-      (google::cloud::dialogflow::cx::v3::CreateIntentRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Intent>, UpdateIntent,
-      (google::cloud::dialogflow::cx::v3::UpdateIntentRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      Status, DeleteIntent,
-      (google::cloud::dialogflow::cx::v3::DeleteIntentRequest const& request),
-      (override));
-};
+/// @deprecated Use dialogflow_cx_v3_mocks::MockIntentsConnection directly.
+using ::google::cloud::dialogflow_cx_v3_mocks::MockIntentsConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_mocks

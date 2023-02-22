@@ -19,53 +19,28 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_WEBHOOKS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_WEBHOOKS_OPTIONS_H
 
+#include "google/cloud/dialogflow_cx/v3/webhooks_options.h"
 #include "google/cloud/dialogflow_cx/webhooks_connection.h"
 #include "google/cloud/dialogflow_cx/webhooks_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct WebhooksRetryPolicyOption {
-  using Type = std::shared_ptr<WebhooksRetryPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::WebhooksBackoffPolicyOption directly.
+using ::google::cloud::dialogflow_cx_v3::WebhooksBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct WebhooksBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::WebhooksConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::
+    WebhooksConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-struct WebhooksConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<WebhooksConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use dialogflow_cx_v3::WebhooksPolicyOptionList directly.
+using ::google::cloud::dialogflow_cx_v3::WebhooksPolicyOptionList;
 
-/**
- * The options applicable to Webhooks.
- *
- * @ingroup google-cloud-dialogflow_cx-options
- */
-using WebhooksPolicyOptionList =
-    OptionList<WebhooksRetryPolicyOption, WebhooksBackoffPolicyOption,
-               WebhooksConnectionIdempotencyPolicyOption>;
+/// @deprecated Use dialogflow_cx_v3::WebhooksRetryPolicyOption directly.
+using ::google::cloud::dialogflow_cx_v3::WebhooksRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

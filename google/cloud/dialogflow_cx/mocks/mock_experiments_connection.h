@@ -20,71 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_MOCKS_MOCK_EXPERIMENTS_CONNECTION_H
 
 #include "google/cloud/dialogflow_cx/experiments_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/dialogflow_cx/v3/mocks/mock_experiments_connection.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `ExperimentsConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `ExperimentsClient`. To do so,
- * construct an object of type `ExperimentsClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockExperimentsConnection : public dialogflow_cx::ExperimentsConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::dialogflow::cx::v3::Experiment>,
-      ListExperiments,
-      (google::cloud::dialogflow::cx::v3::ListExperimentsRequest request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Experiment>, GetExperiment,
-      (google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::Experiment>,
-              CreateExperiment,
-              (google::cloud::dialogflow::cx::v3::CreateExperimentRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::Experiment>,
-              UpdateExperiment,
-              (google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(Status, DeleteExperiment,
-              (google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::Experiment>,
-              StartExperiment,
-              (google::cloud::dialogflow::cx::v3::StartExperimentRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::Experiment>, StopExperiment,
-      (google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request),
-      (override));
-};
+/// @deprecated Use dialogflow_cx_v3_mocks::MockExperimentsConnection directly.
+using ::google::cloud::dialogflow_cx_v3_mocks::MockExperimentsConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_mocks

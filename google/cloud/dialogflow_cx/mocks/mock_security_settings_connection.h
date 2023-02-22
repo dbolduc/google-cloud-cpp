@@ -20,66 +20,17 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_MOCKS_MOCK_SECURITY_SETTINGS_CONNECTION_H
 
 #include "google/cloud/dialogflow_cx/security_settings_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/dialogflow_cx/v3/mocks/mock_security_settings_connection.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `SecuritySettingsServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `SecuritySettingsServiceClient`. To
- * do so, construct an object of type `SecuritySettingsServiceClient` with an
- * instance of this class. Then use the Google Test framework functions to
- * program the behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockSecuritySettingsServiceConnection
-    : public dialogflow_cx::SecuritySettingsServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>,
-      CreateSecuritySettings,
-      (google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>,
-      GetSecuritySettings,
-      (google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>,
-      UpdateSecuritySettings,
-      (google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::dialogflow::cx::v3::SecuritySettings>,
-      ListSecuritySettings,
-      (google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest request),
-      (override));
-
-  MOCK_METHOD(
-      Status, DeleteSecuritySettings,
-      (google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const&
-           request),
-      (override));
-};
+/// @deprecated Use
+/// dialogflow_cx_v3_mocks::MockSecuritySettingsServiceConnection directly.
+using ::google::cloud::dialogflow_cx_v3_mocks::
+    MockSecuritySettingsServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_mocks

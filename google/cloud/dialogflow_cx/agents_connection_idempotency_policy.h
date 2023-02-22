@@ -19,55 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_AGENTS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_AGENTS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/dialogflow/cx/v3/agent.grpc.pb.h>
-#include <memory>
+#include "google/cloud/dialogflow_cx/v3/agents_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class AgentsConnectionIdempotencyPolicy {
- public:
-  virtual ~AgentsConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// dialogflow_cx_v3::MakeDefaultAgentsConnectionIdempotencyPolicy directly.
+using ::google::cloud::dialogflow_cx_v3::
+    MakeDefaultAgentsConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<AgentsConnectionIdempotencyPolicy> clone() const;
-
-  virtual google::cloud::Idempotency ListAgents(
-      google::cloud::dialogflow::cx::v3::ListAgentsRequest request);
-
-  virtual google::cloud::Idempotency GetAgent(
-      google::cloud::dialogflow::cx::v3::GetAgentRequest const& request);
-
-  virtual google::cloud::Idempotency CreateAgent(
-      google::cloud::dialogflow::cx::v3::CreateAgentRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateAgent(
-      google::cloud::dialogflow::cx::v3::UpdateAgentRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteAgent(
-      google::cloud::dialogflow::cx::v3::DeleteAgentRequest const& request);
-
-  virtual google::cloud::Idempotency ExportAgent(
-      google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request);
-
-  virtual google::cloud::Idempotency RestoreAgent(
-      google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request);
-
-  virtual google::cloud::Idempotency ValidateAgent(
-      google::cloud::dialogflow::cx::v3::ValidateAgentRequest const& request);
-
-  virtual google::cloud::Idempotency GetAgentValidationResult(
-      google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const&
-          request);
-};
-
-std::unique_ptr<AgentsConnectionIdempotencyPolicy>
-MakeDefaultAgentsConnectionIdempotencyPolicy();
+/// @deprecated Use dialogflow_cx_v3::AgentsConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::dialogflow_cx_v3::AgentsConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx
