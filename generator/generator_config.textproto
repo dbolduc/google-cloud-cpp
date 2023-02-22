@@ -578,7 +578,8 @@ service {
 service {
   service_proto_path: "google/cloud/dialogflow/cx/v3/environment.proto"
   additional_proto_files: ["google/protobuf/struct.proto"]
-  product_path: "google/cloud/dialogflow_cx"
+  product_path: "google/cloud/dialogflow_cx/v3"
+  forwarding_product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   service_endpoint_env_var: "GOOGLE_CLOUD_CPP_DIALOGFLOW_ENVIRONMENT_ENDPOINT"
   retryable_status_codes: ["kUnavailable"]
@@ -587,7 +588,8 @@ service {
 
 service {
   service_proto_path: "google/cloud/dialogflow/cx/v3/experiment.proto"
-  product_path: "google/cloud/dialogflow_cx"
+  product_path: "google/cloud/dialogflow_cx/v3"
+  forwarding_product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
   endpoint_location_style: LOCATION_DEPENDENT_COMPAT
@@ -595,7 +597,8 @@ service {
 
 service {
   service_proto_path: "google/cloud/dialogflow/cx/v3/session_entity_type.proto"
-  product_path: "google/cloud/dialogflow_cx"
+  product_path: "google/cloud/dialogflow_cx/v3"
+  forwarding_product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
   endpoint_location_style: LOCATION_DEPENDENT_COMPAT
@@ -604,7 +607,8 @@ service {
 service {
   service_proto_path: "google/cloud/dialogflow/cx/v3/version.proto"
   additional_proto_files: ["google/protobuf/struct.proto"]
-  product_path: "google/cloud/dialogflow_cx"
+  product_path: "google/cloud/dialogflow_cx/v3"
+  forwarding_product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   service_endpoint_env_var: "GOOGLE_CLOUD_CPP_DIALOGFLOW_VERSIONS_ENDPOINT"
   retryable_status_codes: ["kUnavailable"]
@@ -613,7 +617,8 @@ service {
 
 service {
   service_proto_path: "google/cloud/dialogflow/cx/v3/page.proto"
-  product_path: "google/cloud/dialogflow_cx"
+  product_path: "google/cloud/dialogflow_cx/v3"
+  forwarding_product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
   endpoint_location_style: LOCATION_DEPENDENT_COMPAT
@@ -621,7 +626,8 @@ service {
 
 service {
   service_proto_path: "google/cloud/dialogflow/cx/v3/session.proto"
-  product_path: "google/cloud/dialogflow_cx"
+  product_path: "google/cloud/dialogflow_cx/v3"
+  forwarding_product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
   endpoint_location_style: LOCATION_DEPENDENT_COMPAT
@@ -629,7 +635,8 @@ service {
 
 service {
   service_proto_path: "google/cloud/dialogflow/cx/v3/intent.proto"
-  product_path: "google/cloud/dialogflow_cx"
+  product_path: "google/cloud/dialogflow_cx/v3"
+  forwarding_product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
   endpoint_location_style: LOCATION_DEPENDENT_COMPAT
@@ -638,7 +645,8 @@ service {
 service {
   service_proto_path: "google/cloud/dialogflow/cx/v3/agent.proto"
   additional_proto_files: ["google/protobuf/struct.proto"]
-  product_path: "google/cloud/dialogflow_cx"
+  product_path: "google/cloud/dialogflow_cx/v3"
+  forwarding_product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
   endpoint_location_style: LOCATION_DEPENDENT_COMPAT
@@ -646,7 +654,8 @@ service {
 
 service {
   service_proto_path: "google/cloud/dialogflow/cx/v3/security_settings.proto"
-  product_path: "google/cloud/dialogflow_cx"
+  product_path: "google/cloud/dialogflow_cx/v3"
+  forwarding_product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
   endpoint_location_style: LOCATION_DEPENDENT_COMPAT
@@ -655,7 +664,8 @@ service {
 service {
   service_proto_path: "google/cloud/dialogflow/cx/v3/flow.proto"
   additional_proto_files: ["google/protobuf/struct.proto"]
-  product_path: "google/cloud/dialogflow_cx"
+  product_path: "google/cloud/dialogflow_cx/v3"
+  forwarding_product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
   endpoint_location_style: LOCATION_DEPENDENT_COMPAT
@@ -663,7 +673,8 @@ service {
 
 service {
   service_proto_path: "google/cloud/dialogflow/cx/v3/entity_type.proto"
-  product_path: "google/cloud/dialogflow_cx"
+  product_path: "google/cloud/dialogflow_cx/v3"
+  forwarding_product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
   endpoint_location_style: LOCATION_DEPENDENT_COMPAT
@@ -671,7 +682,8 @@ service {
 
 service {
   service_proto_path: "google/cloud/dialogflow/cx/v3/transition_route_group.proto"
-  product_path: "google/cloud/dialogflow_cx"
+  product_path: "google/cloud/dialogflow_cx/v3"
+  forwarding_product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
   endpoint_location_style: LOCATION_DEPENDENT_COMPAT
@@ -679,7 +691,8 @@ service {
 
 service {
   service_proto_path: "google/cloud/dialogflow/cx/v3/webhook.proto"
-  product_path: "google/cloud/dialogflow_cx"
+  product_path: "google/cloud/dialogflow_cx/v3"
+  forwarding_product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
   endpoint_location_style: LOCATION_DEPENDENT_COMPAT
@@ -687,7 +700,8 @@ service {
 
 service {
   service_proto_path: "google/cloud/dialogflow/cx/v3/changelog.proto"
-  product_path: "google/cloud/dialogflow_cx"
+  product_path: "google/cloud/dialogflow_cx/v3"
+  forwarding_product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
   endpoint_location_style: LOCATION_DEPENDENT_COMPAT
@@ -695,7 +709,8 @@ service {
 
 service {
   service_proto_path: "google/cloud/dialogflow/cx/v3/test_case.proto"
-  product_path: "google/cloud/dialogflow_cx"
+  product_path: "google/cloud/dialogflow_cx/v3"
+  forwarding_product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
   endpoint_location_style: LOCATION_DEPENDENT_COMPAT
@@ -703,7 +718,8 @@ service {
 
 service {
   service_proto_path: "google/cloud/dialogflow/cx/v3/deployment.proto"
-  product_path: "google/cloud/dialogflow_cx"
+  product_path: "google/cloud/dialogflow_cx/v3"
+  forwarding_product_path: "google/cloud/dialogflow_cx"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
   endpoint_location_style: LOCATION_DEPENDENT_COMPAT
