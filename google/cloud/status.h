@@ -26,6 +26,8 @@ namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+std::string DarrenTest();
+
 /**
  * Well-known status codes with `grpc::StatusCode`-compatible values.
  *

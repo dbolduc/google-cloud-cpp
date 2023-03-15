@@ -20,6 +20,13 @@
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef DARREN_TEST
+std::string DarrenTest() {
+  return "grpc_utils";
+}
+#endif  // DARREN_TEST
+
 namespace internal {
 
 void ConfigureContext(grpc::ClientContext& context, Options const& opts) {

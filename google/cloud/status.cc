@@ -26,6 +26,12 @@ std::string StatusWhat(Status const& status) {
 }
 }  // namespace
 
+#ifndef DARREN_TEST
+std::string DarrenTest() {
+  return "common";
+}
+#endif  // DARREN_TEST
+
 std::string StatusCodeToString(StatusCode code) {
   switch (code) {
     case StatusCode::kOk:

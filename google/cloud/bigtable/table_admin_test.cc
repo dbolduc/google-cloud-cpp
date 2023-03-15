@@ -941,6 +941,15 @@ TEST_F(TableAdminTest, TestIamPermissionsBackupFailure) {
       StatusIs(StatusCode::kPermissionDenied));
 }
 
+// bazel test --//:experimental-opentelemetry=true //google/cloud/bigtable:table_admin_test
+//
+// vs.
+//
+// bazel test --//:experimental-opentelemetry=false //google/cloud/bigtable:table_admin_test
+TEST(DarrenTest, CommonPlusGrpc) {
+  EXPECT_EQ("grpc_utils", DarrenTest());
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable

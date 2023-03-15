@@ -50,6 +50,8 @@ cc_library(
         ":enable_opentelemetry_valid": [
             # Enable OpenTelemetry features in google-cloud-cpp
             "GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY",
+            # Darren is testing dispatching to a dependent library
+            "DARREN_TEST",
         ],
         "//conditions:default": [],
     }),
