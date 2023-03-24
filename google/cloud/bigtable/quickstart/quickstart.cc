@@ -68,9 +68,11 @@ struct Configuration {
   std::string instance_id;
   std::string table_id;
 
-  // The endpoint to use for requests.
+  // The endpoint to use for data requests (`cbt::Table`).
   std::string data_endpoint = "bigtable.googleapis.com";
-  // TODO : set GrpcNumChannelOption?
+  // The number of channels used in the `cbt::DataConnection`. Any value greater
+  // than the `initial_splits` of the table is gratuitous.
+  int grpc_num_channels = 10;
 
   // The total rows in the table.
   std::int64_t total_rows = 420000;
@@ -118,10 +120,67 @@ bool IsRowPastSplit(std::string const& row, std::string const& split) {
   return !split.empty() && row >= split;
 };
 
+// A helper class to group row ranges into buckets, given the splits of a table.
+class Buckets {
+ public:
+  explicit Buckets(std::vector<cbt::RowKeySample> const& samples)
+      : samples_(samples), split_(samples_.begin()) {
+    row_sets_.reserve(samples.size());
+  }
+
+  // Assumes that row keys are (1) non-overlapping, (2) entered in order.
+  void AddClosedRange(std::string start_row_key, std::string end_row_key) {
+    // The range is past the current split.
+    while (IsRowPastSplit(start_row_key, split_->row_key)) Inc();
+
+    // The range straddles at least one split.
+    while (IsRowPastSplit(end_row_key, split_->row_key)) {
+      Append(
+          cbt::RowRange::RightOpen(std::move(start_row_key), split_->row_key));
+      start_row_key = split_->row_key;
+      Inc();
+    }
+
+    // The range is contained within the current split.
+    Append(cbt::RowRange::Closed(std::move(start_row_key),
+                                 std::move(end_row_key)));
+  }
+
+  // Returns the collected row sets and invalidates the object.
+  std::vector<cbt::RowSet> RowSets() && { return std::move(row_sets_); }
+
+ private:
+  // Look to the next split.
+  void Inc() {
+    ++split_;
+    new_split_ = true;
+  }
+
+  void Append(cbt::RowRange range) {
+    // Prepare a new `RowSet` if we crossed a split of the table. This makes it
+    // easier to skip over splits which do not overlap with any of our disjoint
+    // row ranges.
+    //
+    // We do this because a default constructed `RowSet` means read *all* rows.
+    if (new_split_) {
+      row_sets_.emplace_back();
+      new_split_ = false;
+    }
+    row_sets_.back().Append(std::move(range));
+  }
+
+  std::vector<cbt::RowSet> row_sets_;
+  // The row key samples tell us the boundary of each split of our table. We
+  // will group row ranges into buckets according to these boundaries.
+  std::vector<cbt::RowKeySample> const& samples_;
+  std::vector<cbt::RowKeySample>::const_iterator split_;
+  bool new_split_ = true;
+};
+
 void ConditionallyCreateTable(Configuration const& config);
 void ConditionallyDeleteTable(Configuration const& config);
 
-}
+}  // namespace
 
 int main(int argc, char* argv[]) try {
   if (argc == 2 && argv[1] == std::string{"--description"}) {
@@ -145,8 +204,7 @@ int main(int argc, char* argv[]) try {
   std::cout << "\nCONFIGURATION:"
             << "\nTotal Rows: " << config.total_rows
             << "\nDisjoint Sets: " << config.disjoint_row_ranges
-            << "\nRows Per Range: " << config.rows_per_range
-            << "\n\nSETUP:" << std::endl;
+            << "\nRows Per Range: " << config.rows_per_range << "\n\nSETUP:";
 
   ConditionallyCreateTable(config);
 
@@ -155,54 +213,30 @@ int main(int argc, char* argv[]) try {
                                      config.table_id);
 
   // Make a Table client to connect to the Bigtable Data API.
-  auto options = gc::Options{}.set<gc::EndpointOption>(config.data_endpoint);
+  auto options = gc::Options{}
+                     .set<gc::EndpointOption>(config.data_endpoint)
+                     .set<gc::GrpcNumChannelsOption>(config.grpc_num_channels);
   auto table = cbt::Table(cbt::MakeDataConnection(options), tr);
 
-  std::cout << "Start sampling row keys." << std::endl;
+  std::cout << "\nStart sampling row keys.";
   auto samples_sor = table.SampleRows();
   if (!samples_sor) throw std::move(samples_sor).status();
   auto samples = *std::move(samples_sor);
-  std::cout << "Finished sampling row keys." << std::endl;
+  std::cout << "\nFinished sampling row keys.";
 
-  // The row key samples tell us the boundary of each split of our table. We
-  // will group row ranges into buckets according to these boundaries.
-  std::vector<cbt::RowSet> row_sets;
-  row_sets.reserve(samples.size());
-  int current_split = -1;
-  auto split = 0;
-  // Prepare a new RowSet if we cross a split of the table. This makes it easier
-  // to skip over splits which do not overlap with any of our disjoint row
-  // ranges.
-  //
-  // Alternatively, we could have made `row_sets` a
-  // `std::map<int, cbt::RowSet>`.
-  auto handle_new_split = [&row_sets, &current_split, &split] {
-    if (current_split == split) return;
-    row_sets.emplace_back();
-    current_split = split;
-  };
-
-  std::cout << "Start reading disjoint ranges." << std::endl;
-  for (auto i = 0; i != config.disjoint_row_ranges; ++i){
+  std::cout << "\nStart reading disjoint ranges.";
+  Buckets buckets(samples);
+  for (auto i = 0; i != config.disjoint_row_ranges; ++i) {
     auto start_index = i * config.total_rows / config.disjoint_row_ranges;
     auto start_row_key = MakeRowString(row_key_width, start_index);
-    // Instead of subtracting one, we could use a RightOpen RowRange, below.
+    // Instead of subtracting one, we could add RightOpenRanges. :shrug:
     auto end_index = start_index + config.rows_per_range - 1;
     auto end_row_key = MakeRowString(row_key_width, end_index);
 
-    while (IsRowPastSplit(start_row_key, samples[split].row_key)) ++split;
-    while (IsRowPastSplit(end_row_key, samples[split].row_key)) {
-      handle_new_split();
-      row_sets.back().Append(cbt::RowRange::RightOpen(std::move(start_row_key),
-                                                      samples[split].row_key));
-      start_row_key = samples[split].row_key;
-      ++split;
-    }
-    handle_new_split();
-    row_sets.back().Append(cbt::RowRange::Closed(std::move(start_row_key),
-                                                 std::move(end_row_key)));
+    buckets.AddClosedRange(std::move(start_row_key), std::move(end_row_key));
   }
-  std::cout << "Finished reading disjoint ranges." << std::endl;
+  auto row_sets = std::move(buckets).RowSets();
+  std::cout << "\nFinished reading disjoint ranges.";
 
   struct SplitResult {
     // Counts the rows read per split.
@@ -212,44 +246,46 @@ int main(int argc, char* argv[]) try {
   };
   std::vector<SplitResult> accumulators(row_sets.size());
 
-  std::cout << "Start timing." << std::endl;
+  std::cout << "\n\nStart timing.";
   auto start_time = clock::now();
 
-  std::cout << "\nREAD ROWS:" << "\n";
+  std::cout << "\nREAD ROWS:";
   for (std::size_t i = 0; i != row_sets.size(); ++i) {
     auto& accumulator = accumulators[i];
+    // Increment the row count for this split when we receive a row.
     auto on_row = [&accumulator](cbt::Row const& /*row*/) {
       ++accumulator.rows;
       return gc::make_ready_future(true);
     };
+    // Mark the read of this row set as complete when the stream finishes.
     auto on_finish = [&accumulator](gc::Status status) {
       accumulator.promise.set_value(std::move(status));
     };
     table.AsyncReadRows(on_row, on_finish, std::move(row_sets[i]),
                         cbt::Filter::Latest(1));
-    std::cout << "Reading for split: " << i << "\n";
+    std::cout << "\nReading for split: " << i;
   }
 
-  std::cout << "Accumulating...\n";
+  std::cout << "\nAccumulating...";
   auto total_rows = 0;
   for (std::size_t i = 0; i != row_sets.size(); ++i) {
     auto f = accumulators[i].promise.get_future();
+    // Block until the read for this row set is complete.
     auto status = f.get();
     if (!status.ok()) throw std::move(status);
     total_rows += accumulators[i].rows;
-    std::cout << "Accumulator[" << i << "].rows = " << accumulators[i].rows
-              << "\n";
+    std::cout << "\nAccumulator[" << i << "].rows = " << accumulators[i].rows;
   }
 
   // End the timer.
   auto const elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
       clock::now() - start_time);
-  std::cout << "Finished timing." << std::endl;
+  std::cout << "\nFinished timing.";
 
   // Report results.
-  std::cout << "\nRESULTS:"
+  std::cout << "\n\nRESULTS:"
             << "\nElapsed time (milliseconds): " << elapsed.count()
-            << "\nRows read: " << total_rows << std::endl;
+            << "\nRows read: " << total_rows << "\n";
 
   ConditionallyDeleteTable(config);
 
@@ -262,22 +298,24 @@ int main(int argc, char* argv[]) try {
 namespace {
 
 void WriteTableData(Configuration const& config) {
-    if (!config.create_table) return;
+  if (!config.create_table) return;
 
-    auto const row_key_width = RowKeyWidth(config.total_rows);
-    auto const tr = cbt::TableResource(config.project_id, config.instance_id,
-                                       config.table_id);
-    auto const value = std::string(config.bytes_per_row, '0');
+  auto const row_key_width = RowKeyWidth(config.total_rows);
+  auto const tr = cbt::TableResource(config.project_id, config.instance_id,
+                                     config.table_id);
+  auto const value = std::string(config.bytes_per_row, '0');
 
-    auto options = gc::Options{}.set<gc::EndpointOption>(config.data_endpoint);
-    auto table = cbt::Table(cbt::MakeDataConnection(options), tr);
+  auto options = gc::Options{}
+                     .set<gc::EndpointOption>(config.data_endpoint)
+                     .set<gc::GrpcNumChannelsOption>(config.grpc_num_channels);
+  auto table = cbt::Table(cbt::MakeDataConnection(options), tr);
 
-    cbt::MutationBatcher batcher(table);
-    gc::CompletionQueue cq;
-    std::thread cq_runner([&cq]() { cq.Run(); });
+  cbt::MutationBatcher batcher(table);
+  gc::CompletionQueue cq;
+  std::thread cq_runner([&cq]() { cq.Run(); });
 
-    std::cout << "Start writing data." << std::endl;
-    for (std::int64_t i = 0; i != config.total_rows; ++i) {
+  std::cout << "\nStart writing data.";
+  for (std::int64_t i = 0; i != config.total_rows; ++i) {
     auto row_key = MakeRowString(row_key_width, i);
     auto mut = cbt::SingleRowMutation(
         std::move(row_key),
@@ -290,13 +328,13 @@ void WriteTableData(Configuration const& config) {
       if (!s.ok()) throw std::move(s);
     });
     admission_future.get();
-    }
-    // Wait for all mutations to complete
-    batcher.AsyncWaitForNoPendingRequests().get();
-    std::cout << "Finished writing data." << std::endl;
+  }
+  // Wait for all mutations to complete
+  batcher.AsyncWaitForNoPendingRequests().get();
+  std::cout << "\nFinished writing data.";
 
-    cq.Shutdown();
-    cq_runner.join();
+  cq.Shutdown();
+  cq_runner.join();
 }
 
 void ConditionallyCreateTable(Configuration const& config) {
@@ -315,16 +353,16 @@ void ConditionallyCreateTable(Configuration const& config) {
   for (auto i = 1; i < config.initial_splits; ++i) {
     auto row_index = i * config.total_rows / config.initial_splits;
     r.add_initial_splits()->set_key(MakeRowString(row_key_width, row_index));
-    }
-    auto& families = *r.mutable_table()->mutable_column_families();
-    families[config.column_family].mutable_gc_rule()->set_max_num_versions(1);
+  }
+  auto& families = *r.mutable_table()->mutable_column_families();
+  families[config.column_family].mutable_gc_rule()->set_max_num_versions(1);
 
-    std::cout << "Start creating table." << std::endl;
-    auto status = admin.CreateTable(r);
-    if (!status.ok()) throw std::move(status).status();
-    std::cout << "Finished creating table." << std::endl;
+  std::cout << "\nStart creating table.";
+  auto status = admin.CreateTable(r);
+  if (!status.ok()) throw std::move(status).status();
+  std::cout << "\nFinished creating table.";
 
-    WriteTableData(config);
+  WriteTableData(config);
 }
 
 void ConditionallyDeleteTable(Configuration const& config) {
@@ -332,12 +370,12 @@ void ConditionallyDeleteTable(Configuration const& config) {
 
   auto const tr = cbt::TableResource(config.project_id, config.instance_id,
                                      config.table_id);
-  std::cout << "Start deleting table." << std::endl;
+  std::cout << "\nStart deleting table.";
   auto admin =
       cbta::BigtableTableAdminClient(cbta::MakeBigtableTableAdminConnection());
   auto status = admin.DeleteTable(tr.FullName());
   if (!status.ok()) throw std::move(status);
-  std::cout << "Finished deleting table." << std::endl;
+  std::cout << "\nFinished deleting table.";
 }
 
 }  // namespace
