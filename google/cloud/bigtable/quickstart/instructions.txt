@@ -1,0 +1,60 @@
+# From a fresh c2d-standard-16 VM in the same region as my Bigtable instance.
+
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get --no-install-recommends install -y \
+        automake \
+        build-essential \
+        ccache \
+        clang \
+        clang-9 \
+        cmake \
+        curl \
+        gawk \
+        git \
+        gcc \
+        g++ \
+        cmake \
+        libcurl4-openssl-dev \
+        libssl-dev \
+        libtool \
+        llvm-9 \
+        lsb-release \
+        make \
+        ninja-build \
+        patch \
+        pkg-config \
+        python3 \
+        python3-dev \
+        python3-pip \
+        tar \
+        unzip \
+        zip \
+        wget \
+        zlib1g-dev \
+        apt-utils \
+        ca-certificates \
+        apt-transport-https
+ 
+# Install Bazel
+sudo curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.16.0/bazelisk-linux-amd"
+sudo chmod +x /usr/bin/bazelisk
+sudo ln -s /usr/bin/bazelisk /usr/bin/bazel
+ 
+# Authenticate with gcloud
+gcloud auth login
+gcloud auth application-default login
+ 
+# Get code
+sudo apt-get install git
+git clone https://github.com/dbolduc/google-cloud-cpp.git
+cd google-cloud-cpp
+git fetch
+git checkout cbt-bucketed-read-rows-sample
+cd google/cloud/bigtable/quickstart
+ 
+# Read quickstart description
+bazel run :quickstart -- --description
+
+# Run quickstart
+bazel run :quickstart -- <project> <instance> <table>

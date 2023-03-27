@@ -24,4 +24,5 @@ cc_binary(
     deps = [
         "@google_cloud_cpp//:bigtable",
     ],
+    data = [":example_ranges.txt"],
 )
