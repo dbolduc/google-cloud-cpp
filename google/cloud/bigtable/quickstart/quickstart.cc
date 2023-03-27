@@ -17,7 +17,11 @@
 #include "google/cloud/bigtable/table.h"
 #include <chrono>
 #include <cstdint>
+#include <fstream>
 #include <iomanip>
+#include <iterator>
+#include <memory>
+#include <random>
 #include <ratio>
 #include <sstream>
 #include <string>
@@ -30,21 +34,32 @@ auto constexpr kUsage =
 auto constexpr kDescription =
     R"""(An example application for reading disjoint row ranges.
 
+This example showcases how to get the most read performance out of Cloud
+Bigtable. A Bigtable table is split across nodes within a cluster, and across
+tablet servers within a node. We can query the boundaries between tablets with
+`Table::SampleRows()`. We can split up a read rows request into buckets for each
+tablet. We can then make those requests concurrently with
+`Table::AsyncReadRows(...)`.
+
+For more details on how Bigtable stores data, see:
+https://cloud.google.com/bigtable/docs/performance#distributing-data
+
 The program will:
 
- 1) Conditionally create a table, with initial splits.
- 2) Echo your configuration settings.
- 3) Sample the row keys to determine the splits of the table.
- 4) Generate disjoint row ranges.
- 5) Group the row ranges into buckets, as determined by the splits of the table.
- 6) Start a timer.
- 7) Asynchronously read the rows in a bucket's row set, for each bucket.
- 8) Accumulate the number of rows seen, for each bucket.
- 9) Block until all rows have been read.
-10) Sum the total rows read across the buckets.
-11) Stop the timer.
-11) Report the elapsed time of the reads, and the number of rows read.
-12) Conditionally delete the table.
+1) Conditionally create a table, with initial splits.
+2) Echo your configuration settings.
+3) Sample the row keys to determine the splits of the table.
+4) Generate disjoint row ranges, or read row ranges from a file.
+5) Group the row ranges into buckets, as determined by the splits of the table.
+6) Run the following read loop N times:
+  a) Start a timer.
+  b) Asynchronously read the rows in a bucket's row set, for each bucket.
+  c) Accumulate the number of rows seen, for each bucket.
+  d) Block until all rows have been read.
+  e) Sum the total rows read across the buckets.
+  f) Stop the timer.
+  g) Report the elapsed time of the reads, and the number of rows read.
+7) Conditionally delete the table.
 
 For example, if the program is configured with
 - 5000 total_rows
@@ -55,6 +70,9 @@ For example, if the program is configured with
 It will create a table with rows from "row0000" to "row5000". The table will
 have splits: ["row1250", "row2500", "row3750", ""]. It will generate the row
 ranges [["row0000", "row0004"], ["row0500", "row0504"], ..., ["row4500", "row4504"]].
+
+Additionally, the program will not try very hard to handle errors. It will just
+stop execution, and print the error when one is encountered.
 )""";
 
 // Create namespace aliases to make the code easier to read.
@@ -63,6 +81,9 @@ namespace cbt = ::google::cloud::bigtable;
 namespace cbta = ::google::cloud::bigtable_admin;
 using clock = std::chrono::steady_clock;
 
+// The parameters of this sample can be configured by editing these values and
+// recompiling. Note that the project, instance, and table IDs are supplied via
+// the command line.
 struct Configuration {
   std::string project_id;
   std::string instance_id;
@@ -76,6 +97,21 @@ struct Configuration {
   // The number of threads servicing the async I/O queue. These are created in
   // the background by the client.
   int grpc_num_threads = 5;
+  // The file to read row ranges from. If empty, the application will generate
+  // default row ranges for test.
+  //
+  // See the `MakeRowRangeSource(...)` implementation for more details.
+  std::string row_ranges_filepath = "example_ranges.txt";
+  // The number of iterations of the experiment to perform. Note that only the
+  // read is timed. The application does not re-sample row keys.
+  int num_iterations = 5;
+  // If true, the sample will log human readable output that explains what it is
+  // doing. If false, the sample will log experimental results in csv format.
+  bool debug_log = true;
+
+  // The following configuration settings only apply when running this sample
+  // with default test data. If you are running this sample application against
+  // a custom table, they can be ignored.
 
   // The total rows in the table.
   std::int64_t total_rows = 420000;
@@ -90,109 +126,266 @@ struct Configuration {
   std::string column_family = "family";
   std::string column = "column";
   std::int64_t bytes_per_row = 2 * 1024;  // 2 KiB
+  // The endpoint to use for table admin requests
+  // (`cbta::BigtableTableAdminClient`).
+  std::string admin_endpoint = "bigtableadmin.googleapis.com";
 
   // If true, delete the table at the end of execution. Note that tables may
   // leak if execution is stopped abruptly.
   bool delete_table = false;
 };
 
-// Fill the index with leading 0s, so that the row keys are a fixed width.
-std::string MakeRowString(int key_width, int64_t row_index) {
-  std::ostringstream os;
-  os << "row" << std::setw(key_width) << std::setfill('0') << row_index;
-  return std::move(os).str();
-}
+// Run one iteration of the read loop.
+void TimedReadRows(cbt::Table& table, std::vector<cbt::RowSet> row_sets,
+                   Configuration const& config) {
+  struct BucketReadResult {
+    // Counts the rows read per bucket.
+    std::int64_t rows;
+    // Lets us block until the operation has completed.
+    gc::promise<gc::Status> promise;
+  };
+  std::vector<BucketReadResult> results(row_sets.size());
 
-// Compute ceil(log_10(total_rows))
-int RowKeyWidth(std::int64_t total_rows) {
-  int width = 0;
-  while (total_rows != 0) {
-    total_rows /= 10;
-    ++width;
+  if (config.debug_log) std::cout << "Start timing.\n";
+  auto start_time = clock::now();
+
+  if (config.debug_log) std::cout << "READ ROWS:\n";
+  // Concurrently perform reads for the row sets in each bucket.
+  for (std::size_t i = 0; i != row_sets.size(); ++i) {
+    auto& result = results[i];
+
+    // Increment the row count for this bucket when we receive a row.
+    auto on_row = [&result](cbt::Row const& /*row*/) {
+      // This is where you would do something with `row`. In this sample, we
+      // just increment a counter.
+      ++result.rows;
+      return gc::make_ready_future(true);
+    };
+
+    // Mark the read of this row set as complete when the stream finishes.
+    auto on_finish = [&result](gc::Status status) {
+      result.promise.set_value(std::move(status));
+    };
+
+    // Call the streaming read RPC
+    table.AsyncReadRows(on_row, on_finish, std::move(row_sets[i]),
+                        cbt::Filter::Latest(1));
+    if (config.debug_log) std::cout << "Reading for bucket: " << i << "\n";
   }
-  return width;
+
+  if (config.debug_log) std::cout << "Waiting...\n";
+  auto total_rows = 0;
+  for (std::size_t i = 0; i != row_sets.size(); ++i) {
+    auto f = results[i].promise.get_future();
+    // Block until the read for this row set is complete.
+    auto status = f.get();
+    if (!status.ok()) throw std::move(status);
+    total_rows += results[i].rows;
+    if (config.debug_log) {
+      std::cout << "Result[" << i << "].rows = " << results[i].rows << "\n";
+    }
+  }
+
+  // End the timer.
+  auto const elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
+      clock::now() - start_time);
+  if (config.debug_log) std::cout << "Finished timing.\n";
+
+  // Report results.
+  if (config.debug_log) {
+    std::cout << "RESULTS:\n"
+              << "Elapsed time (milliseconds): " << elapsed.count() << "\n"
+              << "Rows read: " << total_rows << "\n";
+  } else {
+    std::cout << elapsed.count() << "," << total_rows << ","
+              << config.grpc_num_channels << "," << config.grpc_num_threads
+              << "," << results.size() << "\n";
+  }
 }
 
-// Returns true if `row` >= `split`...
-//
-// But there is a catch. Bigtable returns "" to mean "end-of-table".
-// `std::string{"row"} > std::string{""}`, but we want "end-of-table" to be
-// greater than all rows. So we need special handling for the case where `split`
-// is empty. Aside: note that `row` cannot be empty.
-bool IsRowPastSplit(std::string const& row, std::string const& split) {
-  return !split.empty() && row >= split;
-};
-
-// A helper class to group row ranges into buckets, given the row key samples of
-// a table.
-class Buckets {
+/**
+ * An extension of the `cbt::RowSet` class that groups row keys and row ranges
+ * into buckets, as determined by the row key samples.
+ *
+ * This is sort of the point of the exercise. The implementation is here for
+ * copying. A class like this may make it into the public API one day.
+ *
+ * Usage:
+ *
+ * @code
+ * auto samples = table.SampleRows();
+ * assert(samples.ok());
+ * BucketedRowSet buckets(*std::move(samples));
+ * buckets.Append("row1");
+ * buckets.Append(RowRange::Open("row2", "row3"));
+ * auto row_sets = std::move(buckets).RowSets();
+ * for (auto& row_set : row_sets) {
+ *   table.AsyncReadRows(..., row_set, ...);
+ * }
+ * @endcode
+ */
+class BucketedRowSet {
  public:
-  explicit Buckets(std::vector<cbt::RowKeySample> const& samples)
-      : samples_(samples), split_(samples_.begin()) {
-    row_sets_.reserve(samples.size());
+  // Initializes `buckets_`, given the row key samples.
+  //
+  // For example, if given sample row keys: {"1", "2"}, it will make buckets:
+  // ("", "1"], ("1", "2"], ("2", ""]
+  //
+  // If given sample row keys: {"", "1", "2", ""}, it will still make buckets:
+  // ("", "1"], ("1", "2"], ("2", ""]
+  //
+  // Note that `cbt::RowRange` handles the empty string differently when it is
+  // the opening key vs. the closing key.
+  explicit BucketedRowSet(std::vector<cbt::RowKeySample> samples) {
+    buckets_.reserve(samples.size() + 1);
+
+    cbt::RowKeyType last;
+    for (auto& sample : samples) {
+      buckets_.emplace_back(std::move(last), sample.row_key);
+      last = std::move(sample.row_key);
+    }
+    if (!last.empty()) buckets_.emplace_back(std::move(last), "");
+    if (buckets_.empty()) buckets_.emplace_back("", "");
   }
 
-  // Assumes that row keys are (1) non-overlapping, (2) entered in order.
-  void AddClosedRange(std::string start_row_key, std::string end_row_key) {
-    left_open_ = false;
+  void Append(cbt::RowRange range) {
+    // The API is too restrictive for us to recover the starting row key. Or
+    // make claims about which side of the row range a row key is on. :shrug:
+    // So we need to manipulate the proto instead.
+    auto proto = std::move(range).as_proto();
 
-    // The range is past the current split.
-    while (split_ != samples_.end() &&
-           IsRowPastSplit(start_row_key, split_->row_key)) {
-      Inc();
+    auto bucket = [this, &proto] {
+      switch (proto.start_key_case()) {
+        case google::bigtable::v2::RowRange::START_KEY_NOT_SET:
+          return buckets_.begin();
+        case google::bigtable::v2::RowRange::kStartKeyClosed:
+          return FindBucketClosed(proto.start_key_closed());
+        case google::bigtable::v2::RowRange::kStartKeyOpen:
+          return FindBucketOpen(proto.start_key_open());
+      }
+    }();
+
+    // Restore the `cbt::RowRange` from the proto.
+    range = cbt::RowRange(proto);
+
+    // Perform a linear search until we hit all of the buckets that this range
+    // falls into.
+    while (bucket != buckets_.end()) {
+      auto p = bucket->range.Intersect(range);
+      // No intersection. We can stop.
+      if (!p.first) break;
+      bucket->empty = false;
+      bucket->row_set.Append(std::move(p.second));
+      ++bucket;
     }
-
-    // The range straddles at least one split.
-    while (split_ != samples_.end() &&
-           IsRowPastSplit(end_row_key, split_->row_key)) {
-      Append(std::move(start_row_key), split_->row_key);
-      left_open_ = true;
-      start_row_key = std::move(split_->row_key);
-      Inc();
-    }
-
-    // The range is contained within the current split.
-    Append(std::move(start_row_key), std::move(end_row_key));
   }
 
-  // Returns the collected row sets and invalidates the object.
-  std::vector<cbt::RowSet> RowSets() && { return std::move(row_sets_); }
+  void Append(cbt::RowKeyType row_key) {
+    auto bucket = FindBucketClosed(row_key);
+    bucket->empty = false;
+    bucket->row_set.Append(std::move(row_key));
+  }
+
+  // Consume this object and return a vector of non-empty `cbt::`RowSets`.
+  std::vector<cbt::RowSet> RowSets() && {
+    std::vector<cbt::RowSet> v;
+    v.reserve(buckets_.size());
+    for (auto& bucket : buckets_) {
+      if (bucket.empty) continue;
+      v.emplace_back(std::move(bucket.row_set));
+    }
+    return v;
+  }
 
  private:
-  // Look to the next split.
-  void Inc() {
-    ++split_;
-    new_split_ = true;
+  struct Bucket {
+    Bucket(cbt::RowKeyType lower_bound, cbt::RowKeyType upper_bound)
+        : upper_bound(upper_bound),
+          range(cbt::RowRange::LeftOpen(std::move(lower_bound),
+                                        std::move(upper_bound))) {}
+
+    // We use this key to perform a binary search to determine which bucket a
+    // given row key or row range belongs to. Although this information is
+    // contained in `range`, the public API is too opaque for us to avoid an
+    // extra copy.
+    cbt::RowKeyType upper_bound;
+    cbt::RowRange const range;
+    // The default constructed `cbt::RowSet()` means read all rows, so we should
+    // manually track whether it is empty or not.
+    bool empty = true;
+    cbt::RowSet row_set;
+  };
+
+  std::vector<Bucket>::iterator FindBucketClosed(
+      cbt::RowKeyType const& row_key) {
+    return std::lower_bound(
+        buckets_.begin(), buckets_.end(), row_key,
+        [](Bucket const& bucket, cbt::RowKeyType const& row_key) {
+          if (bucket.upper_bound.empty()) return false;
+          return bucket.upper_bound < row_key;
+        });
   }
 
-  void Append(std::string start_row_key, std::string end_row_key) {
-    // Prepare a new `RowSet` if we crossed a split of the table. This makes it
-    // easier to skip over splits which do not overlap with any of our disjoint
-    // row ranges.
-    //
-    // We do this because a default constructed `RowSet` means read *all* rows.
-    if (new_split_) {
-      row_sets_.emplace_back();
-      new_split_ = false;
-    }
-    auto range = left_open_ ? cbt::RowRange::LeftOpen(std::move(start_row_key),
-                                                      std::move(end_row_key))
-                            : cbt::RowRange::Closed(std::move(start_row_key),
-                                                    std::move(end_row_key));
-    row_sets_.back().Append(std::move(range));
+  std::vector<Bucket>::iterator FindBucketOpen(cbt::RowKeyType const& row_key) {
+    return std::upper_bound(
+        buckets_.begin(), buckets_.end(), row_key,
+        [](cbt::RowKeyType const& row_key, Bucket const& bucket) {
+          if (bucket.upper_bound.empty()) return true;
+          return row_key < bucket.upper_bound;
+        });
   }
 
-  std::vector<cbt::RowSet> row_sets_;
-  // The row key samples tell us the boundary of each split of our table. We
-  // will group row ranges into buckets according to these boundaries.
-  std::vector<cbt::RowKeySample> const& samples_;
-  std::vector<cbt::RowKeySample>::const_iterator split_;
-  bool new_split_ = true;
-  // The row key samples are the inclusive end key for a tablet. If a range
-  // straddle a sample row key, we need to read up to and including the split.
-  // Then we read from the split (exclusive) to the next end key.
-  bool left_open_ = false;
+  std::vector<Bucket> buckets_;
 };
+
+/**
+ * Abstract interface for sourcing row range data to test with.
+ *
+ * The point of this abstraction is to handle row ranges that may come from a
+ * file (if you are testing an existing table with real data), or from default
+ * test data that is generated by this application when `create_table == true`.
+ *
+ * There is probably no need for this class in a real application.
+ */
+class RowRangeSource {
+ public:
+  // If the optional is not engaged, there are no more row ranges.
+  virtual absl::optional<cbt::RowRange> Next() = 0;
+};
+
+/**
+ * Reads RowRanges from a file.
+ *
+ * The input for the file is expected to be in the format:
+ *
+ * <start_row_key_1>, <end_row_key_1>
+ * <start_row_key_2>, <end_row_key_2>
+ * <start_row_key_3>, <end_row_key_3>
+ * ...
+ * <start_row_key_N>, <end_row_key_N>
+ */
+std::unique_ptr<RowRangeSource> MakeRowRangeSourceFromFile(
+    std::string const& filepath);
+
+/**
+ * Generates RowRanges programmatically for testing.
+ *
+ * The row ranges are determined by the configuration. The row keys are of the
+ * form "rowXXXX". This matches the test data generated by
+ * `ConditionallyCreateTable()`.
+ */
+std::unique_ptr<RowRangeSource> MakeDefaultRowRangeSource(
+    Configuration const& config);
+
+// Read row ranges from a file, if a file is provided. Otherwise use the default
+// test row ranges.
+std::unique_ptr<RowRangeSource> MakeRowRangeSource(
+    Configuration const& config) {
+  if (!config.row_ranges_filepath.empty()) {
+    return MakeRowRangeSourceFromFile(config.row_ranges_filepath);
+  }
+  return MakeDefaultRowRangeSource(config);
+}
 
 void ConditionallyCreateTable(Configuration const& config);
 void ConditionallyDeleteTable(Configuration const& config);
@@ -218,18 +411,15 @@ int main(int argc, char* argv[]) try {
   config.instance_id = argv[2];
   config.table_id = argv[3];
 
-  std::cout << "\nCONFIGURATION:"
-            << "\nChannel Count: " << config.grpc_num_channels
-            << "\nThread Count: " << config.grpc_num_threads
-            << "\nTotal Rows: " << config.total_rows
-            << "\nDisjoint Sets: " << config.disjoint_row_ranges
-            << "\nRows Per Range: " << config.rows_per_range << "\n\nSETUP:";
+  if (config.debug_log) {
+    std::cout << "CONFIGURATION:\n"
+              << "Total Rows: " << config.total_rows << "\n"
+              << "Channel Count: " << config.grpc_num_channels << "\n"
+              << "Thread Count: " << config.grpc_num_threads << "\n"
+              << "\nSETUP:\n";
+  }
 
   ConditionallyCreateTable(config);
-
-  auto const row_key_width = RowKeyWidth(config.total_rows);
-  auto const tr = cbt::TableResource(config.project_id, config.instance_id,
-                                     config.table_id);
 
   // Make a Table client to connect to the Bigtable Data API.
   auto options =
@@ -237,76 +427,35 @@ int main(int argc, char* argv[]) try {
           .set<gc::EndpointOption>(config.data_endpoint)
           .set<gc::GrpcNumChannelsOption>(config.grpc_num_channels)
           .set<gc::GrpcBackgroundThreadPoolSizeOption>(config.grpc_num_threads);
-  auto table = cbt::Table(cbt::MakeDataConnection(options), tr);
+  cbt::Table table(cbt::MakeDataConnection(options),
+                   cbt::TableResource(config.project_id, config.instance_id,
+                                      config.table_id));
 
-  std::cout << "\nStart sampling row keys.";
+  if (config.debug_log) std::cout << "Start sampling row keys.\n";
   auto samples_sor = table.SampleRows();
   if (!samples_sor) throw std::move(samples_sor).status();
   auto samples = *std::move(samples_sor);
-  std::cout << "\nFinished sampling row keys.";
+  if (config.debug_log) std::cout << "Finished sampling row keys.\n";
 
-  std::cout << "\nStart reading disjoint ranges.";
-  Buckets buckets(samples);
-  for (auto i = 0; i != config.disjoint_row_ranges; ++i) {
-    auto start_index = i * config.total_rows / config.disjoint_row_ranges;
-    auto start_row_key = MakeRowString(row_key_width, start_index);
-    // Instead of subtracting one, we could add RightOpenRanges. :shrug:
-    auto end_index = start_index + config.rows_per_range - 1;
-    auto end_row_key = MakeRowString(row_key_width, end_index);
-
-    buckets.AddClosedRange(std::move(start_row_key), std::move(end_row_key));
+  if (config.debug_log) std::cout << "Start reading ranges.\n";
+  BucketedRowSet buckets(samples);
+  auto source = MakeRowRangeSource(config);
+  for (;;) {
+    auto range = source->Next();
+    if (!range) break;
+    buckets.Append(*std::move(range));
   }
   auto row_sets = std::move(buckets).RowSets();
-  std::cout << "\nFinished reading disjoint ranges.";
+  if (config.debug_log) std::cout << "Finished reading ranges.\n";
 
-  struct SplitResult {
-    // Counts the rows read per split.
-    std::int64_t rows;
-    // Lets us block until the operation has completed.
-    gc::promise<gc::Status> promise;
-  };
-  std::vector<SplitResult> accumulators(row_sets.size());
-
-  std::cout << "\n\nStart timing.";
-  auto start_time = clock::now();
-
-  std::cout << "\nREAD ROWS:";
-  for (std::size_t i = 0; i != row_sets.size(); ++i) {
-    auto& accumulator = accumulators[i];
-    // Increment the row count for this split when we receive a row.
-    auto on_row = [&accumulator](cbt::Row const& /*row*/) {
-      ++accumulator.rows;
-      return gc::make_ready_future(true);
-    };
-    // Mark the read of this row set as complete when the stream finishes.
-    auto on_finish = [&accumulator](gc::Status status) {
-      accumulator.promise.set_value(std::move(status));
-    };
-    table.AsyncReadRows(on_row, on_finish, std::move(row_sets[i]),
-                        cbt::Filter::Latest(1));
-    std::cout << "\nReading for split: " << i;
+  if (!config.debug_log) {
+    // Print labels in csv format.
+    std::cout << "ElapsedTime(ms),TotalRows,ChannelCount,ThreadCount,Buckets\n";
   }
-
-  std::cout << "\nAccumulating...";
-  auto total_rows = 0;
-  for (std::size_t i = 0; i != row_sets.size(); ++i) {
-    auto f = accumulators[i].promise.get_future();
-    // Block until the read for this row set is complete.
-    auto status = f.get();
-    if (!status.ok()) throw std::move(status);
-    total_rows += accumulators[i].rows;
-    std::cout << "\nAccumulator[" << i << "].rows = " << accumulators[i].rows;
+  for (int i = 1; i <= config.num_iterations; ++i) {
+    if (config.debug_log) std::cout << "\nIteration: " << i << "\n";
+    TimedReadRows(table, row_sets, config);
   }
-
-  // End the timer.
-  auto const elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
-      clock::now() - start_time);
-  std::cout << "\nFinished timing.";
-
-  // Report results.
-  std::cout << "\n\nRESULTS:"
-            << "\nElapsed time (milliseconds): " << elapsed.count()
-            << "\nRows read: " << total_rows << "\n";
 
   ConditionallyDeleteTable(config);
 
@@ -316,14 +465,110 @@ int main(int argc, char* argv[]) try {
   return 1;
 }
 
+// Anything in this anonymous namespace is an implementation detail that is a
+// distraction from the point of the sample. (The point of the sample is to
+// group row ranges into buckets that match the table's splits and parallelize
+// the reads across those buckets).
 namespace {
+
+// Fill the index with leading 0s, so that the row keys are a fixed width.
+std::string MakeRowString(int key_width, int64_t row_index) {
+  std::ostringstream os;
+  os << "row" << std::setw(key_width) << std::setfill('0') << row_index;
+  return std::move(os).str();
+}
+
+// Compute ceil(log_10(total_rows))
+int RowKeyWidth(std::int64_t total_rows) {
+  int width = 0;
+  while (total_rows != 0) {
+    total_rows /= 10;
+    ++width;
+  }
+  return width;
+}
+
+class FromFileRowRangeSource : public RowRangeSource {
+ public:
+  explicit FromFileRowRangeSource(std::string const& filepath) {
+    auto is = std::ifstream(filepath);
+    is.exceptions(std::ios::badbit);
+    auto contents = std::string(std::istreambuf_iterator<char>(is.rdbuf()), {});
+    lines_ = absl::StrSplit(contents, '\n', absl::SkipEmpty());
+    it_ = lines_.begin();
+  }
+
+  absl::optional<cbt::RowRange> Next() override {
+    while (it_ != lines_.end()) {
+      auto line = *it_++;
+      std::vector<std::string> keys = absl::StrSplit(line, ", ");
+      if (keys.size() != 2) {
+        std::cerr << "bad line: " << line << "\n";
+        continue;
+      }
+      return cbt::RowRange::Closed(std::move(keys[0]), std::move(keys[1]));
+    }
+    return absl::nullopt;
+  }
+
+ private:
+  std::vector<std::string> lines_;
+  std::vector<std::string>::iterator it_;
+};
+
+std::unique_ptr<RowRangeSource> MakeRowRangeSourceFromFile(
+    std::string const& filepath) {
+  return std::make_unique<FromFileRowRangeSource>(filepath);
+}
+
+class DefaultRowRangeSource : public RowRangeSource {
+ public:
+  explicit DefaultRowRangeSource(Configuration const& config)
+      : total_rows_(config.total_rows),
+        disjoint_row_ranges_(config.disjoint_row_ranges),
+        rows_per_range_(config.rows_per_range),
+        row_key_width_(RowKeyWidth(total_rows_)) {
+    // Add a random offset to the disjoint row ranges so we are not reading the
+    // same subset every time.
+    std::int64_t max_offset =
+        total_rows_ / disjoint_row_ranges_ - rows_per_range_;
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<std::int64_t> dist(
+        0, std::max<std::int64_t>(0, max_offset - 1));
+    offset_ = dist(gen);
+  }
+
+  absl::optional<cbt::RowRange> Next() override {
+    if (current_row_range_ >= disjoint_row_ranges_) return absl::nullopt;
+    auto start_index = current_row_range_ * total_rows_ / disjoint_row_ranges_;
+    auto start_row_key = MakeRowString(row_key_width_, start_index);
+    auto end_index = start_index + rows_per_range_;
+    auto end_row_key = MakeRowString(row_key_width_, end_index);
+    ++current_row_range_;
+    return cbt::RowRange::LeftOpen(std::move(start_row_key),
+                                   std::move(end_row_key));
+  }
+
+ private:
+  std::int64_t total_rows_;
+  std::int64_t disjoint_row_ranges_;
+  std::int64_t rows_per_range_;
+  int row_key_width_;
+  std::int64_t offset_;
+
+  std::int64_t current_row_range_ = 0;
+};
+
+std::unique_ptr<RowRangeSource> MakeDefaultRowRangeSource(
+    Configuration const& config) {
+  return std::make_unique<DefaultRowRangeSource>(config);
+}
 
 void WriteTableData(Configuration const& config) {
   if (!config.create_table) return;
 
   auto const row_key_width = RowKeyWidth(config.total_rows);
-  auto const tr = cbt::TableResource(config.project_id, config.instance_id,
-                                     config.table_id);
   auto const value = std::string(config.bytes_per_row, '0');
 
   auto options =
@@ -331,13 +576,15 @@ void WriteTableData(Configuration const& config) {
           .set<gc::EndpointOption>(config.data_endpoint)
           .set<gc::GrpcNumChannelsOption>(config.grpc_num_channels)
           .set<gc::GrpcBackgroundThreadPoolSizeOption>(config.grpc_num_threads);
-  auto table = cbt::Table(cbt::MakeDataConnection(options), tr);
+  cbt::Table table(cbt::MakeDataConnection(options),
+                   cbt::TableResource(config.project_id, config.instance_id,
+                                      config.table_id));
 
   cbt::MutationBatcher batcher(table);
   gc::CompletionQueue cq;
   std::thread cq_runner([&cq]() { cq.Run(); });
 
-  std::cout << "\nStart writing data.";
+  if (config.debug_log) std::cout << "Start writing data.\n";
   for (std::int64_t i = 0; i != config.total_rows; ++i) {
     auto row_key = MakeRowString(row_key_width, i);
     auto mut = cbt::SingleRowMutation(
@@ -354,7 +601,7 @@ void WriteTableData(Configuration const& config) {
   }
   // Wait for all mutations to complete
   batcher.AsyncWaitForNoPendingRequests().get();
-  std::cout << "\nFinished writing data.";
+  if (config.debug_log) std::cout << "Finished writing data.\n";
 
   cq.Shutdown();
   cq_runner.join();
@@ -366,8 +613,9 @@ void ConditionallyCreateTable(Configuration const& config) {
   auto const row_key_width = RowKeyWidth(config.total_rows);
   auto const tr = cbt::TableResource(config.project_id, config.instance_id,
                                      config.table_id);
-  auto admin =
-      cbta::BigtableTableAdminClient(cbta::MakeBigtableTableAdminConnection());
+  auto options = gc::Options{}.set<gc::EndpointOption>(config.admin_endpoint);
+  auto client = cbta::BigtableTableAdminClient(
+      cbta::MakeBigtableTableAdminConnection(std::move(options)));
 
   google::bigtable::admin::v2::CreateTableRequest r;
   r.set_parent(tr.instance().FullName());
@@ -380,10 +628,10 @@ void ConditionallyCreateTable(Configuration const& config) {
   auto& families = *r.mutable_table()->mutable_column_families();
   families[config.column_family].mutable_gc_rule()->set_max_num_versions(1);
 
-  std::cout << "\nStart creating table.";
-  auto status = admin.CreateTable(r);
+  if (config.debug_log) std::cout << "Start creating table.\n";
+  auto status = client.CreateTable(r);
   if (!status.ok()) throw std::move(status).status();
-  std::cout << "\nFinished creating table.";
+  if (config.debug_log) std::cout << "Finished creating table.\n";
 
   WriteTableData(config);
 }
@@ -393,12 +641,13 @@ void ConditionallyDeleteTable(Configuration const& config) {
 
   auto const tr = cbt::TableResource(config.project_id, config.instance_id,
                                      config.table_id);
-  std::cout << "\nStart deleting table.";
-  auto admin =
-      cbta::BigtableTableAdminClient(cbta::MakeBigtableTableAdminConnection());
-  auto status = admin.DeleteTable(tr.FullName());
+  if (config.debug_log) std::cout << "Start deleting table.\n";
+  auto options = gc::Options{}.set<gc::EndpointOption>(config.admin_endpoint);
+  auto client = cbta::BigtableTableAdminClient(
+      cbta::MakeBigtableTableAdminConnection(std::move(options)));
+  auto status = client.DeleteTable(tr.FullName());
   if (!status.ok()) throw std::move(status);
-  std::cout << "\nFinished deleting table.";
+  if (config.debug_log) std::cout << "Finished deleting table.\n";
 }
 
 }  // namespace
