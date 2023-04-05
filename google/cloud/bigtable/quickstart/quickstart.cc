@@ -195,7 +195,8 @@ void TimedReadRows(cbt::Table& table, std::vector<cbt::RowSet> row_sets,
   if (config.debug_log) {
     std::cout << "RESULTS:\n"
               << "Elapsed time (milliseconds): " << elapsed.count() << "\n"
-              << "Rows read: " << total_rows << "\n";
+              << "Rows read: " << total_rows << "\n"
+              << "Buckets: " << results.size() << "\n";
   } else {
     std::cout << elapsed.count() << "," << total_rows << ","
               << config.grpc_num_channels << "," << config.grpc_num_threads
