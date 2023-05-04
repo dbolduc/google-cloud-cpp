@@ -17,6 +17,7 @@
 #include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/bigtable/wait_for_consistency.h"
+#include "google/cloud/opentelemetry/configure_basic_tracing.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/backoff_policy.h"
 #include "google/cloud/internal/getenv.h"
@@ -47,6 +48,10 @@ using ::testing::Not;
 
 namespace btadmin = ::google::bigtable::admin::v2;
 
+std::string TestName() {
+  return ::testing::UnitTest::GetInstance()->current_test_info()->name();
+}
+
 class TableAdminIntegrationTest
     : public bigtable::testing::TableIntegrationTest {
  protected:
@@ -66,6 +71,12 @@ class TableAdminIntegrationTest
   }
 
   BigtableTableAdminClient client_ = bigtable::testing::TableAdminClient();
+
+  // Start a span for each test. This is not necessary, but it is nice to
+  // correlate the API calls for a given test.
+  opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span_ =
+      internal::MakeSpan(TestName());
+  opentelemetry::trace::Scope scope_ = {span_};
 };
 
 TEST_F(TableAdminIntegrationTest, TableListWithMultipleTables) {
@@ -464,6 +475,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleMock(&argc, argv);
+
+  auto project_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+
+  // Set up tracing following the Google Cloud C++ OpenTelemetry quickstart
+  auto configuration = google::cloud::otel::ConfigureBasicTracing(
+      google::cloud::Project(project_id));
+
   (void)::testing::AddGlobalTestEnvironment(
       new google::cloud::bigtable::testing::TableAdminTestEnvironment);
   return RUN_ALL_TESTS();
