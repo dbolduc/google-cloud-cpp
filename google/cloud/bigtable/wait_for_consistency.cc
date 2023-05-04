@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/wait_for_consistency.h"
 #include "google/cloud/bigtable/admin/bigtable_table_admin_options.h"
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_option_defaults.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 #include <chrono>
 
 namespace google {
@@ -87,7 +88,7 @@ class AsyncWaitForConsistencyImpl
     if (state.cancelled) return;
     SetPending(
         state.operation,
-        cq_.MakeRelativeTimer(polling_policy_->WaitPeriod())
+        internal::TracedAsyncBackoff(cq_, polling_policy_->WaitPeriod())
             .then([self](future<TimerResult> f) { self->OnBackoff(f.get()); }));
   }
 
@@ -173,10 +174,16 @@ future<Status> AsyncWaitForConsistency(CompletionQueue cq,
                                        std::string table_name,
                                        std::string consistency_token,
                                        Options options) {
+  // TODO : This doesn't work. What (I think) we want to do is make the Impl
+  // virtual, and conditionally layer on a tracing wrapper for it.
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  auto span = internal::MakeSpan("bigtable_admin::AsyncWaitForConsistency");
+  auto scope = opentelemetry::trace::Scope(span);
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   auto loop = std::make_shared<AsyncWaitForConsistencyImpl>(
       std::move(cq), std::move(client), std::move(table_name),
       std::move(consistency_token), std::move(options));
-  return loop->Start();
+  return internal::EndSpan(std::move(span), loop->Start());
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
