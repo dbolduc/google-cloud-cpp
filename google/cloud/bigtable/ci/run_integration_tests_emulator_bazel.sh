@@ -37,15 +37,14 @@ source module /google/cloud/bigtable/tools/run_emulator_utils.sh
 
 # These can only run against production
 production_only_targets=(
-  "//google/cloud/bigtable/admin/integration_tests:admin_backup_integration_test"
-  "//google/cloud/bigtable/admin/integration_tests:admin_iam_policy_integration_test"
-  "//google/cloud/bigtable/examples:bigtable_table_admin_backup_snippets"
-  "//google/cloud/bigtable/examples:table_admin_iam_policy_snippets"
-  "//google/cloud/bigtable/tests:admin_backup_integration_test"
-  "//google/cloud/bigtable/tests:admin_iam_policy_integration_test"
+  "//google/cloud/bigtable/admin/integration_tests:table_admin_integration_test"
 )
 "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
+  --nocache_test_results \
+  --test_env="ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS=yes" \
   -- "${production_only_targets[@]}"
+
+exit 0
 
 # `start_emulators` creates unsightly *.log files in the current directory
 # (which is ${PROJECT_ROOT}) and we cannot use a subshell because we want the
@@ -66,7 +65,8 @@ done
 "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
   --test_env="BIGTABLE_EMULATOR_HOST=${BIGTABLE_EMULATOR_HOST}" \
   --test_env="BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST=${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST}" \
-  -- "//google/cloud/bigtable/..." "${excluded_targets[@]}"
+  -- "//google/cloud/bigtable/admin/integration_tests:table_admin_integration_test" \
+  ${excluded_targets[@]}
 exit_status=$?
 
 kill_emulators

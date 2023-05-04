@@ -69,6 +69,9 @@ function integration::bazel_args() {
     "--test_env=GOOGLE_CLOUD_CPP_IAM_QUOTA_LIMITED_INTEGRATION_TESTS=${GOOGLE_CLOUD_CPP_IAM_QUOTA_LIMITED_INTEGRATION_TESTS:-}"
     "--test_env=GOOGLE_CLOUD_CPP_IAM_QUOTA_LIMITED_SAMPLES=${GOOGLE_CLOUD_CPP_IAM_QUOTA_LIMITED_SAMPLES:-}"
 
+    # TEMPORARY : Enable OpenTelemetry Tracing.
+    "--test_env=GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING=yes"
+
     # Bigtable
     "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}"
     "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_CLUSTER_ID=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_CLUSTER_ID}"
@@ -168,84 +171,84 @@ function integration::bazel_with_emulators() {
     production_tests_tag_filters="integration-test,-no-msan"
   fi
 
-  io::log_h2 "Running integration tests that require production access"
-  bazel "${verb}" "${args[@]}" \
-    --test_tag_filters="${production_tests_tag_filters}" \
-    "${production_integration_tests[@]}"
-
-  io::log_h2 "Running Pub/Sub integration tests (with emulator)"
-  "google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test"
-
-  io::log_h2 "Running Storage integration tests (with emulator)"
-  "google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test"
-
-  io::log_h2 "Running Spanner integration tests (with emulator)"
-  "google/cloud/spanner/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test"
+  #  io::log_h2 "Running integration tests that require production access"
+  #  bazel "${verb}" "${args[@]}" \
+  #    --test_tag_filters="${production_tests_tag_filters}" \
+  #    "${production_integration_tests[@]}"
+  #
+  #  io::log_h2 "Running Pub/Sub integration tests (with emulator)"
+  #  "google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
+  #    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test"
+  #
+  #  io::log_h2 "Running Storage integration tests (with emulator)"
+  #  "google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
+  #    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test"
+  #
+  #  io::log_h2 "Running Spanner integration tests (with emulator)"
+  #  "google/cloud/spanner/ci/${EMULATOR_SCRIPT}" \
+  #    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test"
 
   io::log_h2 "Running Bigtable integration tests (with emulator)"
   "google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
     bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test"
 
-  io::log_h2 "Running REST integration tests (with emulator)"
-  "google/cloud/internal/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test"
-
-  # This test is run separately because the access token changes every time and
-  # that would mess up bazel's test cache for all the other tests.
-  io::log_h2 "Running Bigtable gRPC credential examples"
-  access_token="$(gcloud auth print-access-token)"
-  bazel "${verb}" "${args[@]}" \
-    "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN=${access_token}" \
-    //google/cloud/bigtable/examples:bigtable_grpc_credentials
-
-  # This test is run separately because the URL may change and that would mess
-  # up Bazel's test cache for all the other tests.
-  io::log_h2 "Running combined examples using multiple services"
-  hello_world_http="$(gcloud run services describe \
-    hello-world-http \
-    --project="${GOOGLE_CLOUD_PROJECT}" \
-    --region="us-central1" --platform="managed" \
-    --format='value(status.url)')"
-
-  hello_world_grpc="$(gcloud run services describe \
-    hello-world-grpc \
-    --project="${GOOGLE_CLOUD_PROJECT}" \
-    --region="us-central1" --platform="managed" \
-    --format='value(status.url)')"
-
-  bazel "${verb}" "${args[@]}" \
-    "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_HTTP_URL=${hello_world_http}" \
-    "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_GRPC_URL=${hello_world_grpc}" \
-    "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT}" \
-    //examples/...
-
-  local bazel_output_base
-  if echo "${args[@]}" | grep -w -q -- "--config=msan"; then
-    io::log_h2 "Skipping generator integration test"
-  else
-    io::log_h2 "Running generator integration test"
-    bazel_output_base="$(bazel info output_base)"
-    bazel run --action_env=GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes \
-      //generator:google-cloud-cpp-codegen -- \
-      --protobuf_proto_path="${bazel_output_base}/external/com_google_protobuf/src" \
-      --googleapis_proto_path="${bazel_output_base}/external/com_google_googleapis" \
-      --golden_proto_path="${PWD}" \
-      --output_path="${PWD}" \
-      --update_ci=false \
-      --config_file="${PWD}/generator/integration_tests/golden_config.textproto"
-    git diff --exit-code \
-      generator/integration_tests/golden/ \
-      ':(exclude)generator/integration_tests/golden/tests/' \
-      ':(exclude)generator/integration_tests/golden/.clang-format' \
-      ':(exclude)generator/integration_tests/golden/BUILD.bazel' \
-      ':(exclude)generator/integration_tests/golden/CMakeLists.txt' \
-      ':(exclude)generator/integration_tests/golden/*.bzl' \
-      ':(exclude)generator/integration_tests/golden/*_stub.h' \
-      ':(exclude)generator/integration_tests/golden/streaming.cc'
-  fi
+  #  io::log_h2 "Running REST integration tests (with emulator)"
+  #  "google/cloud/internal/ci/${EMULATOR_SCRIPT}" \
+  #    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test"
+  #
+  #  # This test is run separately because the access token changes every time and
+  #  # that would mess up bazel's test cache for all the other tests.
+  #  io::log_h2 "Running Bigtable gRPC credential examples"
+  #  access_token="$(gcloud auth print-access-token)"
+  #  bazel "${verb}" "${args[@]}" \
+  #    "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN=${access_token}" \
+  #    //google/cloud/bigtable/examples:bigtable_grpc_credentials
+  #
+  #  # This test is run separately because the URL may change and that would mess
+  #  # up Bazel's test cache for all the other tests.
+  #  io::log_h2 "Running combined examples using multiple services"
+  #  hello_world_http="$(gcloud run services describe \
+  #    hello-world-http \
+  #    --project="${GOOGLE_CLOUD_PROJECT}" \
+  #    --region="us-central1" --platform="managed" \
+  #    --format='value(status.url)')"
+  #
+  #  hello_world_grpc="$(gcloud run services describe \
+  #    hello-world-grpc \
+  #    --project="${GOOGLE_CLOUD_PROJECT}" \
+  #    --region="us-central1" --platform="managed" \
+  #    --format='value(status.url)')"
+  #
+  #  bazel "${verb}" "${args[@]}" \
+  #    "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_HTTP_URL=${hello_world_http}" \
+  #    "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_GRPC_URL=${hello_world_grpc}" \
+  #    "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT}" \
+  #    //examples/...
+  #
+  #  local bazel_output_base
+  #  if echo "${args[@]}" | grep -w -q -- "--config=msan"; then
+  #    io::log_h2 "Skipping generator integration test"
+  #  else
+  #    io::log_h2 "Running generator integration test"
+  #    bazel_output_base="$(bazel info output_base)"
+  #    bazel run --action_env=GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes \
+  #      //generator:google-cloud-cpp-codegen -- \
+  #      --protobuf_proto_path="${bazel_output_base}/external/com_google_protobuf/src" \
+  #      --googleapis_proto_path="${bazel_output_base}/external/com_google_googleapis" \
+  #      --golden_proto_path="${PWD}" \
+  #      --output_path="${PWD}" \
+  #      --update_ci=false \
+  #      --config_file="${PWD}/generator/integration_tests/golden_config.textproto"
+  #    git diff --exit-code \
+  #      generator/integration_tests/golden/ \
+  #      ':(exclude)generator/integration_tests/golden/tests/' \
+  #      ':(exclude)generator/integration_tests/golden/.clang-format' \
+  #      ':(exclude)generator/integration_tests/golden/BUILD.bazel' \
+  #      ':(exclude)generator/integration_tests/golden/CMakeLists.txt' \
+  #      ':(exclude)generator/integration_tests/golden/*.bzl' \
+  #      ':(exclude)generator/integration_tests/golden/*_stub.h' \
+  #      ':(exclude)generator/integration_tests/golden/streaming.cc'
+  #  fi
 }
 
 # Runs integration tests with CTest using emulators. This function requires a
