@@ -14,6 +14,7 @@
 
 #include "google/cloud/opentelemetry/trace_exporter.h"
 #include "google/cloud/trace/v2/trace_client.h"
+#include "google/cloud/internal/opentelemetry_options.h"
 
 namespace google {
 namespace cloud {
@@ -60,8 +61,7 @@ class TraceExporter final : public opentelemetry::sdk::trace::SpanExporter {
 
 std::unique_ptr<opentelemetry::sdk::trace::SpanExporter> MakeTraceExporter(
     Project project, Options options) {
-  // TODO(#11156) - We should filter out options that enable tracing. We should
-  // not trace requests initiated by the underlying trace_v2 client.
+  options.set<internal::OpenTelemetryTracingOption>(false);
   return std::make_unique<TraceExporter>(
       std::move(project),
       trace_v2::MakeTraceServiceConnection(std::move(options)));

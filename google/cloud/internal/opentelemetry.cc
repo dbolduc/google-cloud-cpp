@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/opentelemetry_options.h"
 #include "google/cloud/options.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -79,7 +80,13 @@ Status EndSpan(opentelemetry::trace::Span& span, Status const& status) {
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 bool TracingEnabled(Options const& options) {
-  return options.get<OpenTelemetryTracingOption>();
+  // The Option takes precedence over the environment variable, so we can
+  // explicitly turn off tracing in the Cloud Trace client that implements our
+  // Cloud Trace Exporter.
+  if (options.has<OpenTelemetryTracingOption>()) {
+    return options.get<OpenTelemetryTracingOption>();
+  }
+  return internal::GetEnv("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING").has_value();
 }
 #else
 bool TracingEnabled(Options const&) { return false; }
