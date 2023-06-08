@@ -149,6 +149,9 @@ void PolicyTagManagerMetadata::SetMetadata(grpc::ClientContext& context) {
   }
   auto const& authority = options.get<AuthorityOption>();
   if (!authority.empty()) context.set_authority(authority);
+  for (auto const& kv : options.get<internal::MetadataOption>()) {
+    context.AddMetadata(kv.first, kv.second);
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

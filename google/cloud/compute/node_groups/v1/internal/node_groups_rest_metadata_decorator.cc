@@ -201,6 +201,9 @@ void NodeGroupsRestMetadata::SetMetadata(
     rest_context.AddHeader("x-server-timeout",
                            ms_rep.insert(ms_rep.size() - 3, "."));
   }
+  for (auto const& kv : options.get<internal::MetadataOption>()) {
+    rest_context.AddHeader(kv.first, kv.second);
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
