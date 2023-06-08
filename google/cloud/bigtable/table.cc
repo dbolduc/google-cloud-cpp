@@ -30,7 +30,6 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
-using ::google::cloud::internal::MergeOptions;
 using ::google::cloud::internal::OptionsSpan;
 
 namespace {
@@ -41,6 +40,30 @@ void SetCommonTableOperationRequest(Request& request,
   request.set_app_profile_id(app_profile_id);
   request.set_table_name(table_name);
 }
+
+// TODO(dbolduc) - real comment documentation. Also probably want to compute the
+// MD value programmatically upon client/connection construction.
+//
+// In Bigtable, we must tell the server which [FeatureFlags] we support. The
+// customer does not get to set the "bigtable-features" header.
+//
+// @code
+// google::bigtable::v2::FeatureFlags proto;
+// // set fields in `proto`.
+// auto bytes = proto.SerializeAsString();
+// internal::Base64Encoder enc;
+// for (auto c : bytes) enc.PushBack(c);
+// auto value = std::move(enc).FlushAndPad();
+// context.AddMetadata("bigtable-features", value);
+// @endcode
+Options MergeOptions(Options call, Options client) {
+  call =
+      google::cloud::internal::MergeOptions(std::move(call), std::move(client));
+  auto& md = call.lookup<google::cloud::internal::MetadataOption>();
+  md["bigtable-features"] = "CAE=";
+  return call;
+}
+
 }  // namespace
 
 using ClientUtils = bigtable::internal::UnaryClientUtils<DataClient>;
