@@ -376,6 +376,9 @@ void $metadata_rest_class_name$::SetMetadata(
     rest_context.AddHeader("x-server-timeout",
         ms_rep.insert(ms_rep.size() - 3, "."));
   }
+  for (auto const& kv : options.get<internal::MetadataOption>()) {
+    rest_context.AddHeader(kv.first, kv.second);
+  }
 }
 )""");
 

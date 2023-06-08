@@ -372,6 +372,9 @@ void $metadata_class_name$::SetMetadata(grpc::ClientContext& context) {
   }
   auto const& authority = options.get<AuthorityOption>();
   if (!authority.empty()) context.set_authority(authority);
+  for (auto const& kv : options.get<internal::MetadataOption>()) {
+    context.AddMetadata(kv.first, kv.second);
+  }
 }
 )""");
 

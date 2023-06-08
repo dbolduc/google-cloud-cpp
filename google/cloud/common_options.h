@@ -19,6 +19,7 @@
 #include "google/cloud/version.h"
 #include <set>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 namespace google {
@@ -112,6 +113,19 @@ struct AuthorityOption {
 using CommonOptionList =
     OptionList<EndpointOption, UserAgentProductsOption, TracingComponentsOption,
                UserProjectOption, AuthorityOption>;
+
+namespace internal {
+
+/**
+ * Add metadata to a request.
+ *
+ * A map of key-value pairs.
+ */
+struct MetadataOption {
+  using Type = std::unordered_map<std::string, std::string>;
+};
+
+}  // namespace internal
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
