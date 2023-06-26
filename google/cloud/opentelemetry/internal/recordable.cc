@@ -15,6 +15,7 @@
 #include "google/cloud/opentelemetry/internal/recordable.h"
 #include "google/cloud/opentelemetry/internal/monitored_resource.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/noexcept_action.h"
 #include "google/cloud/internal/time_utils.h"
 #include "absl/time/time.h"
@@ -29,6 +30,27 @@ namespace {
 // Taken from:
 // http://35.193.25.4/TensorFlow/models/research/syntaxnet/util/utf8/unilib_utf8_utils.h
 bool IsTrailByte(char x) { return static_cast<signed char>(x) < -0x40; }
+
+void SetTruncatableString(
+    google::devtools::cloudtrace::v2::TruncatableString& proto,
+    std::string const& value, std::size_t limit) {
+  if (value.size() <= limit) {
+    proto.set_value(value);
+    proto.set_truncated_byte_count(0);
+    return;
+  }
+
+  // If limit points to the beginning of a utf8 character, truncate at the
+  // limit. Otherwise, backtrack to the beginning of utf8 character.
+  auto truncation_pos = limit;
+  while (truncation_pos > 0 && IsTrailByte(value[truncation_pos])) {
+    --truncation_pos;
+  }
+
+  proto.set_value(value.data(), truncation_pos);
+  proto.set_truncated_byte_count(
+      static_cast<std::int32_t>(value.size() - truncation_pos));
+}
 
 // OpenTelemetry's semantic conventions for attribute keys differ from Cloud
 // Trace's semantics for label keys. So translate from one to the other.
@@ -52,9 +74,66 @@ void MapKey(opentelemetry::nostd::string_view& key) {
   if (it != m->end()) key = it->second;
 }
 
-class AttributeVisitor {
+using ProtoAttribute = absl::variant<bool, std::int64_t, std::string>;
+
+template <typename T>
+std::string ToString(opentelemetry::nostd::span<T const> values) {
+  return absl::StrJoin(values, "|");
+}
+template <>
+std::string ToString(
+    opentelemetry::nostd::span<opentelemetry::nostd::string_view const>
+        values) {
+  return absl::StrJoin(values, "|", absl::StreamFormatter());
+}
+template <>
+std::string ToString(opentelemetry::nostd::span<bool const> values) {
+  return absl::StrJoin(values, "|", [](std::string* out, bool v) {
+    out->append(v ? "true" : "false");
+  });
+}
+template <typename T>
+std::string ToString(std::vector<T> const& values) {
+  return absl::StrJoin(values, "|");
+}
+template <>
+std::string ToString(std::vector<bool> const& values) {
+  return absl::StrJoin(values, "|", [](std::string* out, bool v) {
+    out->append(v ? "true" : "false");
+  });
+}
+
+struct AttributeValueVisitor {
+  ProtoAttribute operator()(bool value) { return value; }
+  ProtoAttribute operator()(std::int32_t value) { return std::int64_t{value}; }
+  ProtoAttribute operator()(std::uint32_t value) { return std::int64_t{value}; }
+  ProtoAttribute operator()(std::int64_t value) { return value; }
+  ProtoAttribute operator()(std::uint64_t value) {
+    return static_cast<std::int64_t>(value);
+  }
+  // The Cloud Trace proto does not accept floating point values, so we convert
+  // them to strings.
+  ProtoAttribute operator()(double value) { return absl::StrCat(value); }
+  ProtoAttribute operator()(char const* value) { return std::string{value}; }
+  ProtoAttribute operator()(opentelemetry::nostd::string_view value) {
+    return std::string{value.data(), value.size()};
+  }
+  ProtoAttribute operator()(std::string const& value) { return value; }
+  // There is no mapping from a `Container<T>` to the Cloud Trace proto. We
+  // stream the contents of the container into a string.
+  template <typename T>
+  ProtoAttribute operator()(opentelemetry::nostd::span<T const> const& values) {
+    return ToString(std::move(values));
+  }
+  template <typename T>
+  ProtoAttribute operator()(std::vector<T> const& values) {
+    return ToString(std::move(values));
+  }
+};
+
+class ProtoAttributeVisitor {
  public:
-  AttributeVisitor(
+  ProtoAttributeVisitor(
       google::devtools::cloudtrace::v2::Span::Attributes& attributes,
       opentelemetry::nostd::string_view key, std::size_t limit)
       : attributes_(attributes), key_(key), limit_(limit) {}
@@ -64,51 +143,16 @@ class AttributeVisitor {
     if (!proto) return Drop();
     proto->set_bool_value(value);
   }
-  void operator()(std::int32_t value) {
-    auto* proto = ProtoOrDrop();
-    if (!proto) return Drop();
-    proto->set_int_value(value);
-  }
-  void operator()(std::uint32_t value) {
-    auto* proto = ProtoOrDrop();
-    if (!proto) return Drop();
-    proto->set_int_value(value);
-  }
   void operator()(std::int64_t value) {
     auto* proto = ProtoOrDrop();
     if (!proto) return Drop();
     proto->set_int_value(value);
   }
-  void operator()(std::uint64_t value) {
-    auto* proto = ProtoOrDrop();
-    if (!proto) return Drop();
-    proto->set_int_value(value);
-  }
-  // The Cloud Trace proto does not accept floating point values, so we convert
-  // them to strings.
-  void operator()(double value) {
-    auto* proto = ProtoOrDrop();
-    if (!proto) return Drop();
-    SetTruncatableString(*proto->mutable_string_value(), absl::StrCat(value),
-                         kAttributeValueStringLimit);
-  }
-  void operator()(char const* value) {
+  void operator()(std::string const& value) {
     auto* proto = ProtoOrDrop();
     if (!proto) return Drop();
     SetTruncatableString(*proto->mutable_string_value(), value,
                          kAttributeValueStringLimit);
-  }
-  void operator()(opentelemetry::nostd::string_view value) {
-    auto* proto = ProtoOrDrop();
-    if (!proto) return Drop();
-    SetTruncatableString(*proto->mutable_string_value(), value,
-                         kAttributeValueStringLimit);
-  }
-  // There is no mapping from a `span<T>` to the Cloud Trace proto. We just drop
-  // these attributes.
-  template <typename T>
-  void operator()(opentelemetry::nostd::span<T>) {
-    Drop();
   }
 
  private:
@@ -165,29 +209,15 @@ google::devtools::cloudtrace::v2::Span::SpanKind MapSpanKind(
 void SetTruncatableString(
     google::devtools::cloudtrace::v2::TruncatableString& proto,
     opentelemetry::nostd::string_view value, std::size_t limit) {
-  if (value.size() <= limit) {
-    proto.set_value(value.data(), value.size());
-    proto.set_truncated_byte_count(0);
-    return;
-  }
-
-  // If limit points to the beginning of a utf8 character, truncate at the
-  // limit. Otherwise, backtrack to the beginning of utf8 character.
-  auto truncation_pos = limit;
-  while (truncation_pos > 0 && IsTrailByte(value[truncation_pos])) {
-    --truncation_pos;
-  }
-
-  proto.set_value(value.data(), truncation_pos);
-  proto.set_truncated_byte_count(
-      static_cast<std::int32_t>(value.size() - truncation_pos));
+  SetTruncatableString(proto, std::string{value.data(), value.size()}, limit);
 }
 
 void AddAttribute(
     google::devtools::cloudtrace::v2::Span::Attributes& attributes,
     opentelemetry::nostd::string_view key,
     opentelemetry::common::AttributeValue const& value, std::size_t limit) {
-  absl::visit(AttributeVisitor{attributes, key, limit}, value);
+  auto pav = absl::visit(AttributeValueVisitor{}, value);
+  absl::visit(ProtoAttributeVisitor{attributes, key, limit}, std::move(pav));
 }
 
 google::devtools::cloudtrace::v2::Span&& Recordable::as_proto() && {
@@ -379,7 +409,12 @@ void Recordable::SetStatusImpl(opentelemetry::trace::StatusCode code,
 void Recordable::SetResourceImpl(
     opentelemetry::sdk::resource::Resource const& resource) {
   auto const& attributes = resource.GetAttributes();
-  // TODO(#11775) - add resource attributes as span attributes
+  for (auto const& kv : attributes) {
+    auto pav = absl::visit(AttributeValueVisitor{}, kv.second);
+    absl::visit(ProtoAttributeVisitor{*span_.mutable_attributes(), kv.first,
+                                      kSpanAttributeLimit},
+                std::move(pav));
+  }
   auto mr = ToMonitoredResource(attributes);
   for (auto const& label : mr.labels) {
     SetAttribute(absl::StrCat("g.co/r/", mr.type, "/", label.first),
