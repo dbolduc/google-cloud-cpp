@@ -67,9 +67,11 @@ class KVIterable : public opentelemetry::common::KeyValueIterable {
 };
 
 template <typename T>
-opentelemetry::nostd::span<T> MakeCompositeAttribute() {
-  T v[]{T{}, T{}};
-  return opentelemetry::nostd::span<T>(v);
+opentelemetry::nostd::span<T const> MakeCompositeAttribute(T t1, T t2) {
+  // We use static storage, so make sure that if this method is called multiple
+  // times for a given T, it is called with the same t1 and t2.
+  static auto const* const kData = new T[2]{t1, t2};
+  return {kData, 2};
 }
 
 Matcher<v2::AttributeValue const&> AttributeValue(bool value) {
@@ -290,14 +292,15 @@ TEST(AddAttribute, ConvertsDoubleAttributeToString) {
 
 TEST(AddAttribute, DropsCompositeAttributes) {
   std::vector<opentelemetry::common::AttributeValue> values = {
-      MakeCompositeAttribute<bool>(),
-      MakeCompositeAttribute<std::int32_t>(),
-      MakeCompositeAttribute<std::int64_t>(),
-      MakeCompositeAttribute<std::uint32_t>(),
-      MakeCompositeAttribute<double>(),
-      MakeCompositeAttribute<opentelemetry::nostd::string_view>(),
-      MakeCompositeAttribute<std::uint64_t>(),
-      MakeCompositeAttribute<std::uint8_t>()};
+      MakeCompositeAttribute<bool>(true, false),
+      MakeCompositeAttribute<std::int32_t>(42, 84),
+      MakeCompositeAttribute<std::int64_t>(42, 84),
+      MakeCompositeAttribute<std::uint32_t>(42, 84),
+      MakeCompositeAttribute<double>(4.2, 8.4),
+      MakeCompositeAttribute<opentelemetry::nostd::string_view>("s1", "s2"),
+      MakeCompositeAttribute<std::uint64_t>(42, 84),
+      MakeCompositeAttribute<std::uint8_t>(42, 84),
+  };
 
   for (auto const& value : values) {
     v2::Span::Attributes attributes;
