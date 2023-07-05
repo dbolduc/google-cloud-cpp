@@ -406,7 +406,10 @@ void Recordable::SetStatusImpl(opentelemetry::trace::StatusCode code,
 void Recordable::SetResourceImpl(
     opentelemetry::sdk::resource::Resource const& resource) {
   auto const& attributes = resource.GetAttributes();
-  // TODO(#11775) - add resource attributes as span attributes
+  for (auto const& kv : attributes) {
+    AddOwnedAttribute(*span_.mutable_attributes(), kv.first, kv.second,
+                      kSpanAttributeLimit);
+  }
   auto mr = ToMonitoredResource(attributes);
   for (auto const& label : mr.labels) {
     SetAttribute(absl::StrCat("g.co/r/", mr.type, "/", label.first),

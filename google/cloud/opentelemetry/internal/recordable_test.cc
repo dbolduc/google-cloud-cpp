@@ -68,6 +68,14 @@ class KVIterable : public opentelemetry::common::KeyValueIterable {
 };
 
 template <typename T>
+opentelemetry::nostd::span<T> MakeCompositeAttribute(T t1) {
+  // We use static storage, so make sure that if this method is called multiple
+  // times for a given T, it is called with the same t1.
+  static auto* const kData = new T{t1};
+  return opentelemetry::nostd::span<T>(kData, 1);
+}
+
+template <typename T>
 opentelemetry::nostd::span<T const> MakeCompositeAttribute(T t1, T t2) {
   // We use static storage, so make sure that if this method is called multiple
   // times for a given T, it is called with the same t1 and t2.
@@ -584,6 +592,49 @@ TEST(Recordable, SetAttributeRespectsLimit) {
   auto proto = std::move(rec).as_proto();
   EXPECT_THAT(proto.attributes(), Attributes(SizeIs(kSpanAttributeLimit),
                                              /*dropped_attributes_count=*/1));
+}
+
+TEST(Recordable, SetResourceCopiesResourceAttributes) {
+  auto resource = opentelemetry::sdk::resource::Resource::Create({
+      {"bool", true},
+      {"int32", std::int32_t{5}},
+      {"uint32", std::uint32_t{5}},
+      {"int64", std::int64_t{5}},
+      {"uint64", std::uint64_t{5}},
+      {"double", 5.0},
+      {"string", "5"},
+      // Composite attributes are dropped, but let's include them to make sure
+      // they are handled by the AttributeConverter.
+      {"vector<bool>", MakeCompositeAttribute<bool>(true)},
+      {"vector<int32>", MakeCompositeAttribute<std::int32_t>(5)},
+      {"vector<int64>", MakeCompositeAttribute<std::int64_t>(5)},
+      {"vector<uint32>", MakeCompositeAttribute<std::uint32_t>(5)},
+      {"vector<double>", MakeCompositeAttribute<double>(5.0)},
+      {"vector<string>",
+       MakeCompositeAttribute<opentelemetry::nostd::string_view>("5")},
+      {"vector<uint64>", MakeCompositeAttribute<std::uint64_t>(5)},
+      {"vector<uint8>", MakeCompositeAttribute<std::uint8_t>(5)},
+  });
+
+  auto rec = Recordable(Project(kProjectId));
+  rec.SetResource(resource);
+  auto proto = std::move(rec).as_proto();
+  EXPECT_THAT(
+      proto.attributes(),
+      Attributes(IsSupersetOf(
+          {Pair("bool", AttributeValue(true)), Pair("int32", AttributeValue(5)),
+           Pair("uint32", AttributeValue(5)), Pair("int64", AttributeValue(5)),
+           Pair("uint64", AttributeValue(5)),
+           Pair("double", AttributeValue("5")),
+           Pair("string", AttributeValue("5")),
+           Pair("vector<bool>", AttributeValue("true")),
+           Pair("vector<int32>", AttributeValue("5")),
+           Pair("vector<int64>", AttributeValue("5")),
+           Pair("vector<uint32>", AttributeValue("5")),
+           Pair("vector<double>", AttributeValue("5")),
+           Pair("vector<string>", AttributeValue("5")),
+           Pair("vector<uint64>", AttributeValue("5")),
+           Pair("vector<uint8>", AttributeValue("5"))})));
 }
 
 TEST(Recordable, SetResourceMapsMonitoredResources) {
