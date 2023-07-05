@@ -15,11 +15,12 @@
 #include "google/cloud/opentelemetry/internal/recordable.h"
 #include "google/cloud/opentelemetry/internal/monitored_resource.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/noexcept_action.h"
 #include "google/cloud/internal/time_utils.h"
 #include "absl/time/time.h"
-#include <opentelemetry/sdk/common/attribute_utils.h>
 #include <google/rpc/code.pb.h>
+#include <opentelemetry/sdk/common/attribute_utils.h>
 
 namespace google {
 namespace cloud {
@@ -30,6 +31,17 @@ namespace {
 // Taken from:
 // http://35.193.25.4/TensorFlow/models/research/syntaxnet/util/utf8/unilib_utf8_utils.h
 bool IsTrailByte(char x) { return static_cast<signed char>(x) < -0x40; }
+
+template <typename T>
+std::string ToString(std::vector<T> const& values) {
+  return absl::StrJoin(values, "|");
+}
+template <>
+std::string ToString(std::vector<bool> const& values) {
+  return absl::StrJoin(values, "|", [](std::string* out, bool v) {
+    out->append(v ? "true" : "false");
+  });
+}
 
 // OpenTelemetry's semantic conventions for attribute keys differ from Cloud
 // Trace's semantics for label keys. So translate from one to the other.
@@ -123,8 +135,12 @@ class AttributeVisitor {
   // There is no mapping from a `span<T>` to the Cloud Trace proto. We just drop
   // these attributes.
   template <typename T>
-  void operator()(std::vector<T>) {
-    Drop();
+  void operator()(std::vector<T> values) {
+    auto* proto = ProtoOrDrop();
+    if (!proto) return Drop();
+    SetTruncatableString(*proto->mutable_string_value(),
+                         ToString(std::move(values)),
+                         kAttributeValueStringLimit);
   }
 
  private:
@@ -176,6 +192,13 @@ google::devtools::cloudtrace::v2::Span::SpanKind MapSpanKind(
   }
 }
 
+void AddOwnedAttribute(
+    google::devtools::cloudtrace::v2::Span::Attributes& attributes,
+    opentelemetry::nostd::string_view key,
+    opentelemetry::sdk::common::OwnedAttributeValue value, std::size_t limit) {
+  absl::visit(AttributeVisitor{attributes, key, limit}, std::move(value));
+}
+
 }  // namespace
 
 // TODO : delete?
@@ -191,7 +214,7 @@ void AddAttribute(
     opentelemetry::common::AttributeValue const& value, std::size_t limit) {
   auto owned =
       absl::visit(opentelemetry::sdk::common::AttributeConverter{}, value);
-  absl::visit(AttributeVisitor{attributes, key, limit}, std::move(owned));
+  AddOwnedAttribute(attributes, key, std::move(owned), limit);
 }
 
 google::devtools::cloudtrace::v2::Span&& Recordable::as_proto() && {
