@@ -1,0 +1,13 @@
+prefix=${pcfiledir}/../..
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib64
+includedir=${prefix}/include
+
+Name: Darren's OpenTelemetry Library - Resources
+Description: Darren's OpenTelemetry Library for testing
+Requires: opentelemetry_common
+
+Version: 1.9.1
+
+Libs: -L${libdir} -lopentelemetry_resources
+Cflags: -I${includedir} -DHAVE_ABSEIL

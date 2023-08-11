@@ -107,8 +107,7 @@ foreach (feature IN LISTS FEATURES)
     endif ()
     if ("${feature}" STREQUAL "experimental-opentelemetry")
         add_cmake_quickstart_target("${feature}" opentelemetry quickstart)
-        # TODO(#10795) - sort out opentelemetry-cpp pkgconfig
-        # add_make_quickstart_target("${feature}" opentelemetry quickstart)
+        add_make_quickstart_target("${feature}" opentelemetry quickstart)
         continue()
     endif ()
     # In vcpkg we cannot use `_` in the name of a feature. We replace that with

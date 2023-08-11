@@ -175,9 +175,7 @@ if (experimental-opentelemetry IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         target_compile_definitions(
             google_cloud_cpp_common
             PUBLIC # Enable OpenTelemetry features in google-cloud-cpp
-                   GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-                   # TODO(#10975) - install separate opentelemetry .pc file
-                   HAVE_ABSEIL)
+                   GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY)
         set(GOOGLE_CLOUD_CPP_FIND_OPTIONAL_DEPENDENCIES
             "find_dependency(opentelemetry-cpp)")
     endif ()
@@ -244,7 +242,9 @@ google_cloud_cpp_add_pkgconfig(
     "absl_time"
     "absl_time_zone"
     "absl_variant"
-    "openssl")
+    "openssl"
+    # TODO : We will have to make this conditional.
+    "opentelemetry_api")
 
 # Create and install the CMake configuration files.
 configure_file("config.cmake.in" "google_cloud_cpp_common-config.cmake" @ONLY)

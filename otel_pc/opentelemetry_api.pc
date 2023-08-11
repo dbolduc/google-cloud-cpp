@@ -1,0 +1,14 @@
+prefix=${pcfiledir}/../..
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib64
+includedir=${prefix}/include
+
+Name: Darren's OpenTelemetry Library - API
+Description: Darren's OpenTelemetry Library for testing
+Requires: absl_memory absl_optional absl_span absl_strings absl_time absl_time_zone absl_variant
+
+Version: 1.9.1
+
+# No -l, because there is no library. The OpenTelemetry API is headers only.
+Libs: -L${libdir}
+Cflags: -I${includedir} -DHAVE_ABSEIL
