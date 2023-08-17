@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/admin/internal/bigtable_instance_admin_option_defaults.h"
 #include "google/cloud/bigtable/admin/bigtable_instance_admin_connection.h"
 #include "google/cloud/bigtable/admin/bigtable_instance_admin_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
@@ -33,11 +34,12 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 Options BigtableInstanceAdminDefaultOptions(Options options) {
+  options.set<AuthorityOption>("");
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_BIGTABLE_INSTANCE_ADMIN_ENDPOINT",
       "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST",
       "GOOGLE_CLOUD_CPP_BIGTABLE_INSTANCE_ADMIN_AUTHORITY",
-      "bigtableadmin.googleapis.com");
+      "test-bigtableadmin.sandbox.googleapis.com");
   options = google::cloud::internal::PopulateGrpcOptions(
       std::move(options), "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST");
   if (!options.has<bigtable_admin::BigtableInstanceAdminRetryPolicyOption>()) {

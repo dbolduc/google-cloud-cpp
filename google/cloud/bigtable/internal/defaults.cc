@@ -168,9 +168,11 @@ Options DefaultOptions(Options opts) {
   // Fill any missing default values.
   auto defaults =
       Options{}
-          .set<DataEndpointOption>("bigtable.googleapis.com")
-          .set<AdminEndpointOption>("bigtableadmin.googleapis.com")
-          .set<InstanceAdminEndpointOption>("bigtableadmin.googleapis.com")
+          .set<DataEndpointOption>("test-bigtable.sandbox.googleapis.com")
+          .set<AdminEndpointOption>("test-bigtableadmin.sandbox.googleapis.com")
+          .set<InstanceAdminEndpointOption>(
+              "test-bigtableadmin.sandbox.googleapis.com")
+          .set<AuthorityOption>("")
           .set<GrpcCredentialOption>(emulator
                                          ? grpc::InsecureChannelCredentials()
                                          : grpc::GoogleDefaultCredentials())
@@ -220,16 +222,19 @@ Options DefaultDataOptions(Options opts) {
         bigtable::DefaultIdempotentMutationPolicy());
   }
   opts = DefaultOptions(std::move(opts));
+  std::cout << "DaEndpoint: " << opts.get<DataEndpointOption>() << std::endl;
   return opts.set<EndpointOption>(opts.get<DataEndpointOption>());
 }
 
 Options DefaultInstanceAdminOptions(Options opts) {
   opts = DefaultOptions(std::move(opts));
+  std::cout << "IAEndpoint: " << opts.get<InstanceAdminEndpointOption>() << std::endl;
   return opts.set<EndpointOption>(opts.get<InstanceAdminEndpointOption>());
 }
 
 Options DefaultTableAdminOptions(Options opts) {
   opts = DefaultOptions(std::move(opts));
+  std::cout << "TAEndpoint: " << opts.get<AdminEndpointOption>() << std::endl;
   return opts.set<EndpointOption>(opts.get<AdminEndpointOption>());
 }
 

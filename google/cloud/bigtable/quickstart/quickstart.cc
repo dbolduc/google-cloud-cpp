@@ -30,12 +30,18 @@ int main(int argc, char* argv[]) try {
 
   // Create a namespace alias to make the code easier to read.
   namespace cbt = ::google::cloud::bigtable;
-
   cbt::Table table(cbt::MakeDataConnection(),
                    cbt::TableResource(project_id, instance_id, table_id));
 
   std::string row_key = "r1";
-  std::string column_family = "cf1";
+  std::string column_family = "fam";
+
+  cbt::SingleRowMutation mut(
+      "r1", cbt::SetCell("fam", "cq", std::chrono::milliseconds(0), "value"));
+  auto status = table.Apply(mut);
+  if (!status.ok()) throw std::move(status);
+  std::cout << "Success?" << std::endl;
+  return 0;
 
   std::cout << "Getting a single row by row key:" << std::flush;
   google::cloud::StatusOr<std::pair<bool, cbt::Row>> result =

@@ -51,6 +51,11 @@ inline std::unique_ptr<bigtable::IdempotentMutationPolicy> idempotency_policy(
   return options.get<bigtable::IdempotentMutationPolicyOption>()->clone();
 }
 
+struct CookieJar {
+  std::unordered_map<std::string, std::string> headers = {
+      {"x-goog-cbt-cookie-routing", "darren"}};
+};
+
 }  // namespace
 
 bigtable::Row TransformReadModifyWriteRowResponse(
@@ -85,6 +90,7 @@ DataConnectionImpl::DataConnectionImpl(
 
 Status DataConnectionImpl::Apply(std::string const& table_name,
                                  bigtable::SingleRowMutation mut) {
+  CookieJar cookies;
   auto current = google::cloud::internal::SaveCurrentOptions();
   google::bigtable::v2::MutateRowRequest request;
   request.set_app_profile_id(app_profile_id(*current));
@@ -101,9 +107,41 @@ Status DataConnectionImpl::Apply(std::string const& table_name,
   auto sor = google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       is_idempotent ? Idempotency::kIdempotent : Idempotency::kNonIdempotent,
-      [this](grpc::ClientContext& context,
-             google::bigtable::v2::MutateRowRequest const& request) {
-        return stub_->MutateRow(context, request);
+      [this, &cookies](
+          grpc::ClientContext& context,
+          google::bigtable::v2::MutateRowRequest const& request) mutable {
+        for (auto const& h : cookies.headers) {
+          std::cout << "Adding client header pair: " << h.first << " -> " << h.second << std::endl; 
+          context.AddMetadata(h.first, h.second);
+        }
+        auto status = stub_->MutateRow(context, request);
+        auto headers = context.GetServerInitialMetadata();
+        for (auto& kv : headers) {
+          // TODO : logic - I am just making shit up.
+          auto key = std::string{kv.first.data(), kv.first.size()};
+          auto value = std::string{kv.second.data(), kv.second.size()};
+          std::cout << "Rcving server header pair: " << key << " -> " << value
+                    << std::endl;
+          if (absl::StartsWith(key, "x-goog-cbt-cookie")) {
+            std::cout << "Adding to the cookie jar : " << key << " -> " << value
+                      << std::endl;
+            cookies.headers[key] = value;
+          }
+        }
+        auto trailers = context.GetServerTrailingMetadata();
+        for (auto& kv : trailers) {
+          // TODO : logic - I am just making shit up.
+          auto key = std::string{kv.first.data(), kv.first.size()};
+          auto value = std::string{kv.second.data(), kv.second.size()};
+          std::cout << "Rcving server trailr pair: " << key << " -> " << value
+                    << std::endl;
+          if (absl::StartsWith(key, "x-goog-cbt-cookie")) {
+            std::cout << "Adding to the cookie jar : " << key << " -> " << value
+                      << std::endl;
+            cookies.headers[key] = value;
+          }
+        }
+        return status;
       },
       request, __func__);
   if (!sor) return std::move(sor).status();
@@ -345,13 +383,29 @@ DataConnectionImpl::AsyncSampleRows(std::string const& table_name) {
 
 StatusOr<bigtable::Row> DataConnectionImpl::ReadModifyWriteRow(
     google::bigtable::v2::ReadModifyWriteRowRequest request) {
+  CookieJar cookies;
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto sor = google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       Idempotency::kNonIdempotent,
-      [this](grpc::ClientContext& context,
-             google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
-        return stub_->ReadModifyWriteRow(context, request);
+      [this, &cookies](grpc::ClientContext& context,
+                       google::bigtable::v2::ReadModifyWriteRowRequest const&
+                           request) mutable {
+        for (auto const& h : cookies.headers) {
+          context.AddMetadata("x-goog-cbt-cookie", h.second);
+        }
+        auto status = stub_->ReadModifyWriteRow(context, request);
+        auto trailers = context.GetServerTrailingMetadata();
+        for (auto& kv : trailers) {
+          // TODO : logic - I am just making shit up.
+          auto key = std::string{kv.first.data(), kv.first.size()};
+          auto value = std::string{kv.second.data(), kv.second.size()};
+          std::cout << "DARREN : " << key << " -> " << value << std::endl;
+          if (absl::StartsWith(key, "x-goog-cbt-cookie")) {
+            cookies.headers[key] = value;
+          }
+        }
+        return status;
       },
       request, __func__);
   if (!sor) return std::move(sor).status();
