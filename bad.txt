@@ -1,0 +1,20 @@
+asset: extra protos in the proto_list and extra doxygen includes
+bigquery: handwritten
+bigtable: handwritten
+binaryauthorization: extra doxygen includes, extra proto library dep
+channel: disabled on GCC and no quickstart_runner.... but that's fine.
+containeranalysis: extra doxygen include, but that's fine.
+contentwarehouse: extra proto library deps
+dialogflow_cx: missed out on the versioned clients revolution
+dialogflow_es: missed out on the versioned clients revolution
+dlp: conditionally disabled, but that's fine.
+iam: somewhat handwritten with special protos
+logging: hm, different protos like iam
+monitoring: hm, weirdly handled protos...
+optimization: hm, there is an extra line in external_googleapis_install_pc. Will have to look into why.
+pubsub: handwritten, bubraries in one place
+spanner: handwritten
+speech: hm, weird proto handling
+storage: handwritten
+texttospeech: hm, weird proto handling
+trace: another PROTO_INCLUDE_DIR

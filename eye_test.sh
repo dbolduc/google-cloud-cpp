@@ -1,0 +1,142 @@
+# These libraries were manually yoinked from the GA libraries in `libraries.bzl`
+libraries=(
+    "accessapproval"
+    "accesscontextmanager"
+    "advisorynotifications"
+    "aiplatform"
+    "alloydb"
+    "apigateway"
+    "apigeeconnect"
+    "appengine"
+    "artifactregistry"
+    "asset"
+    "assuredworkloads"
+    "automl"
+    "baremetalsolution"
+    "batch"
+    "beyondcorp"
+    "bigquery"
+    "bigtable"
+    "billing"
+    "binaryauthorization"
+    "certificatemanager"
+    "channel"
+    "cloudbuild"
+    "commerce"
+    "composer"
+    "confidentialcomputing"
+    "connectors"
+    "contactcenterinsights"
+    "container"
+    "containeranalysis"
+    "contentwarehouse"
+    "datacatalog"
+    "datastore"
+    "datafusion"
+    "datamigration"
+    "dataplex"
+    "dataproc"
+    "datastream"
+    "deploy"
+    "dialogflow_cx"
+    "dialogflow_es"
+    "dlp"
+    "documentai"
+    "domains"
+    "edgecontainer"
+    "essentialcontacts"
+    "eventarc"
+    "filestore"
+    "functions"
+    "gkebackup"
+    "gkehub"
+    "gkemulticloud"
+    "iam"
+    "iap"
+    "ids"
+    "kms"
+    "language"
+    "logging"
+    "managedidentities"
+    "memcache"
+    "metastore"
+    "migrationcenter"
+    "monitoring"
+    "networkconnectivity"
+    "networkmanagement"
+    "networksecurity"
+    "networkservices"
+    "notebooks"
+    "optimization"
+    "orgpolicy"
+    "osconfig"
+    "oslogin"
+    "policysimulator"
+    "policytroubleshooter"
+    "privateca"
+    "profiler"
+    "pubsub"
+    "rapidmigrationassessment"
+    "recaptchaenterprise"
+    "recommender"
+    "redis"
+    "resourcemanager"
+    "resourcesettings"
+    "retail"
+    "run"
+    "scheduler"
+    "secretmanager"
+    "securitycenter"
+    "servicecontrol"
+    "servicedirectory"
+    "servicemanagement"
+    "serviceusage"
+    "shell"
+    "spanner"
+    "speech"
+    "storage"
+    "storageinsights"
+    "storagetransfer"
+    "support"
+    "talent"
+    "tasks"
+    "texttospeech"
+    "timeseriesinsights"
+    "tpu"
+    "trace"
+    "translate"
+    "video"
+    "videointelligence"
+    "vision"
+    "vmmigration"
+    "vmwareengine"
+    "vpcaccess"
+    "webrisk"
+    "websecurityscanner"
+    "workflows"
+    "workstations"
+)
+
+for library in "${libraries[@]}"; do
+  sed -i "s/${library}/kms/g" google/cloud/$library/CMakeLists.txt
+  env GOOGLE_CLOUD_CPP_FAST_CHECKERS=1 ci/cloudbuild/build.sh -t checkers-pr
+  diff google/cloud/$library/CMakeLists.txt google/cloud/kms/CMakeLists.txt
+
+  # Inspect visually. If there is anything out of the ordinary, make a note.
+  # We expect there to be changes around our input variables.
+  # - service directories
+  # - library display name
+  #
+  # And also the quickstart arguments, copyright year, etc.
+  read
+  if [ -z "${REPLY}" ]; then
+    # This library is vanilla
+    echo "${library}" >> good.txt
+  else
+    # Write any notes about the library
+    echo "${library}: ${REPLY}" >> bad.txt
+  fi
+
+  # Cleanup so checkers runs faster
+  git restore google/cloud/$library/CMakeLists.txt
+done

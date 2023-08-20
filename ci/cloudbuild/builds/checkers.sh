@@ -78,6 +78,16 @@ readonly TIMEFORMAT="... %R seconds"
 # https://github.com/googleapis/google-cloud-cpp/issues/4152
 enable -n printf
 
+# Apply cmake_format to all the CMake list files.
+#     https://github.com/cheshirekow/cmake_format
+printf "%-50s" "Running cmake-format:" >&2
+time {
+  git_files -z -- 'CMakeLists.txt' '**/CMakeLists.txt' '*.cmake' |
+    xargs -r -P "$(nproc)" -n 1 -0 cmake-format -i
+}
+
+exit 0
+
 # Check for typos first so we don't generate more new files w/ the same typos.
 printf "%-50s" "Running typos:" >&2
 time {
@@ -179,14 +189,6 @@ printf "%-50s" "Running clang-format:" >&2
 time {
   git_files -z -- '*.h' '*.cc' '*.proto' |
     xargs -r -P "$(nproc)" -n 1 -0 clang-format -i
-}
-
-# Apply cmake_format to all the CMake list files.
-#     https://github.com/cheshirekow/cmake_format
-printf "%-50s" "Running cmake-format:" >&2
-time {
-  git_files -z -- 'CMakeLists.txt' '**/CMakeLists.txt' '*.cmake' |
-    xargs -r -P "$(nproc)" -n 1 -0 cmake-format -i
 }
 
 # The markdown generators run last. This is useful because as part of the
