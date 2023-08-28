@@ -18,6 +18,11 @@ include(GoogleCloudCppLibrary)
 
 set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "v1/")
 
+external_googleapis_add_library(
+  "google/apps/script/type/calendar/calendar_addon_manifest.proto" api_field_behavior_protos)
+
+external_googleapis_install_pc("google_cloud_cpp_apps_script_type_calendar_calendar_addon_manifest_protos")
+
 google_cloud_cpp_add_ga_grpc_library(gsuiteaddons
                                      "Google Workspace Add-ons API")
 

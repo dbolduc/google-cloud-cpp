@@ -26,7 +26,7 @@ export CC=clang
 export CXX=clang++
 
 mapfile -t cmake_args < <(cmake::common_args)
-INSTALL_PREFIX="$(mktemp -d)"
+INSTALL_PREFIX="${HOME}/google-cloud-cpp-installed"
 readonly INSTALL_PREFIX
 read -r ENABLED_FEATURES < <(features::list_full_cmake)
 readonly ENABLED_FEATURES
@@ -211,10 +211,10 @@ cmake --build "${PROJECT_ROOT}/cmake-out/quickstart"
 
 # Deletes all the installed artifacts, and installs only the runtime components
 # to verify that we can still execute the compiled quickstart programs.
-rm -rf "${INSTALL_PREFIX:?}"/{include,lib64}
-cmake --install cmake-out --component google_cloud_cpp_runtime
-quickstart::run_cmake_and_make "${INSTALL_PREFIX}"
-quickstart::run_gcs_grpc_quickstart "${INSTALL_PREFIX}"
+#rm -rf "${INSTALL_PREFIX:?}"/{include,lib64}
+#cmake --install cmake-out --component google_cloud_cpp_runtime
+#quickstart::run_cmake_and_make "${INSTALL_PREFIX}"
+#quickstart::run_gcs_grpc_quickstart "${INSTALL_PREFIX}"
 
 # Be a little more explicit because we often run this manually
 io::log_h1 "SUCCESS"

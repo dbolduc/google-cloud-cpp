@@ -156,6 +156,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "gkebackup",
     "gkehub",
     "gkemulticloud",
+    "gsuiteaddons",
     "iam",
     "iap",
     "ids",

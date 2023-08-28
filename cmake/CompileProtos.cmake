@@ -297,6 +297,7 @@ function (google_cloud_cpp_load_protodeps var file)
     # in one library vs. the protos in a second library. The AIPs frown upon
     # such dependencies, but they do happen.
     set(target_substitutions
+        "apps_script_type_calendar_calendar_protos\;apps_script_type_calendar_calendar_addon_manifest_protos"
         "grafeas_v1_grafeas_protos\;grafeas_protos"
         "iam_v2_policy_protos\;iam_v2_protos"
         "logging_type_type_protos\;logging_type_protos"
