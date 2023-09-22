@@ -1,0 +1,57 @@
+# Copyright 2023 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+package(default_visibility = ["//visibility:private"])
+
+licenses(["notice"])  # Apache 2.0
+
+hdrs = [
+  "internal/resource_detector_impl.h",
+  "resource_detector.h",
+  "resource_detector_options.h",
+]
+
+srcs = [
+  "internal/resource_detector_impl.cc",
+  "resource_detector.cc",
+]
+
+cc_library(
+    name = "gcp_detector",
+    srcs = srcs,
+    hdrs = hdrs,
+#    copts = [
+#        "-DCURL_STATICLIB",
+#    ],
+#    tags = ["gcp"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@io_opentelemetry_cpp//sdk/src/resource",
+        "@io_opentelemetry_cpp//ext/src/http/client/curl:http_client_curl",
+        "@github_nlohmann_json//:json",
+    ],
+)
+
+cc_test(
+    name = "resource_detector_test",
+    srcs = ["resource_detector_test.cc"],
+    tags = [
+        "test",
+        "gcp",
+    ],
+    deps = [
+        ":gcp_detector",
+        "@com_google_googletest//:gtest_main",
+    ],
+)

@@ -24,8 +24,9 @@ cc_library(
     hdrs = google_cloud_cpp_opentelemetry_hdrs,
     visibility = ["//:__pkg__"],
     deps = [
+        "//google/cloud/opentelemetry/darren:gcp_detector",
         "//:trace",
-        "//google/cloud:google_cloud_cpp_rest_internal",
+        #"//google/cloud:google_cloud_cpp_rest_internal",
         "@io_opentelemetry_cpp//sdk/src/trace",
     ],
 )
@@ -40,6 +41,6 @@ load(":opentelemetry_unit_tests.bzl", "opentelemetry_unit_tests")
         "//:trace_mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
+        #"//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
     ],
 ) for test in opentelemetry_unit_tests]
