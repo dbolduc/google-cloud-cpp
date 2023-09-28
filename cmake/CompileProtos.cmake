@@ -287,6 +287,8 @@ function (google_cloud_cpp_load_protodeps var file)
 
     # Omit a target from deps.
     set(targets_to_omit
+        # TODO : this one?
+        "google-cloud-cpp::apps_script_type_type_protos"
         "google-cloud-cpp::cloud_kms_v1_kms_protos"
         "google-cloud-cpp::cloud_orgpolicy_v1_orgpolicy_protos"
         "google-cloud-cpp::cloud_oslogin_common_common_protos"
@@ -297,13 +299,20 @@ function (google_cloud_cpp_load_protodeps var file)
     # in one library vs. the protos in a second library. The AIPs frown upon
     # such dependencies, but they do happen.
     set(target_substitutions
-        "apps_script_type_calendar_calendar_protos\;apps_script_type_calendar_calendar_addon_manifest_protos"
+      #"apps_script_type_calendar_calendar_protos\;apps_script_type_calendar_calendar_addon_manifest_protos"
         "grafeas_v1_grafeas_protos\;grafeas_protos"
         "iam_v2_policy_protos\;iam_v2_protos"
         "logging_type_type_protos\;logging_type_protos"
         "identity_accesscontextmanager_v1_accesscontextmanager_protos\;accesscontextmanager_protos"
         "cloud_osconfig_v1_osconfig_protos\;osconfig_protos"
         "cloud_documentai_v1_documentai_protos\;documentai_protos")
+    # There is a consistent mismatch between gsuiteaddons's proto filenames and
+    # its bazel proto targets.
+    foreach (addon IN_LIST "calendar" "docs" "drive" "gmail" "sheets" "slides")
+      list(APPEND target_substitutions "apps_script_type_${addon}_${addon}_protos\;apps_script_type_${addon}_${addon}_addon_manifest_protos")
+      # TODO : Darren : first lets try omitting these fools
+      #list(APPEND targets_to_omit "google-cloud-cpp::apps_script_type_${addon}_${addon}_protos")
+    endforeach ()
 
     foreach (line IN LISTS contents)
         if ("${line}" STREQUAL "")

@@ -18,10 +18,69 @@ include(GoogleCloudCppLibrary)
 
 set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "v1/")
 
-external_googleapis_add_library(
-  "google/apps/script/type/calendar/calendar_addon_manifest.proto" api_field_behavior_protos)
+set(targets)
 
-external_googleapis_install_pc("google_cloud_cpp_apps_script_type_calendar_calendar_addon_manifest_protos")
+foreach (darren "addon_widget_set" "extension_point" "script_manifest")
+  set(proto "google/apps/script/type/${darren}.proto")
+  external_googleapis_short_name(short_name "${proto}")
+  set(target "google_cloud_cpp_${short_name}")
+  message(STATUS "addon: ${addon}")
+  message(STATUS "proto: ${proto}")
+  message(STATUS "target: ${target}")
+  message(STATUS "")
+
+  external_googleapis_add_library("${proto}")
+  external_googleapis_install_pc("${target}")
+
+  google_cloud_cpp_install_proto_library_headers("${target}")
+  google_cloud_cpp_install_proto_library_protos(
+        "${target}" "${EXTERNAL_GOOGLEAPIS_SOURCE}")
+
+  list(APPEND targets "${target}")
+endforeach ()
+
+foreach (addon "calendar" "docs" "drive" "gmail" "sheets" "slides")
+  set(proto "google/apps/script/type/${addon}/${addon}_addon_manifest.proto")
+  external_googleapis_short_name(short_name "${proto}")
+  set(target "google_cloud_cpp_${short_name}")
+  message(STATUS "addon: ${addon}")
+  message(STATUS "proto: ${proto}")
+  message(STATUS "target: ${target}")
+  message(STATUS "")
+
+  # TODO : we could be more accurate here.
+  # calendar -> api_field_behavior_protos
+  # docs -> api_field_behavior_protos, extension_point_protos
+  # drive -> extension_point_protos
+  # gmail -> addon_widget_set, extension_point_protos
+  # sheets -> api_field_behavior_protos, extension_point_protos
+  # slides -> api_field_behavior_protos, extension_point_protos
+  external_googleapis_add_library("${proto}" api_field_behavior_protos)
+  external_googleapis_install_pc("${target}")
+
+  google_cloud_cpp_install_proto_library_headers("${target}")
+  google_cloud_cpp_install_proto_library_protos(
+        "${target}" "${EXTERNAL_GOOGLEAPIS_SOURCE}")
+
+  list(APPEND targets "${target}")
+endforeach ()
+
+install(
+    TARGETS ${targets}
+    # TODO : do we need a new thingy?
+    EXPORT googleapis-targets
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+            COMPONENT google_cloud_cpp_runtime
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_runtime
+            NAMELINK_COMPONENT google_cloud_cpp_development
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_development)
+
+#external_googleapis_add_library(
+#  "google/apps/script/type/calendar/calendar_addon_manifest.proto" api_field_behavior_protos)
+#
+#external_googleapis_install_pc("google_cloud_cpp_apps_script_type_calendar_calendar_addon_manifest_protos")
 
 google_cloud_cpp_add_ga_grpc_library(gsuiteaddons
                                      "Google Workspace Add-ons API")
