@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GSUITEADDONS_V1_INTERNAL_G_SUITE_ADD_ONS_TRACING_STUB_H
 
 #include "google/cloud/gsuiteaddons/v1/internal/g_suite_add_ons_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -83,6 +84,8 @@ class GSuiteAddOnsTracingStub : public GSuiteAddOnsStub {
 
  private:
   std::shared_ptr<GSuiteAddOnsStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -69,7 +69,7 @@ class MockGSuiteAddOnsConnection
       (google::cloud::gsuiteaddons::v1::GetDeploymentRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::gsuiteaddons::v1::Deployment>,
+  MOCK_METHOD((StreamRange<google::cloud::gsuiteaddons::v1::Deployment>),
               ListDeployments,
               (google::cloud::gsuiteaddons::v1::ListDeploymentsRequest request),
               (override));

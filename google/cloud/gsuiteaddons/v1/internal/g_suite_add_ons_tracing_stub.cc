@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GSuiteAddOnsTracingStub::GSuiteAddOnsTracingStub(
     std::shared_ptr<GSuiteAddOnsStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::gsuiteaddons::v1::Authorization>
 GSuiteAddOnsTracingStub::GetAuthorization(
@@ -37,7 +37,7 @@ GSuiteAddOnsTracingStub::GetAuthorization(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.gsuiteaddons.v1.GSuiteAddOns", "GetAuthorization");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetAuthorization(context, request));
 }
@@ -49,7 +49,7 @@ GSuiteAddOnsTracingStub::CreateDeployment(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.gsuiteaddons.v1.GSuiteAddOns", "CreateDeployment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateDeployment(context, request));
 }
@@ -61,7 +61,7 @@ GSuiteAddOnsTracingStub::ReplaceDeployment(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.gsuiteaddons.v1.GSuiteAddOns", "ReplaceDeployment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ReplaceDeployment(context, request));
 }
@@ -73,7 +73,7 @@ GSuiteAddOnsTracingStub::GetDeployment(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.gsuiteaddons.v1.GSuiteAddOns", "GetDeployment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetDeployment(context, request));
 }
@@ -85,7 +85,7 @@ GSuiteAddOnsTracingStub::ListDeployments(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.gsuiteaddons.v1.GSuiteAddOns", "ListDeployments");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListDeployments(context, request));
 }
@@ -96,7 +96,7 @@ Status GSuiteAddOnsTracingStub::DeleteDeployment(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.gsuiteaddons.v1.GSuiteAddOns", "DeleteDeployment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteDeployment(context, request));
 }
@@ -107,7 +107,7 @@ Status GSuiteAddOnsTracingStub::InstallDeployment(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.gsuiteaddons.v1.GSuiteAddOns", "InstallDeployment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->InstallDeployment(context, request));
 }
@@ -119,7 +119,7 @@ Status GSuiteAddOnsTracingStub::UninstallDeployment(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.gsuiteaddons.v1.GSuiteAddOns", "UninstallDeployment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UninstallDeployment(context, request));
 }
@@ -131,7 +131,7 @@ GSuiteAddOnsTracingStub::GetInstallStatus(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.gsuiteaddons.v1.GSuiteAddOns", "GetInstallStatus");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetInstallStatus(context, request));
 }

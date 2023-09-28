@@ -20,9 +20,11 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/gsuiteaddons/v1/gsuiteaddons.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,17 +33,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GSuiteAddOnsMetadata::GSuiteAddOnsMetadata(
     std::shared_ptr<GSuiteAddOnsStub> child,
-    std::multimap<std::string, std::string> fixed_metadata)
+    std::multimap<std::string, std::string> fixed_metadata,
+    std::string api_client_header)
     : child_(std::move(child)),
       fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
-          google::cloud::internal::ApiClientHeader("generator")) {}
+          api_client_header.empty()
+              ? google::cloud::internal::GeneratedLibClientHeader()
+              : std::move(api_client_header)) {}
 
 StatusOr<google::cloud::gsuiteaddons::v1::Authorization>
 GSuiteAddOnsMetadata::GetAuthorization(
     grpc::ClientContext& context,
     google::cloud::gsuiteaddons::v1::GetAuthorizationRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAuthorization(context, request);
 }
 
@@ -49,7 +55,8 @@ StatusOr<google::cloud::gsuiteaddons::v1::Deployment>
 GSuiteAddOnsMetadata::CreateDeployment(
     grpc::ClientContext& context,
     google::cloud::gsuiteaddons::v1::CreateDeploymentRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateDeployment(context, request);
 }
 
@@ -58,7 +65,8 @@ GSuiteAddOnsMetadata::ReplaceDeployment(
     grpc::ClientContext& context,
     google::cloud::gsuiteaddons::v1::ReplaceDeploymentRequest const& request) {
   SetMetadata(context,
-              absl::StrCat("deployment.name=", request.deployment().name()));
+              absl::StrCat("deployment.name=",
+                           internal::UrlEncode(request.deployment().name())));
   return child_->ReplaceDeployment(context, request);
 }
 
@@ -66,7 +74,8 @@ StatusOr<google::cloud::gsuiteaddons::v1::Deployment>
 GSuiteAddOnsMetadata::GetDeployment(
     grpc::ClientContext& context,
     google::cloud::gsuiteaddons::v1::GetDeploymentRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDeployment(context, request);
 }
 
@@ -74,21 +83,24 @@ StatusOr<google::cloud::gsuiteaddons::v1::ListDeploymentsResponse>
 GSuiteAddOnsMetadata::ListDeployments(
     grpc::ClientContext& context,
     google::cloud::gsuiteaddons::v1::ListDeploymentsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDeployments(context, request);
 }
 
 Status GSuiteAddOnsMetadata::DeleteDeployment(
     grpc::ClientContext& context,
     google::cloud::gsuiteaddons::v1::DeleteDeploymentRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteDeployment(context, request);
 }
 
 Status GSuiteAddOnsMetadata::InstallDeployment(
     grpc::ClientContext& context,
     google::cloud::gsuiteaddons::v1::InstallDeploymentRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->InstallDeployment(context, request);
 }
 
@@ -96,7 +108,8 @@ Status GSuiteAddOnsMetadata::UninstallDeployment(
     grpc::ClientContext& context,
     google::cloud::gsuiteaddons::v1::UninstallDeploymentRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UninstallDeployment(context, request);
 }
 
@@ -104,7 +117,8 @@ StatusOr<google::cloud::gsuiteaddons::v1::InstallStatus>
 GSuiteAddOnsMetadata::GetInstallStatus(
     grpc::ClientContext& context,
     google::cloud::gsuiteaddons::v1::GetInstallStatusRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetInstallStatus(context, request);
 }
 

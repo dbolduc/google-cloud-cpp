@@ -34,7 +34,8 @@ class GSuiteAddOnsMetadata : public GSuiteAddOnsStub {
  public:
   ~GSuiteAddOnsMetadata() override = default;
   GSuiteAddOnsMetadata(std::shared_ptr<GSuiteAddOnsStub> child,
-                       std::multimap<std::string, std::string> fixed_metadata);
+                       std::multimap<std::string, std::string> fixed_metadata,
+                       std::string api_client_header = "");
 
   StatusOr<google::cloud::gsuiteaddons::v1::Authorization> GetAuthorization(
       grpc::ClientContext& context,
