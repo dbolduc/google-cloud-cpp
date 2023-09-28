@@ -68,6 +68,16 @@ expected_dirs+=(
   # no RPC services in google/cloud/appengine/logging
   ./include/google/appengine/logging
   ./include/google/appengine/logging/v1
+  # installed by gsuiteaddons
+  ./include/google/apps
+  ./include/google/apps/script
+  ./include/google/apps/script/type
+  ./include/google/apps/script/type/calendar
+  ./include/google/apps/script/type/docs
+  ./include/google/apps/script/type/drive
+  ./include/google/apps/script/type/gmail
+  ./include/google/apps/script/type/sheets
+  ./include/google/apps/script/type/slides
   # no RPC services in google/cloud/bigquery/logging
   ./include/google/cloud/bigquery/logging
   ./include/google/cloud/bigquery/logging/v1
