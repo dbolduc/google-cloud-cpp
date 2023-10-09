@@ -160,12 +160,13 @@ BigtableTracingStub::AsyncMutateRow(
     google::bigtable::v2::MutateRowRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "MutateRow");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::PushOTelContext();
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncMutateRow(cq, context, request);
-  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+  internal::PopOTelContext();
+  return internal::EndSpan(opentelemetry::context::RuntimeContext::GetCurrent(),
+                           std::move(context), std::move(span), std::move(f));
 }
 
 std::unique_ptr<

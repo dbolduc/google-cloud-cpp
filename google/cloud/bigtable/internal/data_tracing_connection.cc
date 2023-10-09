@@ -66,8 +66,12 @@ class DataTracingConnection : public bigtable::DataConnection {
                             bigtable::SingleRowMutation mut) override {
     auto span = internal::MakeSpan("bigtable::Table::AsyncApply");
     auto scope = opentelemetry::trace::Scope(span);
-    return internal::EndSpan(std::move(span),
-                             child_->AsyncApply(table_name, std::move(mut)));
+    internal::PushOTelContext();
+    auto f = child_->AsyncApply(table_name, std::move(mut));
+    internal::PopOTelContext();
+    return internal::EndSpan(
+        opentelemetry::context::RuntimeContext::GetCurrent(), std::move(span),
+        std::move(f));
   }
 
   std::vector<bigtable::FailedMutation> BulkApply(
