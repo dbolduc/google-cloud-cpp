@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/status_or.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <memory>
@@ -147,11 +148,24 @@ DefaultBigtableStub::AsyncSampleRowKeys(
       });
 }
 
+bool sleep = true;
+
 future<StatusOr<google::bigtable::v2::MutateRowResponse>>
 DefaultBigtableStub::AsyncMutateRow(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::v2::MutateRowRequest const& request) {
+  // Simulate an UNAVAILABLE on the initial attempt.
+  if (sleep) {
+    sleep = false;
+    return cq.MakeRelativeTimer(std::chrono::milliseconds(420))
+        .then([](auto f) -> StatusOr<google::bigtable::v2::MutateRowResponse> {
+          auto timer = f.get();
+          if (!timer) return std::move(timer).status();
+          return internal::UnavailableError("try again");
+        });
+  }
+
   return internal::MakeUnaryRpcImpl<google::bigtable::v2::MutateRowRequest,
                                     google::bigtable::v2::MutateRowResponse>(
       cq,
