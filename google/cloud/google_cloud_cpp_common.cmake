@@ -97,6 +97,8 @@ add_library(
     internal/non_constructible.h
     internal/opentelemetry.cc
     internal/opentelemetry.h
+    internal/opentelemetry_context.cc
+    internal/opentelemetry_context.h
     internal/pagination_range.h
     internal/parse_rfc3339.cc
     internal/parse_rfc3339.h
@@ -346,6 +348,7 @@ if (BUILD_TESTING)
         internal/make_status_test.cc
         internal/noexcept_action_test.cc
         internal/opentelemetry_test.cc
+        internal/opentelemetry_context_test.cc
         internal/pagination_range_test.cc
         internal/parse_rfc3339_test.cc
         internal/populate_common_options_test.cc

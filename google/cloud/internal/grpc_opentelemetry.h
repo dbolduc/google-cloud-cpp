@@ -96,6 +96,21 @@ future<T> EndSpan(
   });
 }
 
+template <typename T>
+future<T> EndSpan(
+    opentelemetry::context::Context otel_context,
+    std::shared_ptr<grpc::ClientContext> context,
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
+    future<T> fut) {
+  return fut.then([oc = std::move(otel_context), c = std::move(context),
+                   s = std::move(span)](auto f) mutable {
+    auto t = f.get();
+    ExtractAttributes(*c, *s);
+    internal::DetachOTelContext(oc);
+    return EndSpan(*s, std::move(t));
+  });
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**

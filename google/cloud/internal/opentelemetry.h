@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPENTELEMETRY_H
 
 #include "google/cloud/future.h"
+#include "google/cloud/internal/call_context.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
@@ -181,6 +182,25 @@ future<T> EndSpan(
     future<T> fut) {
   return fut.then(
       [s = std::move(span)](auto f) { return EndSpan(*s, f.get()); });
+}
+
+/**
+ * Extracts information from a `future<>` and adds it to a span.
+ *
+ * The span is ended. The original value is returned, for the sake of
+ * composition.
+ */
+template <typename T>
+future<T> EndSpan(
+    opentelemetry::context::Context otel_context,
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
+    future<T> fut) {
+  return fut.then(
+      [s = std::move(span), oc = std::move(otel_context)](auto f) mutable {
+        auto t = f.get();
+        internal::DetachOTelContext(oc);
+        return EndSpan(*s, std::move(t));
+      });
 }
 
 /**
