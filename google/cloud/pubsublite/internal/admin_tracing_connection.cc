@@ -216,8 +216,11 @@ AdminServiceTracingConnection::AsyncGetTopicPartitions(
   auto span = internal::MakeSpan(
       "pubsublite::AdminServiceConnection::AsyncGetTopicPartitions");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->AsyncGetTopicPartitions(request));
+  internal::PopOTelContext();
+  auto f = child_->AsyncGetTopicPartitions(request);
+  internal::PushOTelContext();
+  return internal::EndSpan(opentelemetry::context::RuntimeContext::GetCurrent(),
+                           std::move(span), std::move(f));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

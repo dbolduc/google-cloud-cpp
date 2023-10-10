@@ -118,12 +118,13 @@ ServiceUsageTracingStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::PushOTelContext();
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncGetOperation(cq, context, request);
-  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+  internal::PopOTelContext();
+  return internal::EndSpan(opentelemetry::context::RuntimeContext::GetCurrent(),
+                           std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> ServiceUsageTracingStub::AsyncCancelOperation(
@@ -132,12 +133,13 @@ future<Status> ServiceUsageTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::PushOTelContext();
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCancelOperation(cq, context, request);
-  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+  internal::PopOTelContext();
+  return internal::EndSpan(opentelemetry::context::RuntimeContext::GetCurrent(),
+                           std::move(context), std::move(span), std::move(f));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

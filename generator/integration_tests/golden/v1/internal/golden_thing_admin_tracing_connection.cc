@@ -176,7 +176,12 @@ GoldenThingAdminTracingConnection::AsyncGetDatabase(google::test::admin::databas
   auto span = internal::MakeSpan(
       "golden_v1::GoldenThingAdminConnection::AsyncGetDatabase");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->AsyncGetDatabase(request));
+  internal::PopOTelContext();
+  auto f = child_->AsyncGetDatabase(request);
+  internal::PushOTelContext();
+  return internal::EndSpan(
+      opentelemetry::context::RuntimeContext::GetCurrent(), std::move(span),
+      std::move(f));
 }
 
 future<Status>
@@ -184,7 +189,12 @@ GoldenThingAdminTracingConnection::AsyncDropDatabase(google::test::admin::databa
   auto span = internal::MakeSpan(
       "golden_v1::GoldenThingAdminConnection::AsyncDropDatabase");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->AsyncDropDatabase(request));
+  internal::PopOTelContext();
+  auto f = child_->AsyncDropDatabase(request);
+  internal::PushOTelContext();
+  return internal::EndSpan(
+      opentelemetry::context::RuntimeContext::GetCurrent(), std::move(span),
+      std::move(f));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

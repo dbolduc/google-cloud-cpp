@@ -190,12 +190,13 @@ SpannerTracingStub::AsyncBatchCreateSessions(
     google::spanner::v1::BatchCreateSessionsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.spanner.v1.Spanner",
                                      "BatchCreateSessions");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::PushOTelContext();
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncBatchCreateSessions(cq, context, request);
-  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+  internal::PopOTelContext();
+  return internal::EndSpan(opentelemetry::context::RuntimeContext::GetCurrent(),
+                           std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> SpannerTracingStub::AsyncDeleteSession(
@@ -204,12 +205,13 @@ future<Status> SpannerTracingStub::AsyncDeleteSession(
     google::spanner::v1::DeleteSessionRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.spanner.v1.Spanner", "DeleteSession");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::PushOTelContext();
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteSession(cq, context, request);
-  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+  internal::PopOTelContext();
+  return internal::EndSpan(opentelemetry::context::RuntimeContext::GetCurrent(),
+                           std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::spanner::v1::ResultSet>>
@@ -218,12 +220,13 @@ SpannerTracingStub::AsyncExecuteSql(
     std::shared_ptr<grpc::ClientContext> context,
     google::spanner::v1::ExecuteSqlRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.spanner.v1.Spanner", "ExecuteSql");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::PushOTelContext();
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncExecuteSql(cq, context, request);
-  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+  internal::PopOTelContext();
+  return internal::EndSpan(opentelemetry::context::RuntimeContext::GetCurrent(),
+                           std::move(context), std::move(span), std::move(f));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

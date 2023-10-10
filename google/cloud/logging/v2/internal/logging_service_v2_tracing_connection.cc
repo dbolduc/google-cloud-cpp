@@ -95,8 +95,11 @@ LoggingServiceV2TracingConnection::AsyncWriteLogEntries(
   auto span = internal::MakeSpan(
       "logging_v2::LoggingServiceV2Connection::AsyncWriteLogEntries");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->AsyncWriteLogEntries(request));
+  internal::PopOTelContext();
+  auto f = child_->AsyncWriteLogEntries(request);
+  internal::PushOTelContext();
+  return internal::EndSpan(opentelemetry::context::RuntimeContext::GetCurrent(),
+                           std::move(span), std::move(f));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

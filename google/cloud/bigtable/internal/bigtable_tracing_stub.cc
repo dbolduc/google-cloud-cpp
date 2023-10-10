@@ -192,12 +192,13 @@ BigtableTracingStub::AsyncCheckAndMutateRow(
     google::bigtable::v2::CheckAndMutateRowRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable",
                                      "CheckAndMutateRow");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::PushOTelContext();
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCheckAndMutateRow(cq, context, request);
-  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+  internal::PopOTelContext();
+  return internal::EndSpan(opentelemetry::context::RuntimeContext::GetCurrent(),
+                           std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>>
@@ -207,12 +208,13 @@ BigtableTracingStub::AsyncReadModifyWriteRow(
     google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable",
                                      "ReadModifyWriteRow");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::PushOTelContext();
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncReadModifyWriteRow(cq, context, request);
-  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+  internal::PopOTelContext();
+  return internal::EndSpan(opentelemetry::context::RuntimeContext::GetCurrent(),
+                           std::move(context), std::move(span), std::move(f));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -415,12 +415,13 @@ StorageTracingStub::AsyncComposeObject(
     google::storage::v2::ComposeObjectRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "ComposeObject");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::PushOTelContext();
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncComposeObject(cq, context, request);
-  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+  internal::PopOTelContext();
+  return internal::EndSpan(opentelemetry::context::RuntimeContext::GetCurrent(),
+                           std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> StorageTracingStub::AsyncDeleteObject(
@@ -429,12 +430,13 @@ future<Status> StorageTracingStub::AsyncDeleteObject(
     google::storage::v2::DeleteObjectRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "DeleteObject");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::PushOTelContext();
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteObject(cq, context, request);
-  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+  internal::PopOTelContext();
+  return internal::EndSpan(opentelemetry::context::RuntimeContext::GetCurrent(),
+                           std::move(context), std::move(span), std::move(f));
 }
 
 std::unique_ptr<
@@ -476,12 +478,13 @@ StorageTracingStub::AsyncStartResumableWrite(
     google::storage::v2::StartResumableWriteRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.storage.v2.Storage",
                                      "StartResumableWrite");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::PushOTelContext();
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncStartResumableWrite(cq, context, request);
-  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+  internal::PopOTelContext();
+  return internal::EndSpan(opentelemetry::context::RuntimeContext::GetCurrent(),
+                           std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
@@ -491,12 +494,13 @@ StorageTracingStub::AsyncQueryWriteStatus(
     google::storage::v2::QueryWriteStatusRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "QueryWriteStatus");
-  {
-    auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, *propagator_);
-  }
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::PushOTelContext();
+  internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncQueryWriteStatus(cq, context, request);
-  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+  internal::PopOTelContext();
+  return internal::EndSpan(opentelemetry::context::RuntimeContext::GetCurrent(),
+                           std::move(context), std::move(span), std::move(f));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
