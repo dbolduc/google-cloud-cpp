@@ -324,7 +324,12 @@ $tracing_connection_class_name$::Async$method_name$($request_type$ const& reques
   auto span = internal::MakeSpan(
       "$product_namespace$::$connection_class_name$::Async$method_name$");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->Async$method_name$(request));
+  internal::PopOTelContext();
+  auto f = child_->Async$method_name$(request);
+  internal::PushOTelContext();
+  return internal::EndSpan(
+      opentelemetry::context::RuntimeContext::GetCurrent(), std::move(span),
+      std::move(f));
 }
 )""");
 }
