@@ -55,8 +55,11 @@ class AsyncReaderConnectionTracing
 
   future<ReadResponse> Read() override {
     auto scope = opentelemetry::trace::Scope(span_);
-    return impl_->Read().then([count = ++count_,
-                               span = span_](auto f) -> ReadResponse {
+    internal::PushOTelContext();
+    auto f = impl_->Read();
+    internal::PopOTelContext();
+    return f.then([c = opentelemetry::context::RuntimeContext::GetCurrent(),
+                   count = ++count_, span = span_](auto f) -> ReadResponse {
       auto r = f.get();
       if (absl::holds_alternative<Status>(r)) {
         span->AddEvent("gl-cpp.read", {
@@ -64,6 +67,7 @@ class AsyncReaderConnectionTracing
                                           {sc::kMessageId, count},
                                           {sc::kThreadId, CurrentThreadId()},
                                       });
+        internal::DetachOTelContext(c);
         return internal::EndSpan(*span, absl::get<Status>(std::move(r)));
       }
       auto const& payload = absl::get<storage_experimental::ReadPayload>(r);
@@ -74,6 +78,7 @@ class AsyncReaderConnectionTracing
                          {sc::kThreadId, CurrentThreadId()},
                          {"message.starting_offset", payload.offset()},
                      });
+      internal::DetachOTelContext(c);
       return r;
     });
   }
