@@ -27,7 +27,7 @@ future<std::vector<bigtable::FailedMutation>> AsyncBulkApplier::Create(
     std::unique_ptr<BackoffPolicy> backoff_policy,
     bigtable::IdempotentMutationPolicy& idempotent_policy,
     std::string const& app_profile_id, std::string const& table_name,
-    bigtable::BulkMutation mut) {
+    bigtable::BulkMutation mut, std::shared_ptr<MutateRowsLimiter> limiter) {
   if (mut.empty()) {
     return make_ready_future(std::vector<bigtable::FailedMutation>{});
   }
@@ -35,7 +35,7 @@ future<std::vector<bigtable::FailedMutation>> AsyncBulkApplier::Create(
   std::shared_ptr<AsyncBulkApplier> bulk_apply(new AsyncBulkApplier(
       std::move(cq), std::move(stub), std::move(retry_policy),
       std::move(backoff_policy), idempotent_policy, app_profile_id, table_name,
-      std::move(mut)));
+      std::move(mut), std::move(limiter)));
   bulk_apply->StartIteration();
   return bulk_apply->promise_.get_future();
 }
@@ -46,15 +46,24 @@ AsyncBulkApplier::AsyncBulkApplier(
     std::unique_ptr<BackoffPolicy> backoff_policy,
     bigtable::IdempotentMutationPolicy& idempotent_policy,
     std::string const& app_profile_id, std::string const& table_name,
-    bigtable::BulkMutation mut)
+    bigtable::BulkMutation mut, std::shared_ptr<MutateRowsLimiter> limiter)
     : cq_(std::move(cq)),
       stub_(std::move(stub)),
       retry_policy_(std::move(retry_policy)),
       backoff_policy_(std::move(backoff_policy)),
       state_(app_profile_id, table_name, idempotent_policy, std::move(mut)),
-      promise_([this] { keep_reading_ = false; }) {}
+      promise_([this] { keep_reading_ = false; }),
+      limiter_(std::move(limiter)) {}
 
 void AsyncBulkApplier::StartIteration() {
+  auto self = this->shared_from_this();
+  limiter_->AsyncAcquire().then([self](auto f) {
+    f.get();
+    self->MakeRequest();
+  });
+}
+
+void AsyncBulkApplier::MakeRequest() {
   internal::ScopedCallContext scope(call_context_);
   auto context = std::make_shared<grpc::ClientContext>();
   internal::ConfigureContext(*context, internal::CurrentOptions());
@@ -71,6 +80,7 @@ void AsyncBulkApplier::StartIteration() {
 
 void AsyncBulkApplier::OnRead(
     google::bigtable::v2::MutateRowsResponse response) {
+  limiter_->Update(response);
   state_.OnRead(std::move(response));
 }
 

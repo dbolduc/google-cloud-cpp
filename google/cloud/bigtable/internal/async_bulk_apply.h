@@ -46,7 +46,9 @@ class AsyncBulkApplier : public std::enable_shared_from_this<AsyncBulkApplier> {
       std::unique_ptr<BackoffPolicy> backoff_policy,
       bigtable::IdempotentMutationPolicy& idempotent_policy,
       std::string const& app_profile_id, std::string const& table_name,
-      bigtable::BulkMutation mut);
+      bigtable::BulkMutation mut,
+      // TODO : reconsider where this belongs, order-wise.
+      std::shared_ptr<MutateRowsLimiter> limiter);
 
  private:
   AsyncBulkApplier(CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
@@ -54,9 +56,12 @@ class AsyncBulkApplier : public std::enable_shared_from_this<AsyncBulkApplier> {
                    std::unique_ptr<BackoffPolicy> backoff_policy,
                    bigtable::IdempotentMutationPolicy& idempotent_policy,
                    std::string const& app_profile_id,
-                   std::string const& table_name, bigtable::BulkMutation mut);
+                   std::string const& table_name, bigtable::BulkMutation mut,
+                   std::shared_ptr<MutateRowsLimiter> limiter);
 
   void StartIteration();
+  // TODO : naming... It is nice when all of the things have the same structure.
+  void MakeRequest();
   void OnRead(google::bigtable::v2::MutateRowsResponse response);
   void OnFinish(Status const& status);
   void SetPromise();
@@ -69,6 +74,7 @@ class AsyncBulkApplier : public std::enable_shared_from_this<AsyncBulkApplier> {
   std::atomic<bool> keep_reading_{true};
   promise<std::vector<bigtable::FailedMutation>> promise_;
   internal::CallContext call_context_;
+  std::shared_ptr<MutateRowsLimiter> limiter_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
