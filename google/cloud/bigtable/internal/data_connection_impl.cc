@@ -170,14 +170,10 @@ future<std::vector<bigtable::FailedMutation>>
 DataConnectionImpl::AsyncBulkApply(std::string const& table_name,
                                    bigtable::BulkMutation mut) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  // TODO : this just feels wrong.
-  return limiter_->AsyncAcquire().then([&](auto f) {
-    f.get();
-    return AsyncBulkApplier::Create(
-        background_->cq(), stub_, retry_policy(*current),
-        backoff_policy(*current), *idempotency_policy(*current),
-        app_profile_id(*current), table_name, std::move(mut), limiter_);
-  });
+  return AsyncBulkApplier::Create(
+      background_->cq(), stub_, retry_policy(*current),
+      backoff_policy(*current), *idempotency_policy(*current),
+      app_profile_id(*current), table_name, std::move(mut), limiter_);
 }
 
 bigtable::RowReader DataConnectionImpl::ReadRowsFull(

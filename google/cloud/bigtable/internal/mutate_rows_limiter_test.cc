@@ -103,8 +103,8 @@ TEST(MutateRowsLimiter, ResponseWithoutRateLimitInfo) {
 TEST(MutateRowsLimiter, NoRateIncreaseIfNoThrottlingSinceLastUpdate) {
   auto clock = std::make_shared<FakeSteadyClock>();
   ThrottlingMutateRowsLimiter limiter(
-      clock, noop, async_noop, std::chrono::milliseconds(100), kMinPeriod, kMaxPeriod,
-      kMinFactor, kMaxFactor);
+      clock, noop, async_noop, std::chrono::milliseconds(100), kMinPeriod,
+      kMaxPeriod, kMinFactor, kMaxFactor);
   EXPECT_EQ(absl::FromChrono(limiter.period()), absl::Milliseconds(100));
 
   limiter.Update(MakeResponse(1.25, std::chrono::milliseconds(0)));
@@ -138,9 +138,9 @@ TEST(MutateRowsLimiter, RateCanDecreaseIfNoThrottlingSinceLastUpdate) {
 
 TEST(MutateRowsLimiter, UpdateClampsMinFactor) {
   auto clock = std::make_shared<FakeSteadyClock>();
-  ThrottlingMutateRowsLimiter limiter(clock, noop, async_noop, std::chrono::milliseconds(7),
-                                      kMinPeriod, kMaxPeriod, /*min_factor=*/.7,
-                                      kMaxFactor);
+  ThrottlingMutateRowsLimiter limiter(
+      clock, noop, async_noop, std::chrono::milliseconds(7), kMinPeriod,
+      kMaxPeriod, /*min_factor=*/.7, kMaxFactor);
   EXPECT_EQ(absl::FromChrono(limiter.period()), absl::Milliseconds(7));
 
   limiter.Update(MakeResponse(.5, std::chrono::milliseconds(0)));
@@ -150,8 +150,8 @@ TEST(MutateRowsLimiter, UpdateClampsMinFactor) {
 TEST(MutateRowsLimiter, UpdateClampsMaxFactor) {
   auto clock = std::make_shared<FakeSteadyClock>();
   ThrottlingMutateRowsLimiter limiter(
-      clock, noop, async_noop, std::chrono::milliseconds(13), kMinPeriod, kMaxPeriod,
-      kMinFactor, /*max_factor=*/1.3);
+      clock, noop, async_noop, std::chrono::milliseconds(13), kMinPeriod,
+      kMaxPeriod, kMinFactor, /*max_factor=*/1.3);
   EXPECT_EQ(absl::FromChrono(limiter.period()), absl::Milliseconds(13));
 
   InduceThrottling(limiter);
@@ -228,15 +228,13 @@ TEST(MutateRowsLimiter, AsyncBasicRateLimiting) {
   limiter.AsyncAcquire();
 }
 
-
 TEST(MutateRowsLimiter, MakeMutateRowsLimiter) {
-  CompletionQueue cq;
-  auto noop =
-      MakeMutateRowsLimiter(cq, Options{}.set<BulkApplyThrottlingOption>(false));
+  auto noop = MakeMutateRowsLimiter(
+      CompletionQueue{}, Options{}.set<BulkApplyThrottlingOption>(false));
   EXPECT_THAT(dynamic_cast<NoopMutateRowsLimiter*>(noop.get()), NotNull());
 
-  auto throttling =
-      MakeMutateRowsLimiter(cq, Options{}.set<BulkApplyThrottlingOption>(true));
+  auto throttling = MakeMutateRowsLimiter(
+      CompletionQueue{}, Options{}.set<BulkApplyThrottlingOption>(true));
   EXPECT_THAT(dynamic_cast<ThrottlingMutateRowsLimiter*>(throttling.get()),
               NotNull());
 }
@@ -250,9 +248,9 @@ using ::testing::IsEmpty;
 
 TEST(MakeMutateRowsLimiter, TracingEnabled) {
   auto span_catcher = testing_util::InstallSpanCatcher();
-  CompletionQueue cq;
 
-  auto limiter = MakeMutateRowsLimiter(cq,
+  auto limiter = MakeMutateRowsLimiter(
+      CompletionQueue{},
       EnableTracing(Options{}.set<BulkApplyThrottlingOption>(true)));
   // With the default settings, we should expect throttling by the second
   // request. Still, go up to 100 in case instructions are slow.
@@ -268,10 +266,12 @@ TEST(MakeMutateRowsLimiter, TracingEnabled) {
 
 TEST(MakeMutateRowsLimiter, TracingDisabled) {
   auto span_catcher = testing_util::InstallSpanCatcher();
-  CompletionQueue cq;
 
+  // TODO(dbolduc): update these tests to call AsyncAcquire, where we can
+  // control the sleeps using a mock cq?
   auto limiter = MakeMutateRowsLimiter(
-      cq, DisableTracing(Options{}.set<BulkApplyThrottlingOption>(true)));
+      CompletionQueue{},
+      DisableTracing(Options{}.set<BulkApplyThrottlingOption>(true)));
   // We generally expect throttling by the second response. Still, go up to 5 to
   // be a little bit more conclusive.
   for (auto i = 0; i != 5; ++i) {

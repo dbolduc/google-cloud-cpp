@@ -14,8 +14,8 @@
 
 #include "google/cloud/bigtable/internal/mutate_rows_limiter.h"
 #include "google/cloud/bigtable/options.h"
-#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include <algorithm>
 #include <thread>
 
@@ -77,23 +77,25 @@ void ThrottlingMutateRowsLimiter::Update(
 }
 
 std::shared_ptr<MutateRowsLimiter> MakeMutateRowsLimiter(
-    CompletionQueue& cq, Options const& options) {
-  if (options.get<bigtable::experimental::BulkApplyThrottlingOption>()) {
-    using duration = ThrottlingMutateRowsLimiter::Clock::duration;
-    std::function<void(duration)> sleeper = [](duration d) {
-      std::this_thread::sleep_for(d);
-    };
-    sleeper = internal::MakeTracedSleeper(
-        options, std::move(sleeper), "gl-cpp.bigtable.bulk_apply_throttling");
-    auto async_sleeper = [&cq, &options](duration d) {
-      return internal::TracedAsyncBackoff(cq, options, d);
-    };
-    return std::make_shared<ThrottlingMutateRowsLimiter>(
-        std::make_shared<internal::SteadyClock>(), std::move(sleeper),
-        std::move(async_sleeper), kInitialPeriod, kMinPeriod, kMaxPeriod,
-        kMinFactor, kMaxFactor);
+    CompletionQueue cq, Options const& options) {
+  if (!options.get<bigtable::experimental::BulkApplyThrottlingOption>()) {
+    return std::make_shared<NoopMutateRowsLimiter>();
   }
-  return std::make_shared<NoopMutateRowsLimiter>();
+  using duration = ThrottlingMutateRowsLimiter::Clock::duration;
+  std::function<void(duration)> sleeper = [](duration d) {
+    std::this_thread::sleep_for(d);
+  };
+  sleeper = internal::MakeTracedSleeper(
+      options, std::move(sleeper), "gl-cpp.bigtable.bulk_apply_throttling");
+  auto async_sleeper = [&cq, &options](duration d) {
+    return internal::TracedAsyncBackoff(cq, options, d).then([](auto f) {
+      (void)f.get();
+    });
+  };
+  return std::make_shared<ThrottlingMutateRowsLimiter>(
+      std::make_shared<internal::SteadyClock>(), std::move(sleeper),
+      std::move(async_sleeper), kInitialPeriod, kMinPeriod, kMaxPeriod,
+      kMinFactor, kMaxFactor);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

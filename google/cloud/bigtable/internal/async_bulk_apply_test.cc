@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/internal/async_bulk_apply.h"
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
+#include "google/cloud/bigtable/testing/mock_mutate_rows_limiter.h"
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -33,6 +34,8 @@ namespace {
 
 namespace v2 = ::google::bigtable::v2;
 using ms = std::chrono::milliseconds;
+using ErrorStream = ::google::cloud::internal::AsyncStreamingReadRpcError<
+    v2::MutateRowsResponse>;
 using ::google::cloud::bigtable::DataLimitedErrorCountRetryPolicy;
 using ::google::cloud::bigtable::testing::MockAsyncMutateRowsStream;
 using ::google::cloud::bigtable::testing::MockBigtableStub;
@@ -116,7 +119,8 @@ TEST(AsyncBulkApplyTest, NoMutations) {
 
   auto actual = AsyncBulkApplier::Create(
       cq, mock, std::move(retry), std::move(mock_b), *idempotency, kAppProfile,
-      kTableName, bigtable::BulkMutation());
+      kTableName, bigtable::BulkMutation(),
+      std::make_shared<NoopMutateRowsLimiter>());
 
   CheckFailedMutations(actual.get(), {});
 }
@@ -171,7 +175,7 @@ TEST(AsyncBulkApplyTest, Success) {
 
   auto actual = AsyncBulkApplier::Create(
       cq, mock, std::move(retry), std::move(mock_b), *idempotency, kAppProfile,
-      kTableName, std::move(mut));
+      kTableName, std::move(mut), std::make_shared<NoopMutateRowsLimiter>());
 
   CheckFailedMutations(actual.get(), {});
 }
@@ -249,7 +253,7 @@ TEST(AsyncBulkApplyTest, PartialStreamIsRetried) {
 
   auto actual = AsyncBulkApplier::Create(
       cq, mock, std::move(retry), std::move(mock_b), *idempotency, kAppProfile,
-      kTableName, std::move(mut));
+      kTableName, std::move(mut), std::make_shared<NoopMutateRowsLimiter>());
 
   CheckFailedMutations(actual.get(), {});
 }
@@ -333,7 +337,7 @@ TEST(AsyncBulkApplyTest, IdempotentMutationPolicy) {
 
   auto actual = AsyncBulkApplier::Create(
       cq, mock, std::move(retry), std::move(mock_b), *idempotency, kAppProfile,
-      kTableName, std::move(mut));
+      kTableName, std::move(mut), std::make_shared<NoopMutateRowsLimiter>());
 
   CheckFailedMutations(actual.get(), expected);
 }
@@ -381,7 +385,7 @@ TEST(AsyncBulkApplyTest, TooManyStreamFailures) {
 
   auto actual = AsyncBulkApplier::Create(
       cq, mock, std::move(retry), std::move(mock_b), *idempotency, kAppProfile,
-      kTableName, std::move(mut));
+      kTableName, std::move(mut), std::make_shared<NoopMutateRowsLimiter>());
 
   CheckFailedMutations(actual.get(), expected);
 }
@@ -426,7 +430,7 @@ TEST(AsyncBulkApplyTest, TimerError) {
 
   auto actual = AsyncBulkApplier::Create(
       cq, mock, std::move(retry), std::move(mock_b), *idempotency, kAppProfile,
-      kTableName, std::move(mut));
+      kTableName, std::move(mut), std::make_shared<NoopMutateRowsLimiter>());
 
   CheckFailedMutations(actual.get(), expected);
 }
@@ -474,7 +478,7 @@ TEST(AsyncBulkApplyTest, CancelAfterSuccess) {
 
   auto actual = AsyncBulkApplier::Create(
       cq, mock, std::move(retry), std::move(mock_b), *idempotency, kAppProfile,
-      kTableName, std::move(mut));
+      kTableName, std::move(mut), std::make_shared<NoopMutateRowsLimiter>());
 
   // Cancel the call after performing the one and only read of this test stream.
   actual.cancel();
@@ -537,7 +541,7 @@ TEST(AsyncBulkApplyTest, CancelMidStream) {
 
   auto actual = AsyncBulkApplier::Create(
       cq, mock, std::move(retry), std::move(mock_b), *idempotency, kAppProfile,
-      kTableName, std::move(mut));
+      kTableName, std::move(mut), std::make_shared<NoopMutateRowsLimiter>());
 
   // Cancel the call after performing one read of this test stream.
   actual.cancel();
@@ -592,9 +596,9 @@ TEST(AsyncBulkApplyTest, CurrentOptionsContinuedOnRetries) {
       Options{}
           .set<internal::GrpcSetupOption>(mock_setup.AsStdFunction())
           .set<TestOption>(5));
-  auto fut = AsyncBulkApplier::Create(cq, mock, std::move(retry),
-                                      std::move(mock_b), *idempotency,
-                                      kAppProfile, kTableName, std::move(mut));
+  auto fut = AsyncBulkApplier::Create(
+      cq, mock, std::move(retry), std::move(mock_b), *idempotency, kAppProfile,
+      kTableName, std::move(mut), std::make_shared<NoopMutateRowsLimiter>());
 
   // Simulate the timer being satisfied in a thread with different prevailing
   // options than the calling thread.
@@ -657,7 +661,42 @@ TEST(AsyncBulkApplyTest, RetriesOkStreamWithFailedMutations) {
 
   auto actual = AsyncBulkApplier::Create(
       cq, mock, std::move(retry), std::move(mock_b), *idempotency, kAppProfile,
-      kTableName, std::move(mut));
+      kTableName, std::move(mut), std::make_shared<NoopMutateRowsLimiter>());
+
+  CheckFailedMutations(actual.get(), expected);
+}
+
+TEST(AsyncBulkApplyTest, Throttling) {
+  std::vector<bigtable::FailedMutation> expected = {{TransientError(), 0}};
+  bigtable::BulkMutation mut(IdempotentMutation("r1"));
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncMutateRows).Times(kNumRetries + 1).WillRepeatedly([] {
+    return std::make_unique<ErrorStream>(TransientError());
+  });
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .Times(kNumRetries)
+      .WillRepeatedly([] {
+        return make_ready_future(
+            make_status_or(std::chrono::system_clock::now()));
+      });
+  CompletionQueue cq(mock_cq);
+
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(kNumRetries);
+  auto idempotency = bigtable::DefaultIdempotentMutationPolicy();
+
+  using ::google::cloud::bigtable::testing::MockMutateRowsLimiter;
+  auto limiter = std::make_shared<MockMutateRowsLimiter>();
+  EXPECT_CALL(*limiter, AsyncAcquire).Times(kNumRetries + 1).WillRepeatedly([] {
+    return make_ready_future();
+  });
+  auto actual = AsyncBulkApplier::Create(
+      cq, mock, std::move(retry), std::move(mock_b), *idempotency, kAppProfile,
+      kTableName, std::move(mut), limiter);
 
   CheckFailedMutations(actual.get(), expected);
 }
@@ -669,8 +708,6 @@ using ::google::cloud::testing_util::SpanNamed;
 using ::testing::AllOf;
 using ::testing::Each;
 using ::testing::SizeIs;
-using ErrorStream =
-    internal::AsyncStreamingReadRpcError<v2::MutateRowsResponse>;
 
 TEST(AsyncBulkApplyTest, TracedBackoff) {
   auto span_catcher = testing_util::InstallSpanCatcher();
@@ -691,7 +728,8 @@ TEST(AsyncBulkApplyTest, TracedBackoff) {
   internal::OptionsSpan o(EnableTracing(Options{}));
   (void)AsyncBulkApplier::Create(background.cq(), mock, std::move(retry),
                                  std::move(mock_b), *idempotency, kAppProfile,
-                                 kTableName, std::move(mut))
+                                 kTableName, std::move(mut),
+                                 std::make_shared<NoopMutateRowsLimiter>())
       .get();
 
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -723,7 +761,8 @@ TEST(AsyncBulkApplyTest, CallSpanActiveThroughout) {
   internal::OptionsSpan o(EnableTracing(Options{}));
   auto f = AsyncBulkApplier::Create(background.cq(), mock, std::move(retry),
                                     std::move(mock_b), *idempotency,
-                                    kAppProfile, kTableName, std::move(mut));
+                                    kAppProfile, kTableName, std::move(mut),
+                                    std::make_shared<NoopMutateRowsLimiter>());
 
   auto overlay = opentelemetry::trace::Scope(internal::MakeSpan("overlay"));
   (void)f.get();

@@ -47,7 +47,7 @@ class AsyncBulkApplier : public std::enable_shared_from_this<AsyncBulkApplier> {
       bigtable::IdempotentMutationPolicy& idempotent_policy,
       std::string const& app_profile_id, std::string const& table_name,
       bigtable::BulkMutation mut,
-      // TODO : reconsider where this belongs, order-wise.
+      // TODO(dbolduc) : reconsider where this belongs, order-wise.
       std::shared_ptr<MutateRowsLimiter> limiter);
 
  private:
@@ -60,7 +60,8 @@ class AsyncBulkApplier : public std::enable_shared_from_this<AsyncBulkApplier> {
                    std::shared_ptr<MutateRowsLimiter> limiter);
 
   void StartIteration();
-  // TODO : naming... It is nice when all of the things have the same structure.
+  // TODO(dbolduc) : naming... It is nice when all of the things have the same
+  // structure.
   void MakeRequest();
   void OnRead(google::bigtable::v2::MutateRowsResponse response);
   void OnFinish(Status const& status);
