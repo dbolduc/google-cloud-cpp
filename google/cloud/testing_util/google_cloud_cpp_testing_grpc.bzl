@@ -18,6 +18,7 @@
 
 google_cloud_cpp_testing_grpc_hdrs = [
     "fake_completion_queue_impl.h",
+    "grpc_client_context_peer.h",
     "is_proto_equal.h",
     "mock_async_response_reader.h",
     "mock_completion_queue_impl.h",
@@ -29,6 +30,7 @@ google_cloud_cpp_testing_grpc_hdrs = [
 
 google_cloud_cpp_testing_grpc_srcs = [
     "fake_completion_queue_impl.cc",
+    "grpc_client_context_peer.cc",
     "is_proto_equal.cc",
     "mock_grpc_authentication_strategy.cc",
     "validate_metadata.cc",

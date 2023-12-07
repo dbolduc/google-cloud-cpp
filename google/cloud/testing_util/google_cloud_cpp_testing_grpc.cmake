@@ -18,6 +18,8 @@ add_library(
     google_cloud_cpp_testing_grpc # cmake-format: sort
     fake_completion_queue_impl.cc
     fake_completion_queue_impl.h
+    grpc_client_context_peer.cc
+    grpc_client_context_peer.h
     is_proto_equal.cc
     is_proto_equal.h
     mock_async_response_reader.h
