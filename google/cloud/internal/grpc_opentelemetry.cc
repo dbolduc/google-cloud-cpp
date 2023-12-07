@@ -14,10 +14,12 @@
 
 #include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/grpc_request_metadata.h"
 #include "google/cloud/internal/noexcept_action.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
+#include "absl/strings/match.h"
 #include <grpcpp/grpcpp.h>
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/context/propagation/global_propagator.h>
@@ -99,11 +101,48 @@ void InjectTraceContext(
   propagator.Inject(carrier, current);
 }
 
+// We translate some keys, and modify binary values to be printable.
+std::pair<std::string, std::string> MakeAttribute(
+    std::pair<std::string, std::string> kv) {
+  if (kv.first == ":grpc-context-peer") {
+    // TODO(#10489): extract IP version, IP address, port from peer URI.
+    // https://github.com/grpc/grpc/blob/master/src/core/lib/address_utils/parse_address.h
+    return {"grpc.peer", std::move(kv.second)};
+  }
+  if (kv.first == ":grpc-context-compression-algorithm") {
+    return {"grpc.compression_algorithm", std::move(kv.second)};
+  }
+  if (!absl::EndsWith(kv.first, "-bin")) {
+    return {"rpc.grpc.response.metadata." + std::move(kv.first),
+            std::move(kv.second)};
+  }
+
+  // The header is in binary format. OpenTelemetry does not really support byte
+  // arrays in their attributes, so let's transform the value into a string that
+  // can be printed and interpreted.
+  std::string value;
+  auto constexpr kDigits = "0123456789ABCDEF";
+  for (unsigned char c : kv.second) {
+    value.push_back('\\');
+    value.push_back('x');
+    value.push_back(kDigits[(c >> 4) & 0xf]);
+    value.push_back(kDigits[c & 0xf]);
+  }
+  return {"rpc.grpc.response.metadata." + std::move(kv.first),
+          std::move(value)};
+}
+
 void ExtractAttributes(grpc::ClientContext& context,
                        opentelemetry::trace::Span& span) {
-  // TODO(#10489): extract IP version, IP address, port from peer URI.
-  // https://github.com/grpc/grpc/blob/master/src/core/lib/address_utils/parse_address.h
-  span.SetAttribute("grpc.peer", context.peer());
+  auto md = GetRequestMetadataFromContext(context);
+  for (auto kv : md.headers) {
+    auto p = MakeAttribute({std::move(kv.first), std::move(kv.second)});
+    span.SetAttribute(std::move(p.first), std::move(p.second));
+  }
+  for (auto kv : md.trailers) {
+    auto p = MakeAttribute({std::move(kv.first), std::move(kv.second)});
+    span.SetAttribute(std::move(p.first), std::move(p.second));
+  }
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
