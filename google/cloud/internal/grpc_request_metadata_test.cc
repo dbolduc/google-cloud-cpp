@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/grpc_request_metadata.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 #include <algorithm>
 
@@ -21,6 +22,20 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
+
+TEST(GrpcRequestMetadata, GetRequestMetadataFromContext) {
+  auto const expected =
+      RpcMetadata{{{"h1", "v1"}, {"h2", "v2"}}, {{"t1", "v1"}, {"t2", "v2"}}};
+  grpc::ClientContext context;
+  {
+    testing_util::ValidateMetadataFixture fixture;
+    fixture.GetMetadata(context, expected);
+  }
+
+  auto md = GetRequestMetadataFromContext(context);
+  EXPECT_THAT(md.headers, testing::IsSupersetOf(expected.headers));
+  EXPECT_THAT(md.trailers, testing::IsSupersetOf(expected.trailers));
+}
 
 TEST(GrpcRequestMetadata, FormatForLoggingDecorator) {
   struct Test {

@@ -261,7 +261,7 @@ ValidateMetadataFixture::~ValidateMetadataFixture() {
 }
 
 std::multimap<std::string, std::string> ValidateMetadataFixture::GetMetadata(
-    grpc::ClientContext& context) {
+    grpc::ClientContext& context, RpcMetadata const& server_metadata) {
   // Set the deadline to far in the future. If the deadline is in the past,
   // gRPC doesn't send the initial metadata at all (which makes sense, given
   // that the context is already expired). The `context` is destroyed by this
@@ -276,18 +276,59 @@ std::multimap<std::string, std::string> ValidateMetadataFixture::GetMetadata(
 
   auto cli_stream =
       generic_stub.PrepareCall(&context, "made_up_method", &cli_cq_);
-  cli_stream->StartCall(nullptr);
+  cli_stream->StartCall((void*)100);
+  void* tag;
   bool ok;
-  void* placeholder;
-  cli_cq_.Next(&placeholder, &ok);  // actually start the client call
+  std::cout << "generic_stub.PrepareCall() ?" << std::endl;
+  cli_cq_.Next(&tag, &ok);  // actually start the client call
+  if (ok && tag == (void*)100)  {
+    std::cout << "good to go..." << std::endl;
+  } else {
+    std::cout << "err... we have a problem" << std::endl;
+  }
 
   // Receive the garbage with the supplied context.
   grpc::GenericServerContext server_context;
+  for (auto const& kv : server_metadata.headers) {
+    server_context.AddInitialMetadata(kv.first, kv.second);
+  }
+  for (auto const& kv : server_metadata.trailers) {
+    server_context.AddTrailingMetadata(kv.first, kv.second);
+  }
   grpc::GenericServerAsyncReaderWriter reader_writer(&server_context);
   generic_service_.RequestCall(&server_context, &reader_writer, srv_cq_.get(),
-                               srv_cq_.get(), nullptr);
-  srv_cq_->Next(&placeholder, &ok);  // actually receive the data
+                               srv_cq_.get(), (void*)1);
 
+  std::cout << "generic_service_.RequestCall() ?" << std::endl;
+  srv_cq_->Next(&tag, &ok);  // actually receive the data
+  if (ok && tag == (void*)1) {
+    std::cout << "good to go..." << std::endl;
+  } else {
+    std::cout << "err... we have a problem" << std::endl;
+  }
+  // TODO : is this how u do it?
+  // reader_writer.SendInitialMetadata(darren_meta);
+  // std::cout << "SendInitialMetadata" << std::endl;
+  reader_writer.Finish(
+      grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "unimplemented"), (void*)2);
+  std::cout << "reader_writer.Finish() ?" << std::endl;
+  srv_cq_->Next(&tag, &ok);
+  if (ok && tag == (void*)2)  {
+    std::cout << "good to go..." << std::endl;
+  } else {
+    std::cout << "err... we have a problem" << std::endl;
+  }
+
+  grpc::Status status;
+  cli_stream->Finish(&status, (void*)200);
+  std::cout << "cli_stream->Finish() ?" << std::endl;
+  cli_cq_.Next(&tag, &ok);
+  if (ok && tag == (void*)200)  {
+    std::cout << "good to go..." << std::endl;
+  } else {
+    std::cout << "err... we have a problem" << std::endl;
+  }
+  
   // Now we've got the data - save it before cleaning up.
   std::multimap<std::string, std::string> res;
   auto const& cli_md = server_context.client_metadata();

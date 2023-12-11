@@ -25,6 +25,10 @@
 namespace grpc {
 namespace testing {
 
+/*
+ * `grpc::ClientContext` is notoriously opaque. The following `friend` class can
+ * help us simulate a server returning metadata to the client.
+ */
 class ClientContextTestPeer {
  public:
   explicit ClientContextTestPeer(ClientContext* context);
@@ -36,8 +40,6 @@ class ClientContextTestPeer {
   /// Inject metadata to the ClientContext for the test. The test peer
   /// must be alive when a ClientContext::GetServerTrailingMetadata is called.
   void AddServerTrailingMetadata(std::pair<std::string, std::string> kv);
-
-  void SetPeer(std::string);
 
  private:
   ClientContext* context_;  // not owned

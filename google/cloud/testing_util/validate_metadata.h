@@ -15,6 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_VALIDATE_METADATA_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_VALIDATE_METADATA_H
 
+#include "google/cloud/rpc_metadata.h"
+#include "google/cloud/version.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
@@ -54,7 +56,7 @@ class ValidateMetadataFixture {
    *   cannot reuse @p context for other RPCs or other calls to this function.
    */
   std::multimap<std::string, std::string> GetMetadata(
-      grpc::ClientContext& context);
+      grpc::ClientContext& context, RpcMetadata const& server_metadata = {});
 
   /**
    * Verify that the metadata in the context is appropriate for a gRPC method.
