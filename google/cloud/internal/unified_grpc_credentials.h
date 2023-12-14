@@ -35,6 +35,7 @@ class GrpcAuthenticationStrategy {
 
   virtual std::shared_ptr<grpc::Channel> CreateChannel(
       std::string const& endpoint, grpc::ChannelArguments const& arguments) = 0;
+  virtual bool Valid() const { return false; };
   virtual bool RequiresConfigureContext() const = 0;
   virtual Status ConfigureContext(grpc::ClientContext& context) = 0;
   virtual future<StatusOr<std::shared_ptr<grpc::ClientContext>>>

@@ -28,7 +28,6 @@
 #include "google/cloud/internal/credentials_impl.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/opentelemetry.h"
-#include "google/cloud/internal/service_endpoint.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/kms/v1/ekm_service.grpc.pb.h>
@@ -40,25 +39,15 @@ namespace kms_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<EkmServiceStub> CreateDefaultEkmServiceStub(
-    google::cloud::CompletionQueue cq, Options& options) {
-  auto endpoint = internal::DetermineServiceEndpoint(
-      internal::GetEnv("GOOGLE_CLOUD_CPP_EKM_SERVICE_ENDPOINT"),
-      internal::FetchOption<EndpointOption>(options), "cloudkms.googleapis.com",
-      options);
-
+    std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
+    Options const& options) {
   std::shared_ptr<EkmServiceStub> stub;
-  std::shared_ptr<internal::GrpcAuthenticationStrategy> auth;
-  if (!endpoint.ok()) {
-    Options error_options = options;
-    error_options.set<google::cloud::UnifiedCredentialsOption>(
-        internal::MakeErrorCredentials(endpoint.status()));
-    auth = internal::CreateAuthenticationStrategy(CompletionQueue{},
-                                                  error_options);
-  } else {
-    options.set<EndpointOption>(*endpoint);
-    auth = internal::CreateAuthenticationStrategy(std::move(cq), options);
-    auto channel =
-        auth->CreateChannel(*endpoint, internal::MakeChannelArguments(options));
+  if (auth->Valid()) {
+    // No need to create a gRPC stub if the auth will always error.
+
+    // alternative: StatusOr<std::shared_ptr<grpc::Channel>> CreateChannel();
+    auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                       internal::MakeChannelArguments(options));
     auto service_grpc_stub =
         google::cloud::kms::v1::EkmService::NewStub(channel);
     stub =

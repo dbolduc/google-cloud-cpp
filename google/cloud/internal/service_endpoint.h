@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// TODO : remove google/cloud/internal/service_endpoint*
+
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SERVICE_ENDPOINT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SERVICE_ENDPOINT_H
 

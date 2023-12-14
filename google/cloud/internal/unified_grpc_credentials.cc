@@ -58,6 +58,7 @@ class GrpcErrorCredentialsAuthentication : public GrpcAuthenticationStrategy {
     return grpc::CreateCustomChannel("error:///",
                                      grpc::InsecureChannelCredentials(), {});
   }
+  bool Valid() const override { return true; }
   bool RequiresConfigureContext() const override { return true; }
   Status ConfigureContext(grpc::ClientContext&) override {
     return error_status_;
@@ -83,6 +84,10 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
       options.get<google::cloud::GrpcCredentialOption>());
 }
 
+// This thing has access to the credentials and the `options`. We should be able to
+// - retrieve the Universe Domain from the MDS.
+// - check it against our `UniverseDomainOption` in here.
+// - If anything goes wrong, we return a `GrpcErrorCredentialsAuthentication`.
 std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
     Credentials const& credentials, CompletionQueue cq, Options options) {
   struct Visitor : public CredentialsVisitor {

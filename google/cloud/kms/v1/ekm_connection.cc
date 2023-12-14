@@ -86,8 +86,9 @@ std::shared_ptr<EkmServiceConnection> MakeEkmServiceConnection(
                                  EkmServicePolicyOptionList>(options, __func__);
   options = kms_v1_internal::EkmServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
+  auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub =
-      kms_v1_internal::CreateDefaultEkmServiceStub(background->cq(), options);
+      kms_v1_internal::CreateDefaultEkmServiceStub(std::move(auth), options);
   return kms_v1_internal::MakeEkmServiceTracingConnection(
       std::make_shared<kms_v1_internal::EkmServiceConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));

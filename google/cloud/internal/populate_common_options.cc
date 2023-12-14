@@ -18,6 +18,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/opentelemetry_options.h"
+#include "google/cloud/universe_domain_options.h"
 #include "absl/strings/str_split.h"
 
 namespace google {
@@ -29,6 +30,7 @@ Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
                               std::string const& emulator_env_var,
                               std::string const& authority_env_var,
                               std::string default_endpoint) {
+  // TODO : The AuthorityOption almost certainly needs the UD treatment as well. -_-
   if (!opts.has<AuthorityOption>()) {
     opts.set<AuthorityOption>(default_endpoint);
   }
@@ -40,8 +42,11 @@ Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
   }
 
   if (!opts.has<EndpointOption>()) {
-    if (!absl::EndsWith(default_endpoint, ".")) {
-      absl::StrAppend(&default_endpoint, ".");
+    absl::StrAppend(&default_endpoint, ".");
+    if (opts.has<UniverseDomainOption>()) {
+      default_endpoint =
+          absl::StrCat(absl::StripSuffix(default_endpoint, ".googleapis.com."),
+                       "." + opts.get<UniverseDomainOption>());
     }
     opts.set<EndpointOption>(std::move(default_endpoint));
   }
