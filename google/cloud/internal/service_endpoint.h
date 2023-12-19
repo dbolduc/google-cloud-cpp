@@ -40,6 +40,19 @@ StatusOr<std::string> DetermineServiceEndpoint(
     absl::optional<std::string> endpoint_option, std::string default_endpoint,
     Options const& options);
 
+/**
+ * Returns the default endpoint, respecting the `UniverseDomainOption`.
+ *
+ * For example:
+ *
+ * @code
+ * auto options = Options{}.set<UniverseDomainOption>("my-ud.net");
+ * EXPECT_EQ(DefaultEndpoint("foo.googleapis.com.", options), "foo.my-ud.net");
+ * @endcode
+ */
+std::string UniverseDomainEndpoint(std::string gdu_endpoint,
+                                   Options const& options);
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
