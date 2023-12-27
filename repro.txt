@@ -1,0 +1,44 @@
+# Repro for x-goog-cbt-cookie* dev? (Aspirational)
+
+DATA_ENDPOINT=test-bigtable.sandbox.googleapis.com
+ADMIN_ENDPOINT=test-bigtableadmin.sandbox.googleapis.com
+
+PROJECT_ID=dbolduc-test
+INSTANCE_ID=darren-instance
+CLUSTER_ID=darren-instance-c1
+TABLE_ID=darren-table
+APP_PROFILE_ID=darren-app-profile
+
+# Set up work - I changed all the endpoint defaults to be test endpoints in the
+# code. This is not reproducible... I just think it would be too annoying to set
+# the endpoints in each command.
+
+# Create the instance
+# TODO : Forgot to document. Sorry.
+
+# Create the table
+# TODO : Forgot to document. Sorry.
+
+# Create an app profile. Must use single cluster routing.
+rb bazelisk run //google/cloud/bigtable/examples:bigtable_instance_admin_snippets -- create-app-profile-cluster ${PROJECT_ID} ${INSTANCE_ID} ${APP_PROFILE_ID} ${CLUSTER_ID}
+
+# ================================================
+
+# Switch app profile from online to data boost
+curl -H "Content-Type: application/json" "https://${ADMIN_ENDPOINT}/v2/projects/${PROJECT_ID}/instances/${INSTANCE_ID}/appProfiles/${APP_PROFILE_ID}?update_mask=databoost_isolation_read_only&ignore_warnings=true" -XPATCH -H "Authorization: Bearer $(gcloud auth print-access-token)" -d '{"databoost_isolation_read_only": { "billingOwner": "PRODUCER" }}'
+
+# Switch app profile from data boost to online
+curl -H "Content-Type: application/json" "https://${ADMIN_ENDPOINT}/v2/projects/${PROJECT_ID}/instances/${INSTANCE_ID}/appProfiles/${APP_PROFILE_ID}?update_mask=databoost_isolation_read_only&ignore_warnings=true" -XPATCH -H "Authorization: Bearer $(gcloud auth print-access-token)" -d '{}'
+# Success. We never receive an `x-goog-cbt-cookie-routing` though.
+
+# ================================================
+
+# Try to make an RPC, using the app profile id, immediately after switching from online to data boost.
+# I made edits to the quickstart to accomplish this.
+rb bazelisk run //google/cloud/bigtable/quickstart:quickstart -- ${PROJECT_ID} ${INSTANCE_ID} ${TABLE_ID} ${APP_PROFILE_ID}
+# Receives UNAVAILABLE errors, and gets the `x-goog-cbt-cookie-routing` back on the first response.
+
+```
+Rcving server trailr pair: x-goog-cbt-cookie-routing -> ATqEe1QFetQ5TveepHmFaiqM7iF4TYfCbovdWIcgphx8-rsKnt7pMERvbFpG61Tn0vUDXGn5vgjqENsGyRfCHgNSHDNHMnAnE3e7dsFo_tz25S8RFh8
+Adding to the cookie jar : x-goog-cbt-cookie-routing -> ATqEe1QFetQ5TveepHmFaiqM7iF4TYfCbovdWIcgphx8-rsKnt7pMERvbFpG61Tn0vUDXGn5vgjqENsGyRfCHgNSHDNHMnAnE3e7dsFo_tz25S8RFh8
+```

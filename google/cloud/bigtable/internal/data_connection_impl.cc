@@ -51,9 +51,68 @@ inline std::unique_ptr<bigtable::IdempotentMutationPolicy> idempotency_policy(
   return options.get<bigtable::IdempotentMutationPolicyOption>()->clone();
 }
 
-struct CookieJar {
-  std::unordered_map<std::string, std::string> headers = {
-      {"x-goog-cbt-cookie-routing", "darren"}};
+// TODO : stale documentation.
+/**
+ * A container for injecting bigtable-specific retry cookies.
+ *
+ * For each request, we need to look for any `x-goog-cbt-cookie-*` trailers, and
+ * include them as headers in any subsequent requests.
+ *
+ * Note that this stub must be layered outside of `BigtableRoundRobin`, as we
+ * are storing state that must persist across RPC attempts.
+ */
+class CookieJar {
+ public:
+  void AddClientHeaders(grpc::ClientContext& context) {
+    for (auto const& h : headers_) {
+      std::cout << "Adding client header pair: " << h.first << " -> "
+                << h.second << std::endl;
+      context.AddMetadata(h.first, h.second);
+    }
+  }
+
+  void ProcessServerHeaders(grpc::ClientContext& context) {
+    auto headers = context.GetServerInitialMetadata();
+    for (auto& kv : headers) {
+      // TODO : logic - I am just making shit up.
+      auto key = std::string{kv.first.data(), kv.first.size()};
+      auto value = std::string{kv.second.data(), kv.second.size()};
+      if (absl::EndsWith(key, "-bin")) {
+        std::cout << "Rcving server header pair: " << key << " -> "
+                  << "<binary nonsense>" << std::endl;
+      } else {
+        std::cout << "Rcving server header pair: " << key << " -> " << value
+                  << std::endl;
+      }
+      if (absl::StartsWith(key, "x-goog-cbt-cookie")) {
+        std::cout << "Adding to the cookie jar : " << key << " -> " << value
+                  << std::endl;
+        headers_[key] = value;
+      }
+    }
+    auto trailers = context.GetServerTrailingMetadata();
+    for (auto& kv : trailers) {
+      // TODO : logic - I am just making shit up.
+      auto key = std::string{kv.first.data(), kv.first.size()};
+      auto value = std::string{kv.second.data(), kv.second.size()};
+      if (absl::EndsWith(key, "-bin")) {
+        std::cout << "Rcving server trailr pair: " << key << " -> "
+                  << "<binary nonsense>" << std::endl;
+      } else {
+        std::cout << "Rcving server trailr pair: " << key << " -> " << value
+                  << std::endl;
+      }
+      if (absl::StartsWith(key, "x-goog-cbt-cookie")) {
+        std::cout << "Adding to the cookie jar : " << key << " -> " << value
+                  << std::endl;
+        headers_[key] = value;
+      }
+    }
+  }
+
+ private:
+  std::unordered_map<std::string, std::string> headers_ = {
+      {"x-goog-cbt-cookie-routing", "us-east1-b"}};
 };
 
 }  // namespace
@@ -110,37 +169,9 @@ Status DataConnectionImpl::Apply(std::string const& table_name,
       [this, &cookies](
           grpc::ClientContext& context,
           google::bigtable::v2::MutateRowRequest const& request) mutable {
-        for (auto const& h : cookies.headers) {
-          std::cout << "Adding client header pair: " << h.first << " -> " << h.second << std::endl; 
-          context.AddMetadata(h.first, h.second);
-        }
+        cookies.AddClientHeaders(context);
         auto status = stub_->MutateRow(context, request);
-        auto headers = context.GetServerInitialMetadata();
-        for (auto& kv : headers) {
-          // TODO : logic - I am just making shit up.
-          auto key = std::string{kv.first.data(), kv.first.size()};
-          auto value = std::string{kv.second.data(), kv.second.size()};
-          std::cout << "Rcving server header pair: " << key << " -> " << value
-                    << std::endl;
-          if (absl::StartsWith(key, "x-goog-cbt-cookie")) {
-            std::cout << "Adding to the cookie jar : " << key << " -> " << value
-                      << std::endl;
-            cookies.headers[key] = value;
-          }
-        }
-        auto trailers = context.GetServerTrailingMetadata();
-        for (auto& kv : trailers) {
-          // TODO : logic - I am just making shit up.
-          auto key = std::string{kv.first.data(), kv.first.size()};
-          auto value = std::string{kv.second.data(), kv.second.size()};
-          std::cout << "Rcving server trailr pair: " << key << " -> " << value
-                    << std::endl;
-          if (absl::StartsWith(key, "x-goog-cbt-cookie")) {
-            std::cout << "Adding to the cookie jar : " << key << " -> " << value
-                      << std::endl;
-            cookies.headers[key] = value;
-          }
-        }
+        cookies.ProcessServerHeaders(context);
         return status;
       },
       request, __func__);

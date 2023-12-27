@@ -172,7 +172,6 @@ Options DefaultOptions(Options opts) {
           .set<AdminEndpointOption>("test-bigtableadmin.sandbox.googleapis.com")
           .set<InstanceAdminEndpointOption>(
               "test-bigtableadmin.sandbox.googleapis.com")
-          .set<AuthorityOption>("")
           .set<GrpcCredentialOption>(emulator
                                          ? grpc::InsecureChannelCredentials()
                                          : grpc::GoogleDefaultCredentials())
@@ -202,8 +201,16 @@ Options DefaultDataOptions(Options opts) {
   if (user_project && !user_project->empty()) {
     opts.set<UserProjectOption>(*std::move(user_project));
   }
+  // NOTE : against staging, we cannot be setting the host: header.
+  /*
   if (!opts.has<AuthorityOption>()) {
     opts.set<AuthorityOption>("bigtable.googleapis.com");
+  }
+  */
+  //  NOTE: Use LimitedErrorCount policy for quicker fails.
+  if (!opts.has<bigtable::DataRetryPolicyOption>()) {
+    opts.set<bigtable::DataRetryPolicyOption>(
+        bigtable::DataLimitedErrorCountRetryPolicy(3).clone());
   }
   if (!opts.has<bigtable::DataRetryPolicyOption>()) {
     opts.set<bigtable::DataRetryPolicyOption>(
@@ -223,6 +230,7 @@ Options DefaultDataOptions(Options opts) {
   }
   opts = DefaultOptions(std::move(opts));
   std::cout << "DaEndpoint: " << opts.get<DataEndpointOption>() << std::endl;
+  std::cout << "AuthorityOption: " << opts.get<AuthorityOption>() << std::endl;
   return opts.set<EndpointOption>(opts.get<DataEndpointOption>());
 }
 

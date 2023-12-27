@@ -16,21 +16,24 @@
 #include "google/cloud/bigtable/table.h"
 
 int main(int argc, char* argv[]) try {
-  if (argc != 4) {
+  if (argc != 5) {
     std::string const cmd = argv[0];
     auto last_slash = std::string(cmd).find_last_of('/');
     std::cerr << "Usage: " << cmd.substr(last_slash + 1)
-              << " <project_id> <instance_id> <table_id>\n";
+              << " <project_id> <instance_id> <table_id> <app_profile_id>\n";
     return 1;
   }
 
   std::string const project_id = argv[1];
   std::string const instance_id = argv[2];
   std::string const table_id = argv[3];
+  std::string const profile_id = argv[4];
 
   // Create a namespace alias to make the code easier to read.
+  namespace gc = ::google::cloud;
   namespace cbt = ::google::cloud::bigtable;
-  cbt::Table table(cbt::MakeDataConnection(),
+  auto options = gc::Options{}.set<cbt::AppProfileIdOption>(profile_id);
+  cbt::Table table(cbt::MakeDataConnection(options),
                    cbt::TableResource(project_id, instance_id, table_id));
 
   std::string row_key = "r1";
