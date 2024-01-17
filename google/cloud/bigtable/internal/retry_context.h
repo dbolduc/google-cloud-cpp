@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_RETRY_CONTEXT_H
 
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/internal/invoke_result.h"
 #include <grpcpp/grpcpp.h>
 #include <map>
 #include <string>
@@ -63,6 +64,35 @@ class RetryContext {
 
   std::unordered_map<std::string, std::string> cookies_;
 };
+
+template <typename Functor, typename Request>
+class RetryContextAdapterImpl {
+  using Result =
+      google::cloud::internal::invoke_result_t<Functor, grpc::ClientContext&,
+                                               Request const&>;
+
+ public:
+  explicit RetryContextAdapterImpl(RetryContext& retry_context,
+                                   Functor&& functor)
+      : retry_context_(retry_context),
+        functor_(std::forward<Functor>(functor)) {}
+
+  Result operator()(grpc::ClientContext& context, Request const& request) {
+    retry_context_.PreCall(context);
+    auto s = functor_(context, request);
+    retry_context_.PostCall(context);
+    return s;
+  }
+
+ private:
+  RetryContext& retry_context_;
+  absl::decay_t<Functor> functor_;
+};
+
+template <typename Request, typename Response,
+          typename Functor = std::function<StatusOr<Response>(
+              grpc::ClientContext&, Request const&)>>
+using RetryContextAdapter = RetryContextAdapterImpl<Functor, Request>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal

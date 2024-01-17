@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/default_row_reader.h"
 #include "google/cloud/bigtable/internal/defaults.h"
+#include "google/cloud/bigtable/internal/retry_context.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/idempotency.h"
@@ -50,6 +51,13 @@ inline std::unique_ptr<bigtable::IdempotentMutationPolicy> idempotency_policy(
     Options const& options) {
   return options.get<bigtable::IdempotentMutationPolicyOption>()->clone();
 }
+
+using CheckAndMutateRowAdapter =
+    RetryContextAdapter<google::bigtable::v2::CheckAndMutateRowRequest,
+                        google::bigtable::v2::CheckAndMutateRowResponse>;
+using MutateRowAdapter =
+    RetryContextAdapter<google::bigtable::v2::MutateRowRequest,
+                        google::bigtable::v2::MutateRowResponse>;
 
 }  // namespace
 
@@ -98,14 +106,17 @@ Status DataConnectionImpl::Apply(std::string const& table_name,
         return idempotent_policy->is_idempotent(m);
       });
 
-  auto sor = google::cloud::internal::RetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      is_idempotent ? Idempotency::kIdempotent : Idempotency::kNonIdempotent,
+  RetryContext retry_context;
+  auto call = MutateRowAdapter(
+      retry_context,
       [this](grpc::ClientContext& context,
              google::bigtable::v2::MutateRowRequest const& request) {
         return stub_->MutateRow(context, request);
-      },
-      request, __func__);
+      });
+  auto sor = google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      is_idempotent ? Idempotency::kIdempotent : Idempotency::kNonIdempotent,
+      std::move(call), request, __func__);
   if (!sor) return std::move(sor).status();
   return Status{};
 }
@@ -227,13 +238,16 @@ StatusOr<bigtable::MutationBranch> DataConnectionImpl::CheckAndMutateRow(
   auto const idempotency = idempotency_policy(*current)->is_idempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
-  auto sor = google::cloud::internal::RetryLoop(
-      retry_policy(*current), backoff_policy(*current), idempotency,
+  RetryContext retry_context;
+  auto call = CheckAndMutateRowAdapter(
+      retry_context,
       [this](grpc::ClientContext& context,
              google::bigtable::v2::CheckAndMutateRowRequest const& request) {
         return stub_->CheckAndMutateRow(context, request);
-      },
-      request, __func__);
+      });
+  auto sor = google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current), idempotency,
+      std::move(call), request, __func__);
   if (!sor) return std::move(sor).status();
   auto response = *std::move(sor);
   return response.predicate_matched()
