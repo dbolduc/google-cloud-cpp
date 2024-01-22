@@ -17,6 +17,9 @@ syntax = "proto3";
 package google.cloud.cpp.generator;
 
 message ServiceConfiguration {
+  // TODO : Developing - Not sure how this will really work.
+  string service_directory = 420;
+
   string service_proto_path = 1;
   string product_path = 2;
   string initial_copyright_year = 3;

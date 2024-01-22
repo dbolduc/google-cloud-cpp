@@ -28,6 +28,7 @@
 #include <google/protobuf/compiler/command_line_interface.h>
 #include <google/protobuf/text_format.h>
 #include <algorithm>
+#include <filesystem>
 #include <fstream>
 #include <future>
 #include <iostream>
@@ -61,6 +62,26 @@ ABSL_FLAG(bool, generate_discovery_protos, false,
           "Generate only .proto files, no C++ code.");
 
 namespace {
+
+// TODO  : Darren
+std::vector<std::string> ProtoList(std::string googleapis_proto_path,
+                                   std::string service_proto_path) {
+  namespace fs = std::filesystem;
+  // TODO : any logic will do.
+  if (absl::EndsWith(service_proto_path, ".proto")) return {service_proto_path};
+  // else, it is a directory. Get all the protos in it.
+  std::vector<std::string> protos;
+  for (auto const& entry : fs::directory_iterator(googleapis_proto_path + "/" +
+                                                  service_proto_path)) {
+    auto path = entry.path().string();
+    // std::cout << path << std::endl;
+    if (absl::EndsWith(path, ".proto")) {
+      // std::cout << "(^ was added)" << std::endl;
+      protos.push_back(path);
+    }
+  }
+  return protos;
+}
 
 using ::google::cloud::generator_internal::GenerateMetadata;
 using ::google::cloud::generator_internal::GenerateScaffold;
@@ -289,7 +310,16 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
     if (service.generate_rest_transport()) {
       args.emplace_back("--cpp_codegen_opt=generate_rest_transport=true");
     }
-    args.emplace_back(service.service_proto_path());
+    // TODO : does this need to be a proto? If so we need to get all protos in
+    // the directory.
+    for (auto proto : ProtoList(generator_args.googleapis_proto_path,
+                                service.service_proto_path())) {
+      args.emplace_back(proto);
+    }
+    if (false && service.service_proto_path() == "google/cloud/vision/v1/") {
+      std::cout << "breaking... on vision" << std::endl;
+      throw "kill";
+    }
     for (auto const& additional_proto_file : service.additional_proto_files()) {
       args.emplace_back(additional_proto_file);
     }
