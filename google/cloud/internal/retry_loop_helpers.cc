@@ -106,6 +106,24 @@ Status RetryLoopCancelled(Status const& status, char const* location) {
   return Status(status.code(), std::move(message), std::move(ei));
 }
 
+// TODO : testing.
+absl::optional<std::chrono::milliseconds> BackoffOrBreak(
+    bool use_server_retry_info, Status const& status, RetryPolicy& retry,
+    BackoffPolicy& backoff, Idempotency idempotency) {
+  bool should_retry =
+      retry.OnFailure(status) && idempotency == Idempotency::kIdempotent;
+  if (use_server_retry_info) {
+    auto ri = internal::GetRetryInfo(status);
+    if (ri.has_value()) {
+      if (retry.IsExhausted()) return absl::nullopt;
+      return std::chrono::duration_cast<std::chrono::milliseconds>(
+          ri->retry_delay());
+    }
+  }
+  if (should_retry) return backoff.OnCompletion();
+  return absl::nullopt;
+}
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

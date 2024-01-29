@@ -15,8 +15,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_RETRY_LOOP_HELPERS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_RETRY_LOOP_HELPERS_H
 
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/idempotency.h"
+#include "google/cloud/retry_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "absl/types/optional.h"
+#include <chrono>
 
 namespace google {
 namespace cloud {
@@ -53,6 +58,22 @@ Status RetryLoopPolicyExhaustedError(Status const& status,
 /// This is only applicable for asynchronous RPCs, as unary RPCs cannot be
 /// cancelled.
 Status RetryLoopCancelled(Status const& status, char const* location);
+
+// TODO : maybe just move this into Bigtable. The common code paths make
+// prettier errors. Arguably we should be doing the same thing in Bigtable for
+// the streams?
+
+/// Returns the backoff given the status, retry policy, and backoff policy.
+/// Takes into account whether the server has returned a `RetryInfo` in the
+/// status's error details.
+///
+/// Returns absl::nullopt if no backoff should be performed.
+///
+/// This function is responsible for calling `retry.OnFailure()`, which might,
+/// for example, increment in error based retry policy.
+absl::optional<std::chrono::milliseconds> BackoffOrBreak(
+    bool use_server_retry_info, Status const& status, RetryPolicy& retry,
+    BackoffPolicy& backoff);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

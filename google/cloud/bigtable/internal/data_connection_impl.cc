@@ -52,6 +52,29 @@ inline std::unique_ptr<bigtable::IdempotentMutationPolicy> idempotency_policy(
   return options.get<bigtable::IdempotentMutationPolicyOption>()->clone();
 }
 
+inline bool use_server_retry_info(Options const& options) {
+  return options.get<UseServerRetryInfoOption>();
+}
+
+/*
+// TODO : cleanup.
+absl::optional<std::chrono::milliseconds> BackoffOrBreak(
+    Options const& current, Status const& status, RetryPolicy& retry,
+    BackoffPolicy& backoff) {
+  bool should_retry = retry.OnFailure(status);
+  if (current.get<UseServerRetryInfoOption>()) {
+    auto ri = internal::GetRetryInfo(status);
+    if (ri.has_value()) {
+      if (retry.IsExhausted()) return absl::nullopt;
+      return std::chrono::duration_cast<std::chrono::milliseconds>(
+          ri->retry_delay());
+    }
+  }
+  if (should_retry) return backoff.OnCompletion();
+  return absl::nullopt;
+}
+*/
+
 }  // namespace
 
 bigtable::Row TransformReadModifyWriteRowResponse(
@@ -77,12 +100,14 @@ bigtable::Row TransformReadModifyWriteRowResponse(
 DataConnectionImpl::DataConnectionImpl(
     std::unique_ptr<BackgroundThreads> background,
     std::shared_ptr<BigtableStub> stub,
-    std::shared_ptr<MutateRowsLimiter> limiter, Options options)
+    std::shared_ptr<MutateRowsLimiter> limiter, Options options,
+    Sleeper sleeper)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       limiter_(std::move(limiter)),
       options_(internal::MergeOptions(std::move(options),
-                                      DataConnection::options())) {}
+                                      DataConnection::options())),
+      sleeper_(std::move(sleeper)) {}
 
 Status DataConnectionImpl::Apply(std::string const& table_name,
                                  bigtable::SingleRowMutation mut) {
@@ -171,10 +196,11 @@ std::vector<bigtable::FailedMutation> DataConnectionImpl::BulkApply(
     auto status = mutator.MakeOneRequest(*stub_, *limiter_);
     if (!mutator.HasPendingMutations()) break;
     if (!retry) retry = retry_policy(*current);
-    if (!retry->OnFailure(status)) break;
     if (!backoff) backoff = backoff_policy(*current);
-    auto delay = backoff->OnCompletion();
-    std::this_thread::sleep_for(delay);
+    auto delay = internal::BackoffOrBreak(use_server_retry_info(*current),
+                                          status, *retry, *backoff);
+    if (!delay) break;
+    sleeper_(*delay);
   }
   return std::move(mutator).OnRetryDone();
 }
@@ -195,7 +221,8 @@ bigtable::RowReader DataConnectionImpl::ReadRowsFull(
   auto impl = std::make_shared<DefaultRowReader>(
       stub_, std::move(params.app_profile_id), std::move(params.table_name),
       std::move(params.row_set), params.rows_limit, std::move(params.filter),
-      params.reverse, retry_policy(*current), backoff_policy(*current));
+      params.reverse, retry_policy(*current), backoff_policy(*current),
+      current->get<UseServerRetryInfoOption>());
   return MakeRowReader(std::move(impl));
 }
 
@@ -348,16 +375,17 @@ StatusOr<std::vector<bigtable::RowKeySample>> DataConnectionImpl::SampleRows(
     // We wait to allocate the policies until they are needed as a
     // micro-optimization.
     if (!retry) retry = retry_policy(*current);
-    if (!retry->OnFailure(status)) {
+    if (!backoff) backoff = backoff_policy(*current);
+    auto delay = internal::BackoffOrBreak(use_server_retry_info(*current),
+                                          status, *retry, *backoff);
+    if (!delay) {
       return Status(status.code(),
                     "Retry policy exhausted: " + status.message());
     }
     retry_context.PostCall(*context);
     // A new stream invalidates previously returned samples.
     samples.clear();
-    if (!backoff) backoff = backoff_policy(*current);
-    auto delay = backoff->OnCompletion();
-    std::this_thread::sleep_for(delay);
+    sleeper_(*delay);
   }
   return samples;
 }

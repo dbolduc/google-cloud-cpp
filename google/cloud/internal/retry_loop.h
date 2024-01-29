@@ -78,8 +78,20 @@ auto RetryLoopImpl(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
     ConfigureContext(context, options);
     auto result = functor(context, options, request);
     if (result.ok()) return result;
-
     last_status = GetResultStatus(std::move(result));
+    auto delay = BackoffOrBreak(options.get<UseServerRetryInfoOption>(),
+                                last_status, retry_policy, backoff_policy);
+
+    if (options.get<UseServerRetryInfoOption>()) {
+      auto ri = internal::GetRetryInfo(last_status);
+      if (ri.has_value()) {
+        // Tell the retry policy about the error. Error-based policies should
+        // know to increment their error count.
+        (void)retry_policy.OnFailure(last_status);
+        sleeper(std::chrono::duration_cast<std::chrono::milliseconds>(
+            ri->retry_delay()));
+      }
+    }
     if (idempotency == Idempotency::kNonIdempotent) {
       return RetryLoopNonIdempotentError(std::move(last_status), location);
     }

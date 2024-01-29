@@ -98,6 +98,8 @@ void BulkMutatorState::OnRead(
     auto const index = static_cast<std::size_t>(entry.index());
     auto& annotation = annotations_[index];
     annotation.has_mutation_result = true;
+    // TODO : Note that these Status's will not contain `RetryInfo`. `RetryInfo`
+    // is only included in the final status of the stream.
     auto status = MakeStatusFromRpcError(entry.status());
     // Successful responses are not even recorded, this class only reports
     // the failures.  The data for successful responses is discarded, because
@@ -134,6 +136,8 @@ void BulkMutatorState::OnFinish(google::cloud::Status finish_status) {
     }
     // If there are any mutations with unknown state, they need to be handled.
     auto& original = *mutations_.mutable_entries(index);
+    // TODO : sounds like we are supposed to ignore idempotency if last_status_
+    // has a RetryInfo error details.
     if (annotation.idempotency == Idempotency::kIdempotent) {
       // If the mutation was retryable, move it to the pending mutations to try
       // again, along with their index.

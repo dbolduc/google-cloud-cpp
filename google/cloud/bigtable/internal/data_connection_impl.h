@@ -33,13 +33,16 @@ bigtable::Row TransformReadModifyWriteRowResponse(
     google::bigtable::v2::ReadModifyWriteRowResponse response);
 
 class DataConnectionImpl : public bigtable::DataConnection {
+  using Sleeper = std::function<void(std::chrono::milliseconds)>;
+
  public:
   ~DataConnectionImpl() override = default;
 
-  DataConnectionImpl(std::unique_ptr<BackgroundThreads> background,
-                     std::shared_ptr<BigtableStub> stub,
-                     std::shared_ptr<MutateRowsLimiter> limiter,
-                     Options options);
+  DataConnectionImpl(
+      std::unique_ptr<BackgroundThreads> background,
+      std::shared_ptr<BigtableStub> stub,
+      std::shared_ptr<MutateRowsLimiter> limiter, Options options,
+      Sleeper sleeper = [](auto d) { std::this_thread::sleep_for(d); });
 
   Options options() override { return options_; }
 
@@ -98,6 +101,7 @@ class DataConnectionImpl : public bigtable::DataConnection {
   std::shared_ptr<BigtableStub> stub_;
   std::shared_ptr<MutateRowsLimiter> limiter_;
   Options options_;
+  Sleeper sleeper_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

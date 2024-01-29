@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/internal/async_streaming_read.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/retry_loop_helpers.h"
 #include <chrono>
 
 namespace google {
@@ -82,7 +83,11 @@ void AsyncRowSampler::OnFinish(Status status) {
     promise_.set_value(std::move(samples_));
     return;
   }
-  if (!retry_policy_->OnFailure(status)) {
+  // TODO : capture in ctor
+  bool use_server_retry_info = false;
+  auto delay = internal::BackoffOrBreak(use_server_retry_info, status,
+                                        *retry_policy_, *backoff_policy_);
+  if (!delay) {
     promise_.set_value(std::move(status));
     return;
   }
@@ -91,8 +96,8 @@ void AsyncRowSampler::OnFinish(Status status) {
   context_.reset();
   samples_.clear();
   auto self = this->shared_from_this();
-  internal::TracedAsyncBackoff(cq_, internal::CurrentOptions(),
-                               backoff_policy_->OnCompletion(), "Async Backoff")
+  internal::TracedAsyncBackoff(cq_, internal::CurrentOptions(), *delay,
+                               "Async Backoff")
       .then([self](auto result) {
         if (result.get()) {
           self->StartIteration();
