@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/retry_info_helper.h"
+#include "google/cloud/internal/retry_loop_helpers.h"
 
 namespace google {
 namespace cloud {
@@ -22,17 +23,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 absl::optional<std::chrono::milliseconds> BackoffOrBreak(
     bool use_server_retry_info, Status const& status, RetryPolicy& retry,
     BackoffPolicy& backoff) {
-  bool should_retry = retry.OnFailure(status);
-  if (use_server_retry_info) {
-    auto ri = internal::GetRetryInfo(status);
-    if (ri.has_value()) {
-      if (retry.IsExhausted()) return absl::nullopt;
-      return std::chrono::duration_cast<std::chrono::milliseconds>(
-          ri->retry_delay());
-    }
-  }
-  if (should_retry) return backoff.OnCompletion();
-  return absl::nullopt;
+  auto delay =
+      internal::BackoffOrBreak(status, "darren", retry, backoff,
+                               Idempotency::kIdempotent, use_server_retry_info);
+  if (!delay) return absl::nullopt;
+  return *delay;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
