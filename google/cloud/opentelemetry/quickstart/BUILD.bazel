@@ -17,6 +17,23 @@ package(default_visibility = ["//visibility:private"])
 licenses(["notice"])  # Apache 2.0
 
 cc_binary(
+    name = "metrics",
+    srcs = [
+        "foo_library.h",
+        "metrics.cc",
+    ],
+    #linkopts = ["-pthread"],
+    local_defines = ["GOOGLE_CLOUD_CPP_ENABLE_CLOG=1", "GOOGLE_CLOUD_CPP_TRACING=rpc"],
+    deps = [
+        "@io_opentelemetry_cpp//api",
+        "@io_opentelemetry_cpp//examples/common/metrics_foo_library:common_metrics_foo_library",
+        "@io_opentelemetry_cpp//exporters/ostream:ostream_metric_exporter",
+        "@io_opentelemetry_cpp//sdk/src/metrics",
+        "@google_cloud_cpp//:opentelemetry",
+    ],
+)
+
+cc_binary(
     name = "quickstart",
     srcs = [
         "quickstart.cc",

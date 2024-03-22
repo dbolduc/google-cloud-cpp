@@ -16,6 +16,7 @@
 #include "google/cloud/monitoring/v3/metric_client.h"
 #include "google/cloud/opentelemetry/internal/monitored_resource.h"
 #include "google/cloud/internal/time_utils.h"
+#include "google/cloud/log.h"
 #include "google/cloud/project.h"
 // TODO : ?
 #include <google/api/monitored_resource.pb.h>
@@ -94,9 +95,145 @@ opentelemetry::sdk::metrics::AggregationType GetAggregationType(
   return opentelemetry::sdk::metrics::AggregationType::kDrop;
 }
 
-google::api::Distribution
-HistogramToDistribution(opentelemetry::sdk::metrics::HistogramPointData h) {
+void PopulateMetric(
+    google::monitoring::v3::TimeSeries& ts,
+    opentelemetry::sdk::metrics::MetricData const& metric_data,
+    opentelemetry::sdk::metrics::PointAttributes const& attributes) {
+  // TODO : The metric name is configurable in golang. And I think for
+  // Bigtable/Storage cases, it gets set to a different value?
+  auto const metric_type =
+      "workload.googleapis.com/" + metric_data.instrument_descriptor.name_;
+  ts.mutable_metric()->set_type(metric_type);
 
+  // TODO(dbolduc): Seems like we have one TimeSeries / PointData? And each one
+  // gets its own labels. We do not aggregate the labels.
+  for (auto const& kv : attributes) {
+    auto& labels = *ts.mutable_metric()->mutable_labels();
+    labels[kv.first] = AsString(kv.second);
+  }
+}
+
+google::api::Distribution HistogramToDistribution(
+    opentelemetry::sdk::metrics::HistogramPointData const& h) {
+  google::api::Distribution d;
+  d.set_count(h.count_);
+
+  if (h.count_ > 0) {
+    //double mean = std::accumulate(h.counts_.begin(), h.counts_.end(), 0.0) /
+    //              static_cast<double>(h.count_);
+    double sum = absl::holds_alternative<double>(h.sum_)
+                     ? absl::get<double>(h.sum_)
+                     : static_cast<double>(absl::get<int64_t>(h.sum_));
+    d.set_mean(sum / h.count_);
+  }
+  for (auto v : h.counts_) {
+    // TODO(dbolduc): could use this loop for the average instead of looping
+    // twice.
+    d.add_bucket_counts(v);
+  }
+  for (auto b : h.boundaries_) {
+    d.mutable_bucket_options()->mutable_explicit_buckets()->add_bounds(b);
+  }
+  // TODO(dbolduc) : calculate variance?
+  // https://github.com/GoogleCloudPlatform/opentelemetry-operations-go/blob/babed4870546b78cee69606726961cfd20cbea42/exporter/metric/metric.go#L585
+  //
+  // It makes absolutely no sense for the client to do this calculation. Or to
+  // calculate the mean. We are already sending the relevant information... wtf.
+  return d;
+}
+
+void PopulateHistogram(
+    google::monitoring::v3::CreateTimeSeriesRequest& request,
+    google::api::MonitoredResource const& resource,
+    opentelemetry::sdk::metrics::MetricData const& metric_data) {
+  auto start_ts = ToProtoTimestamp(metric_data.start_ts);
+  // We need to make sure end_ts - start_ts >= 1ms. To achieve this, we
+  // override the end value.
+  // https://github.com/GoogleCloudPlatform/opentelemetry-operations-go/blob/babed4870546b78cee69606726961cfd20cbea42/exporter/metric/metric.go#L604-L609
+  auto end_ts_nanos = (std::max)(
+      metric_data.end_ts.time_since_epoch(),
+      metric_data.start_ts.time_since_epoch() + std::chrono::milliseconds(1));
+  auto end_ts =
+      internal::ToProtoTimestamp(absl::FromUnixNanos(end_ts_nanos.count()));
+
+  for (auto const& pda : metric_data.point_data_attr_) {
+    auto& ts = *request.add_time_series();
+    ts.set_unit(metric_data.instrument_descriptor.unit_);
+    ts.set_metric_kind(google::api::MetricDescriptor::DELTA);
+    ts.set_value_type(google::api::MetricDescriptor::DISTRIBUTION);
+    *ts.mutable_resource() = resource;
+    PopulateMetric(ts, metric_data, pda.attributes);
+
+    auto& p = *ts.add_points();
+    *p.mutable_interval()->mutable_start_time() = start_ts;
+    *p.mutable_interval()->mutable_end_time() = end_ts;
+    // Note to self: we know it has HistogramPointData from the switch
+    // on aggregation_type
+    auto histogram_data = opentelemetry::nostd::get<
+        opentelemetry::sdk::metrics::HistogramPointData>(pda.point_data);
+    *p.mutable_value()->mutable_distribution_value() =
+        HistogramToDistribution(histogram_data);
+  }
+}
+
+void PopulateGauge(
+    google::monitoring::v3::CreateTimeSeriesRequest& request,
+    google::api::MonitoredResource const& resource,
+    opentelemetry::sdk::metrics::MetricData const& metric_data) {
+  //auto start_ts = ToProtoTimestamp(metric_data.start_ts);
+  auto end_ts = ToProtoTimestamp(metric_data.end_ts);
+  auto const value_type =
+      ToValueType(metric_data.instrument_descriptor.value_type_);
+
+  for (auto const& pda : metric_data.point_data_attr_) {
+    auto& ts = *request.add_time_series();
+    ts.set_unit(metric_data.instrument_descriptor.unit_);
+    ts.set_metric_kind(google::api::MetricDescriptor::GAUGE);
+    ts.set_value_type(value_type);
+    *ts.mutable_resource() = resource;
+    PopulateMetric(ts, metric_data, pda.attributes);
+
+    auto& p = *ts.add_points();
+    // Start timestamp left empty for gauges.
+    *p.mutable_interval()->mutable_end_time() = end_ts;
+    auto gauge_data = opentelemetry::nostd::get<
+        opentelemetry::sdk::metrics::LastValuePointData>(pda.point_data);
+    *p.mutable_value() = ToValue(gauge_data.value_);
+  }
+}
+
+void PopulateSum(
+    google::monitoring::v3::CreateTimeSeriesRequest& request,
+    google::api::MonitoredResource const& resource,
+    opentelemetry::sdk::metrics::MetricData const& metric_data) {
+  auto const start_ts = ToProtoTimestamp(metric_data.start_ts);
+  // We need to make sure end_ts - start_ts >= 1ms. To achieve this, we
+  // override the end value.
+  // https://github.com/GoogleCloudPlatform/opentelemetry-operations-go/blob/babed4870546b78cee69606726961cfd20cbea42/exporter/metric/metric.go#L604-L609
+  auto end_ts_nanos = (std::max)(
+      metric_data.end_ts.time_since_epoch(),
+      metric_data.start_ts.time_since_epoch() + std::chrono::milliseconds(1));
+  auto const end_ts =
+      internal::ToProtoTimestamp(absl::FromUnixNanos(end_ts_nanos.count()));
+  auto const value_type =
+      ToValueType(metric_data.instrument_descriptor.value_type_);
+
+  for (auto const& pda : metric_data.point_data_attr_) {
+    auto& ts = *request.add_time_series();
+    ts.set_unit(metric_data.instrument_descriptor.unit_);
+    ts.set_metric_kind(google::api::MetricDescriptor::CUMULATIVE);
+    ts.set_value_type(value_type);
+    *ts.mutable_resource() = resource;
+    PopulateMetric(ts, metric_data, pda.attributes);
+
+    auto& p = *ts.add_points();
+    *p.mutable_interval()->mutable_start_time() = start_ts;
+    *p.mutable_interval()->mutable_end_time() = end_ts;
+    auto sum_data =
+        opentelemetry::nostd::get<opentelemetry::sdk::metrics::SumPointData>(
+            pda.point_data);
+    *p.mutable_value() = ToValue(sum_data.value_);
+  }
 }
 
 // https://github.com/GoogleCloudPlatform/opentelemetry-operations-go/blob/babed4870546b78cee69606726961cfd20cbea42/exporter/metric/metric.go#L514
@@ -104,128 +241,70 @@ google::monitoring::v3::CreateTimeSeriesRequest ToRequest(
     opentelemetry::sdk::metrics::ResourceMetrics const& data) {
   google::monitoring::v3::CreateTimeSeriesRequest request;
 
-  google::api::MonitoredResource mr_proto;
-  auto const* resource = data.resource_;
-  if (resource) {
-    auto mr = ToMonitoredResource(resource->GetAttributes());
-    mr_proto.set_type(std::move(mr.type));
+  google::api::MonitoredResource resource;
+  if (data.resource_) {
+    auto mr = ToMonitoredResource(data.resource_->GetAttributes());
+    resource.set_type(std::move(mr.type));
     for (auto& label : mr.labels) {
-      mr_proto.mutable_labels()->emplace(std::move(label.first),
+      resource.mutable_labels()->emplace(std::move(label.first),
                                          std::move(label.second));
     }
-    // TODO : Ok, what do I do with mr_proto?
   }
 
   for (auto const& scope_metric : data.scope_metric_data_) {
     auto const* scope = scope_metric.scope_;
     for (auto const& metric_data : scope_metric.metric_data_) {
-      google::monitoring::v3::TimeSeries ts;
-      auto const value_type =
-          ToValueType(metric_data.instrument_descriptor.value_type_);
-
-      auto start_ts = ToProtoTimestamp(metric_data.start_ts);
-      auto end_ts = ToProtoTimestamp(metric_data.end_ts);
-
       auto aggregation_type = GetAggregationType(metric_data);
-
-      // point attributes become labels?? This feels wrong.
-      for (auto const& pda : metric_data.point_data_attr_) {
-        for (auto const& kv_attr : pda.attributes) {
-          auto& labels = *ts.mutable_metric()->mutable_labels();
-          labels[kv_attr.first] = AsString(kv_attr.second);
-        }
-      }
-
-      // metric_data.aggregation_temporality
-
       switch (aggregation_type) {
         case opentelemetry::sdk::metrics::AggregationType::kHistogram:
-          // ConvertHistogramMetric
-          *ts.mutable_resource() = mr_proto;
-          ts.set_unit(metric_data.instrument_descriptor.unit_);
-          ts.set_metric_kind(google::api::MetricDescriptor::CUMULATIVE);
-          ts.set_value_type(google::api::MetricDescriptor::DISTRIBUTION);
-          for (auto const& pda : metric_data.point_data_attr_) {
-            auto& p = *ts.add_points();
-            // TODO : need to make sure end_ts - start_ts >= 1ms, so we override the end value.
-            // https://github.com/GoogleCloudPlatform/opentelemetry-operations-go/blob/babed4870546b78cee69606726961cfd20cbea42/exporter/metric/metric.go#L604-L609
-            if (metric_data.end_ts.time_since_epoch() -
-                    metric_data.start_ts.time_since_epoch() <
-                std::chrono::milliseconds(1)) {
-              end_ts = internal::ToProtoTimestamp(
-                  absl::FromUnixNanos((metric_data.start_ts.time_since_epoch() +
-                                       std::chrono::milliseconds(1))
-                                          .count()));
-            }
-            *p.mutable_interval()->mutable_start_time() = start_ts;
-            *p.mutable_interval()->mutable_end_time() = end_ts;
-          }
+          std::cout << "DARREN : Histogram" << std::endl;
+          PopulateHistogram(request, resource, metric_data);
           break;
-        case opentelemetry::sdk::metrics::AggregationType::kLastValue: {
-          // ConvertGaugeMetric
-          *ts.mutable_resource() = mr_proto;
-          ts.set_unit(metric_data.instrument_descriptor.unit_);
-          ts.set_metric_kind(google::api::MetricDescriptor::GAUGE);
-          ts.set_value_type(value_type);
-          for (auto const& pda : metric_data.point_data_attr_) {
-            auto& p = *ts.add_points();
-            // Start timestamp left empty for gauges.
-            *p.mutable_interval()->mutable_end_time() = end_ts;
-            // Note to self: we know it has LastValuePointData from the switch
-            // on aggregation_type
-            auto gauge_data = opentelemetry::nostd::get<
-                opentelemetry::sdk::metrics::LastValuePointData>(
-                pda.point_data);
-            *p.mutable_value() = ToValue(gauge_data.value_);
-          }
+        case opentelemetry::sdk::metrics::AggregationType::kLastValue:
+          std::cout << "DARREN : LastValue" << std::endl;
+          PopulateGauge(request, resource, metric_data);
           break;
         case opentelemetry::sdk::metrics::AggregationType::kSum:
-          // ConvertSumMetric
+          std::cout << "DARREN : Sum" << std::endl;
+          PopulateSum(request, resource, metric_data);
           break;
         case opentelemetry::sdk::metrics::AggregationType::kDrop:
+          std::cout << "DARREN : Drop" << std::endl;
         case opentelemetry::sdk::metrics::AggregationType::kDefault:
           break;
       }
 
-      // TODO : I am really confused by which thing I am supposed to switch on.
-      // e.g. if the InstrumentType == kHistogram, do I know that the data type is HistogramPointData?
+      // TODO : I am really confused by which thing I am supposed to switch
+      // on. e.g. if the InstrumentType == kHistogram, do I know that the
+      // data type is HistogramPointData?
       switch (metric_data.instrument_descriptor.type_) {
         case opentelemetry::sdk::metrics::InstrumentType::kCounter:
         case opentelemetry::sdk::metrics::InstrumentType::kHistogram:
         case opentelemetry::sdk::metrics::InstrumentType::kUpDownCounter:
-        case opentelemetry::sdk::metrics::InstrumentType::
-            kObservableCounter:
+        case opentelemetry::sdk::metrics::InstrumentType::kObservableCounter:
         case opentelemetry::sdk::metrics::InstrumentType::
             kObservableUpDownCounter:
         case opentelemetry::sdk::metrics::InstrumentType::kObservableGauge:
           break;
-        }
         default:
           continue;
       }
 
-      metric_data.instrument_descriptor.description_;
-      metric_data.instrument_descriptor.name_;
-      // metric_data.instrument_descriptor.type_;  // counter, histogram, etc.
-      // metric_data.instrument_descriptor.unit_;
-      // metric_data.instrument_descriptor.value_type_;  // int, long, float, dub
-
-      for (auto const& pda : metric_data.point_data_attr_) {
-        pda.attributes;  // OrderedAttributeMap
-        pda.point_data;  // variant<SumPointData, HistogramPointData, LastValuePointData, DropPointData>;
-                         // https://github.com/open-telemetry/opentelemetry-cpp/blob/main/sdk/include/opentelemetry/sdk/metrics/data/point_data.h
-      }
+      // TODO : I have not used these fields anywhere
+      //metric_data.aggregation_temporality
+      //metric_data.instrument_descriptor.description_;
     }
   }
-  return {};
+  return request;
 }
 
 class MonitoringExporter final
     : public opentelemetry::sdk::metrics::PushMetricExporter {
  public:
   explicit MonitoringExporter(
+      Project project,
       std::shared_ptr<monitoring_v3::MetricServiceConnection> conn)
-      : client_(std::move(conn)) {}
+      : project_(std::move(project)), client_(std::move(conn)) {}
 
   opentelemetry::sdk::metrics::AggregationTemporality GetAggregationTemporality(
       opentelemetry::sdk::metrics::InstrumentType) const noexcept override {
@@ -236,10 +315,23 @@ class MonitoringExporter final
       opentelemetry::sdk::metrics::ResourceMetrics const& data) noexcept
       override {
     auto request = ToRequest(data);
-    auto status = client_.CreateServiceTimeSeries(request);
-    // TODO(dbolduc): Log on error
-    return status.ok() ? opentelemetry::sdk::common::ExportResult::kSuccess
-                       : opentelemetry::sdk::common::ExportResult::kFailure;
+    request.set_name(project_.FullName());
+    if (request.time_series().empty()) {
+      GCP_LOG(WARNING) << "Cloud Monitoring Export skipped. No TimeSeries "
+                          "added to request...";
+      return opentelemetry::v1::sdk::common::ExportResult::kSuccess;
+    }
+
+    // NOTE : The exporter used for client side metrics should use
+    // `CreateServiceTimeSeries`. While I am developing though, testing with
+    // OTel's simple metric example, I will use the standard `CreateTimeSeries`.
+    //
+    // auto status = client_.CreateServiceTimeSeries(request);
+    auto status = client_.CreateTimeSeries(request);
+
+    if (status.ok()) return opentelemetry::sdk::common::ExportResult::kSuccess;
+    GCP_LOG(WARNING) << "Cloud Monitoring Export failed with status=" << status;
+    return opentelemetry::sdk::common::ExportResult::kFailure;
   }
 
   bool ForceFlush(std::chrono::microseconds) noexcept override { return false; }
@@ -247,19 +339,17 @@ class MonitoringExporter final
   bool Shutdown(std::chrono::microseconds) noexcept override { return true; }
 
  private:
+  Project project_;
   monitoring_v3::MetricServiceClient client_;
 };
 }  // namespace
 
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
 MakeMonitoringExporter(
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
     Project project,
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
     std::shared_ptr<monitoring_v3::MetricServiceConnection> conn) {
-  (void)project;
-  (void)conn;
-  return nullptr;
+  return std::make_unique<MonitoringExporter>(std::move(project),
+                                              std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
