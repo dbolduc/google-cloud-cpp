@@ -27,10 +27,30 @@ namespace cloud {
 namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * NOTE : I am not suggesting this be part of the final API. But I want an easy
+ * way to switch between custom metrics and google-defined metrics while
+ * developing.
+ *
+ * Custom metrics are
+ *   - sent in a CreateTimeSeries RPC
+ *   - named workload.googleapis.com/*
+ *
+ * Google metrics are
+ *   - sent in a CreateServiceTimeSeries RPC
+ *   - named bigtable.googleapis.com/*, e.g.
+ */
+enum class MetricType {
+  // 
+  kGoogle,
+  // 
+  kCustom };
+
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
 MakeMonitoringExporter(
     Project project,
-    std::shared_ptr<monitoring_v3::MetricServiceConnection> conn);
+    std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
+    MetricType type = MetricType::kCustom);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace otel_internal

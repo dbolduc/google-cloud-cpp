@@ -22,14 +22,27 @@ cc_binary(
         "foo_library.h",
         "metrics.cc",
     ],
-    #linkopts = ["-pthread"],
-    local_defines = ["GOOGLE_CLOUD_CPP_ENABLE_CLOG=1", "GOOGLE_CLOUD_CPP_TRACING=rpc"],
     deps = [
         "@io_opentelemetry_cpp//api",
         "@io_opentelemetry_cpp//examples/common/metrics_foo_library:common_metrics_foo_library",
         "@io_opentelemetry_cpp//exporters/ostream:ostream_metric_exporter",
         "@io_opentelemetry_cpp//sdk/src/metrics",
         "@google_cloud_cpp//:opentelemetry",
+    ],
+)
+
+cc_binary(
+    name = "grpc_metrics",
+    srcs = [
+        "grpc_metrics.cc",
+    ],
+    deps = [
+        "@io_opentelemetry_cpp//api",
+        "@io_opentelemetry_cpp//exporters/ostream:ostream_metric_exporter",
+        "@io_opentelemetry_cpp//sdk/src/metrics",
+        "@google_cloud_cpp//:bigtable",
+        "@google_cloud_cpp//:opentelemetry",
+        "@com_github_grpc_grpc//:grpcpp_otel_plugin",
     ],
 )
 

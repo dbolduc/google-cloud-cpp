@@ -38,8 +38,14 @@ int main(int argc, char* argv[]) try {
   std::string column_family = "cf1";
 
   std::cout << "Getting a single row by row key:" << std::flush;
-  google::cloud::StatusOr<std::pair<bool, cbt::Row>> result =
-      table.ReadRow(row_key, cbt::Filter::FamilyRegex(column_family));
+  google::cloud::StatusOr<std::pair<bool, cbt::Row>> result = table.ReadRow(
+      row_key, cbt::Filter::FamilyRegex(column_family),
+      google::cloud::Options{}.set<google::cloud::internal::GrpcSetupOption>(
+          [](grpc::ClientContext& c) {
+            auto now = std::chrono::system_clock::now();
+            auto next = now + std::chrono::microseconds(10);
+            c.set_deadline(next);
+          }));
   if (!result) throw std::move(result).status();
   if (!result->first) {
     std::cout << "Cannot find row " << row_key << " in the table: " << table_id

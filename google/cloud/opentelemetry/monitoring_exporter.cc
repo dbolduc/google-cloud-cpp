@@ -15,9 +15,11 @@
 #include "google/cloud/opentelemetry/monitoring_exporter.h"
 #include "google/cloud/monitoring/v3/metric_client.h"
 #include "google/cloud/opentelemetry/internal/monitored_resource.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/log.h"
 #include "google/cloud/project.h"
+#include "absl/strings/str_replace.h"
 // TODO : ?
 #include <google/api/monitored_resource.pb.h>
 #include <opentelemetry/sdk/metrics/export/metric_producer.h>
@@ -109,7 +111,11 @@ void PopulateMetric(
   // gets its own labels. We do not aggregate the labels.
   for (auto const& kv : attributes) {
     auto& labels = *ts.mutable_metric()->mutable_labels();
-    labels[kv.first] = AsString(kv.second);
+    // GCM labels match on the regex: R"([a-zA-Z_][a-zA-Z0-9_]*)"
+    // gRPC metrics look like "grpc.method"
+    // So swap '.' for '_' ?
+    auto key = absl::StrReplaceAll(kv.first, {{".", "_"}});
+    labels[std::move(key)] = AsString(kv.second);
   }
 }
 
@@ -159,7 +165,7 @@ void PopulateHistogram(
   for (auto const& pda : metric_data.point_data_attr_) {
     auto& ts = *request.add_time_series();
     ts.set_unit(metric_data.instrument_descriptor.unit_);
-    ts.set_metric_kind(google::api::MetricDescriptor::DELTA);
+    ts.set_metric_kind(google::api::MetricDescriptor::CUMULATIVE);
     ts.set_value_type(google::api::MetricDescriptor::DISTRIBUTION);
     *ts.mutable_resource() = resource;
     PopulateMetric(ts, metric_data, pda.attributes);
@@ -303,8 +309,10 @@ class MonitoringExporter final
  public:
   explicit MonitoringExporter(
       Project project,
-      std::shared_ptr<monitoring_v3::MetricServiceConnection> conn)
-      : project_(std::move(project)), client_(std::move(conn)) {}
+      std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
+      MetricType type)
+      //: project_(std::move(project)), client_(std::move(conn)), type_(type) {}
+      : project_(std::move(project)), conn_(std::move(conn)), type_(type) {}
 
   opentelemetry::sdk::metrics::AggregationTemporality GetAggregationTemporality(
       opentelemetry::sdk::metrics::InstrumentType) const noexcept override {
@@ -322,12 +330,22 @@ class MonitoringExporter final
       return opentelemetry::v1::sdk::common::ExportResult::kSuccess;
     }
 
+    // TODO : Darren - Delay creating `grpc::Channel`s
+    if (!conn_) {
+      std::cout << "Initializing connection, client." << std::endl;
+      //auto options = Options{}.set<TracingComponentsOption>({"rpc"});
+      auto options = Options{};
+      conn_ = monitoring_v3::MakeMetricServiceConnection(options);
+    }
+
+    auto client = monitoring_v3::MetricServiceClient(conn_);
+
     // NOTE : The exporter used for client side metrics should use
     // `CreateServiceTimeSeries`. While I am developing though, testing with
     // OTel's simple metric example, I will use the standard `CreateTimeSeries`.
-    //
-    // auto status = client_.CreateServiceTimeSeries(request);
-    auto status = client_.CreateTimeSeries(request);
+    auto status = (type_ == MetricType::kGoogle)
+                      ? client.CreateServiceTimeSeries(request)
+                      : client.CreateTimeSeries(request);
 
     if (status.ok()) return opentelemetry::sdk::common::ExportResult::kSuccess;
     GCP_LOG(WARNING) << "Cloud Monitoring Export failed with status=" << status;
@@ -340,16 +358,20 @@ class MonitoringExporter final
 
  private:
   Project project_;
-  monitoring_v3::MetricServiceClient client_;
+  // TODO : Darren - try a lazy initialized client.
+  //monitoring_v3::MetricServiceClient client_;
+  std::shared_ptr<monitoring_v3::MetricServiceConnection> conn_;
+  MetricType type_;
 };
 }  // namespace
 
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
 MakeMonitoringExporter(
     Project project,
-    std::shared_ptr<monitoring_v3::MetricServiceConnection> conn) {
+    std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
+    MetricType type) {
   return std::make_unique<MonitoringExporter>(std::move(project),
-                                              std::move(conn));
+                                              std::move(conn), type);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
