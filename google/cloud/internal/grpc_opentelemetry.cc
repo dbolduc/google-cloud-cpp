@@ -145,6 +145,21 @@ void ExtractAttributes(grpc::ClientContext& context,
   }
 }
 
+future<Status> EndSpan(
+    std::shared_ptr<grpc::ClientContext> context,
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
+    future<Status> fut) {
+  return fut.then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
+                   c = std::move(context), s = std::move(span)](auto f) {
+    auto t = f.get();
+    if (t.code() != StatusCode::kCancelled) {
+      ExtractAttributes(*c, *s);
+    }
+    DetachOTelContext(oc);
+    return EndSpan(*s, std::move(t));
+  });
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace internal

@@ -85,15 +85,22 @@ T EndSpan(grpc::ClientContext& context, opentelemetry::trace::Span& span,
   return EndSpan(span, std::move(value));
 }
 
-template <typename T>
-future<T> EndSpan(
+future<Status> EndSpan(
     std::shared_ptr<grpc::ClientContext> context,
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
-    future<T> fut) {
+    future<Status> fut);
+
+template <typename T>
+future<StatusOr<T>> EndSpan(
+    std::shared_ptr<grpc::ClientContext> context,
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
+    future<StatusOr<T>> fut) {
   return fut.then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
                    c = std::move(context), s = std::move(span)](auto f) {
     auto t = f.get();
-    ExtractAttributes(*c, *s);
+    if (t.status().code() != StatusCode::kCancelled) {
+      ExtractAttributes(*c, *s);
+    }
     DetachOTelContext(oc);
     return EndSpan(*s, std::move(t));
   });
