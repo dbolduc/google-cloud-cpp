@@ -54,6 +54,22 @@ absl::optional<std::string> IncludePathForWellKnownProtobufType(
 }  // namespace
 
 ServiceCodeGenerator::ServiceCodeGenerator(
+    int for_the_sake_of_overriding, std::string const& cc_path_key,
+    google::protobuf::ServiceDescriptor const* service_descriptor,
+    VarsDictionary service_vars,
+    std::map<std::string, VarsDictionary> service_method_vars,
+    google::protobuf::compiler::GeneratorContext* context)
+    : service_descriptor_(service_descriptor),
+      service_vars_(std::move(service_vars)),
+      service_method_vars_(std::move(service_method_vars)),
+      cc_(context, service_vars_[cc_path_key]) {
+  assert(service_descriptor != nullptr);
+  assert(context != nullptr);
+  SetVars(service_vars_[cc_path_key]);
+  SetMethods();
+}
+
+ServiceCodeGenerator::ServiceCodeGenerator(
     std::string const& header_path_key, std::string const& cc_path_key,
     google::protobuf::ServiceDescriptor const* service_descriptor,
     VarsDictionary service_vars,

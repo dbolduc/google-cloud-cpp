@@ -688,6 +688,9 @@ VarsDictionary CreateServiceVars(
   vars["client_samples_cc_path"] =
       absl::StrCat(vars["product_path"], "samples/",
                    ServiceNameToFilePath(service_name), "_client_samples.cc");
+  vars["conglomerate_cc_path"] =
+      absl::StrCat(vars["product_path"], ServiceNameToFilePath(service_name),
+                   "_conglomerate.cc");
   vars["connection_class_name"] = absl::StrCat(service_name, "Connection");
   vars["connection_cc_path"] =
       absl::StrCat(vars["product_path"], ServiceNameToFilePath(service_name),

@@ -15,6 +15,7 @@
 #include "generator/internal/make_generators.h"
 #include "generator/internal/auth_decorator_generator.h"
 #include "generator/internal/client_generator.h"
+#include "generator/internal/conglomerate_generator.h"
 #include "generator/internal/connection_generator.h"
 #include "generator/internal/connection_impl_generator.h"
 #include "generator/internal/connection_impl_rest_generator.h"
@@ -57,6 +58,7 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
     google::protobuf::compiler::GeneratorContext* context,
     YAML::Node const& service_config,
     std::vector<std::pair<std::string, std::string>> const& vars) {
+  std::vector<std::string> sources;
   std::vector<std::unique_ptr<GeneratorInterface>> code_generators;
   VarsDictionary service_vars = CreateServiceVars(*service, vars);
   auto method_vars = CreateMethodVars(*service, service_config, service_vars);
@@ -72,6 +74,7 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
         service, service_vars, method_vars, context));
     code_generators.push_back(std::make_unique<SampleGenerator>(
         service, service_vars, method_vars, context));
+    sources.push_back(service_vars["client_cc_path"]);
   }
   auto const omit_connection = service_vars.find("omit_connection");
   if (omit_connection == service_vars.end() ||
@@ -79,6 +82,7 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
     if (generate_grpc_transport) {
       code_generators.push_back(std::make_unique<ConnectionImplGenerator>(
           service, service_vars, method_vars, context));
+      sources.push_back(service_vars["connection_impl_cc_path"]);
     }
     code_generators.push_back(std::make_unique<ConnectionGenerator>(
         service, service_vars, method_vars, context));
@@ -97,6 +101,10 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
     }
     code_generators.push_back(std::make_unique<TracingConnectionGenerator>(
         service, service_vars, method_vars, context));
+    sources.push_back(service_vars["connection_cc_path"]);
+    sources.push_back(service_vars["idempotency_policy_cc_path"]);
+    sources.push_back(service_vars["option_defaults_cc_path"]);
+    sources.push_back(service_vars["tracing_connection_cc_path"]);
   }
   auto const omit_stub_factory = service_vars.find("omit_stub_factory");
   if (omit_stub_factory == service_vars.end() ||
@@ -104,6 +112,7 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
     if (generate_grpc_transport) {
       code_generators.push_back(std::make_unique<StubFactoryGenerator>(
           service, service_vars, method_vars, context));
+      sources.push_back(service_vars["stub_factory_cc_path"]);
     }
   }
   auto const forwarding_headers = service_vars.find("forwarding_product_path");
@@ -134,6 +143,11 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
         service, service_vars, method_vars, context));
     code_generators.push_back(std::make_unique<TracingStubGenerator>(
         service, service_vars, method_vars, context));
+    sources.push_back(service_vars["auth_cc_path"]);
+    sources.push_back(service_vars["logging_cc_path"]);
+    sources.push_back(service_vars["metadata_cc_path"]);
+    sources.push_back(service_vars["stub_cc_path"]);
+    sources.push_back(service_vars["tracing_stub_cc_path"]);
   }
 
   auto const generate_round_robin_generator =
@@ -142,6 +156,7 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
       generate_round_robin_generator->second == "true") {
     code_generators.push_back(std::make_unique<RoundRobinDecoratorGenerator>(
         service, service_vars, method_vars, context));
+    sources.push_back(service_vars["round_robin_cc_path"]);
   }
 
   auto const generate_rest_transport =
@@ -164,7 +179,17 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
         service, rest_service_vars, method_vars, context));
     code_generators.push_back(std::make_unique<StubRestGenerator>(
         service, rest_service_vars, method_vars, context));
+    sources.push_back(service_vars["connection_rest_cc_path"]);
+    sources.push_back(service_vars["connection_impl_rest_cc_path"]);
+    sources.push_back(service_vars["logging_rest_cc_path"]);
+    sources.push_back(service_vars["metadata_rest_cc_path"]);
+    sources.push_back(service_vars["stub_factory_rest_cc_path"]);
+    sources.push_back(service_vars["stub_rest_cc_path"]);
   }
+
+  std::sort(sources.begin(), sources.end());
+  code_generators.push_back(std::make_unique<ConglomerateGenerator>(
+      service, service_vars, method_vars, context, std::move(sources)));
 
   return code_generators;
 }

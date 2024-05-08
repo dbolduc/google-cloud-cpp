@@ -30,6 +30,13 @@ namespace generator_internal {
 class ServiceCodeGenerator : public GeneratorInterface {
  public:
   ServiceCodeGenerator(
+      int for_the_sake_of_overriding, std::string const& cc_path_key,
+      google::protobuf::ServiceDescriptor const* service_descriptor,
+      VarsDictionary service_vars,
+      std::map<std::string, VarsDictionary> service_method_vars,
+      google::protobuf::compiler::GeneratorContext* context);
+
+  ServiceCodeGenerator(
       std::string const& header_path_key, std::string const& cc_path_key,
       google::protobuf::ServiceDescriptor const* service_descriptor,
       VarsDictionary service_vars,
