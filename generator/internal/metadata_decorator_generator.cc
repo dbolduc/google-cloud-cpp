@@ -399,7 +399,7 @@ void $metadata_class_name$::SetMetadata(grpc::ClientContext& context,
 )""");
   if (HasApiVersion()) {
     CcPrint(
-        R"""(  context.AddMetadata("x-goog-api-version", $api_version$);
+        R"""(  context.AddMetadata("x-goog-api-version", "$api_version$");
 )""");
   }
   CcPrint(R"""(  google::cloud::internal::SetMetadata(

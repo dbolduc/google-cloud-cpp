@@ -382,7 +382,7 @@ void $metadata_rest_class_name$::SetMetadata(
 )""");
   if (HasApiVersion()) {
     CcPrint(
-        R"""(  rest_context.AddHeader("x-goog-api-version", $api_version$);
+        R"""(  rest_context.AddHeader("x-goog-api-version", "$api_version$");
 )""");
   }
   CcPrint(R"""(  google::cloud::rest_internal::SetMetadata(
