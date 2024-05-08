@@ -73,6 +73,14 @@ filegroup(
 )
 
 filegroup(
+    name = "golden_conglomerate",
+    srcs = glob([
+        "golden/v1/*conglomerate.cc",
+        "golden/v1/internal/streaming.cc",
+    ]),
+)
+
+filegroup(
     name = "golden_hdrs",
     srcs = glob([
         "golden/*.h",
@@ -86,10 +94,11 @@ filegroup(
 cc_library(
     name = "google_cloud_cpp_generator_golden",
     srcs = [
-        ":golden_srcs",
+        ":golden_conglomerate",
     ],
     hdrs = [
         ":golden_hdrs",
+        ":golden_srcs",
     ],
     copts = [
         "-I$(BINDIR)",
