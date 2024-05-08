@@ -146,6 +146,10 @@ endfunction ()
 #   do not already exist.
 #
 function (google_cloud_cpp_add_gapic_library library display_name)
+    # TODO : Darren - An easy switch to go between the current state of things
+    #                 and the prototype.
+    set(use_conglomerate ON)
+
     cmake_parse_arguments(
         _opt
         "EXPERIMENTAL;TRANSITION"
@@ -188,7 +192,13 @@ function (google_cloud_cpp_add_gapic_library library display_name)
             set(dir "")
         endif ()
         string(REPLACE "/" "_" ns "${dir}")
-        list(APPEND source_globs "${dir}*.h" "${dir}*.cc" "${dir}internal/*")
+        # TODO : Darren
+        if (use_conglomerate)
+          list(APPEND source_globs "${dir}*.h" "${dir}*conglomerate.cc"
+               "${dir}internal/streaming.cc")
+        else()
+          list(APPEND source_globs "${dir}*.h" "${dir}*.cc" "${dir}internal/*")
+        endif()
         list(APPEND mocks_globs "${dir}mocks/*.h")
         list(APPEND DOXYGEN_EXCLUDE_SYMBOLS "${library}_${ns}internal")
         if (IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/${dir}samples")
@@ -232,6 +242,10 @@ function (google_cloud_cpp_add_gapic_library library display_name)
         RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
         ${source_globs})
     list(SORT source_files)
+    # TODO : Darren
+    if (NOT use_conglomerate)
+      list(FILTER source_files EXCLUDE REGEX ".*_conglomerate.cc")
+    endif ()
     add_library(${library_target} ${source_files})
     target_include_directories(
         ${library_target}
