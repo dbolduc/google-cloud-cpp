@@ -137,9 +137,6 @@ jobs:
     # Wait until all the other jobs have completed.
     needs:
       - external-account-integration
-      - macos-bazel
-      - macos-cmake
-      - windows-bazel
       - windows-cmake
     # Run even if the other jobs failed or were skipped.
     if: always()
