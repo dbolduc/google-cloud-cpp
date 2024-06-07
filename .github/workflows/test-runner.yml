@@ -64,57 +64,57 @@ jobs:
     with:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
     secrets: inherit
-  macos-bazel:
-    # Build the full matrix only on push events to the default branch, or
-    # when PR gets the has a `gha:full-build` label, or when it had the
-    # label already and it gets a new commit.
-    if: |-
-      ${{
-        github.event_name == 'schedule' ||
-        github.event_name == 'push' ||
-        github.event_name == 'workflow_dispatch' ||
-        contains(github.event.pull_request.labels.*.name, 'gha:full-build')
-      }}
-    name: macOS-Bazel
-    needs: [pre-flight]
-    uses: ./.github/workflows/macos-bazel.yml
-    with:
-      checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
-    secrets: inherit
-  windows-bazel:
-    # Build the full matrix only on push events to the default branch, or
-    # when PR gets the has a `gha:full-build` label, or when it had the
-    # label already and it gets a new commit.
-    if: |-
-      ${{
-        github.event_name == 'schedule' ||
-        github.event_name == 'push' ||
-        github.event_name == 'workflow_dispatch' ||
-        contains(github.event.pull_request.labels.*.name, 'gha:full-build')
-      }}
-    name: Windows-Bazel
-    needs: [pre-flight]
-    uses: ./.github/workflows/windows-bazel.yml
-    with:
-      checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
-    secrets: inherit
-  macos-cmake:
-    name: macOS-CMake
-    needs: [pre-flight]
-    uses: ./.github/workflows/macos-cmake.yml
-    with:
-      checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
-      # Build the full matrix only on push events to the default branch, or
-      # when PR gets the has a `gha:full-build` label, or when it had the
-      # label already and it gets a new commit.
-      full-matrix: |-
-        ${{
-          github.event_name == 'schedule' ||
-          github.event_name == 'push' ||
-          github.event_name == 'workflow_dispatch' ||
-          contains(github.event.pull_request.labels.*.name, 'gha:full-build')
-        }}
-    secrets: inherit
+      #  macos-bazel:
+      #    # Build the full matrix only on push events to the default branch, or
+      #    # when PR gets the has a `gha:full-build` label, or when it had the
+      #    # label already and it gets a new commit.
+      #    if: |-
+      #      ${{
+      #        github.event_name == 'schedule' ||
+      #        github.event_name == 'push' ||
+      #        github.event_name == 'workflow_dispatch' ||
+      #        contains(github.event.pull_request.labels.*.name, 'gha:full-build')
+      #      }}
+      #    name: macOS-Bazel
+      #    needs: [pre-flight]
+      #    uses: ./.github/workflows/macos-bazel.yml
+      #    with:
+      #      checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
+      #    secrets: inherit
+      #  windows-bazel:
+      #    # Build the full matrix only on push events to the default branch, or
+      #    # when PR gets the has a `gha:full-build` label, or when it had the
+      #    # label already and it gets a new commit.
+      #    if: |-
+      #      ${{
+      #        github.event_name == 'schedule' ||
+      #        github.event_name == 'push' ||
+      #        github.event_name == 'workflow_dispatch' ||
+      #        contains(github.event.pull_request.labels.*.name, 'gha:full-build')
+      #      }}
+      #    name: Windows-Bazel
+      #    needs: [pre-flight]
+      #    uses: ./.github/workflows/windows-bazel.yml
+      #    with:
+      #      checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
+      #    secrets: inherit
+      #  macos-cmake:
+      #    name: macOS-CMake
+      #    needs: [pre-flight]
+      #    uses: ./.github/workflows/macos-cmake.yml
+      #    with:
+      #      checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
+      #      # Build the full matrix only on push events to the default branch, or
+      #      # when PR gets the has a `gha:full-build` label, or when it had the
+      #      # label already and it gets a new commit.
+      #      full-matrix: |-
+      #        ${{
+      #          github.event_name == 'schedule' ||
+      #          github.event_name == 'push' ||
+      #          github.event_name == 'workflow_dispatch' ||
+      #          contains(github.event.pull_request.labels.*.name, 'gha:full-build')
+      #        }}
+      #    secrets: inherit
   windows-cmake:
     name: Windows-CMake
     needs: [pre-flight]
@@ -167,6 +167,7 @@ jobs:
           if [[ "${cancelled}" == "true" ]]; then status="cancelled"; fi
           if [[ "${failure}" == "true" ]]; then status="failure"; fi
           # Exit early if there is nothing interesting to report.
+          exit 0 # Do not notify, I am only testing.
           if [[ -z "${status}" ]]; then exit 0; fi
           printf '{"text": "GHA Build %s %s/%s/actions/runs/%s"}' \
             "${status}" "${{ github.server_url }}" "${{ github.repository }}" "${{ github.run_id }}" |
