@@ -14,7 +14,9 @@ following are out of scope:
 
 - Developers who prefer using a package manager such as
   [vcpkg](https://vcpkg.io), or [Conda](https://conda.io), should follow the
-  instructions for their package manager.
+  instructions for their package manager. If `google-cloud-cpp` is not available
+  on the package manager of your choice, you can
+  [file a request for support][package-manager-requests].
 - Developers wanting to use the libraries as part of a larger CMake or Bazel
   project should consult the [quickstart guides](/README.md#quickstart) for the
   library or libraries they want to use.
@@ -2153,6 +2155,7 @@ cmake --build cmake-out --target install
 [nlohmann-json-gh]: https://github.com/nlohmann/json
 [openssl-gh]: https://github.com/openssl/openssl
 [opentelemetry-gh]: https://github.com/open-telemetry/opentelemetry-cpp
+[package-manager-requests]: https://github.com/googleapis/google-cloud-cpp/discussions/14117
 [protobuf-gh]: https://github.com/protocolbuffers/protobuf
 [spanner-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/spanner#readme
 [storage-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/storage#readme
