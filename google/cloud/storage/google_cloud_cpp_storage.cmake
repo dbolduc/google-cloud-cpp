@@ -258,6 +258,7 @@ add_library(
 target_link_libraries(
     google_cloud_cpp_storage
     PUBLIC absl::cord
+           absl::crc32c
            absl::memory
            absl::strings
            absl::time
@@ -265,7 +266,6 @@ target_link_libraries(
            google-cloud-cpp::common
            google-cloud-cpp::rest_internal
            nlohmann_json::nlohmann_json
-           Crc32c::crc32c
            CURL::libcurl
            Threads::Threads)
 if (WIN32)
@@ -335,14 +335,13 @@ google_cloud_cpp_add_pkgconfig(
     "google_cloud_cpp_rest_internal"
     "libcurl"
     "absl_cord"
+    "absl_crc32c"
     "absl_strings"
     "absl_str_format"
     "absl_time"
     "absl_variant"
     NON_WIN32_REQUIRES
     openssl
-    LIBS
-    crc32c
     WIN32_LIBS
     ws2_32
     bcrypt)
