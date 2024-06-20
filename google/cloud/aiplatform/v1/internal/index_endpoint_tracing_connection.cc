@@ -34,46 +34,58 @@ IndexEndpointServiceTracingConnection::IndexEndpointServiceTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>>
-IndexEndpointServiceTracingConnection::CreateIndexEndpoint(google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request) {
+IndexEndpointServiceTracingConnection::CreateIndexEndpoint(
+    google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::IndexEndpointServiceConnection::CreateIndexEndpoint");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateIndexEndpoint(request));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateIndexEndpoint(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
-IndexEndpointServiceTracingConnection::GetIndexEndpoint(google::cloud::aiplatform::v1::GetIndexEndpointRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::IndexEndpointServiceConnection::GetIndexEndpoint");
+IndexEndpointServiceTracingConnection::GetIndexEndpoint(
+    google::cloud::aiplatform::v1::GetIndexEndpointRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::IndexEndpointServiceConnection::GetIndexEndpoint");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIndexEndpoint(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::IndexEndpoint>
-IndexEndpointServiceTracingConnection::ListIndexEndpoints(google::cloud::aiplatform::v1::ListIndexEndpointsRequest request) {
-  auto span = internal::MakeSpan("aiplatform_v1::IndexEndpointServiceConnection::ListIndexEndpoints");
+IndexEndpointServiceTracingConnection::ListIndexEndpoints(
+    google::cloud::aiplatform::v1::ListIndexEndpointsRequest request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::IndexEndpointServiceConnection::ListIndexEndpoints");
   internal::OTelScope scope(span);
   auto sr = child_->ListIndexEndpoints(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::IndexEndpoint>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::aiplatform::v1::IndexEndpoint>(std::move(span),
+                                                    std::move(sr));
 }
 
 StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
-IndexEndpointServiceTracingConnection::UpdateIndexEndpoint(google::cloud::aiplatform::v1::UpdateIndexEndpointRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::IndexEndpointServiceConnection::UpdateIndexEndpoint");
+IndexEndpointServiceTracingConnection::UpdateIndexEndpoint(
+    google::cloud::aiplatform::v1::UpdateIndexEndpointRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::IndexEndpointServiceConnection::UpdateIndexEndpoint");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateIndexEndpoint(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-IndexEndpointServiceTracingConnection::DeleteIndexEndpoint(google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request) {
+IndexEndpointServiceTracingConnection::DeleteIndexEndpoint(
+    google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::IndexEndpointServiceConnection::DeleteIndexEndpoint");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteIndexEndpoint(request));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteIndexEndpoint(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>
-IndexEndpointServiceTracingConnection::DeployIndex(google::cloud::aiplatform::v1::DeployIndexRequest const& request) {
+IndexEndpointServiceTracingConnection::DeployIndex(
+    google::cloud::aiplatform::v1::DeployIndexRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::IndexEndpointServiceConnection::DeployIndex");
   internal::OTelScope scope(span);
@@ -81,7 +93,8 @@ IndexEndpointServiceTracingConnection::DeployIndex(google::cloud::aiplatform::v1
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>
-IndexEndpointServiceTracingConnection::UndeployIndex(google::cloud::aiplatform::v1::UndeployIndexRequest const& request) {
+IndexEndpointServiceTracingConnection::UndeployIndex(
+    google::cloud::aiplatform::v1::UndeployIndexRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::IndexEndpointServiceConnection::UndeployIndex");
   internal::OTelScope scope(span);
@@ -89,11 +102,13 @@ IndexEndpointServiceTracingConnection::UndeployIndex(google::cloud::aiplatform::
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>
-IndexEndpointServiceTracingConnection::MutateDeployedIndex(google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request) {
+IndexEndpointServiceTracingConnection::MutateDeployedIndex(
+    google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::IndexEndpointServiceConnection::MutateDeployedIndex");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->MutateDeployedIndex(request));
+  return internal::EndSpan(std::move(span),
+                           child_->MutateDeployedIndex(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -103,7 +118,8 @@ MakeIndexEndpointServiceTracingConnection(
     std::shared_ptr<aiplatform_v1::IndexEndpointServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<IndexEndpointServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<IndexEndpointServiceTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

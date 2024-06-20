@@ -36,39 +36,49 @@ class FeatureRegistryServiceTracingConnection
   ~FeatureRegistryServiceTracingConnection() override = default;
 
   explicit FeatureRegistryServiceTracingConnection(
-    std::shared_ptr<aiplatform_v1::FeatureRegistryServiceConnection> child);
+      std::shared_ptr<aiplatform_v1::FeatureRegistryServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
-  CreateFeatureGroup(google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request) override;
+  CreateFeatureGroup(
+      google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::FeatureGroup>
-  GetFeatureGroup(google::cloud::aiplatform::v1::GetFeatureGroupRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::FeatureGroup> GetFeatureGroup(
+      google::cloud::aiplatform::v1::GetFeatureGroupRequest const& request)
+      override;
 
-  StreamRange<google::cloud::aiplatform::v1::FeatureGroup>
-  ListFeatureGroups(google::cloud::aiplatform::v1::ListFeatureGroupsRequest request) override;
+  StreamRange<google::cloud::aiplatform::v1::FeatureGroup> ListFeatureGroups(
+      google::cloud::aiplatform::v1::ListFeatureGroupsRequest request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
-  UpdateFeatureGroup(google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request) override;
+  UpdateFeatureGroup(
+      google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeatureGroup(google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request) override;
+  DeleteFeatureGroup(
+      google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::aiplatform::v1::Feature>>
-  CreateFeature(google::cloud::aiplatform::v1::CreateFeatureRequest const& request) override;
+  future<StatusOr<google::cloud::aiplatform::v1::Feature>> CreateFeature(
+      google::cloud::aiplatform::v1::CreateFeatureRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::Feature>
-  GetFeature(google::cloud::aiplatform::v1::GetFeatureRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(
+      google::cloud::aiplatform::v1::GetFeatureRequest const& request) override;
 
-  StreamRange<google::cloud::aiplatform::v1::Feature>
-  ListFeatures(google::cloud::aiplatform::v1::ListFeaturesRequest request) override;
+  StreamRange<google::cloud::aiplatform::v1::Feature> ListFeatures(
+      google::cloud::aiplatform::v1::ListFeaturesRequest request) override;
 
-  future<StatusOr<google::cloud::aiplatform::v1::Feature>>
-  UpdateFeature(google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) override;
+  future<StatusOr<google::cloud::aiplatform::v1::Feature>> UpdateFeature(
+      google::cloud::aiplatform::v1::UpdateFeatureRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeature(google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) override;
+  DeleteFeature(google::cloud::aiplatform::v1::DeleteFeatureRequest const&
+                    request) override;
 
  private:
   std::shared_ptr<aiplatform_v1::FeatureRegistryServiceConnection> child_;

@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BATCH_V1_INTERNAL_BATCH_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BATCH_V1_INTERNAL_BATCH_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/batch/v1/batch_connection.h"
 #include "google/cloud/batch/v1/batch_connection_idempotency_policy.h"
 #include "google/cloud/batch/v1/batch_options.h"
 #include "google/cloud/batch/v1/internal/batch_retry_traits.h"
 #include "google/cloud/batch/v1/internal/batch_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -40,35 +40,34 @@ namespace cloud {
 namespace batch_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class BatchServiceConnectionImpl
-    : public batch_v1::BatchServiceConnection {
+class BatchServiceConnectionImpl : public batch_v1::BatchServiceConnection {
  public:
   ~BatchServiceConnectionImpl() override = default;
 
   BatchServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<batch_v1_internal::BatchServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<batch_v1_internal::BatchServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::batch::v1::Job>
-  CreateJob(google::cloud::batch::v1::CreateJobRequest const& request) override;
+  StatusOr<google::cloud::batch::v1::Job> CreateJob(
+      google::cloud::batch::v1::CreateJobRequest const& request) override;
 
-  StatusOr<google::cloud::batch::v1::Job>
-  GetJob(google::cloud::batch::v1::GetJobRequest const& request) override;
+  StatusOr<google::cloud::batch::v1::Job> GetJob(
+      google::cloud::batch::v1::GetJobRequest const& request) override;
 
-  future<StatusOr<google::cloud::batch::v1::OperationMetadata>>
-  DeleteJob(google::cloud::batch::v1::DeleteJobRequest const& request) override;
+  future<StatusOr<google::cloud::batch::v1::OperationMetadata>> DeleteJob(
+      google::cloud::batch::v1::DeleteJobRequest const& request) override;
 
-  StreamRange<google::cloud::batch::v1::Job>
-  ListJobs(google::cloud::batch::v1::ListJobsRequest request) override;
+  StreamRange<google::cloud::batch::v1::Job> ListJobs(
+      google::cloud::batch::v1::ListJobsRequest request) override;
 
-  StatusOr<google::cloud::batch::v1::Task>
-  GetTask(google::cloud::batch::v1::GetTaskRequest const& request) override;
+  StatusOr<google::cloud::batch::v1::Task> GetTask(
+      google::cloud::batch::v1::GetTaskRequest const& request) override;
 
-  StreamRange<google::cloud::batch::v1::Task>
-  ListTasks(google::cloud::batch::v1::ListTasksRequest request) override;
+  StreamRange<google::cloud::batch::v1::Task> ListTasks(
+      google::cloud::batch::v1::ListTasksRequest request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

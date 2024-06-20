@@ -46,29 +46,28 @@ class MockBatchServiceConnection : public batch_v1::BatchServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::batch::v1::Job>,
-  CreateJob,
-  (google::cloud::batch::v1::CreateJobRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::batch::v1::Job>, CreateJob,
+              (google::cloud::batch::v1::CreateJobRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::batch::v1::Job>,
-  GetJob,
-  (google::cloud::batch::v1::GetJobRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::batch::v1::Job>, GetJob,
+              (google::cloud::batch::v1::GetJobRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::batch::v1::OperationMetadata>>,
-  DeleteJob,
-  (google::cloud::batch::v1::DeleteJobRequest const& request), (override));
+              DeleteJob,
+              (google::cloud::batch::v1::DeleteJobRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::batch::v1::Job>),
-  ListJobs,
-  (google::cloud::batch::v1::ListJobsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::batch::v1::Job>), ListJobs,
+              (google::cloud::batch::v1::ListJobsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::batch::v1::Task>,
-  GetTask,
-  (google::cloud::batch::v1::GetTaskRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::batch::v1::Task>, GetTask,
+              (google::cloud::batch::v1::GetTaskRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::batch::v1::Task>),
-  ListTasks,
-  (google::cloud::batch::v1::ListTasksRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::batch::v1::Task>), ListTasks,
+              (google::cloud::batch::v1::ListTasksRequest request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -34,50 +34,53 @@ BatchServiceTracingConnection::BatchServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::batch::v1::Job>
-BatchServiceTracingConnection::CreateJob(google::cloud::batch::v1::CreateJobRequest const& request) {
+BatchServiceTracingConnection::CreateJob(
+    google::cloud::batch::v1::CreateJobRequest const& request) {
   auto span = internal::MakeSpan("batch_v1::BatchServiceConnection::CreateJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateJob(request));
 }
 
-StatusOr<google::cloud::batch::v1::Job>
-BatchServiceTracingConnection::GetJob(google::cloud::batch::v1::GetJobRequest const& request) {
+StatusOr<google::cloud::batch::v1::Job> BatchServiceTracingConnection::GetJob(
+    google::cloud::batch::v1::GetJobRequest const& request) {
   auto span = internal::MakeSpan("batch_v1::BatchServiceConnection::GetJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetJob(request));
 }
 
 future<StatusOr<google::cloud::batch::v1::OperationMetadata>>
-BatchServiceTracingConnection::DeleteJob(google::cloud::batch::v1::DeleteJobRequest const& request) {
-  auto span = internal::MakeSpan(
-      "batch_v1::BatchServiceConnection::DeleteJob");
+BatchServiceTracingConnection::DeleteJob(
+    google::cloud::batch::v1::DeleteJobRequest const& request) {
+  auto span = internal::MakeSpan("batch_v1::BatchServiceConnection::DeleteJob");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteJob(request));
 }
 
 StreamRange<google::cloud::batch::v1::Job>
-BatchServiceTracingConnection::ListJobs(google::cloud::batch::v1::ListJobsRequest request) {
+BatchServiceTracingConnection::ListJobs(
+    google::cloud::batch::v1::ListJobsRequest request) {
   auto span = internal::MakeSpan("batch_v1::BatchServiceConnection::ListJobs");
   internal::OTelScope scope(span);
   auto sr = child_->ListJobs(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::batch::v1::Job>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
-StatusOr<google::cloud::batch::v1::Task>
-BatchServiceTracingConnection::GetTask(google::cloud::batch::v1::GetTaskRequest const& request) {
+StatusOr<google::cloud::batch::v1::Task> BatchServiceTracingConnection::GetTask(
+    google::cloud::batch::v1::GetTaskRequest const& request) {
   auto span = internal::MakeSpan("batch_v1::BatchServiceConnection::GetTask");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetTask(request));
 }
 
 StreamRange<google::cloud::batch::v1::Task>
-BatchServiceTracingConnection::ListTasks(google::cloud::batch::v1::ListTasksRequest request) {
+BatchServiceTracingConnection::ListTasks(
+    google::cloud::batch::v1::ListTasksRequest request) {
   auto span = internal::MakeSpan("batch_v1::BatchServiceConnection::ListTasks");
   internal::OTelScope scope(span);
   auto sr = child_->ListTasks(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::batch::v1::Task>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

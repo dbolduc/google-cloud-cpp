@@ -31,10 +31,11 @@ namespace cloud {
 namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-FeaturestoreOnlineServingServiceMetadata::FeaturestoreOnlineServingServiceMetadata(
-    std::shared_ptr<FeaturestoreOnlineServingServiceStub> child,
-    std::multimap<std::string, std::string> fixed_metadata,
-    std::string api_client_header)
+FeaturestoreOnlineServingServiceMetadata::
+    FeaturestoreOnlineServingServiceMetadata(
+        std::shared_ptr<FeaturestoreOnlineServingServiceStub> child,
+        std::multimap<std::string, std::string> fixed_metadata,
+        std::string api_client_header)
     : child_(std::move(child)),
       fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
@@ -44,42 +45,48 @@ FeaturestoreOnlineServingServiceMetadata::FeaturestoreOnlineServingServiceMetada
 
 StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
 FeaturestoreOnlineServingServiceMetadata::ReadFeatureValues(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("entity_type=", internal::UrlEncode(request.entity_type())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("entity_type=", internal::UrlEncode(request.entity_type())));
   return child_->ReadFeatureValues(context, options, request);
 }
 
-std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>
 FeaturestoreOnlineServingServiceMetadata::StreamingReadFeatureValues(
-    std::shared_ptr<grpc::ClientContext> context,
-    Options const& options,
-    google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const& request) {
-  SetMetadata(*context, options, absl::StrCat("entity_type=", internal::UrlEncode(request.entity_type())));
-  return child_->StreamingReadFeatureValues(std::move(context), options, request);
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
+        request) {
+  SetMetadata(
+      *context, options,
+      absl::StrCat("entity_type=", internal::UrlEncode(request.entity_type())));
+  return child_->StreamingReadFeatureValues(std::move(context), options,
+                                            request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
 FeaturestoreOnlineServingServiceMetadata::WriteFeatureValues(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("entity_type=", internal::UrlEncode(request.entity_type())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("entity_type=", internal::UrlEncode(request.entity_type())));
   return child_->WriteFeatureValues(context, options, request);
 }
 
-void FeaturestoreOnlineServingServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+void FeaturestoreOnlineServingServiceMetadata::SetMetadata(
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
-void FeaturestoreOnlineServingServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+void FeaturestoreOnlineServingServiceMetadata::SetMetadata(
+    grpc::ClientContext& context, Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

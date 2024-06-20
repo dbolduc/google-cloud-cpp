@@ -42,37 +42,46 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockScheduleServiceConnection : public aiplatform_v1::ScheduleServiceConnection {
+class MockScheduleServiceConnection
+    : public aiplatform_v1::ScheduleServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Schedule>,
-  CreateSchedule,
-  (google::cloud::aiplatform::v1::CreateScheduleRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::Schedule>, CreateSchedule,
+      (google::cloud::aiplatform::v1::CreateScheduleRequest const& request),
+      (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-  DeleteSchedule,
-  (google::cloud::aiplatform::v1::DeleteScheduleRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteSchedule,
+      (google::cloud::aiplatform::v1::DeleteScheduleRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Schedule>,
-  GetSchedule,
-  (google::cloud::aiplatform::v1::GetScheduleRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::Schedule>, GetSchedule,
+      (google::cloud::aiplatform::v1::GetScheduleRequest const& request),
+      (override));
 
   MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Schedule>),
-  ListSchedules,
-  (google::cloud::aiplatform::v1::ListSchedulesRequest request), (override));
+              ListSchedules,
+              (google::cloud::aiplatform::v1::ListSchedulesRequest request),
+              (override));
 
-  MOCK_METHOD(Status,
-  PauseSchedule,
-  (google::cloud::aiplatform::v1::PauseScheduleRequest const& request), (override));
+  MOCK_METHOD(
+      Status, PauseSchedule,
+      (google::cloud::aiplatform::v1::PauseScheduleRequest const& request),
+      (override));
 
-  MOCK_METHOD(Status,
-  ResumeSchedule,
-  (google::cloud::aiplatform::v1::ResumeScheduleRequest const& request), (override));
+  MOCK_METHOD(
+      Status, ResumeSchedule,
+      (google::cloud::aiplatform::v1::ResumeScheduleRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Schedule>,
-  UpdateSchedule,
-  (google::cloud::aiplatform::v1::UpdateScheduleRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::Schedule>, UpdateSchedule,
+      (google::cloud::aiplatform::v1::UpdateScheduleRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -36,30 +36,42 @@ class AppConnectorsServiceTracingConnection
   ~AppConnectorsServiceTracingConnection() override = default;
 
   explicit AppConnectorsServiceTracingConnection(
-    std::shared_ptr<beyondcorp_appconnectors_v1::AppConnectorsServiceConnection> child);
+      std::shared_ptr<
+          beyondcorp_appconnectors_v1::AppConnectorsServiceConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
   StreamRange<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
-  ListAppConnectors(google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest request) override;
+  ListAppConnectors(
+      google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest
+          request) override;
 
   StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
-  GetAppConnector(google::cloud::beyondcorp::appconnectors::v1::GetAppConnectorRequest const& request) override;
+  GetAppConnector(google::cloud::beyondcorp::appconnectors::v1::
+                      GetAppConnectorRequest const& request) override;
 
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  CreateAppConnector(google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest const& request) override;
+  CreateAppConnector(google::cloud::beyondcorp::appconnectors::v1::
+                         CreateAppConnectorRequest const& request) override;
 
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  UpdateAppConnector(google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest const& request) override;
+  UpdateAppConnector(google::cloud::beyondcorp::appconnectors::v1::
+                         UpdateAppConnectorRequest const& request) override;
 
-  future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnectorOperationMetadata>>
-  DeleteAppConnector(google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest const& request) override;
+  future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
+                      AppConnectorOperationMetadata>>
+  DeleteAppConnector(google::cloud::beyondcorp::appconnectors::v1::
+                         DeleteAppConnectorRequest const& request) override;
 
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  ReportStatus(google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const& request) override;
+  ReportStatus(
+      google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
+          request) override;
 
  private:
-  std::shared_ptr<beyondcorp_appconnectors_v1::AppConnectorsServiceConnection> child_;
+  std::shared_ptr<beyondcorp_appconnectors_v1::AppConnectorsServiceConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -72,7 +84,8 @@ class AppConnectorsServiceTracingConnection
  */
 std::shared_ptr<beyondcorp_appconnectors_v1::AppConnectorsServiceConnection>
 MakeAppConnectorsServiceTracingConnection(
-    std::shared_ptr<beyondcorp_appconnectors_v1::AppConnectorsServiceConnection> conn);
+    std::shared_ptr<beyondcorp_appconnectors_v1::AppConnectorsServiceConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_appconnectors_v1_internal

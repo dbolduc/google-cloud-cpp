@@ -28,12 +28,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SpecialistPoolServiceClient::SpecialistPoolServiceClient(
     std::shared_ptr<SpecialistPoolServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 SpecialistPoolServiceClient::~SpecialistPoolServiceClient() = default;
 
 future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-SpecialistPoolServiceClient::CreateSpecialistPool(std::string const& parent, google::cloud::aiplatform::v1::SpecialistPool const& specialist_pool, Options opts) {
+SpecialistPoolServiceClient::CreateSpecialistPool(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::SpecialistPool const& specialist_pool,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateSpecialistPoolRequest request;
   request.set_parent(parent);
@@ -42,13 +45,16 @@ SpecialistPoolServiceClient::CreateSpecialistPool(std::string const& parent, goo
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-SpecialistPoolServiceClient::CreateSpecialistPool(google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request, Options opts) {
+SpecialistPoolServiceClient::CreateSpecialistPool(
+    google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSpecialistPool(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
-SpecialistPoolServiceClient::GetSpecialistPool(std::string const& name, Options opts) {
+SpecialistPoolServiceClient::GetSpecialistPool(std::string const& name,
+                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::GetSpecialistPoolRequest request;
   request.set_name(name);
@@ -56,13 +62,16 @@ SpecialistPoolServiceClient::GetSpecialistPool(std::string const& name, Options 
 }
 
 StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
-SpecialistPoolServiceClient::GetSpecialistPool(google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request, Options opts) {
+SpecialistPoolServiceClient::GetSpecialistPool(
+    google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSpecialistPool(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::SpecialistPool>
-SpecialistPoolServiceClient::ListSpecialistPools(std::string const& parent, Options opts) {
+SpecialistPoolServiceClient::ListSpecialistPools(std::string const& parent,
+                                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListSpecialistPoolsRequest request;
   request.set_parent(parent);
@@ -70,13 +79,16 @@ SpecialistPoolServiceClient::ListSpecialistPools(std::string const& parent, Opti
 }
 
 StreamRange<google::cloud::aiplatform::v1::SpecialistPool>
-SpecialistPoolServiceClient::ListSpecialistPools(google::cloud::aiplatform::v1::ListSpecialistPoolsRequest request, Options opts) {
+SpecialistPoolServiceClient::ListSpecialistPools(
+    google::cloud::aiplatform::v1::ListSpecialistPoolsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSpecialistPools(std::move(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-SpecialistPoolServiceClient::DeleteSpecialistPool(std::string const& name, Options opts) {
+SpecialistPoolServiceClient::DeleteSpecialistPool(std::string const& name,
+                                                  Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest request;
   request.set_name(name);
@@ -84,13 +96,17 @@ SpecialistPoolServiceClient::DeleteSpecialistPool(std::string const& name, Optio
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-SpecialistPoolServiceClient::DeleteSpecialistPool(google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request, Options opts) {
+SpecialistPoolServiceClient::DeleteSpecialistPool(
+    google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSpecialistPool(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-SpecialistPoolServiceClient::UpdateSpecialistPool(google::cloud::aiplatform::v1::SpecialistPool const& specialist_pool, google::protobuf::FieldMask const& update_mask, Options opts) {
+SpecialistPoolServiceClient::UpdateSpecialistPool(
+    google::cloud::aiplatform::v1::SpecialistPool const& specialist_pool,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest request;
   *request.mutable_specialist_pool() = specialist_pool;
@@ -99,7 +115,9 @@ SpecialistPoolServiceClient::UpdateSpecialistPool(google::cloud::aiplatform::v1:
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-SpecialistPoolServiceClient::UpdateSpecialistPool(google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request, Options opts) {
+SpecialistPoolServiceClient::UpdateSpecialistPool(
+    google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSpecialistPool(request);
 }

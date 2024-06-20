@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ArtifactRegistryConnection::~ArtifactRegistryConnection() = default;
 
-StreamRange<google::devtools::artifactregistry::v1::DockerImage> ArtifactRegistryConnection::ListDockerImages(
-    google::devtools::artifactregistry::v1::ListDockerImagesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::devtools::artifactregistry::v1::DockerImage>
+ArtifactRegistryConnection::ListDockerImages(
+    google::devtools::artifactregistry::v1::
+        ListDockerImagesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::artifactregistry::v1::DockerImage>>();
 }
@@ -50,8 +52,10 @@ ArtifactRegistryConnection::GetDockerImage(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::devtools::artifactregistry::v1::MavenArtifact> ArtifactRegistryConnection::ListMavenArtifacts(
-    google::devtools::artifactregistry::v1::ListMavenArtifactsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::devtools::artifactregistry::v1::MavenArtifact>
+ArtifactRegistryConnection::ListMavenArtifacts(
+    google::devtools::artifactregistry::v1::
+        ListMavenArtifactsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::artifactregistry::v1::MavenArtifact>>();
 }
@@ -62,8 +66,10 @@ ArtifactRegistryConnection::GetMavenArtifact(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::devtools::artifactregistry::v1::NpmPackage> ArtifactRegistryConnection::ListNpmPackages(
-    google::devtools::artifactregistry::v1::ListNpmPackagesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::devtools::artifactregistry::v1::NpmPackage>
+ArtifactRegistryConnection::ListNpmPackages(
+    google::devtools::artifactregistry::v1::
+        ListNpmPackagesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::artifactregistry::v1::NpmPackage>>();
 }
@@ -74,8 +80,10 @@ ArtifactRegistryConnection::GetNpmPackage(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::devtools::artifactregistry::v1::PythonPackage> ArtifactRegistryConnection::ListPythonPackages(
-    google::devtools::artifactregistry::v1::ListPythonPackagesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::devtools::artifactregistry::v1::PythonPackage>
+ArtifactRegistryConnection::ListPythonPackages(
+    google::devtools::artifactregistry::v1::
+        ListPythonPackagesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::artifactregistry::v1::PythonPackage>>();
 }
@@ -86,24 +94,28 @@ ArtifactRegistryConnection::GetPythonPackage(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-future<StatusOr<google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
+future<StatusOr<
+    google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
 ArtifactRegistryConnection::ImportAptArtifacts(
     google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
+future<StatusOr<
+    google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
 ArtifactRegistryConnection::ImportYumArtifacts(
     google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::devtools::artifactregistry::v1::Repository> ArtifactRegistryConnection::ListRepositories(
-    google::devtools::artifactregistry::v1::ListRepositoriesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::devtools::artifactregistry::v1::Repository>
+ArtifactRegistryConnection::ListRepositories(
+    google::devtools::artifactregistry::v1::
+        ListRepositoriesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::artifactregistry::v1::Repository>>();
 }
@@ -118,8 +130,8 @@ future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
 ArtifactRegistryConnection::CreateRepository(
     google::devtools::artifactregistry::v1::CreateRepositoryRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::devtools::artifactregistry::v1::Repository>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::devtools::artifactregistry::v1::Repository>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Repository>
@@ -132,12 +144,14 @@ future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
 ArtifactRegistryConnection::DeleteRepository(
     google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::devtools::artifactregistry::v1::Package> ArtifactRegistryConnection::ListPackages(
-    google::devtools::artifactregistry::v1::ListPackagesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::devtools::artifactregistry::v1::Package>
+ArtifactRegistryConnection::ListPackages(
+    google::devtools::artifactregistry::v1::
+        ListPackagesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::artifactregistry::v1::Package>>();
 }
@@ -152,12 +166,14 @@ future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
 ArtifactRegistryConnection::DeletePackage(
     google::devtools::artifactregistry::v1::DeletePackageRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::devtools::artifactregistry::v1::Version> ArtifactRegistryConnection::ListVersions(
-    google::devtools::artifactregistry::v1::ListVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::devtools::artifactregistry::v1::Version>
+ArtifactRegistryConnection::ListVersions(
+    google::devtools::artifactregistry::v1::
+        ListVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::artifactregistry::v1::Version>>();
 }
@@ -172,20 +188,23 @@ future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
 ArtifactRegistryConnection::DeleteVersion(
     google::devtools::artifactregistry::v1::DeleteVersionRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
+future<StatusOr<
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
 ArtifactRegistryConnection::BatchDeleteVersions(
     google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::devtools::artifactregistry::v1::File> ArtifactRegistryConnection::ListFiles(
-    google::devtools::artifactregistry::v1::ListFilesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::devtools::artifactregistry::v1::File>
+ArtifactRegistryConnection::ListFiles(
+    google::devtools::artifactregistry::v1::
+        ListFilesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::artifactregistry::v1::File>>();
 }
@@ -196,8 +215,10 @@ ArtifactRegistryConnection::GetFile(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::devtools::artifactregistry::v1::Tag> ArtifactRegistryConnection::ListTags(
-    google::devtools::artifactregistry::v1::ListTagsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::devtools::artifactregistry::v1::Tag>
+ArtifactRegistryConnection::ListTags(
+    google::devtools::artifactregistry::v1::
+        ListTagsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::artifactregistry::v1::Tag>>();
 }
@@ -220,20 +241,17 @@ ArtifactRegistryConnection::UpdateTag(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ArtifactRegistryConnection::DeleteTag(
+Status ArtifactRegistryConnection::DeleteTag(
     google::devtools::artifactregistry::v1::DeleteTagRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-ArtifactRegistryConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> ArtifactRegistryConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-ArtifactRegistryConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> ArtifactRegistryConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -252,7 +270,8 @@ ArtifactRegistryConnection::GetProjectSettings(
 
 StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
 ArtifactRegistryConnection::UpdateProjectSettings(
-    google::devtools::artifactregistry::v1::UpdateProjectSettingsRequest const&) {
+    google::devtools::artifactregistry::v1::
+        UpdateProjectSettingsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -271,17 +290,19 @@ ArtifactRegistryConnection::UpdateVPCSCConfig(
 std::shared_ptr<ArtifactRegistryConnection> MakeArtifactRegistryConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ArtifactRegistryPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 ArtifactRegistryPolicyOptionList>(options,
+                                                                   __func__);
   options = artifactregistry_v1_internal::ArtifactRegistryDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = artifactregistry_v1_internal::CreateDefaultArtifactRegistryStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return artifactregistry_v1_internal::MakeArtifactRegistryTracingConnection(
-      std::make_shared<artifactregistry_v1_internal::ArtifactRegistryConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          artifactregistry_v1_internal::ArtifactRegistryConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

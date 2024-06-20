@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `FeatureOnlineStoreAdminServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `FeatureOnlineStoreAdminServiceClient`. To do so,
- * construct an object of type `FeatureOnlineStoreAdminServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * including errors, from an object of type
+ * `FeatureOnlineStoreAdminServiceClient`. To do so, construct an object of type
+ * `FeatureOnlineStoreAdminServiceClient` with an instance of this class. Then
+ * use the Google Test framework functions to program the behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,61 +42,90 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockFeatureOnlineStoreAdminServiceConnection : public aiplatform_v1::FeatureOnlineStoreAdminServiceConnection {
+class MockFeatureOnlineStoreAdminServiceConnection
+    : public aiplatform_v1::FeatureOnlineStoreAdminServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>,
-  CreateFeatureOnlineStore,
-  (google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>,
+      CreateFeatureOnlineStore,
+      (google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>,
-  GetFeatureOnlineStore,
-  (google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>,
+      GetFeatureOnlineStore,
+      (google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::FeatureOnlineStore>),
-  ListFeatureOnlineStores,
-  (google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::aiplatform::v1::FeatureOnlineStore>),
+      ListFeatureOnlineStores,
+      (google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest request),
+      (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>,
-  UpdateFeatureOnlineStore,
-  (google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>,
+      UpdateFeatureOnlineStore,
+      (google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-  DeleteFeatureOnlineStore,
-  (google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteFeatureOnlineStore,
+      (google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>,
-  CreateFeatureView,
-  (google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>,
+      CreateFeatureView,
+      (google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::FeatureView>,
-  GetFeatureView,
-  (google::cloud::aiplatform::v1::GetFeatureViewRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::FeatureView>, GetFeatureView,
+      (google::cloud::aiplatform::v1::GetFeatureViewRequest const& request),
+      (override));
 
   MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::FeatureView>),
-  ListFeatureViews,
-  (google::cloud::aiplatform::v1::ListFeatureViewsRequest request), (override));
+              ListFeatureViews,
+              (google::cloud::aiplatform::v1::ListFeatureViewsRequest request),
+              (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>,
-  UpdateFeatureView,
-  (google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>,
+      UpdateFeatureView,
+      (google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request),
+      (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-  DeleteFeatureView,
-  (google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteFeatureView,
+      (google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse>,
-  SyncFeatureView,
-  (google::cloud::aiplatform::v1::SyncFeatureViewRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse>,
+      SyncFeatureView,
+      (google::cloud::aiplatform::v1::SyncFeatureViewRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::FeatureViewSync>,
-  GetFeatureViewSync,
-  (google::cloud::aiplatform::v1::GetFeatureViewSyncRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::FeatureViewSync>,
+      GetFeatureViewSync,
+      (google::cloud::aiplatform::v1::GetFeatureViewSyncRequest const& request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::FeatureViewSync>),
-  ListFeatureViewSyncs,
-  (google::cloud::aiplatform::v1::ListFeatureViewSyncsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::aiplatform::v1::FeatureViewSync>),
+      ListFeatureViewSyncs,
+      (google::cloud::aiplatform::v1::ListFeatureViewSyncsRequest request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

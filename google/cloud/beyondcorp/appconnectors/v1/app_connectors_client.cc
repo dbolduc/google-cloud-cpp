@@ -28,26 +28,32 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AppConnectorsServiceClient::AppConnectorsServiceClient(
     std::shared_ptr<AppConnectorsServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 AppConnectorsServiceClient::~AppConnectorsServiceClient() = default;
 
 StreamRange<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
-AppConnectorsServiceClient::ListAppConnectors(std::string const& parent, Options opts) {
+AppConnectorsServiceClient::ListAppConnectors(std::string const& parent,
+                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest request;
+  google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest
+      request;
   request.set_parent(parent);
   return connection_->ListAppConnectors(request);
 }
 
 StreamRange<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
-AppConnectorsServiceClient::ListAppConnectors(google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest request, Options opts) {
+AppConnectorsServiceClient::ListAppConnectors(
+    google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAppConnectors(std::move(request));
 }
 
 StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
-AppConnectorsServiceClient::GetAppConnector(std::string const& name, Options opts) {
+AppConnectorsServiceClient::GetAppConnector(std::string const& name,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::beyondcorp::appconnectors::v1::GetAppConnectorRequest request;
   request.set_name(name);
@@ -55,15 +61,23 @@ AppConnectorsServiceClient::GetAppConnector(std::string const& name, Options opt
 }
 
 StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
-AppConnectorsServiceClient::GetAppConnector(google::cloud::beyondcorp::appconnectors::v1::GetAppConnectorRequest const& request, Options opts) {
+AppConnectorsServiceClient::GetAppConnector(
+    google::cloud::beyondcorp::appconnectors::v1::GetAppConnectorRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAppConnector(request);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-AppConnectorsServiceClient::CreateAppConnector(std::string const& parent, google::cloud::beyondcorp::appconnectors::v1::AppConnector const& app_connector, std::string const& app_connector_id, Options opts) {
+AppConnectorsServiceClient::CreateAppConnector(
+    std::string const& parent,
+    google::cloud::beyondcorp::appconnectors::v1::AppConnector const&
+        app_connector,
+    std::string const& app_connector_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest request;
+  google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest
+      request;
   request.set_parent(parent);
   *request.mutable_app_connector() = app_connector;
   request.set_app_connector_id(app_connector_id);
@@ -71,42 +85,63 @@ AppConnectorsServiceClient::CreateAppConnector(std::string const& parent, google
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-AppConnectorsServiceClient::CreateAppConnector(google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest const& request, Options opts) {
+AppConnectorsServiceClient::CreateAppConnector(
+    google::cloud::beyondcorp::appconnectors::v1::
+        CreateAppConnectorRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAppConnector(request);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-AppConnectorsServiceClient::UpdateAppConnector(google::cloud::beyondcorp::appconnectors::v1::AppConnector const& app_connector, google::protobuf::FieldMask const& update_mask, Options opts) {
+AppConnectorsServiceClient::UpdateAppConnector(
+    google::cloud::beyondcorp::appconnectors::v1::AppConnector const&
+        app_connector,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest request;
+  google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest
+      request;
   *request.mutable_app_connector() = app_connector;
   *request.mutable_update_mask() = update_mask;
   return connection_->UpdateAppConnector(request);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-AppConnectorsServiceClient::UpdateAppConnector(google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest const& request, Options opts) {
+AppConnectorsServiceClient::UpdateAppConnector(
+    google::cloud::beyondcorp::appconnectors::v1::
+        UpdateAppConnectorRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAppConnector(request);
 }
 
-future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnectorOperationMetadata>>
-AppConnectorsServiceClient::DeleteAppConnector(std::string const& name, Options opts) {
+future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
+                    AppConnectorOperationMetadata>>
+AppConnectorsServiceClient::DeleteAppConnector(std::string const& name,
+                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest request;
+  google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest
+      request;
   request.set_name(name);
   return connection_->DeleteAppConnector(request);
 }
 
-future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnectorOperationMetadata>>
-AppConnectorsServiceClient::DeleteAppConnector(google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest const& request, Options opts) {
+future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
+                    AppConnectorOperationMetadata>>
+AppConnectorsServiceClient::DeleteAppConnector(
+    google::cloud::beyondcorp::appconnectors::v1::
+        DeleteAppConnectorRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAppConnector(request);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-AppConnectorsServiceClient::ReportStatus(std::string const& app_connector, google::cloud::beyondcorp::appconnectors::v1::ResourceInfo const& resource_info, Options opts) {
+AppConnectorsServiceClient::ReportStatus(
+    std::string const& app_connector,
+    google::cloud::beyondcorp::appconnectors::v1::ResourceInfo const&
+        resource_info,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest request;
   request.set_app_connector(app_connector);
@@ -115,7 +150,10 @@ AppConnectorsServiceClient::ReportStatus(std::string const& app_connector, googl
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-AppConnectorsServiceClient::ReportStatus(google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const& request, Options opts) {
+AppConnectorsServiceClient::ReportStatus(
+    google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReportStatus(request);
 }

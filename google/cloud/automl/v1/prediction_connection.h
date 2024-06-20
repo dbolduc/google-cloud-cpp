@@ -55,7 +55,8 @@ class PredictionServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class PredictionServiceLimitedErrorCountRetryPolicy : public PredictionServiceRetryPolicy {
+class PredictionServiceLimitedErrorCountRetryPolicy
+    : public PredictionServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,14 +66,14 @@ class PredictionServiceLimitedErrorCountRetryPolicy : public PredictionServiceRe
    *     @p maximum_failures == 0.
    */
   explicit PredictionServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   PredictionServiceLimitedErrorCountRetryPolicy(
       PredictionServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : PredictionServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : PredictionServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   PredictionServiceLimitedErrorCountRetryPolicy(
       PredictionServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : PredictionServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : PredictionServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,7 +93,9 @@ class PredictionServiceLimitedErrorCountRetryPolicy : public PredictionServiceRe
   using BaseType = PredictionServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<automl_v1_internal::PredictionServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      automl_v1_internal::PredictionServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -105,7 +108,8 @@ class PredictionServiceLimitedErrorCountRetryPolicy : public PredictionServiceRe
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class PredictionServiceLimitedTimeRetryPolicy : public PredictionServiceRetryPolicy {
+class PredictionServiceLimitedTimeRetryPolicy
+    : public PredictionServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -130,12 +134,14 @@ class PredictionServiceLimitedTimeRetryPolicy : public PredictionServiceRetryPol
   template <typename DurationRep, typename DurationPeriod>
   explicit PredictionServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  PredictionServiceLimitedTimeRetryPolicy(PredictionServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : PredictionServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  PredictionServiceLimitedTimeRetryPolicy(PredictionServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : PredictionServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  PredictionServiceLimitedTimeRetryPolicy(
+      PredictionServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : PredictionServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  PredictionServiceLimitedTimeRetryPolicy(
+      PredictionServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : PredictionServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -157,16 +163,18 @@ class PredictionServiceLimitedTimeRetryPolicy : public PredictionServiceRetryPol
   using BaseType = PredictionServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<automl_v1_internal::PredictionServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      automl_v1_internal::PredictionServiceRetryTraits>
+      impl_;
 };
 
 /**
  * The `PredictionServiceConnection` object for `PredictionServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `PredictionServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `PredictionServiceClient`.
+ * sets in `PredictionServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `PredictionServiceClient`.
  *
  * To create a concrete instance, see `MakePredictionServiceConnection()`.
  *
@@ -178,22 +186,24 @@ class PredictionServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::automl::v1::PredictResponse>
-  Predict(google::cloud::automl::v1::PredictRequest const& request);
+  virtual StatusOr<google::cloud::automl::v1::PredictResponse> Predict(
+      google::cloud::automl::v1::PredictRequest const& request);
 
   virtual future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>
   BatchPredict(google::cloud::automl::v1::BatchPredictRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `PredictionServiceConnection`.
+ * A factory function to construct an object of type
+ * `PredictionServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of PredictionServiceClient.
+ * should be passed as an argument to the constructor of
+ * PredictionServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `PredictionServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `PredictionServiceConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -203,8 +213,8 @@ class PredictionServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `PredictionServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `PredictionServiceConnection` created
+ * by this function.
  */
 std::shared_ptr<PredictionServiceConnection> MakePredictionServiceConnection(
     Options options = {});

@@ -34,44 +34,54 @@ VizierServiceTracingConnection::VizierServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::aiplatform::v1::Study>
-VizierServiceTracingConnection::CreateStudy(google::cloud::aiplatform::v1::CreateStudyRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::VizierServiceConnection::CreateStudy");
+VizierServiceTracingConnection::CreateStudy(
+    google::cloud::aiplatform::v1::CreateStudyRequest const& request) {
+  auto span =
+      internal::MakeSpan("aiplatform_v1::VizierServiceConnection::CreateStudy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateStudy(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Study>
-VizierServiceTracingConnection::GetStudy(google::cloud::aiplatform::v1::GetStudyRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::VizierServiceConnection::GetStudy");
+VizierServiceTracingConnection::GetStudy(
+    google::cloud::aiplatform::v1::GetStudyRequest const& request) {
+  auto span =
+      internal::MakeSpan("aiplatform_v1::VizierServiceConnection::GetStudy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetStudy(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::Study>
-VizierServiceTracingConnection::ListStudies(google::cloud::aiplatform::v1::ListStudiesRequest request) {
-  auto span = internal::MakeSpan("aiplatform_v1::VizierServiceConnection::ListStudies");
+VizierServiceTracingConnection::ListStudies(
+    google::cloud::aiplatform::v1::ListStudiesRequest request) {
+  auto span =
+      internal::MakeSpan("aiplatform_v1::VizierServiceConnection::ListStudies");
   internal::OTelScope scope(span);
   auto sr = child_->ListStudies(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::Study>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
-Status
-VizierServiceTracingConnection::DeleteStudy(google::cloud::aiplatform::v1::DeleteStudyRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::VizierServiceConnection::DeleteStudy");
+Status VizierServiceTracingConnection::DeleteStudy(
+    google::cloud::aiplatform::v1::DeleteStudyRequest const& request) {
+  auto span =
+      internal::MakeSpan("aiplatform_v1::VizierServiceConnection::DeleteStudy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteStudy(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Study>
-VizierServiceTracingConnection::LookupStudy(google::cloud::aiplatform::v1::LookupStudyRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::VizierServiceConnection::LookupStudy");
+VizierServiceTracingConnection::LookupStudy(
+    google::cloud::aiplatform::v1::LookupStudyRequest const& request) {
+  auto span =
+      internal::MakeSpan("aiplatform_v1::VizierServiceConnection::LookupStudy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->LookupStudy(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>
-VizierServiceTracingConnection::SuggestTrials(google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
+VizierServiceTracingConnection::SuggestTrials(
+    google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::VizierServiceConnection::SuggestTrials");
   internal::OTelScope scope(span);
@@ -79,67 +89,86 @@ VizierServiceTracingConnection::SuggestTrials(google::cloud::aiplatform::v1::Sug
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial>
-VizierServiceTracingConnection::CreateTrial(google::cloud::aiplatform::v1::CreateTrialRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::VizierServiceConnection::CreateTrial");
+VizierServiceTracingConnection::CreateTrial(
+    google::cloud::aiplatform::v1::CreateTrialRequest const& request) {
+  auto span =
+      internal::MakeSpan("aiplatform_v1::VizierServiceConnection::CreateTrial");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateTrial(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial>
-VizierServiceTracingConnection::GetTrial(google::cloud::aiplatform::v1::GetTrialRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::VizierServiceConnection::GetTrial");
+VizierServiceTracingConnection::GetTrial(
+    google::cloud::aiplatform::v1::GetTrialRequest const& request) {
+  auto span =
+      internal::MakeSpan("aiplatform_v1::VizierServiceConnection::GetTrial");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetTrial(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::Trial>
-VizierServiceTracingConnection::ListTrials(google::cloud::aiplatform::v1::ListTrialsRequest request) {
-  auto span = internal::MakeSpan("aiplatform_v1::VizierServiceConnection::ListTrials");
+VizierServiceTracingConnection::ListTrials(
+    google::cloud::aiplatform::v1::ListTrialsRequest request) {
+  auto span =
+      internal::MakeSpan("aiplatform_v1::VizierServiceConnection::ListTrials");
   internal::OTelScope scope(span);
   auto sr = child_->ListTrials(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::Trial>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial>
-VizierServiceTracingConnection::AddTrialMeasurement(google::cloud::aiplatform::v1::AddTrialMeasurementRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::VizierServiceConnection::AddTrialMeasurement");
+VizierServiceTracingConnection::AddTrialMeasurement(
+    google::cloud::aiplatform::v1::AddTrialMeasurementRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::VizierServiceConnection::AddTrialMeasurement");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AddTrialMeasurement(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial>
-VizierServiceTracingConnection::CompleteTrial(google::cloud::aiplatform::v1::CompleteTrialRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::VizierServiceConnection::CompleteTrial");
+VizierServiceTracingConnection::CompleteTrial(
+    google::cloud::aiplatform::v1::CompleteTrialRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::VizierServiceConnection::CompleteTrial");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CompleteTrial(request));
 }
 
-Status
-VizierServiceTracingConnection::DeleteTrial(google::cloud::aiplatform::v1::DeleteTrialRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::VizierServiceConnection::DeleteTrial");
+Status VizierServiceTracingConnection::DeleteTrial(
+    google::cloud::aiplatform::v1::DeleteTrialRequest const& request) {
+  auto span =
+      internal::MakeSpan("aiplatform_v1::VizierServiceConnection::DeleteTrial");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteTrial(request));
 }
 
-future<StatusOr<google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
-VizierServiceTracingConnection::CheckTrialEarlyStoppingState(google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const& request) {
+future<StatusOr<
+    google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
+VizierServiceTracingConnection::CheckTrialEarlyStoppingState(
+    google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::VizierServiceConnection::CheckTrialEarlyStoppingState");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CheckTrialEarlyStoppingState(request));
+  return internal::EndSpan(std::move(span),
+                           child_->CheckTrialEarlyStoppingState(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial>
-VizierServiceTracingConnection::StopTrial(google::cloud::aiplatform::v1::StopTrialRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::VizierServiceConnection::StopTrial");
+VizierServiceTracingConnection::StopTrial(
+    google::cloud::aiplatform::v1::StopTrialRequest const& request) {
+  auto span =
+      internal::MakeSpan("aiplatform_v1::VizierServiceConnection::StopTrial");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->StopTrial(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListOptimalTrialsResponse>
-VizierServiceTracingConnection::ListOptimalTrials(google::cloud::aiplatform::v1::ListOptimalTrialsRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::VizierServiceConnection::ListOptimalTrials");
+VizierServiceTracingConnection::ListOptimalTrials(
+    google::cloud::aiplatform::v1::ListOptimalTrialsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::VizierServiceConnection::ListOptimalTrials");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ListOptimalTrials(request));
 }

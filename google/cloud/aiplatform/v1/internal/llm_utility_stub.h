@@ -35,35 +35,39 @@ class LlmUtilityServiceStub {
  public:
   virtual ~LlmUtilityServiceStub() = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::CountTokensResponse> CountTokens(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::aiplatform::v1::CountTokensResponse>
+  CountTokens(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CountTokensRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse> ComputeTokens(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse>
+  ComputeTokens(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ComputeTokensRequest const& request) = 0;
 };
 
 class DefaultLlmUtilityServiceStub : public LlmUtilityServiceStub {
  public:
   explicit DefaultLlmUtilityServiceStub(
-      std::unique_ptr<google::cloud::aiplatform::v1::LlmUtilityService::StubInterface> grpc_stub)
+      std::unique_ptr<
+          google::cloud::aiplatform::v1::LlmUtilityService::StubInterface>
+          grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::aiplatform::v1::CountTokensResponse> CountTokens(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::CountTokensRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::CountTokensRequest const& request)
+      override;
 
   StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse> ComputeTokens(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ComputeTokensRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ComputeTokensRequest const& request)
+      override;
 
  private:
-  std::unique_ptr<google::cloud::aiplatform::v1::LlmUtilityService::StubInterface> grpc_stub_;
+  std::unique_ptr<
+      google::cloud::aiplatform::v1::LlmUtilityService::StubInterface>
+      grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

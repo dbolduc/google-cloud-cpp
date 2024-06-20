@@ -28,12 +28,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 MigrationServiceClient::MigrationServiceClient(
     std::shared_ptr<MigrationServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 MigrationServiceClient::~MigrationServiceClient() = default;
 
 StreamRange<google::cloud::aiplatform::v1::MigratableResource>
-MigrationServiceClient::SearchMigratableResources(std::string const& parent, Options opts) {
+MigrationServiceClient::SearchMigratableResources(std::string const& parent,
+                                                  Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::SearchMigratableResourcesRequest request;
   request.set_parent(parent);
@@ -41,22 +42,31 @@ MigrationServiceClient::SearchMigratableResources(std::string const& parent, Opt
 }
 
 StreamRange<google::cloud::aiplatform::v1::MigratableResource>
-MigrationServiceClient::SearchMigratableResources(google::cloud::aiplatform::v1::SearchMigratableResourcesRequest request, Options opts) {
+MigrationServiceClient::SearchMigratableResources(
+    google::cloud::aiplatform::v1::SearchMigratableResourcesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchMigratableResources(std::move(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
-MigrationServiceClient::BatchMigrateResources(std::string const& parent, std::vector<google::cloud::aiplatform::v1::MigrateResourceRequest> const& migrate_resource_requests, Options opts) {
+MigrationServiceClient::BatchMigrateResources(
+    std::string const& parent,
+    std::vector<google::cloud::aiplatform::v1::MigrateResourceRequest> const&
+        migrate_resource_requests,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::BatchMigrateResourcesRequest request;
   request.set_parent(parent);
-  *request.mutable_migrate_resource_requests() = {migrate_resource_requests.begin(), migrate_resource_requests.end()};
+  *request.mutable_migrate_resource_requests() = {
+      migrate_resource_requests.begin(), migrate_resource_requests.end()};
   return connection_->BatchMigrateResources(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
-MigrationServiceClient::BatchMigrateResources(google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request, Options opts) {
+MigrationServiceClient::BatchMigrateResources(
+    google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchMigrateResources(request);
 }

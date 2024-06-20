@@ -28,18 +28,22 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 MatchServiceClient::MatchServiceClient(
     std::shared_ptr<MatchServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 MatchServiceClient::~MatchServiceClient() = default;
 
 StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse>
-MatchServiceClient::FindNeighbors(google::cloud::aiplatform::v1::FindNeighborsRequest const& request, Options opts) {
+MatchServiceClient::FindNeighbors(
+    google::cloud::aiplatform::v1::FindNeighborsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FindNeighbors(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>
-MatchServiceClient::ReadIndexDatapoints(google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request, Options opts) {
+MatchServiceClient::ReadIndexDatapoints(
+    google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReadIndexDatapoints(request);
 }

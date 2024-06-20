@@ -35,103 +35,136 @@ namespace {
 
 std::unique_ptr<aiplatform_v1::DeploymentResourcePoolServiceRetryPolicy>
 retry_policy(Options const& options) {
-  return options.get<aiplatform_v1::DeploymentResourcePoolServiceRetryPolicyOption>()->clone();
+  return options
+      .get<aiplatform_v1::DeploymentResourcePoolServiceRetryPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<aiplatform_v1::DeploymentResourcePoolServiceBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<aiplatform_v1::DeploymentResourcePoolServiceBackoffPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<aiplatform_v1::DeploymentResourcePoolServiceConnectionIdempotencyPolicy>
+std::unique_ptr<
+    aiplatform_v1::DeploymentResourcePoolServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<aiplatform_v1::DeploymentResourcePoolServiceConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<aiplatform_v1::
+               DeploymentResourcePoolServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-  return options.get<aiplatform_v1::DeploymentResourcePoolServicePollingPolicyOption>()->clone();
+  return options
+      .get<aiplatform_v1::DeploymentResourcePoolServicePollingPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
-DeploymentResourcePoolServiceConnectionImpl::DeploymentResourcePoolServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<aiplatform_v1_internal::DeploymentResourcePoolServiceStub> stub,
-    Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        DeploymentResourcePoolServiceConnection::options())) {}
+DeploymentResourcePoolServiceConnectionImpl::
+    DeploymentResourcePoolServiceConnectionImpl(
+        std::unique_ptr<google::cloud::BackgroundThreads> background,
+        std::shared_ptr<
+            aiplatform_v1_internal::DeploymentResourcePoolServiceStub>
+            stub,
+        Options options)
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options),
+          DeploymentResourcePoolServiceConnection::options())) {}
 
 future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
-DeploymentResourcePoolServiceConnectionImpl::CreateDeploymentResourcePool(google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const& request) {
+DeploymentResourcePoolServiceConnectionImpl::CreateDeploymentResourcePool(
+    google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateDeploymentResourcePool(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::aiplatform::v1::DeploymentResourcePool>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const& request) {
-     return stub->AsyncCreateDeploymentResourcePool(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::aiplatform::v1::DeploymentResourcePool>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::aiplatform::v1::DeploymentResourcePool>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::aiplatform::v1::
+                         CreateDeploymentResourcePoolRequest const& request) {
+        return stub->AsyncCreateDeploymentResourcePool(
+            cq, std::move(context), std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::aiplatform::v1::DeploymentResourcePool>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
-DeploymentResourcePoolServiceConnectionImpl::GetDeploymentResourcePool(google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const& request) {
+DeploymentResourcePoolServiceConnectionImpl::GetDeploymentResourcePool(
+    google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDeploymentResourcePool(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
+              request) {
         return stub_->GetDeploymentResourcePool(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::DeploymentResourcePool>
-DeploymentResourcePoolServiceConnectionImpl::ListDeploymentResourcePools(google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest request) {
+DeploymentResourcePoolServiceConnectionImpl::ListDeploymentResourcePools(
+    google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListDeploymentResourcePools(request);
+  auto idempotency =
+      idempotency_policy(*current)->ListDeploymentResourcePools(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::aiplatform::v1::DeploymentResourcePool>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::aiplatform::v1::DeploymentResourcePool>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::DeploymentResourcePoolServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<
+           aiplatform_v1::DeploymentResourcePoolServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest const& r) {
+          Options const& options,
+          google::cloud::aiplatform::v1::
+              ListDeploymentResourcePoolsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest const& request) {
-              return stub->ListDeploymentResourcePools(context, options, request);
+                   google::cloud::aiplatform::v1::
+                       ListDeploymentResourcePoolsRequest const& request) {
+              return stub->ListDeploymentResourcePools(context, options,
+                                                       request);
             },
             options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListDeploymentResourcePoolsResponse r) {
-        std::vector<google::cloud::aiplatform::v1::DeploymentResourcePool> result(r.deployment_resource_pools().size());
+        std::vector<google::cloud::aiplatform::v1::DeploymentResourcePool>
+            result(r.deployment_resource_pools().size());
         auto& messages = *r.mutable_deployment_resource_pools();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -139,37 +172,43 @@ DeploymentResourcePoolServiceConnectionImpl::ListDeploymentResourcePools(google:
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-DeploymentResourcePoolServiceConnectionImpl::DeleteDeploymentResourcePool(google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const& request) {
+DeploymentResourcePoolServiceConnectionImpl::DeleteDeploymentResourcePool(
+    google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteDeploymentResourcePool(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::aiplatform::v1::DeleteOperationMetadata>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const& request) {
-     return stub->AsyncDeleteDeploymentResourcePool(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::aiplatform::v1::DeleteOperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::aiplatform::v1::
+                         DeleteDeploymentResourcePoolRequest const& request) {
+        return stub->AsyncDeleteDeploymentResourcePool(
+            cq, std::move(context), std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::aiplatform::v1::DeleteOperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

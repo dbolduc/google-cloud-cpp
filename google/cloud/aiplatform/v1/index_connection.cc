@@ -42,18 +42,19 @@ future<StatusOr<google::cloud::aiplatform::v1::Index>>
 IndexServiceConnection::CreateIndex(
     google::cloud::aiplatform::v1::CreateIndexRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::Index>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::Index>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::cloud::aiplatform::v1::Index>
-IndexServiceConnection::GetIndex(
+StatusOr<google::cloud::aiplatform::v1::Index> IndexServiceConnection::GetIndex(
     google::cloud::aiplatform::v1::GetIndexRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::Index> IndexServiceConnection::ListIndexes(
-    google::cloud::aiplatform::v1::ListIndexesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::Index>
+IndexServiceConnection::ListIndexes(
+    google::cloud::aiplatform::v1::
+        ListIndexesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Index>>();
 }
@@ -62,16 +63,16 @@ future<StatusOr<google::cloud::aiplatform::v1::Index>>
 IndexServiceConnection::UpdateIndex(
     google::cloud::aiplatform::v1::UpdateIndexRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::Index>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::Index>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 IndexServiceConnection::DeleteIndex(
     google::cloud::aiplatform::v1::DeleteIndexRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>
@@ -89,17 +90,18 @@ IndexServiceConnection::RemoveDatapoints(
 std::shared_ptr<IndexServiceConnection> MakeIndexServiceConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      IndexServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 IndexServicePolicyOptionList>(options,
+                                                               __func__);
   options = aiplatform_v1_internal::IndexServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = aiplatform_v1_internal::CreateDefaultIndexServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return aiplatform_v1_internal::MakeIndexServiceTracingConnection(
       std::make_shared<aiplatform_v1_internal::IndexServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

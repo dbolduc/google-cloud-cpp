@@ -34,37 +34,46 @@ PredictionServiceTracingConnection::PredictionServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::aiplatform::v1::PredictResponse>
-PredictionServiceTracingConnection::Predict(google::cloud::aiplatform::v1::PredictRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::PredictionServiceConnection::Predict");
+PredictionServiceTracingConnection::Predict(
+    google::cloud::aiplatform::v1::PredictRequest const& request) {
+  auto span =
+      internal::MakeSpan("aiplatform_v1::PredictionServiceConnection::Predict");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Predict(request));
 }
 
-StatusOr<google::api::HttpBody>
-PredictionServiceTracingConnection::RawPredict(google::cloud::aiplatform::v1::RawPredictRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::PredictionServiceConnection::RawPredict");
+StatusOr<google::api::HttpBody> PredictionServiceTracingConnection::RawPredict(
+    google::cloud::aiplatform::v1::RawPredictRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::PredictionServiceConnection::RawPredict");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->RawPredict(request));
 }
 
 StreamRange<google::api::HttpBody>
-PredictionServiceTracingConnection::StreamRawPredict(google::cloud::aiplatform::v1::StreamRawPredictRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::PredictionServiceConnection::StreamRawPredict");
+PredictionServiceTracingConnection::StreamRawPredict(
+    google::cloud::aiplatform::v1::StreamRawPredictRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::PredictionServiceConnection::StreamRawPredict");
   internal::OTelScope scope(span);
   auto sr = child_->StreamRawPredict(request);
-  return internal::MakeTracedStreamRange<google::api::HttpBody>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::api::HttpBody>(std::move(span),
+                                                                std::move(sr));
 }
 StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>
-PredictionServiceTracingConnection::DirectPredict(google::cloud::aiplatform::v1::DirectPredictRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::PredictionServiceConnection::DirectPredict");
+PredictionServiceTracingConnection::DirectPredict(
+    google::cloud::aiplatform::v1::DirectPredictRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::PredictionServiceConnection::DirectPredict");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DirectPredict(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>
-PredictionServiceTracingConnection::DirectRawPredict(google::cloud::aiplatform::v1::DirectRawPredictRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::PredictionServiceConnection::DirectRawPredict");
+PredictionServiceTracingConnection::DirectRawPredict(
+    google::cloud::aiplatform::v1::DirectRawPredictRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::PredictionServiceConnection::DirectRawPredict");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DirectRawPredict(request));
 }
@@ -91,12 +100,15 @@ PredictionServiceTracingConnection::AsyncStreamingPredict() {
 }
 
 StreamRange<google::cloud::aiplatform::v1::StreamingPredictResponse>
-PredictionServiceTracingConnection::ServerStreamingPredict(google::cloud::aiplatform::v1::StreamingPredictRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::PredictionServiceConnection::ServerStreamingPredict");
+PredictionServiceTracingConnection::ServerStreamingPredict(
+    google::cloud::aiplatform::v1::StreamingPredictRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::PredictionServiceConnection::ServerStreamingPredict");
   internal::OTelScope scope(span);
   auto sr = child_->ServerStreamingPredict(request);
-  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::StreamingPredictResponse>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::aiplatform::v1::StreamingPredictResponse>(std::move(span),
+                                                               std::move(sr));
 }
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::aiplatform::v1::StreamingRawPredictRequest,
@@ -106,26 +118,33 @@ PredictionServiceTracingConnection::AsyncStreamingRawPredict() {
 }
 
 StatusOr<google::cloud::aiplatform::v1::ExplainResponse>
-PredictionServiceTracingConnection::Explain(google::cloud::aiplatform::v1::ExplainRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::PredictionServiceConnection::Explain");
+PredictionServiceTracingConnection::Explain(
+    google::cloud::aiplatform::v1::ExplainRequest const& request) {
+  auto span =
+      internal::MakeSpan("aiplatform_v1::PredictionServiceConnection::Explain");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Explain(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse>
-PredictionServiceTracingConnection::GenerateContent(google::cloud::aiplatform::v1::GenerateContentRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::PredictionServiceConnection::GenerateContent");
+PredictionServiceTracingConnection::GenerateContent(
+    google::cloud::aiplatform::v1::GenerateContentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::PredictionServiceConnection::GenerateContent");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GenerateContent(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::GenerateContentResponse>
-PredictionServiceTracingConnection::StreamGenerateContent(google::cloud::aiplatform::v1::GenerateContentRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::PredictionServiceConnection::StreamGenerateContent");
+PredictionServiceTracingConnection::StreamGenerateContent(
+    google::cloud::aiplatform::v1::GenerateContentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::PredictionServiceConnection::StreamGenerateContent");
   internal::OTelScope scope(span);
   auto sr = child_->StreamGenerateContent(request);
-  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::GenerateContentResponse>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::aiplatform::v1::GenerateContentResponse>(std::move(span),
+                                                              std::move(sr));
 }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
@@ -134,7 +153,8 @@ MakePredictionServiceTracingConnection(
     std::shared_ptr<aiplatform_v1::PredictionServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<PredictionServiceTracingConnection>(std::move(conn));
+    conn =
+        std::make_shared<PredictionServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

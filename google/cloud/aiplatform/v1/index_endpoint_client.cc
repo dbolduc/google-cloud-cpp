@@ -28,12 +28,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 IndexEndpointServiceClient::IndexEndpointServiceClient(
     std::shared_ptr<IndexEndpointServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 IndexEndpointServiceClient::~IndexEndpointServiceClient() = default;
 
 future<StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>>
-IndexEndpointServiceClient::CreateIndexEndpoint(std::string const& parent, google::cloud::aiplatform::v1::IndexEndpoint const& index_endpoint, Options opts) {
+IndexEndpointServiceClient::CreateIndexEndpoint(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::IndexEndpoint const& index_endpoint,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateIndexEndpointRequest request;
   request.set_parent(parent);
@@ -42,13 +45,16 @@ IndexEndpointServiceClient::CreateIndexEndpoint(std::string const& parent, googl
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>>
-IndexEndpointServiceClient::CreateIndexEndpoint(google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request, Options opts) {
+IndexEndpointServiceClient::CreateIndexEndpoint(
+    google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateIndexEndpoint(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
-IndexEndpointServiceClient::GetIndexEndpoint(std::string const& name, Options opts) {
+IndexEndpointServiceClient::GetIndexEndpoint(std::string const& name,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::GetIndexEndpointRequest request;
   request.set_name(name);
@@ -56,13 +62,16 @@ IndexEndpointServiceClient::GetIndexEndpoint(std::string const& name, Options op
 }
 
 StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
-IndexEndpointServiceClient::GetIndexEndpoint(google::cloud::aiplatform::v1::GetIndexEndpointRequest const& request, Options opts) {
+IndexEndpointServiceClient::GetIndexEndpoint(
+    google::cloud::aiplatform::v1::GetIndexEndpointRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIndexEndpoint(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::IndexEndpoint>
-IndexEndpointServiceClient::ListIndexEndpoints(std::string const& parent, Options opts) {
+IndexEndpointServiceClient::ListIndexEndpoints(std::string const& parent,
+                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListIndexEndpointsRequest request;
   request.set_parent(parent);
@@ -70,13 +79,17 @@ IndexEndpointServiceClient::ListIndexEndpoints(std::string const& parent, Option
 }
 
 StreamRange<google::cloud::aiplatform::v1::IndexEndpoint>
-IndexEndpointServiceClient::ListIndexEndpoints(google::cloud::aiplatform::v1::ListIndexEndpointsRequest request, Options opts) {
+IndexEndpointServiceClient::ListIndexEndpoints(
+    google::cloud::aiplatform::v1::ListIndexEndpointsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListIndexEndpoints(std::move(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
-IndexEndpointServiceClient::UpdateIndexEndpoint(google::cloud::aiplatform::v1::IndexEndpoint const& index_endpoint, google::protobuf::FieldMask const& update_mask, Options opts) {
+IndexEndpointServiceClient::UpdateIndexEndpoint(
+    google::cloud::aiplatform::v1::IndexEndpoint const& index_endpoint,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdateIndexEndpointRequest request;
   *request.mutable_index_endpoint() = index_endpoint;
@@ -85,13 +98,16 @@ IndexEndpointServiceClient::UpdateIndexEndpoint(google::cloud::aiplatform::v1::I
 }
 
 StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
-IndexEndpointServiceClient::UpdateIndexEndpoint(google::cloud::aiplatform::v1::UpdateIndexEndpointRequest const& request, Options opts) {
+IndexEndpointServiceClient::UpdateIndexEndpoint(
+    google::cloud::aiplatform::v1::UpdateIndexEndpointRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateIndexEndpoint(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-IndexEndpointServiceClient::DeleteIndexEndpoint(std::string const& name, Options opts) {
+IndexEndpointServiceClient::DeleteIndexEndpoint(std::string const& name,
+                                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteIndexEndpointRequest request;
   request.set_name(name);
@@ -99,13 +115,18 @@ IndexEndpointServiceClient::DeleteIndexEndpoint(std::string const& name, Options
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-IndexEndpointServiceClient::DeleteIndexEndpoint(google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request, Options opts) {
+IndexEndpointServiceClient::DeleteIndexEndpoint(
+    google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteIndexEndpoint(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>
-IndexEndpointServiceClient::DeployIndex(std::string const& index_endpoint, google::cloud::aiplatform::v1::DeployedIndex const& deployed_index, Options opts) {
+IndexEndpointServiceClient::DeployIndex(
+    std::string const& index_endpoint,
+    google::cloud::aiplatform::v1::DeployedIndex const& deployed_index,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeployIndexRequest request;
   request.set_index_endpoint(index_endpoint);
@@ -114,13 +135,17 @@ IndexEndpointServiceClient::DeployIndex(std::string const& index_endpoint, googl
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>
-IndexEndpointServiceClient::DeployIndex(google::cloud::aiplatform::v1::DeployIndexRequest const& request, Options opts) {
+IndexEndpointServiceClient::DeployIndex(
+    google::cloud::aiplatform::v1::DeployIndexRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeployIndex(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>
-IndexEndpointServiceClient::UndeployIndex(std::string const& index_endpoint, std::string const& deployed_index_id, Options opts) {
+IndexEndpointServiceClient::UndeployIndex(std::string const& index_endpoint,
+                                          std::string const& deployed_index_id,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UndeployIndexRequest request;
   request.set_index_endpoint(index_endpoint);
@@ -129,13 +154,18 @@ IndexEndpointServiceClient::UndeployIndex(std::string const& index_endpoint, std
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>
-IndexEndpointServiceClient::UndeployIndex(google::cloud::aiplatform::v1::UndeployIndexRequest const& request, Options opts) {
+IndexEndpointServiceClient::UndeployIndex(
+    google::cloud::aiplatform::v1::UndeployIndexRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeployIndex(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>
-IndexEndpointServiceClient::MutateDeployedIndex(std::string const& index_endpoint, google::cloud::aiplatform::v1::DeployedIndex const& deployed_index, Options opts) {
+IndexEndpointServiceClient::MutateDeployedIndex(
+    std::string const& index_endpoint,
+    google::cloud::aiplatform::v1::DeployedIndex const& deployed_index,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::MutateDeployedIndexRequest request;
   request.set_index_endpoint(index_endpoint);
@@ -144,7 +174,9 @@ IndexEndpointServiceClient::MutateDeployedIndex(std::string const& index_endpoin
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>
-IndexEndpointServiceClient::MutateDeployedIndex(google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request, Options opts) {
+IndexEndpointServiceClient::MutateDeployedIndex(
+    google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->MutateDeployedIndex(request);
 }

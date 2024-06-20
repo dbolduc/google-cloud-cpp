@@ -38,91 +38,89 @@ class VizierServiceTracingStub : public VizierServiceStub {
   explicit VizierServiceTracingStub(std::shared_ptr<VizierServiceStub> child);
 
   StatusOr<google::cloud::aiplatform::v1::Study> CreateStudy(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::CreateStudyRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::CreateStudyRequest const& request)
+      override;
 
   StatusOr<google::cloud::aiplatform::v1::Study> GetStudy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetStudyRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListStudiesResponse> ListStudies(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListStudiesRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListStudiesRequest const& request)
+      override;
 
-  Status DeleteStudy(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::DeleteStudyRequest const& request) override;
+  Status DeleteStudy(grpc::ClientContext& context, Options const& options,
+                     google::cloud::aiplatform::v1::DeleteStudyRequest const&
+                         request) override;
 
   StatusOr<google::cloud::aiplatform::v1::Study> LookupStudy(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::LookupStudyRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::LookupStudyRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncSuggestTrials(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) override;
+      google::cloud::aiplatform::v1::SuggestTrialsRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> SuggestTrials(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::SuggestTrialsRequest const& request)
+      override;
 
   StatusOr<google::cloud::aiplatform::v1::Trial> CreateTrial(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::CreateTrialRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::CreateTrialRequest const& request)
+      override;
 
   StatusOr<google::cloud::aiplatform::v1::Trial> GetTrial(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetTrialRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListTrialsResponse> ListTrials(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListTrialsRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::Trial> AddTrialMeasurement(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::AddTrialMeasurementRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::AddTrialMeasurementRequest const& request)
+      override;
 
   StatusOr<google::cloud::aiplatform::v1::Trial> CompleteTrial(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::CompleteTrialRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::CompleteTrialRequest const& request)
+      override;
 
-  Status DeleteTrial(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::DeleteTrialRequest const& request) override;
+  Status DeleteTrial(grpc::ClientContext& context, Options const& options,
+                     google::cloud::aiplatform::v1::DeleteTrialRequest const&
+                         request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncCheckTrialEarlyStoppingState(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCheckTrialEarlyStoppingState(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const& request) override;
+      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CheckTrialEarlyStoppingState(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
+          request) override;
 
   StatusOr<google::cloud::aiplatform::v1::Trial> StopTrial(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::StopTrialRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::ListOptimalTrialsResponse> ListOptimalTrials(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListOptimalTrialsRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::ListOptimalTrialsResponse>
+  ListOptimalTrials(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListOptimalTrialsRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -138,7 +136,8 @@ class VizierServiceTracingStub : public VizierServiceStub {
 
  private:
   std::shared_ptr<VizierServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

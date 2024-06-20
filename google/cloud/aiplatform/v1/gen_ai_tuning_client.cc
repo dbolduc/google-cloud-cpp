@@ -28,12 +28,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GenAiTuningServiceClient::GenAiTuningServiceClient(
     std::shared_ptr<GenAiTuningServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 GenAiTuningServiceClient::~GenAiTuningServiceClient() = default;
 
 StatusOr<google::cloud::aiplatform::v1::TuningJob>
-GenAiTuningServiceClient::CreateTuningJob(std::string const& parent, google::cloud::aiplatform::v1::TuningJob const& tuning_job, Options opts) {
+GenAiTuningServiceClient::CreateTuningJob(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::TuningJob const& tuning_job, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateTuningJobRequest request;
   request.set_parent(parent);
@@ -42,7 +44,9 @@ GenAiTuningServiceClient::CreateTuningJob(std::string const& parent, google::clo
 }
 
 StatusOr<google::cloud::aiplatform::v1::TuningJob>
-GenAiTuningServiceClient::CreateTuningJob(google::cloud::aiplatform::v1::CreateTuningJobRequest const& request, Options opts) {
+GenAiTuningServiceClient::CreateTuningJob(
+    google::cloud::aiplatform::v1::CreateTuningJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTuningJob(request);
 }
@@ -56,13 +60,16 @@ GenAiTuningServiceClient::GetTuningJob(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::aiplatform::v1::TuningJob>
-GenAiTuningServiceClient::GetTuningJob(google::cloud::aiplatform::v1::GetTuningJobRequest const& request, Options opts) {
+GenAiTuningServiceClient::GetTuningJob(
+    google::cloud::aiplatform::v1::GetTuningJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTuningJob(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::TuningJob>
-GenAiTuningServiceClient::ListTuningJobs(std::string const& parent, Options opts) {
+GenAiTuningServiceClient::ListTuningJobs(std::string const& parent,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListTuningJobsRequest request;
   request.set_parent(parent);
@@ -70,21 +77,24 @@ GenAiTuningServiceClient::ListTuningJobs(std::string const& parent, Options opts
 }
 
 StreamRange<google::cloud::aiplatform::v1::TuningJob>
-GenAiTuningServiceClient::ListTuningJobs(google::cloud::aiplatform::v1::ListTuningJobsRequest request, Options opts) {
+GenAiTuningServiceClient::ListTuningJobs(
+    google::cloud::aiplatform::v1::ListTuningJobsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTuningJobs(std::move(request));
 }
 
-Status
-GenAiTuningServiceClient::CancelTuningJob(std::string const& name, Options opts) {
+Status GenAiTuningServiceClient::CancelTuningJob(std::string const& name,
+                                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CancelTuningJobRequest request;
   request.set_name(name);
   return connection_->CancelTuningJob(request);
 }
 
-Status
-GenAiTuningServiceClient::CancelTuningJob(google::cloud::aiplatform::v1::CancelTuningJobRequest const& request, Options opts) {
+Status GenAiTuningServiceClient::CancelTuningJob(
+    google::cloud::aiplatform::v1::CancelTuningJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelTuningJob(request);
 }

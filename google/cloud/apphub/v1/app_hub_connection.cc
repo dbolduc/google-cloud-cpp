@@ -44,8 +44,10 @@ AppHubConnection::LookupServiceProjectAttachment(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::apphub::v1::ServiceProjectAttachment> AppHubConnection::ListServiceProjectAttachments(
-    google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::apphub::v1::ServiceProjectAttachment>
+AppHubConnection::ListServiceProjectAttachments(
+    google::cloud::apphub::v1::
+        ListServiceProjectAttachmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::apphub::v1::ServiceProjectAttachment>>();
 }
@@ -54,8 +56,8 @@ future<StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>
 AppHubConnection::CreateServiceProjectAttachment(
     google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>
@@ -68,8 +70,8 @@ future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
 AppHubConnection::DeleteServiceProjectAttachment(
     google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::apphub::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::apphub::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::apphub::v1::DetachServiceProjectAttachmentResponse>
@@ -78,8 +80,10 @@ AppHubConnection::DetachServiceProjectAttachment(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::apphub::v1::DiscoveredService> AppHubConnection::ListDiscoveredServices(
-    google::cloud::apphub::v1::ListDiscoveredServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::apphub::v1::DiscoveredService>
+AppHubConnection::ListDiscoveredServices(
+    google::cloud::apphub::v1::
+        ListDiscoveredServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::apphub::v1::DiscoveredService>>();
 }
@@ -97,7 +101,8 @@ AppHubConnection::LookupDiscoveredService(
 }
 
 StreamRange<google::cloud::apphub::v1::Service> AppHubConnection::ListServices(
-    google::cloud::apphub::v1::ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::cloud::apphub::v1::
+        ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::apphub::v1::Service>>();
 }
@@ -106,12 +111,11 @@ future<StatusOr<google::cloud::apphub::v1::Service>>
 AppHubConnection::CreateService(
     google::cloud::apphub::v1::CreateServiceRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::apphub::v1::Service>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::apphub::v1::Service>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::cloud::apphub::v1::Service>
-AppHubConnection::GetService(
+StatusOr<google::cloud::apphub::v1::Service> AppHubConnection::GetService(
     google::cloud::apphub::v1::GetServiceRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -120,20 +124,22 @@ future<StatusOr<google::cloud::apphub::v1::Service>>
 AppHubConnection::UpdateService(
     google::cloud::apphub::v1::UpdateServiceRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::apphub::v1::Service>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::apphub::v1::Service>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
 AppHubConnection::DeleteService(
     google::cloud::apphub::v1::DeleteServiceRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::apphub::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::apphub::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::apphub::v1::DiscoveredWorkload> AppHubConnection::ListDiscoveredWorkloads(
-    google::cloud::apphub::v1::ListDiscoveredWorkloadsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::apphub::v1::DiscoveredWorkload>
+AppHubConnection::ListDiscoveredWorkloads(
+    google::cloud::apphub::v1::
+        ListDiscoveredWorkloadsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::apphub::v1::DiscoveredWorkload>>();
 }
@@ -150,8 +156,10 @@ AppHubConnection::LookupDiscoveredWorkload(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::apphub::v1::Workload> AppHubConnection::ListWorkloads(
-    google::cloud::apphub::v1::ListWorkloadsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::apphub::v1::Workload>
+AppHubConnection::ListWorkloads(
+    google::cloud::apphub::v1::
+        ListWorkloadsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::apphub::v1::Workload>>();
 }
@@ -160,12 +168,11 @@ future<StatusOr<google::cloud::apphub::v1::Workload>>
 AppHubConnection::CreateWorkload(
     google::cloud::apphub::v1::CreateWorkloadRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::apphub::v1::Workload>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::apphub::v1::Workload>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::cloud::apphub::v1::Workload>
-AppHubConnection::GetWorkload(
+StatusOr<google::cloud::apphub::v1::Workload> AppHubConnection::GetWorkload(
     google::cloud::apphub::v1::GetWorkloadRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -174,20 +181,22 @@ future<StatusOr<google::cloud::apphub::v1::Workload>>
 AppHubConnection::UpdateWorkload(
     google::cloud::apphub::v1::UpdateWorkloadRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::apphub::v1::Workload>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::apphub::v1::Workload>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
 AppHubConnection::DeleteWorkload(
     google::cloud::apphub::v1::DeleteWorkloadRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::apphub::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::apphub::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::apphub::v1::Application> AppHubConnection::ListApplications(
-    google::cloud::apphub::v1::ListApplicationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::apphub::v1::Application>
+AppHubConnection::ListApplications(
+    google::cloud::apphub::v1::
+        ListApplicationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::apphub::v1::Application>>();
 }
@@ -196,8 +205,8 @@ future<StatusOr<google::cloud::apphub::v1::Application>>
 AppHubConnection::CreateApplication(
     google::cloud::apphub::v1::CreateApplicationRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::apphub::v1::Application>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::apphub::v1::Application>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::apphub::v1::Application>
@@ -210,32 +219,30 @@ future<StatusOr<google::cloud::apphub::v1::Application>>
 AppHubConnection::UpdateApplication(
     google::cloud::apphub::v1::UpdateApplicationRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::apphub::v1::Application>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::apphub::v1::Application>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
 AppHubConnection::DeleteApplication(
     google::cloud::apphub::v1::DeleteApplicationRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::apphub::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::apphub::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-std::shared_ptr<AppHubConnection> MakeAppHubConnection(
-    Options options) {
+std::shared_ptr<AppHubConnection> MakeAppHubConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      AppHubPolicyOptionList>(options, __func__);
-  options = apphub_v1_internal::AppHubDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 AppHubPolicyOptionList>(options, __func__);
+  options = apphub_v1_internal::AppHubDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = apphub_v1_internal::CreateDefaultAppHubStub(
-    std::move(auth), options);
+  auto stub =
+      apphub_v1_internal::CreateDefaultAppHubStub(std::move(auth), options);
   return apphub_v1_internal::MakeAppHubTracingConnection(
       std::make_shared<apphub_v1_internal::AppHubConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

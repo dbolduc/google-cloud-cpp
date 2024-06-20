@@ -36,15 +36,18 @@ class MatchServiceTracingConnection
   ~MatchServiceTracingConnection() override = default;
 
   explicit MatchServiceTracingConnection(
-    std::shared_ptr<aiplatform_v1::MatchServiceConnection> child);
+      std::shared_ptr<aiplatform_v1::MatchServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse>
-  FindNeighbors(google::cloud::aiplatform::v1::FindNeighborsRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse> FindNeighbors(
+      google::cloud::aiplatform::v1::FindNeighborsRequest const& request)
+      override;
 
   StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>
-  ReadIndexDatapoints(google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request) override;
+  ReadIndexDatapoints(
+      google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request)
+      override;
 
  private:
   std::shared_ptr<aiplatform_v1::MatchServiceConnection> child_;

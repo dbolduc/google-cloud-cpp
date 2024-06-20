@@ -31,22 +31,24 @@ ApiGatewayServiceTracingStub::ApiGatewayServiceTracingStub(
     std::shared_ptr<ApiGatewayServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::apigateway::v1::ListGatewaysResponse> ApiGatewayServiceTracingStub::ListGateways(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::apigateway::v1::ListGatewaysResponse>
+ApiGatewayServiceTracingStub::ListGateways(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::ListGatewaysRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apigateway.v1.ApiGatewayService", "ListGateways");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "ListGateways");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListGateways(context, options, request));
 }
 
-StatusOr<google::cloud::apigateway::v1::Gateway> ApiGatewayServiceTracingStub::GetGateway(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::apigateway::v1::Gateway>
+ApiGatewayServiceTracingStub::GetGateway(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::GetGatewayRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apigateway.v1.ApiGatewayService", "GetGateway");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "GetGateway");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -55,11 +57,12 @@ StatusOr<google::cloud::apigateway::v1::Gateway> ApiGatewayServiceTracingStub::G
 
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceTracingStub::AsyncCreateGateway(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apigateway.v1.ApiGatewayService", "CreateGateway");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "CreateGateway");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateGateway(cq, context, std::move(options), request);
@@ -68,10 +71,10 @@ ApiGatewayServiceTracingStub::AsyncCreateGateway(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceTracingStub::CreateGateway(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apigateway.v1.ApiGatewayService", "CreateGateway");
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "CreateGateway");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -80,11 +83,12 @@ ApiGatewayServiceTracingStub::CreateGateway(
 
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceTracingStub::AsyncUpdateGateway(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apigateway.v1.ApiGatewayService", "UpdateGateway");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "UpdateGateway");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateGateway(cq, context, std::move(options), request);
@@ -93,10 +97,10 @@ ApiGatewayServiceTracingStub::AsyncUpdateGateway(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceTracingStub::UpdateGateway(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apigateway.v1.ApiGatewayService", "UpdateGateway");
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "UpdateGateway");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -105,11 +109,12 @@ ApiGatewayServiceTracingStub::UpdateGateway(
 
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceTracingStub::AsyncDeleteGateway(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apigateway.v1.ApiGatewayService", "DeleteGateway");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "DeleteGateway");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteGateway(cq, context, std::move(options), request);
@@ -118,32 +123,34 @@ ApiGatewayServiceTracingStub::AsyncDeleteGateway(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceTracingStub::DeleteGateway(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apigateway.v1.ApiGatewayService", "DeleteGateway");
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "DeleteGateway");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteGateway(context, options, request));
 }
 
-StatusOr<google::cloud::apigateway::v1::ListApisResponse> ApiGatewayServiceTracingStub::ListApis(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::apigateway::v1::ListApisResponse>
+ApiGatewayServiceTracingStub::ListApis(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::ListApisRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apigateway.v1.ApiGatewayService", "ListApis");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "ListApis");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListApis(context, options, request));
 }
 
-StatusOr<google::cloud::apigateway::v1::Api> ApiGatewayServiceTracingStub::GetApi(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::apigateway::v1::Api>
+ApiGatewayServiceTracingStub::GetApi(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::GetApiRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apigateway.v1.ApiGatewayService", "GetApi");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "GetApi");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -152,11 +159,12 @@ StatusOr<google::cloud::apigateway::v1::Api> ApiGatewayServiceTracingStub::GetAp
 
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceTracingStub::AsyncCreateApi(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::apigateway::v1::CreateApiRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apigateway.v1.ApiGatewayService", "CreateApi");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apigateway::v1::CreateApiRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "CreateApi");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateApi(cq, context, std::move(options), request);
@@ -165,10 +173,10 @@ ApiGatewayServiceTracingStub::AsyncCreateApi(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceTracingStub::CreateApi(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apigateway::v1::CreateApiRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apigateway.v1.ApiGatewayService", "CreateApi");
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::CreateApiRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "CreateApi");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -177,11 +185,12 @@ ApiGatewayServiceTracingStub::CreateApi(
 
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceTracingStub::AsyncUpdateApi(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::apigateway::v1::UpdateApiRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apigateway.v1.ApiGatewayService", "UpdateApi");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apigateway::v1::UpdateApiRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "UpdateApi");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateApi(cq, context, std::move(options), request);
@@ -190,10 +199,10 @@ ApiGatewayServiceTracingStub::AsyncUpdateApi(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceTracingStub::UpdateApi(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apigateway::v1::UpdateApiRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apigateway.v1.ApiGatewayService", "UpdateApi");
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::UpdateApiRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "UpdateApi");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -202,11 +211,12 @@ ApiGatewayServiceTracingStub::UpdateApi(
 
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceTracingStub::AsyncDeleteApi(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::apigateway::v1::DeleteApiRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apigateway.v1.ApiGatewayService", "DeleteApi");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apigateway::v1::DeleteApiRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "DeleteApi");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteApi(cq, context, std::move(options), request);
@@ -215,32 +225,34 @@ ApiGatewayServiceTracingStub::AsyncDeleteApi(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceTracingStub::DeleteApi(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apigateway::v1::DeleteApiRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apigateway.v1.ApiGatewayService", "DeleteApi");
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::DeleteApiRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "DeleteApi");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteApi(context, options, request));
 }
 
-StatusOr<google::cloud::apigateway::v1::ListApiConfigsResponse> ApiGatewayServiceTracingStub::ListApiConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::apigateway::v1::ListApiConfigsResponse>
+ApiGatewayServiceTracingStub::ListApiConfigs(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::ListApiConfigsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apigateway.v1.ApiGatewayService", "ListApiConfigs");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "ListApiConfigs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListApiConfigs(context, options, request));
 }
 
-StatusOr<google::cloud::apigateway::v1::ApiConfig> ApiGatewayServiceTracingStub::GetApiConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::apigateway::v1::ApiConfig>
+ApiGatewayServiceTracingStub::GetApiConfig(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::GetApiConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apigateway.v1.ApiGatewayService", "GetApiConfig");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "GetApiConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -249,23 +261,25 @@ StatusOr<google::cloud::apigateway::v1::ApiConfig> ApiGatewayServiceTracingStub:
 
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceTracingStub::AsyncCreateApiConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::apigateway::v1::CreateApiConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apigateway.v1.ApiGatewayService", "CreateApiConfig");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apigateway::v1::CreateApiConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "CreateApiConfig");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateApiConfig(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCreateApiConfig(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceTracingStub::CreateApiConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apigateway::v1::CreateApiConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apigateway.v1.ApiGatewayService", "CreateApiConfig");
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::CreateApiConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "CreateApiConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -274,23 +288,25 @@ ApiGatewayServiceTracingStub::CreateApiConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceTracingStub::AsyncUpdateApiConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apigateway.v1.ApiGatewayService", "UpdateApiConfig");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "UpdateApiConfig");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateApiConfig(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncUpdateApiConfig(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceTracingStub::UpdateApiConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apigateway.v1.ApiGatewayService", "UpdateApiConfig");
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "UpdateApiConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -299,23 +315,25 @@ ApiGatewayServiceTracingStub::UpdateApiConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceTracingStub::AsyncDeleteApiConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apigateway.v1.ApiGatewayService", "DeleteApiConfig");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "DeleteApiConfig");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteApiConfig(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncDeleteApiConfig(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceTracingStub::DeleteApiConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.apigateway.v1.ApiGatewayService", "DeleteApiConfig");
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "DeleteApiConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -332,8 +350,7 @@ ApiGatewayServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -346,8 +363,8 @@ future<Status> ApiGatewayServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

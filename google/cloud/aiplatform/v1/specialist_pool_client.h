@@ -39,8 +39,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// When customers start Data Labeling jobs, they can reuse/create Specialist
 /// Pools to bring their own Specialists to label the data.
 /// Customers can add/remove Managers for the Specialist Pool on Cloud console,
-/// then Managers will get email notifications to manage Specialists and tasks on
-/// CrowdCompute console.
+/// then Managers will get email notifications to manage Specialists and tasks
+/// on CrowdCompute console.
 ///
 /// @par Equality
 ///
@@ -67,23 +67,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SpecialistPoolServiceClient {
  public:
-  explicit SpecialistPoolServiceClient(std::shared_ptr<SpecialistPoolServiceConnection> connection, Options opts = {});
+  explicit SpecialistPoolServiceClient(
+      std::shared_ptr<SpecialistPoolServiceConnection> connection,
+      Options opts = {});
   ~SpecialistPoolServiceClient();
 
   ///@{
   /// @name Copy and move support
   SpecialistPoolServiceClient(SpecialistPoolServiceClient const&) = default;
-  SpecialistPoolServiceClient& operator=(SpecialistPoolServiceClient const&) = default;
+  SpecialistPoolServiceClient& operator=(SpecialistPoolServiceClient const&) =
+      default;
   SpecialistPoolServiceClient(SpecialistPoolServiceClient&&) = default;
-  SpecialistPoolServiceClient& operator=(SpecialistPoolServiceClient&&) = default;
+  SpecialistPoolServiceClient& operator=(SpecialistPoolServiceClient&&) =
+      default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(SpecialistPoolServiceClient const& a, SpecialistPoolServiceClient const& b) {
+  friend bool operator==(SpecialistPoolServiceClient const& a,
+                         SpecialistPoolServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SpecialistPoolServiceClient const& a, SpecialistPoolServiceClient const& b) {
+  friend bool operator!=(SpecialistPoolServiceClient const& a,
+                         SpecialistPoolServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -120,7 +126,10 @@ class SpecialistPoolServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-  CreateSpecialistPool(std::string const& parent, google::cloud::aiplatform::v1::SpecialistPool const& specialist_pool, Options opts = {});
+  CreateSpecialistPool(
+      std::string const& parent,
+      google::cloud::aiplatform::v1::SpecialistPool const& specialist_pool,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -157,7 +166,9 @@ class SpecialistPoolServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-  CreateSpecialistPool(google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request, Options opts = {});
+  CreateSpecialistPool(
+      google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -183,8 +194,8 @@ class SpecialistPoolServiceClient {
   /// [google.cloud.aiplatform.v1.SpecialistPool]: @googleapis_reference_link{google/cloud/aiplatform/v1/specialist_pool.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
-  GetSpecialistPool(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::SpecialistPool> GetSpecialistPool(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -213,8 +224,9 @@ class SpecialistPoolServiceClient {
   /// [google.cloud.aiplatform.v1.SpecialistPool]: @googleapis_reference_link{google/cloud/aiplatform/v1/specialist_pool.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
-  GetSpecialistPool(google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::SpecialistPool> GetSpecialistPool(
+      google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -288,7 +300,9 @@ class SpecialistPoolServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::SpecialistPool>
-  ListSpecialistPools(google::cloud::aiplatform::v1::ListSpecialistPoolsRequest request, Options opts = {});
+  ListSpecialistPools(
+      google::cloud::aiplatform::v1::ListSpecialistPoolsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -358,7 +372,9 @@ class SpecialistPoolServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteSpecialistPool(google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request, Options opts = {});
+  DeleteSpecialistPool(
+      google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -391,7 +407,9 @@ class SpecialistPoolServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-  UpdateSpecialistPool(google::cloud::aiplatform::v1::SpecialistPool const& specialist_pool, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateSpecialistPool(
+      google::cloud::aiplatform::v1::SpecialistPool const& specialist_pool,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -428,7 +446,9 @@ class SpecialistPoolServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-  UpdateSpecialistPool(google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request, Options opts = {});
+  UpdateSpecialistPool(
+      google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<SpecialistPoolServiceConnection> connection_;

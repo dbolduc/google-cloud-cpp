@@ -36,21 +36,24 @@ class GenAiTuningServiceTracingConnection
   ~GenAiTuningServiceTracingConnection() override = default;
 
   explicit GenAiTuningServiceTracingConnection(
-    std::shared_ptr<aiplatform_v1::GenAiTuningServiceConnection> child);
+      std::shared_ptr<aiplatform_v1::GenAiTuningServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::aiplatform::v1::TuningJob>
-  CreateTuningJob(google::cloud::aiplatform::v1::CreateTuningJobRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::TuningJob> CreateTuningJob(
+      google::cloud::aiplatform::v1::CreateTuningJobRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::TuningJob>
-  GetTuningJob(google::cloud::aiplatform::v1::GetTuningJobRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::TuningJob> GetTuningJob(
+      google::cloud::aiplatform::v1::GetTuningJobRequest const& request)
+      override;
 
-  StreamRange<google::cloud::aiplatform::v1::TuningJob>
-  ListTuningJobs(google::cloud::aiplatform::v1::ListTuningJobsRequest request) override;
+  StreamRange<google::cloud::aiplatform::v1::TuningJob> ListTuningJobs(
+      google::cloud::aiplatform::v1::ListTuningJobsRequest request) override;
 
-  Status
-  CancelTuningJob(google::cloud::aiplatform::v1::CancelTuningJobRequest const& request) override;
+  Status CancelTuningJob(
+      google::cloud::aiplatform::v1::CancelTuningJobRequest const& request)
+      override;
 
  private:
   std::shared_ptr<aiplatform_v1::GenAiTuningServiceConnection> child_;

@@ -33,15 +33,19 @@ MatchServiceTracingConnection::MatchServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse>
-MatchServiceTracingConnection::FindNeighbors(google::cloud::aiplatform::v1::FindNeighborsRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::MatchServiceConnection::FindNeighbors");
+MatchServiceTracingConnection::FindNeighbors(
+    google::cloud::aiplatform::v1::FindNeighborsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::MatchServiceConnection::FindNeighbors");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->FindNeighbors(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>
-MatchServiceTracingConnection::ReadIndexDatapoints(google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::MatchServiceConnection::ReadIndexDatapoints");
+MatchServiceTracingConnection::ReadIndexDatapoints(
+    google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::MatchServiceConnection::ReadIndexDatapoints");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ReadIndexDatapoints(request));
 }

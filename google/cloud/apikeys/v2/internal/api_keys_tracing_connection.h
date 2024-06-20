@@ -30,39 +30,38 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class ApiKeysTracingConnection
-    : public apikeys_v2::ApiKeysConnection {
+class ApiKeysTracingConnection : public apikeys_v2::ApiKeysConnection {
  public:
   ~ApiKeysTracingConnection() override = default;
 
   explicit ApiKeysTracingConnection(
-    std::shared_ptr<apikeys_v2::ApiKeysConnection> child);
+      std::shared_ptr<apikeys_v2::ApiKeysConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::api::apikeys::v2::Key>>
-  CreateKey(google::api::apikeys::v2::CreateKeyRequest const& request) override;
+  future<StatusOr<google::api::apikeys::v2::Key>> CreateKey(
+      google::api::apikeys::v2::CreateKeyRequest const& request) override;
 
-  StreamRange<google::api::apikeys::v2::Key>
-  ListKeys(google::api::apikeys::v2::ListKeysRequest request) override;
+  StreamRange<google::api::apikeys::v2::Key> ListKeys(
+      google::api::apikeys::v2::ListKeysRequest request) override;
 
-  StatusOr<google::api::apikeys::v2::Key>
-  GetKey(google::api::apikeys::v2::GetKeyRequest const& request) override;
+  StatusOr<google::api::apikeys::v2::Key> GetKey(
+      google::api::apikeys::v2::GetKeyRequest const& request) override;
 
-  StatusOr<google::api::apikeys::v2::GetKeyStringResponse>
-  GetKeyString(google::api::apikeys::v2::GetKeyStringRequest const& request) override;
+  StatusOr<google::api::apikeys::v2::GetKeyStringResponse> GetKeyString(
+      google::api::apikeys::v2::GetKeyStringRequest const& request) override;
 
-  future<StatusOr<google::api::apikeys::v2::Key>>
-  UpdateKey(google::api::apikeys::v2::UpdateKeyRequest const& request) override;
+  future<StatusOr<google::api::apikeys::v2::Key>> UpdateKey(
+      google::api::apikeys::v2::UpdateKeyRequest const& request) override;
 
-  future<StatusOr<google::api::apikeys::v2::Key>>
-  DeleteKey(google::api::apikeys::v2::DeleteKeyRequest const& request) override;
+  future<StatusOr<google::api::apikeys::v2::Key>> DeleteKey(
+      google::api::apikeys::v2::DeleteKeyRequest const& request) override;
 
-  future<StatusOr<google::api::apikeys::v2::Key>>
-  UndeleteKey(google::api::apikeys::v2::UndeleteKeyRequest const& request) override;
+  future<StatusOr<google::api::apikeys::v2::Key>> UndeleteKey(
+      google::api::apikeys::v2::UndeleteKeyRequest const& request) override;
 
-  StatusOr<google::api::apikeys::v2::LookupKeyResponse>
-  LookupKey(google::api::apikeys::v2::LookupKeyRequest const& request) override;
+  StatusOr<google::api::apikeys::v2::LookupKeyResponse> LookupKey(
+      google::api::apikeys::v2::LookupKeyRequest const& request) override;
 
  private:
   std::shared_ptr<apikeys_v2::ApiKeysConnection> child_;
@@ -76,8 +75,7 @@ class ApiKeysTracingConnection
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<apikeys_v2::ApiKeysConnection>
-MakeApiKeysTracingConnection(
+std::shared_ptr<apikeys_v2::ApiKeysConnection> MakeApiKeysTracingConnection(
     std::shared_ptr<apikeys_v2::ApiKeysConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

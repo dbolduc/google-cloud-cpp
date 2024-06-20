@@ -46,17 +46,19 @@ ModelGardenServiceConnection::GetPublisherModel(
 std::shared_ptr<ModelGardenServiceConnection> MakeModelGardenServiceConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ModelGardenServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 ModelGardenServicePolicyOptionList>(options,
+                                                                     __func__);
   options = aiplatform_v1_internal::ModelGardenServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = aiplatform_v1_internal::CreateDefaultModelGardenServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return aiplatform_v1_internal::MakeModelGardenServiceTracingConnection(
-      std::make_shared<aiplatform_v1_internal::ModelGardenServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          aiplatform_v1_internal::ModelGardenServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

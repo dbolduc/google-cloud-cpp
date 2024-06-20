@@ -33,15 +33,17 @@ IndexEndpointServiceStub::~IndexEndpointServiceStub() = default;
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultIndexEndpointServiceStub::AsyncCreateIndexEndpoint(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::CreateIndexEndpointRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::CreateIndexEndpointRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request,
+             google::cloud::aiplatform::v1::CreateIndexEndpointRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateIndexEndpoint(context, request, cq);
       },
@@ -50,68 +52,65 @@ DefaultIndexEndpointServiceStub::AsyncCreateIndexEndpoint(
 
 StatusOr<google::longrunning::Operation>
 DefaultIndexEndpointServiceStub::CreateIndexEndpoint(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateIndexEndpoint(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateIndexEndpoint(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
 DefaultIndexEndpointServiceStub::GetIndexEndpoint(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::GetIndexEndpointRequest const& request) {
-    google::cloud::aiplatform::v1::IndexEndpoint response;
-    auto status =
-        grpc_stub_->GetIndexEndpoint(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::GetIndexEndpointRequest const& request) {
+  google::cloud::aiplatform::v1::IndexEndpoint response;
+  auto status = grpc_stub_->GetIndexEndpoint(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListIndexEndpointsResponse>
 DefaultIndexEndpointServiceStub::ListIndexEndpoints(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::ListIndexEndpointsRequest const& request) {
-    google::cloud::aiplatform::v1::ListIndexEndpointsResponse response;
-    auto status =
-        grpc_stub_->ListIndexEndpoints(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::ListIndexEndpointsRequest const& request) {
+  google::cloud::aiplatform::v1::ListIndexEndpointsResponse response;
+  auto status = grpc_stub_->ListIndexEndpoints(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
 DefaultIndexEndpointServiceStub::UpdateIndexEndpoint(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::UpdateIndexEndpointRequest const& request) {
-    google::cloud::aiplatform::v1::IndexEndpoint response;
-    auto status =
-        grpc_stub_->UpdateIndexEndpoint(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::UpdateIndexEndpointRequest const& request) {
+  google::cloud::aiplatform::v1::IndexEndpoint response;
+  auto status = grpc_stub_->UpdateIndexEndpoint(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultIndexEndpointServiceStub::AsyncDeleteIndexEndpoint(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::DeleteIndexEndpointRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::DeleteIndexEndpointRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request,
+             google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteIndexEndpoint(context, request, cq);
       },
@@ -120,26 +119,25 @@ DefaultIndexEndpointServiceStub::AsyncDeleteIndexEndpoint(
 
 StatusOr<google::longrunning::Operation>
 DefaultIndexEndpointServiceStub::DeleteIndexEndpoint(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteIndexEndpoint(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteIndexEndpoint(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultIndexEndpointServiceStub::AsyncDeployIndex(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::aiplatform::v1::DeployIndexRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::DeployIndexRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::aiplatform::v1::DeployIndexRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::DeployIndexRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::aiplatform::v1::DeployIndexRequest const& request,
@@ -151,26 +149,25 @@ DefaultIndexEndpointServiceStub::AsyncDeployIndex(
 
 StatusOr<google::longrunning::Operation>
 DefaultIndexEndpointServiceStub::DeployIndex(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::aiplatform::v1::DeployIndexRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeployIndex(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeployIndexRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeployIndex(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultIndexEndpointServiceStub::AsyncUndeployIndex(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::aiplatform::v1::UndeployIndexRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::UndeployIndexRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::aiplatform::v1::UndeployIndexRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::UndeployIndexRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::aiplatform::v1::UndeployIndexRequest const& request,
@@ -182,29 +179,29 @@ DefaultIndexEndpointServiceStub::AsyncUndeployIndex(
 
 StatusOr<google::longrunning::Operation>
 DefaultIndexEndpointServiceStub::UndeployIndex(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::aiplatform::v1::UndeployIndexRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UndeployIndex(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::UndeployIndexRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UndeployIndex(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultIndexEndpointServiceStub::AsyncMutateDeployedIndex(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::MutateDeployedIndexRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::MutateDeployedIndexRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request,
+             google::cloud::aiplatform::v1::MutateDeployedIndexRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncMutateDeployedIndex(context, request, cq);
       },
@@ -213,16 +210,14 @@ DefaultIndexEndpointServiceStub::AsyncMutateDeployedIndex(
 
 StatusOr<google::longrunning::Operation>
 DefaultIndexEndpointServiceStub::MutateDeployedIndex(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->MutateDeployedIndex(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->MutateDeployedIndex(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -251,13 +246,13 @@ future<Status> DefaultIndexEndpointServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_->AsyncCancelOperation(context, request, cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

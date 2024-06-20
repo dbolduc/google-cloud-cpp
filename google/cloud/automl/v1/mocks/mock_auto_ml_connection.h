@@ -47,76 +47,87 @@ class MockAutoMlConnection : public automl_v1::AutoMlConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::Dataset>>,
-  CreateDataset,
-  (google::cloud::automl::v1::CreateDatasetRequest const& request), (override));
+              CreateDataset,
+              (google::cloud::automl::v1::CreateDatasetRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::automl::v1::Dataset>,
-  GetDataset,
-  (google::cloud::automl::v1::GetDatasetRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::automl::v1::Dataset>, GetDataset,
+              (google::cloud::automl::v1::GetDatasetRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::automl::v1::Dataset>),
-  ListDatasets,
-  (google::cloud::automl::v1::ListDatasetsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::automl::v1::Dataset>), ListDatasets,
+              (google::cloud::automl::v1::ListDatasetsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::automl::v1::Dataset>,
-  UpdateDataset,
-  (google::cloud::automl::v1::UpdateDatasetRequest const& request), (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
-  DeleteDataset,
-  (google::cloud::automl::v1::DeleteDatasetRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::automl::v1::Dataset>, UpdateDataset,
+              (google::cloud::automl::v1::UpdateDatasetRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
-  ImportData,
-  (google::cloud::automl::v1::ImportDataRequest const& request), (override));
+              DeleteDataset,
+              (google::cloud::automl::v1::DeleteDatasetRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
-  ExportData,
-  (google::cloud::automl::v1::ExportDataRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::automl::v1::AnnotationSpec>,
-  GetAnnotationSpec,
-  (google::cloud::automl::v1::GetAnnotationSpecRequest const& request), (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::Model>>,
-  CreateModel,
-  (google::cloud::automl::v1::CreateModelRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::automl::v1::Model>,
-  GetModel,
-  (google::cloud::automl::v1::GetModelRequest const& request), (override));
-
-  MOCK_METHOD((StreamRange<google::cloud::automl::v1::Model>),
-  ListModels,
-  (google::cloud::automl::v1::ListModelsRequest request), (override));
+              ImportData,
+              (google::cloud::automl::v1::ImportDataRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
-  DeleteModel,
-  (google::cloud::automl::v1::DeleteModelRequest const& request), (override));
+              ExportData,
+              (google::cloud::automl::v1::ExportDataRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::automl::v1::Model>,
-  UpdateModel,
-  (google::cloud::automl::v1::UpdateModelRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::automl::v1::AnnotationSpec>, GetAnnotationSpec,
+      (google::cloud::automl::v1::GetAnnotationSpecRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::Model>>, CreateModel,
+              (google::cloud::automl::v1::CreateModelRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::automl::v1::Model>, GetModel,
+              (google::cloud::automl::v1::GetModelRequest const& request),
+              (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::automl::v1::Model>), ListModels,
+              (google::cloud::automl::v1::ListModelsRequest request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
-  DeployModel,
-  (google::cloud::automl::v1::DeployModelRequest const& request), (override));
+              DeleteModel,
+              (google::cloud::automl::v1::DeleteModelRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::automl::v1::Model>, UpdateModel,
+              (google::cloud::automl::v1::UpdateModelRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
-  UndeployModel,
-  (google::cloud::automl::v1::UndeployModelRequest const& request), (override));
+              DeployModel,
+              (google::cloud::automl::v1::DeployModelRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
-  ExportModel,
-  (google::cloud::automl::v1::ExportModelRequest const& request), (override));
+              UndeployModel,
+              (google::cloud::automl::v1::UndeployModelRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::automl::v1::ModelEvaluation>,
-  GetModelEvaluation,
-  (google::cloud::automl::v1::GetModelEvaluationRequest const& request), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
+              ExportModel,
+              (google::cloud::automl::v1::ExportModelRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::automl::v1::ModelEvaluation>, GetModelEvaluation,
+      (google::cloud::automl::v1::GetModelEvaluationRequest const& request),
+      (override));
 
   MOCK_METHOD((StreamRange<google::cloud::automl::v1::ModelEvaluation>),
-  ListModelEvaluations,
-  (google::cloud::automl::v1::ListModelEvaluationsRequest request), (override));
+              ListModelEvaluations,
+              (google::cloud::automl::v1::ListModelEvaluationsRequest request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

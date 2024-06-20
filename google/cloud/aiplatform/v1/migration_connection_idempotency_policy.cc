@@ -26,23 +26,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-MigrationServiceConnectionIdempotencyPolicy::~MigrationServiceConnectionIdempotencyPolicy() = default;
+MigrationServiceConnectionIdempotencyPolicy::
+    ~MigrationServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<MigrationServiceConnectionIdempotencyPolicy>
 MigrationServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<MigrationServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency MigrationServiceConnectionIdempotencyPolicy::SearchMigratableResources(google::cloud::aiplatform::v1::SearchMigratableResourcesRequest) {  // NOLINT
+Idempotency
+MigrationServiceConnectionIdempotencyPolicy::SearchMigratableResources(
+    google::cloud::aiplatform::v1::
+        SearchMigratableResourcesRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MigrationServiceConnectionIdempotencyPolicy::BatchMigrateResources(google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&) {
+Idempotency MigrationServiceConnectionIdempotencyPolicy::BatchMigrateResources(
+    google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<MigrationServiceConnectionIdempotencyPolicy>
-    MakeDefaultMigrationServiceConnectionIdempotencyPolicy() {
+MakeDefaultMigrationServiceConnectionIdempotencyPolicy() {
   return std::make_unique<MigrationServiceConnectionIdempotencyPolicy>();
 }
 

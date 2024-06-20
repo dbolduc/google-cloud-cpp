@@ -25,15 +25,16 @@ namespace cloud {
 namespace apphub_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-AppHubClient::AppHubClient(
-    std::shared_ptr<AppHubConnection> connection, Options opts)
+AppHubClient::AppHubClient(std::shared_ptr<AppHubConnection> connection,
+                           Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 AppHubClient::~AppHubClient() = default;
 
 StatusOr<google::cloud::apphub::v1::LookupServiceProjectAttachmentResponse>
-AppHubClient::LookupServiceProjectAttachment(std::string const& name, Options opts) {
+AppHubClient::LookupServiceProjectAttachment(std::string const& name,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apphub::v1::LookupServiceProjectAttachmentRequest request;
   request.set_name(name);
@@ -41,13 +42,17 @@ AppHubClient::LookupServiceProjectAttachment(std::string const& name, Options op
 }
 
 StatusOr<google::cloud::apphub::v1::LookupServiceProjectAttachmentResponse>
-AppHubClient::LookupServiceProjectAttachment(google::cloud::apphub::v1::LookupServiceProjectAttachmentRequest const& request, Options opts) {
+AppHubClient::LookupServiceProjectAttachment(
+    google::cloud::apphub::v1::LookupServiceProjectAttachmentRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->LookupServiceProjectAttachment(request);
 }
 
 StreamRange<google::cloud::apphub::v1::ServiceProjectAttachment>
-AppHubClient::ListServiceProjectAttachments(std::string const& parent, Options opts) {
+AppHubClient::ListServiceProjectAttachments(std::string const& parent,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest request;
   request.set_parent(parent);
@@ -55,13 +60,19 @@ AppHubClient::ListServiceProjectAttachments(std::string const& parent, Options o
 }
 
 StreamRange<google::cloud::apphub::v1::ServiceProjectAttachment>
-AppHubClient::ListServiceProjectAttachments(google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest request, Options opts) {
+AppHubClient::ListServiceProjectAttachments(
+    google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListServiceProjectAttachments(std::move(request));
 }
 
 future<StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>
-AppHubClient::CreateServiceProjectAttachment(std::string const& parent, google::cloud::apphub::v1::ServiceProjectAttachment const& service_project_attachment, std::string const& service_project_attachment_id, Options opts) {
+AppHubClient::CreateServiceProjectAttachment(
+    std::string const& parent,
+    google::cloud::apphub::v1::ServiceProjectAttachment const&
+        service_project_attachment,
+    std::string const& service_project_attachment_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest request;
   request.set_parent(parent);
@@ -71,13 +82,17 @@ AppHubClient::CreateServiceProjectAttachment(std::string const& parent, google::
 }
 
 future<StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>
-AppHubClient::CreateServiceProjectAttachment(google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const& request, Options opts) {
+AppHubClient::CreateServiceProjectAttachment(
+    google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateServiceProjectAttachment(request);
 }
 
 StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>
-AppHubClient::GetServiceProjectAttachment(std::string const& name, Options opts) {
+AppHubClient::GetServiceProjectAttachment(std::string const& name,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apphub::v1::GetServiceProjectAttachmentRequest request;
   request.set_name(name);
@@ -85,13 +100,17 @@ AppHubClient::GetServiceProjectAttachment(std::string const& name, Options opts)
 }
 
 StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>
-AppHubClient::GetServiceProjectAttachment(google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const& request, Options opts) {
+AppHubClient::GetServiceProjectAttachment(
+    google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetServiceProjectAttachment(request);
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
-AppHubClient::DeleteServiceProjectAttachment(std::string const& name, Options opts) {
+AppHubClient::DeleteServiceProjectAttachment(std::string const& name,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest request;
   request.set_name(name);
@@ -99,13 +118,17 @@ AppHubClient::DeleteServiceProjectAttachment(std::string const& name, Options op
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
-AppHubClient::DeleteServiceProjectAttachment(google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const& request, Options opts) {
+AppHubClient::DeleteServiceProjectAttachment(
+    google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteServiceProjectAttachment(request);
 }
 
 StatusOr<google::cloud::apphub::v1::DetachServiceProjectAttachmentResponse>
-AppHubClient::DetachServiceProjectAttachment(std::string const& name, Options opts) {
+AppHubClient::DetachServiceProjectAttachment(std::string const& name,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apphub::v1::DetachServiceProjectAttachmentRequest request;
   request.set_name(name);
@@ -113,7 +136,10 @@ AppHubClient::DetachServiceProjectAttachment(std::string const& name, Options op
 }
 
 StatusOr<google::cloud::apphub::v1::DetachServiceProjectAttachmentResponse>
-AppHubClient::DetachServiceProjectAttachment(google::cloud::apphub::v1::DetachServiceProjectAttachmentRequest const& request, Options opts) {
+AppHubClient::DetachServiceProjectAttachment(
+    google::cloud::apphub::v1::DetachServiceProjectAttachmentRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DetachServiceProjectAttachment(request);
 }
@@ -127,7 +153,9 @@ AppHubClient::ListDiscoveredServices(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::apphub::v1::DiscoveredService>
-AppHubClient::ListDiscoveredServices(google::cloud::apphub::v1::ListDiscoveredServicesRequest request, Options opts) {
+AppHubClient::ListDiscoveredServices(
+    google::cloud::apphub::v1::ListDiscoveredServicesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDiscoveredServices(std::move(request));
 }
@@ -141,13 +169,16 @@ AppHubClient::GetDiscoveredService(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::apphub::v1::DiscoveredService>
-AppHubClient::GetDiscoveredService(google::cloud::apphub::v1::GetDiscoveredServiceRequest const& request, Options opts) {
+AppHubClient::GetDiscoveredService(
+    google::cloud::apphub::v1::GetDiscoveredServiceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDiscoveredService(request);
 }
 
 StatusOr<google::cloud::apphub::v1::LookupDiscoveredServiceResponse>
-AppHubClient::LookupDiscoveredService(std::string const& parent, std::string const& uri, Options opts) {
+AppHubClient::LookupDiscoveredService(std::string const& parent,
+                                      std::string const& uri, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apphub::v1::LookupDiscoveredServiceRequest request;
   request.set_parent(parent);
@@ -156,27 +187,31 @@ AppHubClient::LookupDiscoveredService(std::string const& parent, std::string con
 }
 
 StatusOr<google::cloud::apphub::v1::LookupDiscoveredServiceResponse>
-AppHubClient::LookupDiscoveredService(google::cloud::apphub::v1::LookupDiscoveredServiceRequest const& request, Options opts) {
+AppHubClient::LookupDiscoveredService(
+    google::cloud::apphub::v1::LookupDiscoveredServiceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->LookupDiscoveredService(request);
 }
 
-StreamRange<google::cloud::apphub::v1::Service>
-AppHubClient::ListServices(std::string const& parent, Options opts) {
+StreamRange<google::cloud::apphub::v1::Service> AppHubClient::ListServices(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apphub::v1::ListServicesRequest request;
   request.set_parent(parent);
   return connection_->ListServices(request);
 }
 
-StreamRange<google::cloud::apphub::v1::Service>
-AppHubClient::ListServices(google::cloud::apphub::v1::ListServicesRequest request, Options opts) {
+StreamRange<google::cloud::apphub::v1::Service> AppHubClient::ListServices(
+    google::cloud::apphub::v1::ListServicesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListServices(std::move(request));
 }
 
 future<StatusOr<google::cloud::apphub::v1::Service>>
-AppHubClient::CreateService(std::string const& parent, google::cloud::apphub::v1::Service const& service, std::string const& service_id, Options opts) {
+AppHubClient::CreateService(std::string const& parent,
+                            google::cloud::apphub::v1::Service const& service,
+                            std::string const& service_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apphub::v1::CreateServiceRequest request;
   request.set_parent(parent);
@@ -186,27 +221,31 @@ AppHubClient::CreateService(std::string const& parent, google::cloud::apphub::v1
 }
 
 future<StatusOr<google::cloud::apphub::v1::Service>>
-AppHubClient::CreateService(google::cloud::apphub::v1::CreateServiceRequest const& request, Options opts) {
+AppHubClient::CreateService(
+    google::cloud::apphub::v1::CreateServiceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateService(request);
 }
 
-StatusOr<google::cloud::apphub::v1::Service>
-AppHubClient::GetService(std::string const& name, Options opts) {
+StatusOr<google::cloud::apphub::v1::Service> AppHubClient::GetService(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apphub::v1::GetServiceRequest request;
   request.set_name(name);
   return connection_->GetService(request);
 }
 
-StatusOr<google::cloud::apphub::v1::Service>
-AppHubClient::GetService(google::cloud::apphub::v1::GetServiceRequest const& request, Options opts) {
+StatusOr<google::cloud::apphub::v1::Service> AppHubClient::GetService(
+    google::cloud::apphub::v1::GetServiceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetService(request);
 }
 
 future<StatusOr<google::cloud::apphub::v1::Service>>
-AppHubClient::UpdateService(google::cloud::apphub::v1::Service const& service, google::protobuf::FieldMask const& update_mask, Options opts) {
+AppHubClient::UpdateService(google::cloud::apphub::v1::Service const& service,
+                            google::protobuf::FieldMask const& update_mask,
+                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apphub::v1::UpdateServiceRequest request;
   *request.mutable_service() = service;
@@ -215,7 +254,9 @@ AppHubClient::UpdateService(google::cloud::apphub::v1::Service const& service, g
 }
 
 future<StatusOr<google::cloud::apphub::v1::Service>>
-AppHubClient::UpdateService(google::cloud::apphub::v1::UpdateServiceRequest const& request, Options opts) {
+AppHubClient::UpdateService(
+    google::cloud::apphub::v1::UpdateServiceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateService(request);
 }
@@ -229,7 +270,9 @@ AppHubClient::DeleteService(std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
-AppHubClient::DeleteService(google::cloud::apphub::v1::DeleteServiceRequest const& request, Options opts) {
+AppHubClient::DeleteService(
+    google::cloud::apphub::v1::DeleteServiceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteService(request);
 }
@@ -243,7 +286,9 @@ AppHubClient::ListDiscoveredWorkloads(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::apphub::v1::DiscoveredWorkload>
-AppHubClient::ListDiscoveredWorkloads(google::cloud::apphub::v1::ListDiscoveredWorkloadsRequest request, Options opts) {
+AppHubClient::ListDiscoveredWorkloads(
+    google::cloud::apphub::v1::ListDiscoveredWorkloadsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDiscoveredWorkloads(std::move(request));
 }
@@ -257,13 +302,16 @@ AppHubClient::GetDiscoveredWorkload(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::apphub::v1::DiscoveredWorkload>
-AppHubClient::GetDiscoveredWorkload(google::cloud::apphub::v1::GetDiscoveredWorkloadRequest const& request, Options opts) {
+AppHubClient::GetDiscoveredWorkload(
+    google::cloud::apphub::v1::GetDiscoveredWorkloadRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDiscoveredWorkload(request);
 }
 
 StatusOr<google::cloud::apphub::v1::LookupDiscoveredWorkloadResponse>
-AppHubClient::LookupDiscoveredWorkload(std::string const& parent, std::string const& uri, Options opts) {
+AppHubClient::LookupDiscoveredWorkload(std::string const& parent,
+                                       std::string const& uri, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apphub::v1::LookupDiscoveredWorkloadRequest request;
   request.set_parent(parent);
@@ -272,27 +320,32 @@ AppHubClient::LookupDiscoveredWorkload(std::string const& parent, std::string co
 }
 
 StatusOr<google::cloud::apphub::v1::LookupDiscoveredWorkloadResponse>
-AppHubClient::LookupDiscoveredWorkload(google::cloud::apphub::v1::LookupDiscoveredWorkloadRequest const& request, Options opts) {
+AppHubClient::LookupDiscoveredWorkload(
+    google::cloud::apphub::v1::LookupDiscoveredWorkloadRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->LookupDiscoveredWorkload(request);
 }
 
-StreamRange<google::cloud::apphub::v1::Workload>
-AppHubClient::ListWorkloads(std::string const& parent, Options opts) {
+StreamRange<google::cloud::apphub::v1::Workload> AppHubClient::ListWorkloads(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apphub::v1::ListWorkloadsRequest request;
   request.set_parent(parent);
   return connection_->ListWorkloads(request);
 }
 
-StreamRange<google::cloud::apphub::v1::Workload>
-AppHubClient::ListWorkloads(google::cloud::apphub::v1::ListWorkloadsRequest request, Options opts) {
+StreamRange<google::cloud::apphub::v1::Workload> AppHubClient::ListWorkloads(
+    google::cloud::apphub::v1::ListWorkloadsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListWorkloads(std::move(request));
 }
 
 future<StatusOr<google::cloud::apphub::v1::Workload>>
-AppHubClient::CreateWorkload(std::string const& parent, google::cloud::apphub::v1::Workload const& workload, std::string const& workload_id, Options opts) {
+AppHubClient::CreateWorkload(
+    std::string const& parent,
+    google::cloud::apphub::v1::Workload const& workload,
+    std::string const& workload_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apphub::v1::CreateWorkloadRequest request;
   request.set_parent(parent);
@@ -302,27 +355,32 @@ AppHubClient::CreateWorkload(std::string const& parent, google::cloud::apphub::v
 }
 
 future<StatusOr<google::cloud::apphub::v1::Workload>>
-AppHubClient::CreateWorkload(google::cloud::apphub::v1::CreateWorkloadRequest const& request, Options opts) {
+AppHubClient::CreateWorkload(
+    google::cloud::apphub::v1::CreateWorkloadRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateWorkload(request);
 }
 
-StatusOr<google::cloud::apphub::v1::Workload>
-AppHubClient::GetWorkload(std::string const& name, Options opts) {
+StatusOr<google::cloud::apphub::v1::Workload> AppHubClient::GetWorkload(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apphub::v1::GetWorkloadRequest request;
   request.set_name(name);
   return connection_->GetWorkload(request);
 }
 
-StatusOr<google::cloud::apphub::v1::Workload>
-AppHubClient::GetWorkload(google::cloud::apphub::v1::GetWorkloadRequest const& request, Options opts) {
+StatusOr<google::cloud::apphub::v1::Workload> AppHubClient::GetWorkload(
+    google::cloud::apphub::v1::GetWorkloadRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetWorkload(request);
 }
 
 future<StatusOr<google::cloud::apphub::v1::Workload>>
-AppHubClient::UpdateWorkload(google::cloud::apphub::v1::Workload const& workload, google::protobuf::FieldMask const& update_mask, Options opts) {
+AppHubClient::UpdateWorkload(
+    google::cloud::apphub::v1::Workload const& workload,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apphub::v1::UpdateWorkloadRequest request;
   *request.mutable_workload() = workload;
@@ -331,7 +389,9 @@ AppHubClient::UpdateWorkload(google::cloud::apphub::v1::Workload const& workload
 }
 
 future<StatusOr<google::cloud::apphub::v1::Workload>>
-AppHubClient::UpdateWorkload(google::cloud::apphub::v1::UpdateWorkloadRequest const& request, Options opts) {
+AppHubClient::UpdateWorkload(
+    google::cloud::apphub::v1::UpdateWorkloadRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateWorkload(request);
 }
@@ -345,7 +405,9 @@ AppHubClient::DeleteWorkload(std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
-AppHubClient::DeleteWorkload(google::cloud::apphub::v1::DeleteWorkloadRequest const& request, Options opts) {
+AppHubClient::DeleteWorkload(
+    google::cloud::apphub::v1::DeleteWorkloadRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteWorkload(request);
 }
@@ -359,13 +421,17 @@ AppHubClient::ListApplications(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::apphub::v1::Application>
-AppHubClient::ListApplications(google::cloud::apphub::v1::ListApplicationsRequest request, Options opts) {
+AppHubClient::ListApplications(
+    google::cloud::apphub::v1::ListApplicationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListApplications(std::move(request));
 }
 
 future<StatusOr<google::cloud::apphub::v1::Application>>
-AppHubClient::CreateApplication(std::string const& parent, google::cloud::apphub::v1::Application const& application, std::string const& application_id, Options opts) {
+AppHubClient::CreateApplication(
+    std::string const& parent,
+    google::cloud::apphub::v1::Application const& application,
+    std::string const& application_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apphub::v1::CreateApplicationRequest request;
   request.set_parent(parent);
@@ -375,27 +441,32 @@ AppHubClient::CreateApplication(std::string const& parent, google::cloud::apphub
 }
 
 future<StatusOr<google::cloud::apphub::v1::Application>>
-AppHubClient::CreateApplication(google::cloud::apphub::v1::CreateApplicationRequest const& request, Options opts) {
+AppHubClient::CreateApplication(
+    google::cloud::apphub::v1::CreateApplicationRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateApplication(request);
 }
 
-StatusOr<google::cloud::apphub::v1::Application>
-AppHubClient::GetApplication(std::string const& name, Options opts) {
+StatusOr<google::cloud::apphub::v1::Application> AppHubClient::GetApplication(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apphub::v1::GetApplicationRequest request;
   request.set_name(name);
   return connection_->GetApplication(request);
 }
 
-StatusOr<google::cloud::apphub::v1::Application>
-AppHubClient::GetApplication(google::cloud::apphub::v1::GetApplicationRequest const& request, Options opts) {
+StatusOr<google::cloud::apphub::v1::Application> AppHubClient::GetApplication(
+    google::cloud::apphub::v1::GetApplicationRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetApplication(request);
 }
 
 future<StatusOr<google::cloud::apphub::v1::Application>>
-AppHubClient::UpdateApplication(google::cloud::apphub::v1::Application const& application, google::protobuf::FieldMask const& update_mask, Options opts) {
+AppHubClient::UpdateApplication(
+    google::cloud::apphub::v1::Application const& application,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apphub::v1::UpdateApplicationRequest request;
   *request.mutable_application() = application;
@@ -404,7 +475,9 @@ AppHubClient::UpdateApplication(google::cloud::apphub::v1::Application const& ap
 }
 
 future<StatusOr<google::cloud::apphub::v1::Application>>
-AppHubClient::UpdateApplication(google::cloud::apphub::v1::UpdateApplicationRequest const& request, Options opts) {
+AppHubClient::UpdateApplication(
+    google::cloud::apphub::v1::UpdateApplicationRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateApplication(request);
 }
@@ -418,7 +491,9 @@ AppHubClient::DeleteApplication(std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
-AppHubClient::DeleteApplication(google::cloud::apphub::v1::DeleteApplicationRequest const& request, Options opts) {
+AppHubClient::DeleteApplication(
+    google::cloud::apphub::v1::DeleteApplicationRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteApplication(request);
 }

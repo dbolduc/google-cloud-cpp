@@ -29,39 +29,36 @@ namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DatasetServiceLogging::DatasetServiceLogging(
-    std::shared_ptr<DatasetServiceStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<DatasetServiceStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 future<StatusOr<google::longrunning::Operation>>
 DatasetServiceLogging::AsyncCreateDataset(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateDatasetRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::CreateDatasetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::CreateDatasetRequest const& request) {
-        return child_->AsyncCreateDataset(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::aiplatform::v1::CreateDatasetRequest const& request) {
+        return child_->AsyncCreateDataset(cq, std::move(context),
+                                          std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-DatasetServiceLogging::CreateDataset(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CreateDatasetRequest const& request) {
+StatusOr<google::longrunning::Operation> DatasetServiceLogging::CreateDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateDatasetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::CreateDatasetRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::CreateDatasetRequest const& request) {
         return child_->CreateDataset(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -69,12 +66,10 @@ DatasetServiceLogging::CreateDataset(
 
 StatusOr<google::cloud::aiplatform::v1::Dataset>
 DatasetServiceLogging::GetDataset(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetDatasetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GetDatasetRequest const& request) {
         return child_->GetDataset(context, options, request);
       },
@@ -83,13 +78,12 @@ DatasetServiceLogging::GetDataset(
 
 StatusOr<google::cloud::aiplatform::v1::Dataset>
 DatasetServiceLogging::UpdateDataset(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpdateDatasetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::UpdateDatasetRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::UpdateDatasetRequest const& request) {
         return child_->UpdateDataset(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -97,13 +91,12 @@ DatasetServiceLogging::UpdateDataset(
 
 StatusOr<google::cloud::aiplatform::v1::ListDatasetsResponse>
 DatasetServiceLogging::ListDatasets(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListDatasetsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::ListDatasetsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::ListDatasetsRequest const& request) {
         return child_->ListDatasets(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -111,31 +104,30 @@ DatasetServiceLogging::ListDatasets(
 
 future<StatusOr<google::longrunning::Operation>>
 DatasetServiceLogging::AsyncDeleteDataset(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteDatasetRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::DeleteDatasetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::DeleteDatasetRequest const& request) {
-        return child_->AsyncDeleteDataset(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::aiplatform::v1::DeleteDatasetRequest const& request) {
+        return child_->AsyncDeleteDataset(cq, std::move(context),
+                                          std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-DatasetServiceLogging::DeleteDataset(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteDatasetRequest const& request) {
+StatusOr<google::longrunning::Operation> DatasetServiceLogging::DeleteDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteDatasetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::DeleteDatasetRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::DeleteDatasetRequest const& request) {
         return child_->DeleteDataset(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -143,30 +135,27 @@ DatasetServiceLogging::DeleteDataset(
 
 future<StatusOr<google::longrunning::Operation>>
 DatasetServiceLogging::AsyncImportData(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::ImportDataRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::ImportDataRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::aiplatform::v1::ImportDataRequest const& request) {
-        return child_->AsyncImportData(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncImportData(cq, std::move(context),
+                                       std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-DatasetServiceLogging::ImportData(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::ImportDataRequest const& request) {
+StatusOr<google::longrunning::Operation> DatasetServiceLogging::ImportData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::ImportDataRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::ImportDataRequest const& request) {
         return child_->ImportData(context, options, request);
       },
@@ -175,30 +164,27 @@ DatasetServiceLogging::ImportData(
 
 future<StatusOr<google::longrunning::Operation>>
 DatasetServiceLogging::AsyncExportData(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::ExportDataRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::ExportDataRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::aiplatform::v1::ExportDataRequest const& request) {
-        return child_->AsyncExportData(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncExportData(cq, std::move(context),
+                                       std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-DatasetServiceLogging::ExportData(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::ExportDataRequest const& request) {
+StatusOr<google::longrunning::Operation> DatasetServiceLogging::ExportData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::ExportDataRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::ExportDataRequest const& request) {
         return child_->ExportData(context, options, request);
       },
@@ -207,17 +193,18 @@ DatasetServiceLogging::ExportData(
 
 future<StatusOr<google::longrunning::Operation>>
 DatasetServiceLogging::AsyncCreateDatasetVersion(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) {
-        return child_->AsyncCreateDatasetVersion(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::aiplatform::v1::CreateDatasetVersionRequest const&
+                 request) {
+        return child_->AsyncCreateDatasetVersion(cq, std::move(context),
+                                                 std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -225,13 +212,12 @@ DatasetServiceLogging::AsyncCreateDatasetVersion(
 
 StatusOr<google::longrunning::Operation>
 DatasetServiceLogging::CreateDatasetVersion(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::CreateDatasetVersionRequest const&
+                 request) {
         return child_->CreateDatasetVersion(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -239,13 +225,12 @@ DatasetServiceLogging::CreateDatasetVersion(
 
 StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
 DatasetServiceLogging::UpdateDatasetVersion(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const&
+                 request) {
         return child_->UpdateDatasetVersion(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -253,17 +238,18 @@ DatasetServiceLogging::UpdateDatasetVersion(
 
 future<StatusOr<google::longrunning::Operation>>
 DatasetServiceLogging::AsyncDeleteDatasetVersion(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) {
-        return child_->AsyncDeleteDatasetVersion(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const&
+                 request) {
+        return child_->AsyncDeleteDatasetVersion(cq, std::move(context),
+                                                 std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -271,13 +257,12 @@ DatasetServiceLogging::AsyncDeleteDatasetVersion(
 
 StatusOr<google::longrunning::Operation>
 DatasetServiceLogging::DeleteDatasetVersion(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const&
+                 request) {
         return child_->DeleteDatasetVersion(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -285,13 +270,12 @@ DatasetServiceLogging::DeleteDatasetVersion(
 
 StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
 DatasetServiceLogging::GetDatasetVersion(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::GetDatasetVersionRequest const&
+                 request) {
         return child_->GetDatasetVersion(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -299,13 +283,12 @@ DatasetServiceLogging::GetDatasetVersion(
 
 StatusOr<google::cloud::aiplatform::v1::ListDatasetVersionsResponse>
 DatasetServiceLogging::ListDatasetVersions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListDatasetVersionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::ListDatasetVersionsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::ListDatasetVersionsRequest const&
+                 request) {
         return child_->ListDatasetVersions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -313,17 +296,19 @@ DatasetServiceLogging::ListDatasetVersions(
 
 future<StatusOr<google::longrunning::Operation>>
 DatasetServiceLogging::AsyncRestoreDatasetVersion(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const& request) {
-        return child_->AsyncRestoreDatasetVersion(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
+                 request) {
+        return child_->AsyncRestoreDatasetVersion(cq, std::move(context),
+                                                  std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -331,13 +316,13 @@ DatasetServiceLogging::AsyncRestoreDatasetVersion(
 
 StatusOr<google::longrunning::Operation>
 DatasetServiceLogging::RestoreDatasetVersion(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
+                 request) {
         return child_->RestoreDatasetVersion(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -345,13 +330,12 @@ DatasetServiceLogging::RestoreDatasetVersion(
 
 StatusOr<google::cloud::aiplatform::v1::ListDataItemsResponse>
 DatasetServiceLogging::ListDataItems(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListDataItemsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::ListDataItemsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::ListDataItemsRequest const& request) {
         return child_->ListDataItems(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -359,13 +343,12 @@ DatasetServiceLogging::ListDataItems(
 
 StatusOr<google::cloud::aiplatform::v1::SearchDataItemsResponse>
 DatasetServiceLogging::SearchDataItems(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::SearchDataItemsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::SearchDataItemsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::SearchDataItemsRequest const&
+                 request) {
         return child_->SearchDataItems(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -373,13 +356,12 @@ DatasetServiceLogging::SearchDataItems(
 
 StatusOr<google::cloud::aiplatform::v1::ListSavedQueriesResponse>
 DatasetServiceLogging::ListSavedQueries(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListSavedQueriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::ListSavedQueriesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::ListSavedQueriesRequest const&
+                 request) {
         return child_->ListSavedQueries(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -387,17 +369,18 @@ DatasetServiceLogging::ListSavedQueries(
 
 future<StatusOr<google::longrunning::Operation>>
 DatasetServiceLogging::AsyncDeleteSavedQuery(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) {
-        return child_->AsyncDeleteSavedQuery(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::aiplatform::v1::DeleteSavedQueryRequest const&
+                 request) {
+        return child_->AsyncDeleteSavedQuery(cq, std::move(context),
+                                             std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -405,13 +388,12 @@ DatasetServiceLogging::AsyncDeleteSavedQuery(
 
 StatusOr<google::longrunning::Operation>
 DatasetServiceLogging::DeleteSavedQuery(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::DeleteSavedQueryRequest const&
+                 request) {
         return child_->DeleteSavedQuery(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -419,13 +401,12 @@ DatasetServiceLogging::DeleteSavedQuery(
 
 StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
 DatasetServiceLogging::GetAnnotationSpec(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::GetAnnotationSpecRequest const&
+                 request) {
         return child_->GetAnnotationSpec(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -433,13 +414,12 @@ DatasetServiceLogging::GetAnnotationSpec(
 
 StatusOr<google::cloud::aiplatform::v1::ListAnnotationsResponse>
 DatasetServiceLogging::ListAnnotations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListAnnotationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::ListAnnotationsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::ListAnnotationsRequest const&
+                 request) {
         return child_->ListAnnotations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -456,8 +436,8 @@ DatasetServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -473,8 +453,8 @@ future<Status> DatasetServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

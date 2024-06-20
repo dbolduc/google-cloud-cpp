@@ -28,12 +28,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 FeaturestoreServiceClient::FeaturestoreServiceClient(
     std::shared_ptr<FeaturestoreServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 FeaturestoreServiceClient::~FeaturestoreServiceClient() = default;
 
 future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
-FeaturestoreServiceClient::CreateFeaturestore(std::string const& parent, google::cloud::aiplatform::v1::Featurestore const& featurestore, Options opts) {
+FeaturestoreServiceClient::CreateFeaturestore(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::Featurestore const& featurestore,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateFeaturestoreRequest request;
   request.set_parent(parent);
@@ -42,7 +45,10 @@ FeaturestoreServiceClient::CreateFeaturestore(std::string const& parent, google:
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
-FeaturestoreServiceClient::CreateFeaturestore(std::string const& parent, google::cloud::aiplatform::v1::Featurestore const& featurestore, std::string const& featurestore_id, Options opts) {
+FeaturestoreServiceClient::CreateFeaturestore(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::Featurestore const& featurestore,
+    std::string const& featurestore_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateFeaturestoreRequest request;
   request.set_parent(parent);
@@ -52,13 +58,16 @@ FeaturestoreServiceClient::CreateFeaturestore(std::string const& parent, google:
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
-FeaturestoreServiceClient::CreateFeaturestore(google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request, Options opts) {
+FeaturestoreServiceClient::CreateFeaturestore(
+    google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateFeaturestore(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Featurestore>
-FeaturestoreServiceClient::GetFeaturestore(std::string const& name, Options opts) {
+FeaturestoreServiceClient::GetFeaturestore(std::string const& name,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::GetFeaturestoreRequest request;
   request.set_name(name);
@@ -66,13 +75,16 @@ FeaturestoreServiceClient::GetFeaturestore(std::string const& name, Options opts
 }
 
 StatusOr<google::cloud::aiplatform::v1::Featurestore>
-FeaturestoreServiceClient::GetFeaturestore(google::cloud::aiplatform::v1::GetFeaturestoreRequest const& request, Options opts) {
+FeaturestoreServiceClient::GetFeaturestore(
+    google::cloud::aiplatform::v1::GetFeaturestoreRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetFeaturestore(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::Featurestore>
-FeaturestoreServiceClient::ListFeaturestores(std::string const& parent, Options opts) {
+FeaturestoreServiceClient::ListFeaturestores(std::string const& parent,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListFeaturestoresRequest request;
   request.set_parent(parent);
@@ -80,13 +92,17 @@ FeaturestoreServiceClient::ListFeaturestores(std::string const& parent, Options 
 }
 
 StreamRange<google::cloud::aiplatform::v1::Featurestore>
-FeaturestoreServiceClient::ListFeaturestores(google::cloud::aiplatform::v1::ListFeaturestoresRequest request, Options opts) {
+FeaturestoreServiceClient::ListFeaturestores(
+    google::cloud::aiplatform::v1::ListFeaturestoresRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListFeaturestores(std::move(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
-FeaturestoreServiceClient::UpdateFeaturestore(google::cloud::aiplatform::v1::Featurestore const& featurestore, google::protobuf::FieldMask const& update_mask, Options opts) {
+FeaturestoreServiceClient::UpdateFeaturestore(
+    google::cloud::aiplatform::v1::Featurestore const& featurestore,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdateFeaturestoreRequest request;
   *request.mutable_featurestore() = featurestore;
@@ -95,13 +111,16 @@ FeaturestoreServiceClient::UpdateFeaturestore(google::cloud::aiplatform::v1::Fea
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
-FeaturestoreServiceClient::UpdateFeaturestore(google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request, Options opts) {
+FeaturestoreServiceClient::UpdateFeaturestore(
+    google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateFeaturestore(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-FeaturestoreServiceClient::DeleteFeaturestore(std::string const& name, Options opts) {
+FeaturestoreServiceClient::DeleteFeaturestore(std::string const& name,
+                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteFeaturestoreRequest request;
   request.set_name(name);
@@ -109,7 +128,8 @@ FeaturestoreServiceClient::DeleteFeaturestore(std::string const& name, Options o
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-FeaturestoreServiceClient::DeleteFeaturestore(std::string const& name, bool force, Options opts) {
+FeaturestoreServiceClient::DeleteFeaturestore(std::string const& name,
+                                              bool force, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteFeaturestoreRequest request;
   request.set_name(name);
@@ -118,13 +138,18 @@ FeaturestoreServiceClient::DeleteFeaturestore(std::string const& name, bool forc
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-FeaturestoreServiceClient::DeleteFeaturestore(google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request, Options opts) {
+FeaturestoreServiceClient::DeleteFeaturestore(
+    google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFeaturestore(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::EntityType>>
-FeaturestoreServiceClient::CreateEntityType(std::string const& parent, google::cloud::aiplatform::v1::EntityType const& entity_type, Options opts) {
+FeaturestoreServiceClient::CreateEntityType(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::EntityType const& entity_type,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateEntityTypeRequest request;
   request.set_parent(parent);
@@ -133,7 +158,10 @@ FeaturestoreServiceClient::CreateEntityType(std::string const& parent, google::c
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::EntityType>>
-FeaturestoreServiceClient::CreateEntityType(std::string const& parent, google::cloud::aiplatform::v1::EntityType const& entity_type, std::string const& entity_type_id, Options opts) {
+FeaturestoreServiceClient::CreateEntityType(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::EntityType const& entity_type,
+    std::string const& entity_type_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateEntityTypeRequest request;
   request.set_parent(parent);
@@ -143,13 +171,16 @@ FeaturestoreServiceClient::CreateEntityType(std::string const& parent, google::c
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::EntityType>>
-FeaturestoreServiceClient::CreateEntityType(google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request, Options opts) {
+FeaturestoreServiceClient::CreateEntityType(
+    google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEntityType(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::EntityType>
-FeaturestoreServiceClient::GetEntityType(std::string const& name, Options opts) {
+FeaturestoreServiceClient::GetEntityType(std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::GetEntityTypeRequest request;
   request.set_name(name);
@@ -157,13 +188,16 @@ FeaturestoreServiceClient::GetEntityType(std::string const& name, Options opts) 
 }
 
 StatusOr<google::cloud::aiplatform::v1::EntityType>
-FeaturestoreServiceClient::GetEntityType(google::cloud::aiplatform::v1::GetEntityTypeRequest const& request, Options opts) {
+FeaturestoreServiceClient::GetEntityType(
+    google::cloud::aiplatform::v1::GetEntityTypeRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetEntityType(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::EntityType>
-FeaturestoreServiceClient::ListEntityTypes(std::string const& parent, Options opts) {
+FeaturestoreServiceClient::ListEntityTypes(std::string const& parent,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListEntityTypesRequest request;
   request.set_parent(parent);
@@ -171,13 +205,17 @@ FeaturestoreServiceClient::ListEntityTypes(std::string const& parent, Options op
 }
 
 StreamRange<google::cloud::aiplatform::v1::EntityType>
-FeaturestoreServiceClient::ListEntityTypes(google::cloud::aiplatform::v1::ListEntityTypesRequest request, Options opts) {
+FeaturestoreServiceClient::ListEntityTypes(
+    google::cloud::aiplatform::v1::ListEntityTypesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListEntityTypes(std::move(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::EntityType>
-FeaturestoreServiceClient::UpdateEntityType(google::cloud::aiplatform::v1::EntityType const& entity_type, google::protobuf::FieldMask const& update_mask, Options opts) {
+FeaturestoreServiceClient::UpdateEntityType(
+    google::cloud::aiplatform::v1::EntityType const& entity_type,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdateEntityTypeRequest request;
   *request.mutable_entity_type() = entity_type;
@@ -186,13 +224,16 @@ FeaturestoreServiceClient::UpdateEntityType(google::cloud::aiplatform::v1::Entit
 }
 
 StatusOr<google::cloud::aiplatform::v1::EntityType>
-FeaturestoreServiceClient::UpdateEntityType(google::cloud::aiplatform::v1::UpdateEntityTypeRequest const& request, Options opts) {
+FeaturestoreServiceClient::UpdateEntityType(
+    google::cloud::aiplatform::v1::UpdateEntityTypeRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateEntityType(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-FeaturestoreServiceClient::DeleteEntityType(std::string const& name, Options opts) {
+FeaturestoreServiceClient::DeleteEntityType(std::string const& name,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteEntityTypeRequest request;
   request.set_name(name);
@@ -200,7 +241,8 @@ FeaturestoreServiceClient::DeleteEntityType(std::string const& name, Options opt
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-FeaturestoreServiceClient::DeleteEntityType(std::string const& name, bool force, Options opts) {
+FeaturestoreServiceClient::DeleteEntityType(std::string const& name, bool force,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteEntityTypeRequest request;
   request.set_name(name);
@@ -209,13 +251,17 @@ FeaturestoreServiceClient::DeleteEntityType(std::string const& name, bool force,
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-FeaturestoreServiceClient::DeleteEntityType(google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request, Options opts) {
+FeaturestoreServiceClient::DeleteEntityType(
+    google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEntityType(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Feature>>
-FeaturestoreServiceClient::CreateFeature(std::string const& parent, google::cloud::aiplatform::v1::Feature const& feature, Options opts) {
+FeaturestoreServiceClient::CreateFeature(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::Feature const& feature, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateFeatureRequest request;
   request.set_parent(parent);
@@ -224,7 +270,10 @@ FeaturestoreServiceClient::CreateFeature(std::string const& parent, google::clou
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Feature>>
-FeaturestoreServiceClient::CreateFeature(std::string const& parent, google::cloud::aiplatform::v1::Feature const& feature, std::string const& feature_id, Options opts) {
+FeaturestoreServiceClient::CreateFeature(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::Feature const& feature,
+    std::string const& feature_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateFeatureRequest request;
   request.set_parent(parent);
@@ -234,13 +283,19 @@ FeaturestoreServiceClient::CreateFeature(std::string const& parent, google::clou
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Feature>>
-FeaturestoreServiceClient::CreateFeature(google::cloud::aiplatform::v1::CreateFeatureRequest const& request, Options opts) {
+FeaturestoreServiceClient::CreateFeature(
+    google::cloud::aiplatform::v1::CreateFeatureRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateFeature(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
-FeaturestoreServiceClient::BatchCreateFeatures(std::string const& parent, std::vector<google::cloud::aiplatform::v1::CreateFeatureRequest> const& requests, Options opts) {
+FeaturestoreServiceClient::BatchCreateFeatures(
+    std::string const& parent,
+    std::vector<google::cloud::aiplatform::v1::CreateFeatureRequest> const&
+        requests,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::BatchCreateFeaturesRequest request;
   request.set_parent(parent);
@@ -249,7 +304,9 @@ FeaturestoreServiceClient::BatchCreateFeatures(std::string const& parent, std::v
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
-FeaturestoreServiceClient::BatchCreateFeatures(google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request, Options opts) {
+FeaturestoreServiceClient::BatchCreateFeatures(
+    google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchCreateFeatures(request);
 }
@@ -263,13 +320,16 @@ FeaturestoreServiceClient::GetFeature(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::aiplatform::v1::Feature>
-FeaturestoreServiceClient::GetFeature(google::cloud::aiplatform::v1::GetFeatureRequest const& request, Options opts) {
+FeaturestoreServiceClient::GetFeature(
+    google::cloud::aiplatform::v1::GetFeatureRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetFeature(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::Feature>
-FeaturestoreServiceClient::ListFeatures(std::string const& parent, Options opts) {
+FeaturestoreServiceClient::ListFeatures(std::string const& parent,
+                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListFeaturesRequest request;
   request.set_parent(parent);
@@ -277,13 +337,16 @@ FeaturestoreServiceClient::ListFeatures(std::string const& parent, Options opts)
 }
 
 StreamRange<google::cloud::aiplatform::v1::Feature>
-FeaturestoreServiceClient::ListFeatures(google::cloud::aiplatform::v1::ListFeaturesRequest request, Options opts) {
+FeaturestoreServiceClient::ListFeatures(
+    google::cloud::aiplatform::v1::ListFeaturesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListFeatures(std::move(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Feature>
-FeaturestoreServiceClient::UpdateFeature(google::cloud::aiplatform::v1::Feature const& feature, google::protobuf::FieldMask const& update_mask, Options opts) {
+FeaturestoreServiceClient::UpdateFeature(
+    google::cloud::aiplatform::v1::Feature const& feature,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdateFeatureRequest request;
   *request.mutable_feature() = feature;
@@ -292,13 +355,16 @@ FeaturestoreServiceClient::UpdateFeature(google::cloud::aiplatform::v1::Feature 
 }
 
 StatusOr<google::cloud::aiplatform::v1::Feature>
-FeaturestoreServiceClient::UpdateFeature(google::cloud::aiplatform::v1::UpdateFeatureRequest const& request, Options opts) {
+FeaturestoreServiceClient::UpdateFeature(
+    google::cloud::aiplatform::v1::UpdateFeatureRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateFeature(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-FeaturestoreServiceClient::DeleteFeature(std::string const& name, Options opts) {
+FeaturestoreServiceClient::DeleteFeature(std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteFeatureRequest request;
   request.set_name(name);
@@ -306,13 +372,16 @@ FeaturestoreServiceClient::DeleteFeature(std::string const& name, Options opts) 
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-FeaturestoreServiceClient::DeleteFeature(google::cloud::aiplatform::v1::DeleteFeatureRequest const& request, Options opts) {
+FeaturestoreServiceClient::DeleteFeature(
+    google::cloud::aiplatform::v1::DeleteFeatureRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFeature(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ImportFeatureValuesResponse>>
-FeaturestoreServiceClient::ImportFeatureValues(std::string const& entity_type, Options opts) {
+FeaturestoreServiceClient::ImportFeatureValues(std::string const& entity_type,
+                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ImportFeatureValuesRequest request;
   request.set_entity_type(entity_type);
@@ -320,13 +389,16 @@ FeaturestoreServiceClient::ImportFeatureValues(std::string const& entity_type, O
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ImportFeatureValuesResponse>>
-FeaturestoreServiceClient::ImportFeatureValues(google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request, Options opts) {
+FeaturestoreServiceClient::ImportFeatureValues(
+    google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportFeatureValues(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>
-FeaturestoreServiceClient::BatchReadFeatureValues(std::string const& featurestore, Options opts) {
+FeaturestoreServiceClient::BatchReadFeatureValues(
+    std::string const& featurestore, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest request;
   request.set_featurestore(featurestore);
@@ -334,13 +406,16 @@ FeaturestoreServiceClient::BatchReadFeatureValues(std::string const& featurestor
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>
-FeaturestoreServiceClient::BatchReadFeatureValues(google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const& request, Options opts) {
+FeaturestoreServiceClient::BatchReadFeatureValues(
+    google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchReadFeatureValues(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ExportFeatureValuesResponse>>
-FeaturestoreServiceClient::ExportFeatureValues(std::string const& entity_type, Options opts) {
+FeaturestoreServiceClient::ExportFeatureValues(std::string const& entity_type,
+                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ExportFeatureValuesRequest request;
   request.set_entity_type(entity_type);
@@ -348,13 +423,16 @@ FeaturestoreServiceClient::ExportFeatureValues(std::string const& entity_type, O
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ExportFeatureValuesResponse>>
-FeaturestoreServiceClient::ExportFeatureValues(google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request, Options opts) {
+FeaturestoreServiceClient::ExportFeatureValues(
+    google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportFeatureValues(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>
-FeaturestoreServiceClient::DeleteFeatureValues(std::string const& entity_type, Options opts) {
+FeaturestoreServiceClient::DeleteFeatureValues(std::string const& entity_type,
+                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteFeatureValuesRequest request;
   request.set_entity_type(entity_type);
@@ -362,13 +440,16 @@ FeaturestoreServiceClient::DeleteFeatureValues(std::string const& entity_type, O
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>
-FeaturestoreServiceClient::DeleteFeatureValues(google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request, Options opts) {
+FeaturestoreServiceClient::DeleteFeatureValues(
+    google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFeatureValues(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::Feature>
-FeaturestoreServiceClient::SearchFeatures(std::string const& location, Options opts) {
+FeaturestoreServiceClient::SearchFeatures(std::string const& location,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::SearchFeaturesRequest request;
   request.set_location(location);
@@ -376,7 +457,9 @@ FeaturestoreServiceClient::SearchFeatures(std::string const& location, Options o
 }
 
 StreamRange<google::cloud::aiplatform::v1::Feature>
-FeaturestoreServiceClient::SearchFeatures(std::string const& location, std::string const& query, Options opts) {
+FeaturestoreServiceClient::SearchFeatures(std::string const& location,
+                                          std::string const& query,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::SearchFeaturesRequest request;
   request.set_location(location);
@@ -385,7 +468,9 @@ FeaturestoreServiceClient::SearchFeatures(std::string const& location, std::stri
 }
 
 StreamRange<google::cloud::aiplatform::v1::Feature>
-FeaturestoreServiceClient::SearchFeatures(google::cloud::aiplatform::v1::SearchFeaturesRequest request, Options opts) {
+FeaturestoreServiceClient::SearchFeatures(
+    google::cloud::aiplatform::v1::SearchFeaturesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchFeatures(std::move(request));
 }

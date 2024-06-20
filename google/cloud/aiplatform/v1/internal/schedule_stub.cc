@@ -33,29 +33,30 @@ ScheduleServiceStub::~ScheduleServiceStub() = default;
 
 StatusOr<google::cloud::aiplatform::v1::Schedule>
 DefaultScheduleServiceStub::CreateSchedule(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::CreateScheduleRequest const& request) {
-    google::cloud::aiplatform::v1::Schedule response;
-    auto status =
-        grpc_stub_->CreateSchedule(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::CreateScheduleRequest const& request) {
+  google::cloud::aiplatform::v1::Schedule response;
+  auto status = grpc_stub_->CreateSchedule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultScheduleServiceStub::AsyncDeleteSchedule(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::DeleteScheduleRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::DeleteScheduleRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::DeleteScheduleRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::aiplatform::v1::DeleteScheduleRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteSchedule(context, request, cq);
       },
       request, std::move(context));
@@ -63,81 +64,72 @@ DefaultScheduleServiceStub::AsyncDeleteSchedule(
 
 StatusOr<google::longrunning::Operation>
 DefaultScheduleServiceStub::DeleteSchedule(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteSchedule(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteSchedule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::Schedule>
 DefaultScheduleServiceStub::GetSchedule(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::GetScheduleRequest const& request) {
-    google::cloud::aiplatform::v1::Schedule response;
-    auto status =
-        grpc_stub_->GetSchedule(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::GetScheduleRequest const& request) {
+  google::cloud::aiplatform::v1::Schedule response;
+  auto status = grpc_stub_->GetSchedule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListSchedulesResponse>
 DefaultScheduleServiceStub::ListSchedules(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::ListSchedulesRequest const& request) {
-    google::cloud::aiplatform::v1::ListSchedulesResponse response;
-    auto status =
-        grpc_stub_->ListSchedules(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::ListSchedulesRequest const& request) {
+  google::cloud::aiplatform::v1::ListSchedulesResponse response;
+  auto status = grpc_stub_->ListSchedules(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultScheduleServiceStub::PauseSchedule(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::PauseScheduleRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->PauseSchedule(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultScheduleServiceStub::PauseSchedule(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::PauseScheduleRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->PauseSchedule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-Status
-DefaultScheduleServiceStub::ResumeSchedule(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::ResumeScheduleRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->ResumeSchedule(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultScheduleServiceStub::ResumeSchedule(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::ResumeScheduleRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->ResumeSchedule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::cloud::aiplatform::v1::Schedule>
 DefaultScheduleServiceStub::UpdateSchedule(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::UpdateScheduleRequest const& request) {
-    google::cloud::aiplatform::v1::Schedule response;
-    auto status =
-        grpc_stub_->UpdateSchedule(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::UpdateScheduleRequest const& request) {
+  google::cloud::aiplatform::v1::Schedule response;
+  auto status = grpc_stub_->UpdateSchedule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -166,13 +158,13 @@ future<Status> DefaultScheduleServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_->AsyncCancelOperation(context, request, cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

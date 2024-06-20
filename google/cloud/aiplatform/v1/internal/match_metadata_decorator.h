@@ -34,24 +34,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MatchServiceMetadata : public MatchServiceStub {
  public:
   ~MatchServiceMetadata() override = default;
-  MatchServiceMetadata(
-      std::shared_ptr<MatchServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata,
-      std::string api_client_header = "");
+  MatchServiceMetadata(std::shared_ptr<MatchServiceStub> child,
+                       std::multimap<std::string, std::string> fixed_metadata,
+                       std::string api_client_header = "");
 
   StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse> FindNeighbors(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::FindNeighborsRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::FindNeighborsRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse> ReadIndexDatapoints(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>
+  ReadIndexDatapoints(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request)
+      override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

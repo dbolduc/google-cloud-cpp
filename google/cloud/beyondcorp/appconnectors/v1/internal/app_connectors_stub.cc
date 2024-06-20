@@ -31,43 +31,48 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AppConnectorsServiceStub::~AppConnectorsServiceStub() = default;
 
-StatusOr<google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsResponse>
+StatusOr<
+    google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsResponse>
 DefaultAppConnectorsServiceStub::ListAppConnectors(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest const& request) {
-    google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsResponse response;
-    auto status =
-        grpc_stub_->ListAppConnectors(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::beyondcorp::appconnectors::v1::
+        ListAppConnectorsRequest const& request) {
+  google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsResponse
+      response;
+  auto status = grpc_stub_->ListAppConnectors(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
 DefaultAppConnectorsServiceStub::GetAppConnector(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::beyondcorp::appconnectors::v1::GetAppConnectorRequest const& request) {
-    google::cloud::beyondcorp::appconnectors::v1::AppConnector response;
-    auto status =
-        grpc_stub_->GetAppConnector(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::beyondcorp::appconnectors::v1::GetAppConnectorRequest const&
+        request) {
+  google::cloud::beyondcorp::appconnectors::v1::AppConnector response;
+  auto status = grpc_stub_->GetAppConnector(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAppConnectorsServiceStub::AsyncCreateAppConnector(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::beyondcorp::appconnectors::v1::
+        CreateAppConnectorRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest const& request,
+             google::cloud::beyondcorp::appconnectors::v1::
+                 CreateAppConnectorRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateAppConnector(context, request, cq);
       },
@@ -76,29 +81,31 @@ DefaultAppConnectorsServiceStub::AsyncCreateAppConnector(
 
 StatusOr<google::longrunning::Operation>
 DefaultAppConnectorsServiceStub::CreateAppConnector(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateAppConnector(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        CreateAppConnectorRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateAppConnector(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAppConnectorsServiceStub::AsyncUpdateAppConnector(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::beyondcorp::appconnectors::v1::
+        UpdateAppConnectorRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest const& request,
+             google::cloud::beyondcorp::appconnectors::v1::
+                 UpdateAppConnectorRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateAppConnector(context, request, cq);
       },
@@ -107,29 +114,31 @@ DefaultAppConnectorsServiceStub::AsyncUpdateAppConnector(
 
 StatusOr<google::longrunning::Operation>
 DefaultAppConnectorsServiceStub::UpdateAppConnector(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateAppConnector(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        UpdateAppConnectorRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateAppConnector(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAppConnectorsServiceStub::AsyncDeleteAppConnector(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::beyondcorp::appconnectors::v1::
+        DeleteAppConnectorRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest const& request,
+             google::cloud::beyondcorp::appconnectors::v1::
+                 DeleteAppConnectorRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteAppConnector(context, request, cq);
       },
@@ -138,29 +147,31 @@ DefaultAppConnectorsServiceStub::AsyncDeleteAppConnector(
 
 StatusOr<google::longrunning::Operation>
 DefaultAppConnectorsServiceStub::DeleteAppConnector(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteAppConnector(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        DeleteAppConnectorRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteAppConnector(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAppConnectorsServiceStub::AsyncReportStatus(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const& request,
+             google::cloud::beyondcorp::appconnectors::v1::
+                 ReportStatusRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncReportStatus(context, request, cq);
       },
@@ -169,16 +180,15 @@ DefaultAppConnectorsServiceStub::AsyncReportStatus(
 
 StatusOr<google::longrunning::Operation>
 DefaultAppConnectorsServiceStub::ReportStatus(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->ReportStatus(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ReportStatus(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -207,13 +217,13 @@ future<Status> DefaultAppConnectorsServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_->AsyncCancelOperation(context, request, cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

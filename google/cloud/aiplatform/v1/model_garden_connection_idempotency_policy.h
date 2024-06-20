@@ -34,14 +34,15 @@ class ModelGardenServiceConnectionIdempotencyPolicy {
   virtual ~ModelGardenServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ModelGardenServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<ModelGardenServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  GetPublisherModel(google::cloud::aiplatform::v1::GetPublisherModelRequest const& request);
+  virtual google::cloud::Idempotency GetPublisherModel(
+      google::cloud::aiplatform::v1::GetPublisherModelRequest const& request);
 };
 
 std::unique_ptr<ModelGardenServiceConnectionIdempotencyPolicy>
-    MakeDefaultModelGardenServiceConnectionIdempotencyPolicy();
+MakeDefaultModelGardenServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

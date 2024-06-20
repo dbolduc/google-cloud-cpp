@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BACKUPDR_V1_INTERNAL_BACKUP_DR_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BACKUPDR_V1_INTERNAL_BACKUP_DR_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/backupdr/v1/backup_dr_connection.h"
 #include "google/cloud/backupdr/v1/backup_dr_connection_idempotency_policy.h"
 #include "google/cloud/backupdr/v1/backup_dr_options.h"
 #include "google/cloud/backupdr/v1/internal/backup_dr_retry_traits.h"
 #include "google/cloud/backupdr/v1/internal/backup_dr_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -40,29 +40,35 @@ namespace cloud {
 namespace backupdr_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class BackupDRConnectionImpl
-    : public backupdr_v1::BackupDRConnection {
+class BackupDRConnectionImpl : public backupdr_v1::BackupDRConnection {
  public:
   ~BackupDRConnectionImpl() override = default;
 
   BackupDRConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<backupdr_v1_internal::BackupDRStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<backupdr_v1_internal::BackupDRStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StreamRange<google::cloud::backupdr::v1::ManagementServer>
-  ListManagementServers(google::cloud::backupdr::v1::ListManagementServersRequest request) override;
+  ListManagementServers(
+      google::cloud::backupdr::v1::ListManagementServersRequest request)
+      override;
 
-  StatusOr<google::cloud::backupdr::v1::ManagementServer>
-  GetManagementServer(google::cloud::backupdr::v1::GetManagementServerRequest const& request) override;
+  StatusOr<google::cloud::backupdr::v1::ManagementServer> GetManagementServer(
+      google::cloud::backupdr::v1::GetManagementServerRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>
-  CreateManagementServer(google::cloud::backupdr::v1::CreateManagementServerRequest const& request) override;
+  CreateManagementServer(
+      google::cloud::backupdr::v1::CreateManagementServerRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
-  DeleteManagementServer(google::cloud::backupdr::v1::DeleteManagementServerRequest const& request) override;
+  DeleteManagementServer(
+      google::cloud::backupdr::v1::DeleteManagementServerRequest const& request)
+      override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

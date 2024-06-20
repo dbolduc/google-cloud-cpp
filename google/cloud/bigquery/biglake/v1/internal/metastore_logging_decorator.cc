@@ -29,21 +29,18 @@ namespace bigquery_biglake_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 MetastoreServiceLogging::MetastoreServiceLogging(
-    std::shared_ptr<MetastoreServiceStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<MetastoreServiceStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
 MetastoreServiceLogging::CreateCatalog(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::CreateCatalogRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::biglake::v1::CreateCatalogRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::biglake::v1::CreateCatalogRequest const&
+                 request) {
         return child_->CreateCatalog(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -51,13 +48,12 @@ MetastoreServiceLogging::CreateCatalog(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
 MetastoreServiceLogging::DeleteCatalog(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::DeleteCatalogRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::biglake::v1::DeleteCatalogRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::biglake::v1::DeleteCatalogRequest const&
+                 request) {
         return child_->DeleteCatalog(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -65,13 +61,12 @@ MetastoreServiceLogging::DeleteCatalog(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
 MetastoreServiceLogging::GetCatalog(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::GetCatalogRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::biglake::v1::GetCatalogRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::biglake::v1::GetCatalogRequest const&
+                 request) {
         return child_->GetCatalog(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -79,13 +74,12 @@ MetastoreServiceLogging::GetCatalog(
 
 StatusOr<google::cloud::bigquery::biglake::v1::ListCatalogsResponse>
 MetastoreServiceLogging::ListCatalogs(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::ListCatalogsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::biglake::v1::ListCatalogsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::biglake::v1::ListCatalogsRequest const&
+                 request) {
         return child_->ListCatalogs(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -93,13 +87,13 @@ MetastoreServiceLogging::ListCatalogs(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Database>
 MetastoreServiceLogging::CreateDatabase(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const&
+                 request) {
         return child_->CreateDatabase(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -107,13 +101,13 @@ MetastoreServiceLogging::CreateDatabase(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Database>
 MetastoreServiceLogging::DeleteDatabase(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const&
+                 request) {
         return child_->DeleteDatabase(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -121,13 +115,13 @@ MetastoreServiceLogging::DeleteDatabase(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Database>
 MetastoreServiceLogging::UpdateDatabase(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const&
+                 request) {
         return child_->UpdateDatabase(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -135,13 +129,12 @@ MetastoreServiceLogging::UpdateDatabase(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Database>
 MetastoreServiceLogging::GetDatabase(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::GetDatabaseRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::biglake::v1::GetDatabaseRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::biglake::v1::GetDatabaseRequest const&
+                 request) {
         return child_->GetDatabase(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -149,13 +142,12 @@ MetastoreServiceLogging::GetDatabase(
 
 StatusOr<google::cloud::bigquery::biglake::v1::ListDatabasesResponse>
 MetastoreServiceLogging::ListDatabases(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::ListDatabasesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::biglake::v1::ListDatabasesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::biglake::v1::ListDatabasesRequest const&
+                 request) {
         return child_->ListDatabases(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -163,13 +155,12 @@ MetastoreServiceLogging::ListDatabases(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
 MetastoreServiceLogging::CreateTable(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::CreateTableRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::biglake::v1::CreateTableRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::biglake::v1::CreateTableRequest const&
+                 request) {
         return child_->CreateTable(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -177,13 +168,12 @@ MetastoreServiceLogging::CreateTable(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
 MetastoreServiceLogging::DeleteTable(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::DeleteTableRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::biglake::v1::DeleteTableRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::biglake::v1::DeleteTableRequest const&
+                 request) {
         return child_->DeleteTable(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -191,13 +181,12 @@ MetastoreServiceLogging::DeleteTable(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
 MetastoreServiceLogging::UpdateTable(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::UpdateTableRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::biglake::v1::UpdateTableRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::biglake::v1::UpdateTableRequest const&
+                 request) {
         return child_->UpdateTable(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -205,13 +194,12 @@ MetastoreServiceLogging::UpdateTable(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
 MetastoreServiceLogging::RenameTable(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::RenameTableRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::biglake::v1::RenameTableRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::biglake::v1::RenameTableRequest const&
+                 request) {
         return child_->RenameTable(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -219,13 +207,12 @@ MetastoreServiceLogging::RenameTable(
 
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
 MetastoreServiceLogging::GetTable(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::GetTableRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::biglake::v1::GetTableRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::biglake::v1::GetTableRequest const&
+                 request) {
         return child_->GetTable(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -233,13 +220,12 @@ MetastoreServiceLogging::GetTable(
 
 StatusOr<google::cloud::bigquery::biglake::v1::ListTablesResponse>
 MetastoreServiceLogging::ListTables(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::ListTablesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::biglake::v1::ListTablesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::biglake::v1::ListTablesRequest const&
+                 request) {
         return child_->ListTables(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

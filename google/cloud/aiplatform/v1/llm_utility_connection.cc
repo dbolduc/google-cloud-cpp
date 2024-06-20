@@ -52,17 +52,18 @@ LlmUtilityServiceConnection::ComputeTokens(
 std::shared_ptr<LlmUtilityServiceConnection> MakeLlmUtilityServiceConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      LlmUtilityServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 LlmUtilityServicePolicyOptionList>(options,
+                                                                    __func__);
   options = aiplatform_v1_internal::LlmUtilityServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = aiplatform_v1_internal::CreateDefaultLlmUtilityServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return aiplatform_v1_internal::MakeLlmUtilityServiceTracingConnection(
       std::make_shared<aiplatform_v1_internal::LlmUtilityServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

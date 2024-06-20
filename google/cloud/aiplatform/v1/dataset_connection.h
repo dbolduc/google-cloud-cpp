@@ -56,7 +56,8 @@ class DatasetServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DatasetServiceLimitedErrorCountRetryPolicy : public DatasetServiceRetryPolicy {
+class DatasetServiceLimitedErrorCountRetryPolicy
+    : public DatasetServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +67,14 @@ class DatasetServiceLimitedErrorCountRetryPolicy : public DatasetServiceRetryPol
    *     @p maximum_failures == 0.
    */
   explicit DatasetServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   DatasetServiceLimitedErrorCountRetryPolicy(
       DatasetServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : DatasetServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DatasetServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   DatasetServiceLimitedErrorCountRetryPolicy(
       DatasetServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : DatasetServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DatasetServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +94,9 @@ class DatasetServiceLimitedErrorCountRetryPolicy : public DatasetServiceRetryPol
   using BaseType = DatasetServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<aiplatform_v1_internal::DatasetServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      aiplatform_v1_internal::DatasetServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -131,12 +134,14 @@ class DatasetServiceLimitedTimeRetryPolicy : public DatasetServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit DatasetServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  DatasetServiceLimitedTimeRetryPolicy(DatasetServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : DatasetServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  DatasetServiceLimitedTimeRetryPolicy(DatasetServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : DatasetServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DatasetServiceLimitedTimeRetryPolicy(
+      DatasetServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : DatasetServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DatasetServiceLimitedTimeRetryPolicy(
+      DatasetServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : DatasetServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +163,9 @@ class DatasetServiceLimitedTimeRetryPolicy : public DatasetServiceRetryPolicy {
   using BaseType = DatasetServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<aiplatform_v1_internal::DatasetServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      aiplatform_v1_internal::DatasetServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -180,19 +187,22 @@ class DatasetServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::Dataset>>
-  CreateDataset(google::cloud::aiplatform::v1::CreateDatasetRequest const& request);
+  CreateDataset(
+      google::cloud::aiplatform::v1::CreateDatasetRequest const& request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Dataset>
-  GetDataset(google::cloud::aiplatform::v1::GetDatasetRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Dataset> GetDataset(
+      google::cloud::aiplatform::v1::GetDatasetRequest const& request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Dataset>
-  UpdateDataset(google::cloud::aiplatform::v1::UpdateDatasetRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Dataset> UpdateDataset(
+      google::cloud::aiplatform::v1::UpdateDatasetRequest const& request);
 
-  virtual StreamRange<google::cloud::aiplatform::v1::Dataset>
-  ListDatasets(google::cloud::aiplatform::v1::ListDatasetsRequest request);
+  virtual StreamRange<google::cloud::aiplatform::v1::Dataset> ListDatasets(
+      google::cloud::aiplatform::v1::ListDatasetsRequest request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDataset(google::cloud::aiplatform::v1::DeleteDatasetRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteDataset(
+      google::cloud::aiplatform::v1::DeleteDatasetRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
   ImportData(google::cloud::aiplatform::v1::ImportDataRequest const& request);
@@ -201,40 +211,57 @@ class DatasetServiceConnection {
   ExportData(google::cloud::aiplatform::v1::ExportDataRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
-  CreateDatasetVersion(google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request);
+  CreateDatasetVersion(
+      google::cloud::aiplatform::v1::CreateDatasetVersionRequest const&
+          request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
-  UpdateDatasetVersion(google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request);
+  UpdateDatasetVersion(
+      google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDatasetVersion(google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteDatasetVersion(
+      google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const&
+          request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
-  GetDatasetVersion(google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request);
+  GetDatasetVersion(
+      google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::DatasetVersion>
-  ListDatasetVersions(google::cloud::aiplatform::v1::ListDatasetVersionsRequest request);
+  ListDatasetVersions(
+      google::cloud::aiplatform::v1::ListDatasetVersionsRequest request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
-  RestoreDatasetVersion(google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const& request);
+  RestoreDatasetVersion(
+      google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
+          request);
 
-  virtual StreamRange<google::cloud::aiplatform::v1::DataItem>
-  ListDataItems(google::cloud::aiplatform::v1::ListDataItemsRequest request);
+  virtual StreamRange<google::cloud::aiplatform::v1::DataItem> ListDataItems(
+      google::cloud::aiplatform::v1::ListDataItemsRequest request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::DataItemView>
-  SearchDataItems(google::cloud::aiplatform::v1::SearchDataItemsRequest request);
+  SearchDataItems(
+      google::cloud::aiplatform::v1::SearchDataItemsRequest request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::SavedQuery>
-  ListSavedQueries(google::cloud::aiplatform::v1::ListSavedQueriesRequest request);
+  ListSavedQueries(
+      google::cloud::aiplatform::v1::ListSavedQueriesRequest request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteSavedQuery(google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteSavedQuery(
+      google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
-  GetAnnotationSpec(google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request);
+  GetAnnotationSpec(
+      google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::Annotation>
-  ListAnnotations(google::cloud::aiplatform::v1::ListAnnotationsRequest request);
+  ListAnnotations(
+      google::cloud::aiplatform::v1::ListAnnotationsRequest request);
 };
 
 /**

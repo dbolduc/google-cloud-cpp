@@ -29,94 +29,105 @@ namespace cloud {
 namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DeploymentResourcePoolServiceStub::~DeploymentResourcePoolServiceStub() = default;
+DeploymentResourcePoolServiceStub::~DeploymentResourcePoolServiceStub() =
+    default;
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDeploymentResourcePoolServiceStub::AsyncCreateDeploymentResourcePool(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const& request,
+             google::cloud::aiplatform::v1::
+                 CreateDeploymentResourcePoolRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncCreateDeploymentResourcePool(context, request, cq);
+        return grpc_stub_->AsyncCreateDeploymentResourcePool(context, request,
+                                                             cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultDeploymentResourcePoolServiceStub::CreateDeploymentResourcePool(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateDeploymentResourcePool(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateDeploymentResourcePool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
 DefaultDeploymentResourcePoolServiceStub::GetDeploymentResourcePool(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const& request) {
-    google::cloud::aiplatform::v1::DeploymentResourcePool response;
-    auto status =
-        grpc_stub_->GetDeploymentResourcePool(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
+        request) {
+  google::cloud::aiplatform::v1::DeploymentResourcePool response;
+  auto status =
+      grpc_stub_->GetDeploymentResourcePool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListDeploymentResourcePoolsResponse>
 DefaultDeploymentResourcePoolServiceStub::ListDeploymentResourcePools(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest const& request) {
-    google::cloud::aiplatform::v1::ListDeploymentResourcePoolsResponse response;
-    auto status =
-        grpc_stub_->ListDeploymentResourcePools(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest const&
+        request) {
+  google::cloud::aiplatform::v1::ListDeploymentResourcePoolsResponse response;
+  auto status =
+      grpc_stub_->ListDeploymentResourcePools(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDeploymentResourcePoolServiceStub::AsyncDeleteDeploymentResourcePool(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const& request,
+             google::cloud::aiplatform::v1::
+                 DeleteDeploymentResourcePoolRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncDeleteDeploymentResourcePool(context, request, cq);
+        return grpc_stub_->AsyncDeleteDeploymentResourcePool(context, request,
+                                                             cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultDeploymentResourcePoolServiceStub::DeleteDeploymentResourcePool(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteDeploymentResourcePool(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteDeploymentResourcePool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -145,13 +156,13 @@ future<Status> DefaultDeploymentResourcePoolServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_->AsyncCancelOperation(context, request, cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

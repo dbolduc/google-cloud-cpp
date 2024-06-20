@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `AppConnectorsServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `AppConnectorsServiceClient`. To do so,
- * construct an object of type `AppConnectorsServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * including errors, from an object of type `AppConnectorsServiceClient`. To do
+ * so, construct an object of type `AppConnectorsServiceClient` with an instance
+ * of this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,33 +42,55 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockAppConnectorsServiceConnection : public beyondcorp_appconnectors_v1::AppConnectorsServiceConnection {
+class MockAppConnectorsServiceConnection
+    : public beyondcorp_appconnectors_v1::AppConnectorsServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::beyondcorp::appconnectors::v1::AppConnector>),
-  ListAppConnectors,
-  (google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::beyondcorp::appconnectors::v1::AppConnector>),
+      ListAppConnectors,
+      (google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>,
-  GetAppConnector,
-  (google::cloud::beyondcorp::appconnectors::v1::GetAppConnectorRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>,
+      GetAppConnector,
+      (google::cloud::beyondcorp::appconnectors::v1::
+           GetAppConnectorRequest const& request),
+      (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>,
-  CreateAppConnector,
-  (google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest const& request), (override));
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>,
+      CreateAppConnector,
+      (google::cloud::beyondcorp::appconnectors::v1::
+           CreateAppConnectorRequest const& request),
+      (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>,
-  UpdateAppConnector,
-  (google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest const& request), (override));
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>,
+      UpdateAppConnector,
+      (google::cloud::beyondcorp::appconnectors::v1::
+           UpdateAppConnectorRequest const& request),
+      (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnectorOperationMetadata>>,
-  DeleteAppConnector,
-  (google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest const& request), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
+                                  AppConnectorOperationMetadata>>,
+              DeleteAppConnector,
+              (google::cloud::beyondcorp::appconnectors::v1::
+                   DeleteAppConnectorRequest const& request),
+              (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>,
-  ReportStatus,
-  (google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const& request), (override));
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>,
+      ReportStatus,
+      (google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

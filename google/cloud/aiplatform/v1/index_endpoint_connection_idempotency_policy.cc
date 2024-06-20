@@ -26,47 +26,61 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-IndexEndpointServiceConnectionIdempotencyPolicy::~IndexEndpointServiceConnectionIdempotencyPolicy() = default;
+IndexEndpointServiceConnectionIdempotencyPolicy::
+    ~IndexEndpointServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<IndexEndpointServiceConnectionIdempotencyPolicy>
 IndexEndpointServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<IndexEndpointServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<IndexEndpointServiceConnectionIdempotencyPolicy>(
+      *this);
 }
 
-Idempotency IndexEndpointServiceConnectionIdempotencyPolicy::CreateIndexEndpoint(google::cloud::aiplatform::v1::CreateIndexEndpointRequest const&) {
+Idempotency
+IndexEndpointServiceConnectionIdempotencyPolicy::CreateIndexEndpoint(
+    google::cloud::aiplatform::v1::CreateIndexEndpointRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency IndexEndpointServiceConnectionIdempotencyPolicy::GetIndexEndpoint(google::cloud::aiplatform::v1::GetIndexEndpointRequest const&) {
+Idempotency IndexEndpointServiceConnectionIdempotencyPolicy::GetIndexEndpoint(
+    google::cloud::aiplatform::v1::GetIndexEndpointRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency IndexEndpointServiceConnectionIdempotencyPolicy::ListIndexEndpoints(google::cloud::aiplatform::v1::ListIndexEndpointsRequest) {  // NOLINT
+Idempotency IndexEndpointServiceConnectionIdempotencyPolicy::ListIndexEndpoints(
+    google::cloud::aiplatform::v1::ListIndexEndpointsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency IndexEndpointServiceConnectionIdempotencyPolicy::UpdateIndexEndpoint(google::cloud::aiplatform::v1::UpdateIndexEndpointRequest const&) {
+Idempotency
+IndexEndpointServiceConnectionIdempotencyPolicy::UpdateIndexEndpoint(
+    google::cloud::aiplatform::v1::UpdateIndexEndpointRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency IndexEndpointServiceConnectionIdempotencyPolicy::DeleteIndexEndpoint(google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const&) {
+Idempotency
+IndexEndpointServiceConnectionIdempotencyPolicy::DeleteIndexEndpoint(
+    google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency IndexEndpointServiceConnectionIdempotencyPolicy::DeployIndex(google::cloud::aiplatform::v1::DeployIndexRequest const&) {
+Idempotency IndexEndpointServiceConnectionIdempotencyPolicy::DeployIndex(
+    google::cloud::aiplatform::v1::DeployIndexRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency IndexEndpointServiceConnectionIdempotencyPolicy::UndeployIndex(google::cloud::aiplatform::v1::UndeployIndexRequest const&) {
+Idempotency IndexEndpointServiceConnectionIdempotencyPolicy::UndeployIndex(
+    google::cloud::aiplatform::v1::UndeployIndexRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency IndexEndpointServiceConnectionIdempotencyPolicy::MutateDeployedIndex(google::cloud::aiplatform::v1::MutateDeployedIndexRequest const&) {
+Idempotency
+IndexEndpointServiceConnectionIdempotencyPolicy::MutateDeployedIndex(
+    google::cloud::aiplatform::v1::MutateDeployedIndexRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<IndexEndpointServiceConnectionIdempotencyPolicy>
-    MakeDefaultIndexEndpointServiceConnectionIdempotencyPolicy() {
+MakeDefaultIndexEndpointServiceConnectionIdempotencyPolicy() {
   return std::make_unique<IndexEndpointServiceConnectionIdempotencyPolicy>();
 }
 

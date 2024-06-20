@@ -26,35 +26,46 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SpecialistPoolServiceConnectionIdempotencyPolicy::~SpecialistPoolServiceConnectionIdempotencyPolicy() = default;
+SpecialistPoolServiceConnectionIdempotencyPolicy::
+    ~SpecialistPoolServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<SpecialistPoolServiceConnectionIdempotencyPolicy>
 SpecialistPoolServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<SpecialistPoolServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<SpecialistPoolServiceConnectionIdempotencyPolicy>(
+      *this);
 }
 
-Idempotency SpecialistPoolServiceConnectionIdempotencyPolicy::CreateSpecialistPool(google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const&) {
+Idempotency
+SpecialistPoolServiceConnectionIdempotencyPolicy::CreateSpecialistPool(
+    google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SpecialistPoolServiceConnectionIdempotencyPolicy::GetSpecialistPool(google::cloud::aiplatform::v1::GetSpecialistPoolRequest const&) {
+Idempotency SpecialistPoolServiceConnectionIdempotencyPolicy::GetSpecialistPool(
+    google::cloud::aiplatform::v1::GetSpecialistPoolRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SpecialistPoolServiceConnectionIdempotencyPolicy::ListSpecialistPools(google::cloud::aiplatform::v1::ListSpecialistPoolsRequest) {  // NOLINT
+Idempotency
+SpecialistPoolServiceConnectionIdempotencyPolicy::ListSpecialistPools(
+    google::cloud::aiplatform::v1::ListSpecialistPoolsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SpecialistPoolServiceConnectionIdempotencyPolicy::DeleteSpecialistPool(google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const&) {
+Idempotency
+SpecialistPoolServiceConnectionIdempotencyPolicy::DeleteSpecialistPool(
+    google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SpecialistPoolServiceConnectionIdempotencyPolicy::UpdateSpecialistPool(google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const&) {
+Idempotency
+SpecialistPoolServiceConnectionIdempotencyPolicy::UpdateSpecialistPool(
+    google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<SpecialistPoolServiceConnectionIdempotencyPolicy>
-    MakeDefaultSpecialistPoolServiceConnectionIdempotencyPolicy() {
+MakeDefaultSpecialistPoolServiceConnectionIdempotencyPolicy() {
   return std::make_unique<SpecialistPoolServiceConnectionIdempotencyPolicy>();
 }
 

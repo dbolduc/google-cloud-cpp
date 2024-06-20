@@ -38,66 +38,82 @@ class AppHubStub {
  public:
   virtual ~AppHubStub() = 0;
 
-  virtual StatusOr<google::cloud::apphub::v1::LookupServiceProjectAttachmentResponse> LookupServiceProjectAttachment(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::apphub::v1::LookupServiceProjectAttachmentRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::apphub::v1::LookupServiceProjectAttachmentResponse>
+  LookupServiceProjectAttachment(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::apphub::v1::LookupServiceProjectAttachmentRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::apphub::v1::ListServiceProjectAttachmentsResponse> ListServiceProjectAttachments(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::apphub::v1::ListServiceProjectAttachmentsResponse>
+  ListServiceProjectAttachments(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateServiceProjectAttachment(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateServiceProjectAttachment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const& request) = 0;
+      google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::longrunning::Operation> CreateServiceProjectAttachment(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const& request) = 0;
+  virtual StatusOr<google::longrunning::Operation>
+  CreateServiceProjectAttachment(
+      grpc::ClientContext& context, Options options,
+      google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment> GetServiceProjectAttachment(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const& request) = 0;
+  virtual StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>
+  GetServiceProjectAttachment(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteServiceProjectAttachment(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteServiceProjectAttachment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const& request) = 0;
+      google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::longrunning::Operation> DeleteServiceProjectAttachment(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const& request) = 0;
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteServiceProjectAttachment(
+      grpc::ClientContext& context, Options options,
+      google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::apphub::v1::DetachServiceProjectAttachmentResponse> DetachServiceProjectAttachment(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::apphub::v1::DetachServiceProjectAttachmentRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::apphub::v1::DetachServiceProjectAttachmentResponse>
+  DetachServiceProjectAttachment(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::apphub::v1::DetachServiceProjectAttachmentRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::apphub::v1::ListDiscoveredServicesResponse> ListDiscoveredServices(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::apphub::v1::ListDiscoveredServicesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::apphub::v1::ListDiscoveredServicesResponse>
+  ListDiscoveredServices(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::apphub::v1::ListDiscoveredServicesRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::apphub::v1::DiscoveredService> GetDiscoveredService(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::apphub::v1::GetDiscoveredServiceRequest const& request) = 0;
+  virtual StatusOr<google::cloud::apphub::v1::DiscoveredService>
+  GetDiscoveredService(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::apphub::v1::GetDiscoveredServiceRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::apphub::v1::LookupDiscoveredServiceResponse> LookupDiscoveredService(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::apphub::v1::LookupDiscoveredServiceRequest const& request) = 0;
+  virtual StatusOr<google::cloud::apphub::v1::LookupDiscoveredServiceResponse>
+  LookupDiscoveredService(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::apphub::v1::LookupDiscoveredServiceRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::apphub::v1::ListServicesResponse> ListServices(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::apphub::v1::ListServicesResponse>
+  ListServices(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::apphub::v1::ListServicesRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateService(
@@ -107,13 +123,11 @@ class AppHubStub {
       google::cloud::apphub::v1::CreateServiceRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateService(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::apphub::v1::CreateServiceRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::apphub::v1::Service> GetService(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::apphub::v1::GetServiceRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateService(
@@ -123,8 +137,7 @@ class AppHubStub {
       google::cloud::apphub::v1::UpdateServiceRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateService(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::apphub::v1::UpdateServiceRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteService(
@@ -134,28 +147,30 @@ class AppHubStub {
       google::cloud::apphub::v1::DeleteServiceRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteService(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::apphub::v1::DeleteServiceRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::apphub::v1::ListDiscoveredWorkloadsResponse> ListDiscoveredWorkloads(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::apphub::v1::ListDiscoveredWorkloadsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::apphub::v1::ListDiscoveredWorkloadsResponse>
+  ListDiscoveredWorkloads(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::apphub::v1::ListDiscoveredWorkloadsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::apphub::v1::DiscoveredWorkload> GetDiscoveredWorkload(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::apphub::v1::GetDiscoveredWorkloadRequest const& request) = 0;
+  virtual StatusOr<google::cloud::apphub::v1::DiscoveredWorkload>
+  GetDiscoveredWorkload(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::apphub::v1::GetDiscoveredWorkloadRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::apphub::v1::LookupDiscoveredWorkloadResponse> LookupDiscoveredWorkload(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::apphub::v1::LookupDiscoveredWorkloadRequest const& request) = 0;
+  virtual StatusOr<google::cloud::apphub::v1::LookupDiscoveredWorkloadResponse>
+  LookupDiscoveredWorkload(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::apphub::v1::LookupDiscoveredWorkloadRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::apphub::v1::ListWorkloadsResponse> ListWorkloads(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::apphub::v1::ListWorkloadsResponse>
+  ListWorkloads(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::apphub::v1::ListWorkloadsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateWorkload(
@@ -165,13 +180,11 @@ class AppHubStub {
       google::cloud::apphub::v1::CreateWorkloadRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateWorkload(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::apphub::v1::CreateWorkloadRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::apphub::v1::Workload> GetWorkload(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::apphub::v1::GetWorkloadRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateWorkload(
@@ -181,8 +194,7 @@ class AppHubStub {
       google::cloud::apphub::v1::UpdateWorkloadRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateWorkload(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::apphub::v1::UpdateWorkloadRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteWorkload(
@@ -192,57 +204,55 @@ class AppHubStub {
       google::cloud::apphub::v1::DeleteWorkloadRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteWorkload(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::apphub::v1::DeleteWorkloadRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::apphub::v1::ListApplicationsResponse> ListApplications(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::apphub::v1::ListApplicationsResponse>
+  ListApplications(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::apphub::v1::ListApplicationsRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateApplication(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateApplication(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::apphub::v1::CreateApplicationRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateApplication(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::apphub::v1::CreateApplicationRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::apphub::v1::Application> GetApplication(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::apphub::v1::GetApplicationRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateApplication(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateApplication(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::apphub::v1::UpdateApplicationRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateApplication(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::apphub::v1::UpdateApplicationRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteApplication(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteApplication(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::apphub::v1::DeleteApplicationRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteApplication(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::apphub::v1::DeleteApplicationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -255,71 +265,81 @@ class AppHubStub {
 class DefaultAppHubStub : public AppHubStub {
  public:
   DefaultAppHubStub(
-      std::unique_ptr<google::cloud::apphub::v1::AppHub::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations)
-      : grpc_stub_(std::move(grpc_stub)),
-        operations_(std::move(operations)) {}
+      std::unique_ptr<google::cloud::apphub::v1::AppHub::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations)
+      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
-  StatusOr<google::cloud::apphub::v1::LookupServiceProjectAttachmentResponse> LookupServiceProjectAttachment(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::apphub::v1::LookupServiceProjectAttachmentRequest const& request) override;
+  StatusOr<google::cloud::apphub::v1::LookupServiceProjectAttachmentResponse>
+  LookupServiceProjectAttachment(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::apphub::v1::LookupServiceProjectAttachmentRequest const&
+          request) override;
 
-  StatusOr<google::cloud::apphub::v1::ListServiceProjectAttachmentsResponse> ListServiceProjectAttachments(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest const& request) override;
+  StatusOr<google::cloud::apphub::v1::ListServiceProjectAttachmentsResponse>
+  ListServiceProjectAttachments(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncCreateServiceProjectAttachment(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateServiceProjectAttachment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const& request) override;
+      google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateServiceProjectAttachment(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
+          request) override;
 
-  StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment> GetServiceProjectAttachment(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const& request) override;
+  StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>
+  GetServiceProjectAttachment(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncDeleteServiceProjectAttachment(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteServiceProjectAttachment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const& request) override;
+      google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteServiceProjectAttachment(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
+          request) override;
 
-  StatusOr<google::cloud::apphub::v1::DetachServiceProjectAttachmentResponse> DetachServiceProjectAttachment(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::apphub::v1::DetachServiceProjectAttachmentRequest const& request) override;
+  StatusOr<google::cloud::apphub::v1::DetachServiceProjectAttachmentResponse>
+  DetachServiceProjectAttachment(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::apphub::v1::DetachServiceProjectAttachmentRequest const&
+          request) override;
 
-  StatusOr<google::cloud::apphub::v1::ListDiscoveredServicesResponse> ListDiscoveredServices(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::apphub::v1::ListDiscoveredServicesRequest const& request) override;
+  StatusOr<google::cloud::apphub::v1::ListDiscoveredServicesResponse>
+  ListDiscoveredServices(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::apphub::v1::ListDiscoveredServicesRequest const& request)
+      override;
 
   StatusOr<google::cloud::apphub::v1::DiscoveredService> GetDiscoveredService(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::apphub::v1::GetDiscoveredServiceRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::apphub::v1::GetDiscoveredServiceRequest const& request)
+      override;
 
-  StatusOr<google::cloud::apphub::v1::LookupDiscoveredServiceResponse> LookupDiscoveredService(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::apphub::v1::LookupDiscoveredServiceRequest const& request) override;
+  StatusOr<google::cloud::apphub::v1::LookupDiscoveredServiceResponse>
+  LookupDiscoveredService(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::apphub::v1::LookupDiscoveredServiceRequest const& request)
+      override;
 
   StatusOr<google::cloud::apphub::v1::ListServicesResponse> ListServices(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::apphub::v1::ListServicesRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateService(
@@ -329,13 +349,11 @@ class DefaultAppHubStub : public AppHubStub {
       google::cloud::apphub::v1::CreateServiceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateService(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::apphub::v1::CreateServiceRequest const& request) override;
 
   StatusOr<google::cloud::apphub::v1::Service> GetService(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::apphub::v1::GetServiceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateService(
@@ -345,8 +363,7 @@ class DefaultAppHubStub : public AppHubStub {
       google::cloud::apphub::v1::UpdateServiceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateService(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::apphub::v1::UpdateServiceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteService(
@@ -356,28 +373,28 @@ class DefaultAppHubStub : public AppHubStub {
       google::cloud::apphub::v1::DeleteServiceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteService(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::apphub::v1::DeleteServiceRequest const& request) override;
 
-  StatusOr<google::cloud::apphub::v1::ListDiscoveredWorkloadsResponse> ListDiscoveredWorkloads(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::apphub::v1::ListDiscoveredWorkloadsRequest const& request) override;
+  StatusOr<google::cloud::apphub::v1::ListDiscoveredWorkloadsResponse>
+  ListDiscoveredWorkloads(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::apphub::v1::ListDiscoveredWorkloadsRequest const& request)
+      override;
 
   StatusOr<google::cloud::apphub::v1::DiscoveredWorkload> GetDiscoveredWorkload(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::apphub::v1::GetDiscoveredWorkloadRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::apphub::v1::GetDiscoveredWorkloadRequest const& request)
+      override;
 
-  StatusOr<google::cloud::apphub::v1::LookupDiscoveredWorkloadResponse> LookupDiscoveredWorkload(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::apphub::v1::LookupDiscoveredWorkloadRequest const& request) override;
+  StatusOr<google::cloud::apphub::v1::LookupDiscoveredWorkloadResponse>
+  LookupDiscoveredWorkload(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::apphub::v1::LookupDiscoveredWorkloadRequest const& request)
+      override;
 
   StatusOr<google::cloud::apphub::v1::ListWorkloadsResponse> ListWorkloads(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::apphub::v1::ListWorkloadsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateWorkload(
@@ -387,13 +404,11 @@ class DefaultAppHubStub : public AppHubStub {
       google::cloud::apphub::v1::CreateWorkloadRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateWorkload(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::apphub::v1::CreateWorkloadRequest const& request) override;
 
   StatusOr<google::cloud::apphub::v1::Workload> GetWorkload(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::apphub::v1::GetWorkloadRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateWorkload(
@@ -403,8 +418,7 @@ class DefaultAppHubStub : public AppHubStub {
       google::cloud::apphub::v1::UpdateWorkloadRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateWorkload(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::apphub::v1::UpdateWorkloadRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteWorkload(
@@ -414,52 +428,53 @@ class DefaultAppHubStub : public AppHubStub {
       google::cloud::apphub::v1::DeleteWorkloadRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteWorkload(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::apphub::v1::DeleteWorkloadRequest const& request) override;
 
-  StatusOr<google::cloud::apphub::v1::ListApplicationsResponse> ListApplications(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::apphub::v1::ListApplicationsRequest const& request) override;
+  StatusOr<google::cloud::apphub::v1::ListApplicationsResponse>
+  ListApplications(grpc::ClientContext& context, Options const& options,
+                   google::cloud::apphub::v1::ListApplicationsRequest const&
+                       request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateApplication(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::apphub::v1::CreateApplicationRequest const& request) override;
+      google::cloud::apphub::v1::CreateApplicationRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateApplication(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apphub::v1::CreateApplicationRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::apphub::v1::CreateApplicationRequest const& request)
+      override;
 
   StatusOr<google::cloud::apphub::v1::Application> GetApplication(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::apphub::v1::GetApplicationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateApplication(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::apphub::v1::UpdateApplicationRequest const& request) override;
+      google::cloud::apphub::v1::UpdateApplicationRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateApplication(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apphub::v1::UpdateApplicationRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::apphub::v1::UpdateApplicationRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteApplication(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::apphub::v1::DeleteApplicationRequest const& request) override;
+      google::cloud::apphub::v1::DeleteApplicationRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteApplication(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apphub::v1::DeleteApplicationRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::apphub::v1::DeleteApplicationRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

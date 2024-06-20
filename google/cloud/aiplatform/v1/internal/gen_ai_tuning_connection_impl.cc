@@ -32,94 +32,108 @@ namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<aiplatform_v1::GenAiTuningServiceRetryPolicy>
-retry_policy(Options const& options) {
-  return options.get<aiplatform_v1::GenAiTuningServiceRetryPolicyOption>()->clone();
+std::unique_ptr<aiplatform_v1::GenAiTuningServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<aiplatform_v1::GenAiTuningServiceRetryPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<aiplatform_v1::GenAiTuningServiceBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<aiplatform_v1::GenAiTuningServiceBackoffPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<aiplatform_v1::GenAiTuningServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<aiplatform_v1::GenAiTuningServiceConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<aiplatform_v1::GenAiTuningServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 GenAiTuningServiceConnectionImpl::GenAiTuningServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<aiplatform_v1_internal::GenAiTuningServiceStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        GenAiTuningServiceConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options), GenAiTuningServiceConnection::options())) {}
 
 StatusOr<google::cloud::aiplatform::v1::TuningJob>
-GenAiTuningServiceConnectionImpl::CreateTuningJob(google::cloud::aiplatform::v1::CreateTuningJobRequest const& request) {
+GenAiTuningServiceConnectionImpl::CreateTuningJob(
+    google::cloud::aiplatform::v1::CreateTuningJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateTuningJob(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::CreateTuningJobRequest const& request) {
+             google::cloud::aiplatform::v1::CreateTuningJobRequest const&
+                 request) {
         return stub_->CreateTuningJob(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TuningJob>
-GenAiTuningServiceConnectionImpl::GetTuningJob(google::cloud::aiplatform::v1::GetTuningJobRequest const& request) {
+GenAiTuningServiceConnectionImpl::GetTuningJob(
+    google::cloud::aiplatform::v1::GetTuningJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetTuningJob(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::GetTuningJobRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::GetTuningJobRequest const& request) {
         return stub_->GetTuningJob(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::TuningJob>
-GenAiTuningServiceConnectionImpl::ListTuningJobs(google::cloud::aiplatform::v1::ListTuningJobsRequest request) {
+GenAiTuningServiceConnectionImpl::ListTuningJobs(
+    google::cloud::aiplatform::v1::ListTuningJobsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListTuningJobs(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::aiplatform::v1::TuningJob>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::aiplatform::v1::TuningJob>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::GenAiTuningServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<aiplatform_v1::GenAiTuningServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::aiplatform::v1::ListTuningJobsRequest const& r) {
+          Options const& options,
+          google::cloud::aiplatform::v1::ListTuningJobsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::aiplatform::v1::ListTuningJobsRequest const& request) {
+                   google::cloud::aiplatform::v1::ListTuningJobsRequest const&
+                       request) {
               return stub->ListTuningJobs(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListTuningJobsResponse r) {
-        std::vector<google::cloud::aiplatform::v1::TuningJob> result(r.tuning_jobs().size());
+        std::vector<google::cloud::aiplatform::v1::TuningJob> result(
+            r.tuning_jobs().size());
         auto& messages = *r.mutable_tuning_jobs();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-Status
-GenAiTuningServiceConnectionImpl::CancelTuningJob(google::cloud::aiplatform::v1::CancelTuningJobRequest const& request) {
+Status GenAiTuningServiceConnectionImpl::CancelTuningJob(
+    google::cloud::aiplatform::v1::CancelTuningJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CancelTuningJob(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::CancelTuningJobRequest const& request) {
+             google::cloud::aiplatform::v1::CancelTuningJobRequest const&
+                 request) {
         return stub_->CancelTuningJob(context, options, request);
       },
       *current, request, __func__);

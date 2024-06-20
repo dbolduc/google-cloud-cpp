@@ -43,71 +43,76 @@ class EndpointServiceAuth : public EndpointServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateEndpointRequest const& request) override;
+      google::cloud::aiplatform::v1::CreateEndpointRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateEndpoint(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CreateEndpointRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreateEndpointRequest const& request)
+      override;
 
   StatusOr<google::cloud::aiplatform::v1::Endpoint> GetEndpoint(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::GetEndpointRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::GetEndpointRequest const& request)
+      override;
 
   StatusOr<google::cloud::aiplatform::v1::ListEndpointsResponse> ListEndpoints(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListEndpointsRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListEndpointsRequest const& request)
+      override;
 
   StatusOr<google::cloud::aiplatform::v1::Endpoint> UpdateEndpoint(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::UpdateEndpointRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::UpdateEndpointRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteEndpoint(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteEndpointRequest const& request) override;
+      google::cloud::aiplatform::v1::DeleteEndpointRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteEndpoint(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteEndpointRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteEndpointRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeployModel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeployModelRequest const& request) override;
+      google::cloud::aiplatform::v1::DeployModelRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeployModel(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeployModelRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeployModelRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUndeployModel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::UndeployModelRequest const& request) override;
+      google::cloud::aiplatform::v1::UndeployModelRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UndeployModel(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::UndeployModelRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::UndeployModelRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncMutateDeployedModel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request) override;
+      google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> MutateDeployedModel(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BACKUPDR_V1_BACKUP_DR_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BACKUPDR_V1_BACKUP_DR_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/backupdr/v1/backup_dr_connection_idempotency_policy.h"
 #include "google/cloud/backupdr/v1/internal/backup_dr_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -65,14 +65,14 @@ class BackupDRLimitedErrorCountRetryPolicy : public BackupDRRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit BackupDRLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   BackupDRLimitedErrorCountRetryPolicy(
       BackupDRLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : BackupDRLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : BackupDRLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   BackupDRLimitedErrorCountRetryPolicy(
       BackupDRLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : BackupDRLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : BackupDRLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,7 +92,9 @@ class BackupDRLimitedErrorCountRetryPolicy : public BackupDRRetryPolicy {
   using BaseType = BackupDRRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<backupdr_v1_internal::BackupDRRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      backupdr_v1_internal::BackupDRRetryTraits>
+      impl_;
 };
 
 /**
@@ -130,12 +132,13 @@ class BackupDRLimitedTimeRetryPolicy : public BackupDRRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit BackupDRLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   BackupDRLimitedTimeRetryPolicy(BackupDRLimitedTimeRetryPolicy&& rhs) noexcept
-    : BackupDRLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  BackupDRLimitedTimeRetryPolicy(BackupDRLimitedTimeRetryPolicy const& rhs) noexcept
-    : BackupDRLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : BackupDRLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  BackupDRLimitedTimeRetryPolicy(
+      BackupDRLimitedTimeRetryPolicy const& rhs) noexcept
+      : BackupDRLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -149,15 +152,16 @@ class BackupDRLimitedTimeRetryPolicy : public BackupDRRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<BackupDRRetryPolicy> clone() const override {
-    return std::make_unique<BackupDRLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<BackupDRLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = BackupDRRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<backupdr_v1_internal::BackupDRRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      backupdr_v1_internal::BackupDRRetryTraits>
+      impl_;
 };
 
 /**
@@ -179,16 +183,22 @@ class BackupDRConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::backupdr::v1::ManagementServer>
-  ListManagementServers(google::cloud::backupdr::v1::ListManagementServersRequest request);
+  ListManagementServers(
+      google::cloud::backupdr::v1::ListManagementServersRequest request);
 
   virtual StatusOr<google::cloud::backupdr::v1::ManagementServer>
-  GetManagementServer(google::cloud::backupdr::v1::GetManagementServerRequest const& request);
+  GetManagementServer(
+      google::cloud::backupdr::v1::GetManagementServerRequest const& request);
 
   virtual future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>
-  CreateManagementServer(google::cloud::backupdr::v1::CreateManagementServerRequest const& request);
+  CreateManagementServer(
+      google::cloud::backupdr::v1::CreateManagementServerRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
-  DeleteManagementServer(google::cloud::backupdr::v1::DeleteManagementServerRequest const& request);
+  DeleteManagementServer(
+      google::cloud::backupdr::v1::DeleteManagementServerRequest const&
+          request);
 };
 
 /**

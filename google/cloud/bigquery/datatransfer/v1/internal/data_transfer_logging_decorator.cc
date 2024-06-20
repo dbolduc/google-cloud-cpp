@@ -30,20 +30,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DataTransferServiceLogging::DataTransferServiceLogging(
     std::shared_ptr<DataTransferServiceStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options, std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource>
 DataTransferServiceLogging::GetDataSource(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const&
+              request) {
         return child_->GetDataSource(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -51,13 +50,13 @@ DataTransferServiceLogging::GetDataSource(
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::ListDataSourcesResponse>
 DataTransferServiceLogging::ListDataSources(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::datatransfer::v1::
+                 ListDataSourcesRequest const& request) {
         return child_->ListDataSources(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -65,13 +64,13 @@ DataTransferServiceLogging::ListDataSources(
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
 DataTransferServiceLogging::CreateTransferConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::CreateTransferConfigRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::
+        CreateTransferConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::datatransfer::v1::CreateTransferConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::datatransfer::v1::
+                 CreateTransferConfigRequest const& request) {
         return child_->CreateTransferConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -79,27 +78,26 @@ DataTransferServiceLogging::CreateTransferConfig(
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
 DataTransferServiceLogging::UpdateTransferConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::UpdateTransferConfigRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::
+        UpdateTransferConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::datatransfer::v1::UpdateTransferConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::datatransfer::v1::
+                 UpdateTransferConfigRequest const& request) {
         return child_->UpdateTransferConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DataTransferServiceLogging::DeleteTransferConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::DeleteTransferConfigRequest const& request) {
+Status DataTransferServiceLogging::DeleteTransferConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::
+        DeleteTransferConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::datatransfer::v1::DeleteTransferConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::datatransfer::v1::
+                 DeleteTransferConfigRequest const& request) {
         return child_->DeleteTransferConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -107,13 +105,13 @@ DataTransferServiceLogging::DeleteTransferConfig(
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
 DataTransferServiceLogging::GetTransferConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::datatransfer::v1::
+                 GetTransferConfigRequest const& request) {
         return child_->GetTransferConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -121,41 +119,43 @@ DataTransferServiceLogging::GetTransferConfig(
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::ListTransferConfigsResponse>
 DataTransferServiceLogging::ListTransferConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::datatransfer::v1::
+                 ListTransferConfigsRequest const& request) {
         return child_->ListTransferConfigs(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse>
+StatusOr<
+    google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse>
 DataTransferServiceLogging::ScheduleTransferRuns(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::
+        ScheduleTransferRunsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::datatransfer::v1::
+                 ScheduleTransferRunsRequest const& request) {
         return child_->ScheduleTransferRuns(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsResponse>
+StatusOr<
+    google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsResponse>
 DataTransferServiceLogging::StartManualTransferRuns(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::
+        StartManualTransferRunsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::datatransfer::v1::
+                 StartManualTransferRunsRequest const& request) {
         return child_->StartManualTransferRuns(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -163,27 +163,26 @@ DataTransferServiceLogging::StartManualTransferRuns(
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::TransferRun>
 DataTransferServiceLogging::GetTransferRun(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::datatransfer::v1::
+                 GetTransferRunRequest const& request) {
         return child_->GetTransferRun(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DataTransferServiceLogging::DeleteTransferRun(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest const& request) {
+Status DataTransferServiceLogging::DeleteTransferRun(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::datatransfer::v1::
+                 DeleteTransferRunRequest const& request) {
         return child_->DeleteTransferRun(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -191,13 +190,13 @@ DataTransferServiceLogging::DeleteTransferRun(
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::ListTransferRunsResponse>
 DataTransferServiceLogging::ListTransferRuns(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::datatransfer::v1::
+                 ListTransferRunsRequest const& request) {
         return child_->ListTransferRuns(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -205,13 +204,13 @@ DataTransferServiceLogging::ListTransferRuns(
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::ListTransferLogsResponse>
 DataTransferServiceLogging::ListTransferLogs(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::datatransfer::v1::
+                 ListTransferLogsRequest const& request) {
         return child_->ListTransferLogs(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -219,41 +218,39 @@ DataTransferServiceLogging::ListTransferLogs(
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse>
 DataTransferServiceLogging::CheckValidCreds(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::datatransfer::v1::
+                 CheckValidCredsRequest const& request) {
         return child_->CheckValidCreds(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DataTransferServiceLogging::EnrollDataSources(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const& request) {
+Status DataTransferServiceLogging::EnrollDataSources(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::datatransfer::v1::
+                 EnrollDataSourcesRequest const& request) {
         return child_->EnrollDataSources(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DataTransferServiceLogging::UnenrollDataSources(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::UnenrollDataSourcesRequest const& request) {
+Status DataTransferServiceLogging::UnenrollDataSources(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::UnenrollDataSourcesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::datatransfer::v1::UnenrollDataSourcesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::datatransfer::v1::
+                 UnenrollDataSourcesRequest const& request) {
         return child_->UnenrollDataSources(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

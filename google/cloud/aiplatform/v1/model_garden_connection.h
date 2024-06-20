@@ -52,7 +52,8 @@ class ModelGardenServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ModelGardenServiceLimitedErrorCountRetryPolicy : public ModelGardenServiceRetryPolicy {
+class ModelGardenServiceLimitedErrorCountRetryPolicy
+    : public ModelGardenServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +63,16 @@ class ModelGardenServiceLimitedErrorCountRetryPolicy : public ModelGardenService
    *     @p maximum_failures == 0.
    */
   explicit ModelGardenServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ModelGardenServiceLimitedErrorCountRetryPolicy(
       ModelGardenServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ModelGardenServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ModelGardenServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
+  }
   ModelGardenServiceLimitedErrorCountRetryPolicy(
       ModelGardenServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ModelGardenServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ModelGardenServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
+  }
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +92,9 @@ class ModelGardenServiceLimitedErrorCountRetryPolicy : public ModelGardenService
   using BaseType = ModelGardenServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<aiplatform_v1_internal::ModelGardenServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      aiplatform_v1_internal::ModelGardenServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -102,7 +107,8 @@ class ModelGardenServiceLimitedErrorCountRetryPolicy : public ModelGardenService
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ModelGardenServiceLimitedTimeRetryPolicy : public ModelGardenServiceRetryPolicy {
+class ModelGardenServiceLimitedTimeRetryPolicy
+    : public ModelGardenServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -127,12 +133,14 @@ class ModelGardenServiceLimitedTimeRetryPolicy : public ModelGardenServiceRetryP
   template <typename DurationRep, typename DurationPeriod>
   explicit ModelGardenServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ModelGardenServiceLimitedTimeRetryPolicy(ModelGardenServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : ModelGardenServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ModelGardenServiceLimitedTimeRetryPolicy(ModelGardenServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : ModelGardenServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ModelGardenServiceLimitedTimeRetryPolicy(
+      ModelGardenServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : ModelGardenServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ModelGardenServiceLimitedTimeRetryPolicy(
+      ModelGardenServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : ModelGardenServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,16 +162,18 @@ class ModelGardenServiceLimitedTimeRetryPolicy : public ModelGardenServiceRetryP
   using BaseType = ModelGardenServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<aiplatform_v1_internal::ModelGardenServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      aiplatform_v1_internal::ModelGardenServiceRetryTraits>
+      impl_;
 };
 
 /**
  * The `ModelGardenServiceConnection` object for `ModelGardenServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `ModelGardenServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `ModelGardenServiceClient`.
+ * sets in `ModelGardenServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `ModelGardenServiceClient`.
  *
  * To create a concrete instance, see `MakeModelGardenServiceConnection()`.
  *
@@ -176,18 +186,21 @@ class ModelGardenServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::aiplatform::v1::PublisherModel>
-  GetPublisherModel(google::cloud::aiplatform::v1::GetPublisherModelRequest const& request);
+  GetPublisherModel(
+      google::cloud::aiplatform::v1::GetPublisherModelRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `ModelGardenServiceConnection`.
+ * A factory function to construct an object of type
+ * `ModelGardenServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of ModelGardenServiceClient.
+ * should be passed as an argument to the constructor of
+ * ModelGardenServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `ModelGardenServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `ModelGardenServiceConnection`. Expected options are any of the
+ * types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -198,8 +211,8 @@ class ModelGardenServiceConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `ModelGardenServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `ModelGardenServiceConnection`
+ * created by this function.
  */
 std::shared_ptr<ModelGardenServiceConnection> MakeModelGardenServiceConnection(
     std::string const& location, Options options = {});

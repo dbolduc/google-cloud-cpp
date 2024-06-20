@@ -46,113 +46,159 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::apphub::v1::LookupServiceProjectAttachmentResponse>,
-  LookupServiceProjectAttachment,
-  (google::cloud::apphub::v1::LookupServiceProjectAttachmentRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<
+          google::cloud::apphub::v1::LookupServiceProjectAttachmentResponse>,
+      LookupServiceProjectAttachment,
+      (google::cloud::apphub::v1::LookupServiceProjectAttachmentRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::apphub::v1::ServiceProjectAttachment>),
-  ListServiceProjectAttachments,
-  (google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::apphub::v1::ServiceProjectAttachment>),
+      ListServiceProjectAttachments,
+      (google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest request),
+      (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>,
-  CreateServiceProjectAttachment,
-  (google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>,
+      CreateServiceProjectAttachment,
+      (google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>,
-  GetServiceProjectAttachment,
-  (google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>,
+      GetServiceProjectAttachment,
+      (google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
-  DeleteServiceProjectAttachment,
-  (google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
+      DeleteServiceProjectAttachment,
+      (google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::apphub::v1::DetachServiceProjectAttachmentResponse>,
-  DetachServiceProjectAttachment,
-  (google::cloud::apphub::v1::DetachServiceProjectAttachmentRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<
+          google::cloud::apphub::v1::DetachServiceProjectAttachmentResponse>,
+      DetachServiceProjectAttachment,
+      (google::cloud::apphub::v1::DetachServiceProjectAttachmentRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::apphub::v1::DiscoveredService>),
-  ListDiscoveredServices,
-  (google::cloud::apphub::v1::ListDiscoveredServicesRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::apphub::v1::DiscoveredService>),
+      ListDiscoveredServices,
+      (google::cloud::apphub::v1::ListDiscoveredServicesRequest request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::apphub::v1::DiscoveredService>,
-  GetDiscoveredService,
-  (google::cloud::apphub::v1::GetDiscoveredServiceRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::apphub::v1::DiscoveredService>,
+      GetDiscoveredService,
+      (google::cloud::apphub::v1::GetDiscoveredServiceRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::apphub::v1::LookupDiscoveredServiceResponse>,
-  LookupDiscoveredService,
-  (google::cloud::apphub::v1::LookupDiscoveredServiceRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::apphub::v1::LookupDiscoveredServiceResponse>,
+      LookupDiscoveredService,
+      (google::cloud::apphub::v1::LookupDiscoveredServiceRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::apphub::v1::Service>),
-  ListServices,
-  (google::cloud::apphub::v1::ListServicesRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::apphub::v1::Service>), ListServices,
+              (google::cloud::apphub::v1::ListServicesRequest request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Service>>,
-  CreateService,
-  (google::cloud::apphub::v1::CreateServiceRequest const& request), (override));
+              CreateService,
+              (google::cloud::apphub::v1::CreateServiceRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::apphub::v1::Service>,
-  GetService,
-  (google::cloud::apphub::v1::GetServiceRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::apphub::v1::Service>, GetService,
+              (google::cloud::apphub::v1::GetServiceRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Service>>,
-  UpdateService,
-  (google::cloud::apphub::v1::UpdateServiceRequest const& request), (override));
+              UpdateService,
+              (google::cloud::apphub::v1::UpdateServiceRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
-  DeleteService,
-  (google::cloud::apphub::v1::DeleteServiceRequest const& request), (override));
+              DeleteService,
+              (google::cloud::apphub::v1::DeleteServiceRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::apphub::v1::DiscoveredWorkload>),
-  ListDiscoveredWorkloads,
-  (google::cloud::apphub::v1::ListDiscoveredWorkloadsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::apphub::v1::DiscoveredWorkload>),
+      ListDiscoveredWorkloads,
+      (google::cloud::apphub::v1::ListDiscoveredWorkloadsRequest request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::apphub::v1::DiscoveredWorkload>,
-  GetDiscoveredWorkload,
-  (google::cloud::apphub::v1::GetDiscoveredWorkloadRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::apphub::v1::DiscoveredWorkload>,
+      GetDiscoveredWorkload,
+      (google::cloud::apphub::v1::GetDiscoveredWorkloadRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::apphub::v1::LookupDiscoveredWorkloadResponse>,
-  LookupDiscoveredWorkload,
-  (google::cloud::apphub::v1::LookupDiscoveredWorkloadRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::apphub::v1::LookupDiscoveredWorkloadResponse>,
+      LookupDiscoveredWorkload,
+      (google::cloud::apphub::v1::LookupDiscoveredWorkloadRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::apphub::v1::Workload>),
-  ListWorkloads,
-  (google::cloud::apphub::v1::ListWorkloadsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::apphub::v1::Workload>), ListWorkloads,
+              (google::cloud::apphub::v1::ListWorkloadsRequest request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Workload>>,
-  CreateWorkload,
-  (google::cloud::apphub::v1::CreateWorkloadRequest const& request), (override));
+              CreateWorkload,
+              (google::cloud::apphub::v1::CreateWorkloadRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::apphub::v1::Workload>,
-  GetWorkload,
-  (google::cloud::apphub::v1::GetWorkloadRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::apphub::v1::Workload>, GetWorkload,
+              (google::cloud::apphub::v1::GetWorkloadRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Workload>>,
-  UpdateWorkload,
-  (google::cloud::apphub::v1::UpdateWorkloadRequest const& request), (override));
+              UpdateWorkload,
+              (google::cloud::apphub::v1::UpdateWorkloadRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
-  DeleteWorkload,
-  (google::cloud::apphub::v1::DeleteWorkloadRequest const& request), (override));
+              DeleteWorkload,
+              (google::cloud::apphub::v1::DeleteWorkloadRequest const& request),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::apphub::v1::Application>),
-  ListApplications,
-  (google::cloud::apphub::v1::ListApplicationsRequest request), (override));
+              ListApplications,
+              (google::cloud::apphub::v1::ListApplicationsRequest request),
+              (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Application>>,
-  CreateApplication,
-  (google::cloud::apphub::v1::CreateApplicationRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::apphub::v1::Application>>,
+      CreateApplication,
+      (google::cloud::apphub::v1::CreateApplicationRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::apphub::v1::Application>,
-  GetApplication,
-  (google::cloud::apphub::v1::GetApplicationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::apphub::v1::Application>, GetApplication,
+              (google::cloud::apphub::v1::GetApplicationRequest const& request),
+              (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Application>>,
-  UpdateApplication,
-  (google::cloud::apphub::v1::UpdateApplicationRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::apphub::v1::Application>>,
+      UpdateApplication,
+      (google::cloud::apphub::v1::UpdateApplicationRequest const& request),
+      (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
-  DeleteApplication,
-  (google::cloud::apphub::v1::DeleteApplicationRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
+      DeleteApplication,
+      (google::cloud::apphub::v1::DeleteApplicationRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

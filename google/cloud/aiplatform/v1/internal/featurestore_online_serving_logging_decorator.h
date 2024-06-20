@@ -31,28 +31,32 @@ namespace cloud {
 namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class FeaturestoreOnlineServingServiceLogging : public FeaturestoreOnlineServingServiceStub {
+class FeaturestoreOnlineServingServiceLogging
+    : public FeaturestoreOnlineServingServiceStub {
  public:
   ~FeaturestoreOnlineServingServiceLogging() override = default;
-  FeaturestoreOnlineServingServiceLogging(std::shared_ptr<FeaturestoreOnlineServingServiceStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+  FeaturestoreOnlineServingServiceLogging(
+      std::shared_ptr<FeaturestoreOnlineServingServiceStub> child,
+      TracingOptions tracing_options, std::set<std::string> const& components);
 
-  StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse> ReadFeatureValues(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
+  ReadFeatureValues(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request)
+      override;
 
-  std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>
   StreamingReadFeatureValues(
-      std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
-      google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const& request) override;
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse> WriteFeatureValues(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
+  WriteFeatureValues(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request)
+      override;
 
  private:
   std::shared_ptr<FeaturestoreOnlineServingServiceStub> child_;

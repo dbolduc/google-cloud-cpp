@@ -31,30 +31,32 @@ FeaturestoreOnlineServingServiceAuth::FeaturestoreOnlineServingServiceAuth(
     std::shared_ptr<FeaturestoreOnlineServingServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse> FeaturestoreOnlineServingServiceAuth::ReadFeatureValues(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
+FeaturestoreOnlineServingServiceAuth::ReadFeatureValues(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ReadFeatureValues(context, options, request);
 }
 
-std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>
 FeaturestoreOnlineServingServiceAuth::StreamingReadFeatureValues(
-   std::shared_ptr<grpc::ClientContext> context,
-   Options const& options,
-   google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const& request) {
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
+        request) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::cloud::aiplatform::v1::ReadFeatureValuesResponse>;
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
-  return child_->StreamingReadFeatureValues(std::move(context), options, request);
+  return child_->StreamingReadFeatureValues(std::move(context), options,
+                                            request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse> FeaturestoreOnlineServingServiceAuth::WriteFeatureValues(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
+FeaturestoreOnlineServingServiceAuth::WriteFeatureValues(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

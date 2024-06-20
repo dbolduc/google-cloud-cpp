@@ -28,12 +28,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 JobServiceClient::JobServiceClient(
     std::shared_ptr<JobServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 JobServiceClient::~JobServiceClient() = default;
 
 StatusOr<google::cloud::aiplatform::v1::CustomJob>
-JobServiceClient::CreateCustomJob(std::string const& parent, google::cloud::aiplatform::v1::CustomJob const& custom_job, Options opts) {
+JobServiceClient::CreateCustomJob(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::CustomJob const& custom_job, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateCustomJobRequest request;
   request.set_parent(parent);
@@ -42,7 +44,9 @@ JobServiceClient::CreateCustomJob(std::string const& parent, google::cloud::aipl
 }
 
 StatusOr<google::cloud::aiplatform::v1::CustomJob>
-JobServiceClient::CreateCustomJob(google::cloud::aiplatform::v1::CreateCustomJobRequest const& request, Options opts) {
+JobServiceClient::CreateCustomJob(
+    google::cloud::aiplatform::v1::CreateCustomJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCustomJob(request);
 }
@@ -56,7 +60,9 @@ JobServiceClient::GetCustomJob(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::aiplatform::v1::CustomJob>
-JobServiceClient::GetCustomJob(google::cloud::aiplatform::v1::GetCustomJobRequest const& request, Options opts) {
+JobServiceClient::GetCustomJob(
+    google::cloud::aiplatform::v1::GetCustomJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetCustomJob(request);
 }
@@ -70,7 +76,9 @@ JobServiceClient::ListCustomJobs(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::aiplatform::v1::CustomJob>
-JobServiceClient::ListCustomJobs(google::cloud::aiplatform::v1::ListCustomJobsRequest request, Options opts) {
+JobServiceClient::ListCustomJobs(
+    google::cloud::aiplatform::v1::ListCustomJobsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListCustomJobs(std::move(request));
 }
@@ -84,27 +92,33 @@ JobServiceClient::DeleteCustomJob(std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-JobServiceClient::DeleteCustomJob(google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request, Options opts) {
+JobServiceClient::DeleteCustomJob(
+    google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCustomJob(request);
 }
 
-Status
-JobServiceClient::CancelCustomJob(std::string const& name, Options opts) {
+Status JobServiceClient::CancelCustomJob(std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CancelCustomJobRequest request;
   request.set_name(name);
   return connection_->CancelCustomJob(request);
 }
 
-Status
-JobServiceClient::CancelCustomJob(google::cloud::aiplatform::v1::CancelCustomJobRequest const& request, Options opts) {
+Status JobServiceClient::CancelCustomJob(
+    google::cloud::aiplatform::v1::CancelCustomJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelCustomJob(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
-JobServiceClient::CreateDataLabelingJob(std::string const& parent, google::cloud::aiplatform::v1::DataLabelingJob const& data_labeling_job, Options opts) {
+JobServiceClient::CreateDataLabelingJob(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::DataLabelingJob const& data_labeling_job,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateDataLabelingJobRequest request;
   request.set_parent(parent);
@@ -113,7 +127,9 @@ JobServiceClient::CreateDataLabelingJob(std::string const& parent, google::cloud
 }
 
 StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
-JobServiceClient::CreateDataLabelingJob(google::cloud::aiplatform::v1::CreateDataLabelingJobRequest const& request, Options opts) {
+JobServiceClient::CreateDataLabelingJob(
+    google::cloud::aiplatform::v1::CreateDataLabelingJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDataLabelingJob(request);
 }
@@ -127,13 +143,16 @@ JobServiceClient::GetDataLabelingJob(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
-JobServiceClient::GetDataLabelingJob(google::cloud::aiplatform::v1::GetDataLabelingJobRequest const& request, Options opts) {
+JobServiceClient::GetDataLabelingJob(
+    google::cloud::aiplatform::v1::GetDataLabelingJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDataLabelingJob(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::DataLabelingJob>
-JobServiceClient::ListDataLabelingJobs(std::string const& parent, Options opts) {
+JobServiceClient::ListDataLabelingJobs(std::string const& parent,
+                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListDataLabelingJobsRequest request;
   request.set_parent(parent);
@@ -141,7 +160,9 @@ JobServiceClient::ListDataLabelingJobs(std::string const& parent, Options opts) 
 }
 
 StreamRange<google::cloud::aiplatform::v1::DataLabelingJob>
-JobServiceClient::ListDataLabelingJobs(google::cloud::aiplatform::v1::ListDataLabelingJobsRequest request, Options opts) {
+JobServiceClient::ListDataLabelingJobs(
+    google::cloud::aiplatform::v1::ListDataLabelingJobsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDataLabelingJobs(std::move(request));
 }
@@ -155,27 +176,34 @@ JobServiceClient::DeleteDataLabelingJob(std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-JobServiceClient::DeleteDataLabelingJob(google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const& request, Options opts) {
+JobServiceClient::DeleteDataLabelingJob(
+    google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDataLabelingJob(request);
 }
 
-Status
-JobServiceClient::CancelDataLabelingJob(std::string const& name, Options opts) {
+Status JobServiceClient::CancelDataLabelingJob(std::string const& name,
+                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CancelDataLabelingJobRequest request;
   request.set_name(name);
   return connection_->CancelDataLabelingJob(request);
 }
 
-Status
-JobServiceClient::CancelDataLabelingJob(google::cloud::aiplatform::v1::CancelDataLabelingJobRequest const& request, Options opts) {
+Status JobServiceClient::CancelDataLabelingJob(
+    google::cloud::aiplatform::v1::CancelDataLabelingJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelDataLabelingJob(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
-JobServiceClient::CreateHyperparameterTuningJob(std::string const& parent, google::cloud::aiplatform::v1::HyperparameterTuningJob const& hyperparameter_tuning_job, Options opts) {
+JobServiceClient::CreateHyperparameterTuningJob(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::HyperparameterTuningJob const&
+        hyperparameter_tuning_job,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateHyperparameterTuningJobRequest request;
   request.set_parent(parent);
@@ -184,13 +212,17 @@ JobServiceClient::CreateHyperparameterTuningJob(std::string const& parent, googl
 }
 
 StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
-JobServiceClient::CreateHyperparameterTuningJob(google::cloud::aiplatform::v1::CreateHyperparameterTuningJobRequest const& request, Options opts) {
+JobServiceClient::CreateHyperparameterTuningJob(
+    google::cloud::aiplatform::v1::CreateHyperparameterTuningJobRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateHyperparameterTuningJob(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
-JobServiceClient::GetHyperparameterTuningJob(std::string const& name, Options opts) {
+JobServiceClient::GetHyperparameterTuningJob(std::string const& name,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::GetHyperparameterTuningJobRequest request;
   request.set_name(name);
@@ -198,13 +230,17 @@ JobServiceClient::GetHyperparameterTuningJob(std::string const& name, Options op
 }
 
 StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
-JobServiceClient::GetHyperparameterTuningJob(google::cloud::aiplatform::v1::GetHyperparameterTuningJobRequest const& request, Options opts) {
+JobServiceClient::GetHyperparameterTuningJob(
+    google::cloud::aiplatform::v1::GetHyperparameterTuningJobRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetHyperparameterTuningJob(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::HyperparameterTuningJob>
-JobServiceClient::ListHyperparameterTuningJobs(std::string const& parent, Options opts) {
+JobServiceClient::ListHyperparameterTuningJobs(std::string const& parent,
+                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListHyperparameterTuningJobsRequest request;
   request.set_parent(parent);
@@ -212,13 +248,16 @@ JobServiceClient::ListHyperparameterTuningJobs(std::string const& parent, Option
 }
 
 StreamRange<google::cloud::aiplatform::v1::HyperparameterTuningJob>
-JobServiceClient::ListHyperparameterTuningJobs(google::cloud::aiplatform::v1::ListHyperparameterTuningJobsRequest request, Options opts) {
+JobServiceClient::ListHyperparameterTuningJobs(
+    google::cloud::aiplatform::v1::ListHyperparameterTuningJobsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListHyperparameterTuningJobs(std::move(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-JobServiceClient::DeleteHyperparameterTuningJob(std::string const& name, Options opts) {
+JobServiceClient::DeleteHyperparameterTuningJob(std::string const& name,
+                                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest request;
   request.set_name(name);
@@ -226,27 +265,33 @@ JobServiceClient::DeleteHyperparameterTuningJob(std::string const& name, Options
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-JobServiceClient::DeleteHyperparameterTuningJob(google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const& request, Options opts) {
+JobServiceClient::DeleteHyperparameterTuningJob(
+    google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteHyperparameterTuningJob(request);
 }
 
-Status
-JobServiceClient::CancelHyperparameterTuningJob(std::string const& name, Options opts) {
+Status JobServiceClient::CancelHyperparameterTuningJob(std::string const& name,
+                                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest request;
   request.set_name(name);
   return connection_->CancelHyperparameterTuningJob(request);
 }
 
-Status
-JobServiceClient::CancelHyperparameterTuningJob(google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const& request, Options opts) {
+Status JobServiceClient::CancelHyperparameterTuningJob(
+    google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelHyperparameterTuningJob(request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::NasJob>
-JobServiceClient::CreateNasJob(std::string const& parent, google::cloud::aiplatform::v1::NasJob const& nas_job, Options opts) {
+StatusOr<google::cloud::aiplatform::v1::NasJob> JobServiceClient::CreateNasJob(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::NasJob const& nas_job, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateNasJobRequest request;
   request.set_parent(parent);
@@ -254,22 +299,24 @@ JobServiceClient::CreateNasJob(std::string const& parent, google::cloud::aiplatf
   return connection_->CreateNasJob(request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::NasJob>
-JobServiceClient::CreateNasJob(google::cloud::aiplatform::v1::CreateNasJobRequest const& request, Options opts) {
+StatusOr<google::cloud::aiplatform::v1::NasJob> JobServiceClient::CreateNasJob(
+    google::cloud::aiplatform::v1::CreateNasJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateNasJob(request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::NasJob>
-JobServiceClient::GetNasJob(std::string const& name, Options opts) {
+StatusOr<google::cloud::aiplatform::v1::NasJob> JobServiceClient::GetNasJob(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::GetNasJobRequest request;
   request.set_name(name);
   return connection_->GetNasJob(request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::NasJob>
-JobServiceClient::GetNasJob(google::cloud::aiplatform::v1::GetNasJobRequest const& request, Options opts) {
+StatusOr<google::cloud::aiplatform::v1::NasJob> JobServiceClient::GetNasJob(
+    google::cloud::aiplatform::v1::GetNasJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetNasJob(request);
 }
@@ -283,7 +330,8 @@ JobServiceClient::ListNasJobs(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::aiplatform::v1::NasJob>
-JobServiceClient::ListNasJobs(google::cloud::aiplatform::v1::ListNasJobsRequest request, Options opts) {
+JobServiceClient::ListNasJobs(
+    google::cloud::aiplatform::v1::ListNasJobsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListNasJobs(std::move(request));
 }
@@ -297,21 +345,23 @@ JobServiceClient::DeleteNasJob(std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-JobServiceClient::DeleteNasJob(google::cloud::aiplatform::v1::DeleteNasJobRequest const& request, Options opts) {
+JobServiceClient::DeleteNasJob(
+    google::cloud::aiplatform::v1::DeleteNasJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNasJob(request);
 }
 
-Status
-JobServiceClient::CancelNasJob(std::string const& name, Options opts) {
+Status JobServiceClient::CancelNasJob(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CancelNasJobRequest request;
   request.set_name(name);
   return connection_->CancelNasJob(request);
 }
 
-Status
-JobServiceClient::CancelNasJob(google::cloud::aiplatform::v1::CancelNasJobRequest const& request, Options opts) {
+Status JobServiceClient::CancelNasJob(
+    google::cloud::aiplatform::v1::CancelNasJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelNasJob(request);
 }
@@ -325,7 +375,9 @@ JobServiceClient::GetNasTrialDetail(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::aiplatform::v1::NasTrialDetail>
-JobServiceClient::GetNasTrialDetail(google::cloud::aiplatform::v1::GetNasTrialDetailRequest const& request, Options opts) {
+JobServiceClient::GetNasTrialDetail(
+    google::cloud::aiplatform::v1::GetNasTrialDetailRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetNasTrialDetail(request);
 }
@@ -339,13 +391,19 @@ JobServiceClient::ListNasTrialDetails(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::aiplatform::v1::NasTrialDetail>
-JobServiceClient::ListNasTrialDetails(google::cloud::aiplatform::v1::ListNasTrialDetailsRequest request, Options opts) {
+JobServiceClient::ListNasTrialDetails(
+    google::cloud::aiplatform::v1::ListNasTrialDetailsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListNasTrialDetails(std::move(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
-JobServiceClient::CreateBatchPredictionJob(std::string const& parent, google::cloud::aiplatform::v1::BatchPredictionJob const& batch_prediction_job, Options opts) {
+JobServiceClient::CreateBatchPredictionJob(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::BatchPredictionJob const&
+        batch_prediction_job,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateBatchPredictionJobRequest request;
   request.set_parent(parent);
@@ -354,7 +412,10 @@ JobServiceClient::CreateBatchPredictionJob(std::string const& parent, google::cl
 }
 
 StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
-JobServiceClient::CreateBatchPredictionJob(google::cloud::aiplatform::v1::CreateBatchPredictionJobRequest const& request, Options opts) {
+JobServiceClient::CreateBatchPredictionJob(
+    google::cloud::aiplatform::v1::CreateBatchPredictionJobRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBatchPredictionJob(request);
 }
@@ -368,13 +429,16 @@ JobServiceClient::GetBatchPredictionJob(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
-JobServiceClient::GetBatchPredictionJob(google::cloud::aiplatform::v1::GetBatchPredictionJobRequest const& request, Options opts) {
+JobServiceClient::GetBatchPredictionJob(
+    google::cloud::aiplatform::v1::GetBatchPredictionJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetBatchPredictionJob(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::BatchPredictionJob>
-JobServiceClient::ListBatchPredictionJobs(std::string const& parent, Options opts) {
+JobServiceClient::ListBatchPredictionJobs(std::string const& parent,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest request;
   request.set_parent(parent);
@@ -382,13 +446,16 @@ JobServiceClient::ListBatchPredictionJobs(std::string const& parent, Options opt
 }
 
 StreamRange<google::cloud::aiplatform::v1::BatchPredictionJob>
-JobServiceClient::ListBatchPredictionJobs(google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest request, Options opts) {
+JobServiceClient::ListBatchPredictionJobs(
+    google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListBatchPredictionJobs(std::move(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-JobServiceClient::DeleteBatchPredictionJob(std::string const& name, Options opts) {
+JobServiceClient::DeleteBatchPredictionJob(std::string const& name,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest request;
   request.set_name(name);
@@ -396,57 +463,79 @@ JobServiceClient::DeleteBatchPredictionJob(std::string const& name, Options opts
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-JobServiceClient::DeleteBatchPredictionJob(google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const& request, Options opts) {
+JobServiceClient::DeleteBatchPredictionJob(
+    google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBatchPredictionJob(request);
 }
 
-Status
-JobServiceClient::CancelBatchPredictionJob(std::string const& name, Options opts) {
+Status JobServiceClient::CancelBatchPredictionJob(std::string const& name,
+                                                  Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest request;
   request.set_name(name);
   return connection_->CancelBatchPredictionJob(request);
 }
 
-Status
-JobServiceClient::CancelBatchPredictionJob(google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const& request, Options opts) {
+Status JobServiceClient::CancelBatchPredictionJob(
+    google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelBatchPredictionJob(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
-JobServiceClient::CreateModelDeploymentMonitoringJob(std::string const& parent, google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob const& model_deployment_monitoring_job, Options opts) {
+JobServiceClient::CreateModelDeploymentMonitoringJob(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob const&
+        model_deployment_monitoring_job,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::aiplatform::v1::CreateModelDeploymentMonitoringJobRequest request;
+  google::cloud::aiplatform::v1::CreateModelDeploymentMonitoringJobRequest
+      request;
   request.set_parent(parent);
-  *request.mutable_model_deployment_monitoring_job() = model_deployment_monitoring_job;
+  *request.mutable_model_deployment_monitoring_job() =
+      model_deployment_monitoring_job;
   return connection_->CreateModelDeploymentMonitoringJob(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
-JobServiceClient::CreateModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::CreateModelDeploymentMonitoringJobRequest const& request, Options opts) {
+JobServiceClient::CreateModelDeploymentMonitoringJob(
+    google::cloud::aiplatform::v1::
+        CreateModelDeploymentMonitoringJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateModelDeploymentMonitoringJob(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::ModelMonitoringStatsAnomalies>
-JobServiceClient::SearchModelDeploymentMonitoringStatsAnomalies(std::string const& model_deployment_monitoring_job, std::string const& deployed_model_id, Options opts) {
+JobServiceClient::SearchModelDeploymentMonitoringStatsAnomalies(
+    std::string const& model_deployment_monitoring_job,
+    std::string const& deployed_model_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::aiplatform::v1::SearchModelDeploymentMonitoringStatsAnomaliesRequest request;
+  google::cloud::aiplatform::v1::
+      SearchModelDeploymentMonitoringStatsAnomaliesRequest request;
   request.set_model_deployment_monitoring_job(model_deployment_monitoring_job);
   request.set_deployed_model_id(deployed_model_id);
   return connection_->SearchModelDeploymentMonitoringStatsAnomalies(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::ModelMonitoringStatsAnomalies>
-JobServiceClient::SearchModelDeploymentMonitoringStatsAnomalies(google::cloud::aiplatform::v1::SearchModelDeploymentMonitoringStatsAnomaliesRequest request, Options opts) {
+JobServiceClient::SearchModelDeploymentMonitoringStatsAnomalies(
+    google::cloud::aiplatform::v1::
+        SearchModelDeploymentMonitoringStatsAnomaliesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SearchModelDeploymentMonitoringStatsAnomalies(std::move(request));
+  return connection_->SearchModelDeploymentMonitoringStatsAnomalies(
+      std::move(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
-JobServiceClient::GetModelDeploymentMonitoringJob(std::string const& name, Options opts) {
+JobServiceClient::GetModelDeploymentMonitoringJob(std::string const& name,
+                                                  Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::GetModelDeploymentMonitoringJobRequest request;
   request.set_name(name);
@@ -454,78 +543,105 @@ JobServiceClient::GetModelDeploymentMonitoringJob(std::string const& name, Optio
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
-JobServiceClient::GetModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::GetModelDeploymentMonitoringJobRequest const& request, Options opts) {
+JobServiceClient::GetModelDeploymentMonitoringJob(
+    google::cloud::aiplatform::v1::GetModelDeploymentMonitoringJobRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetModelDeploymentMonitoringJob(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
-JobServiceClient::ListModelDeploymentMonitoringJobs(std::string const& parent, Options opts) {
+JobServiceClient::ListModelDeploymentMonitoringJobs(std::string const& parent,
+                                                    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsRequest request;
+  google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsRequest
+      request;
   request.set_parent(parent);
   return connection_->ListModelDeploymentMonitoringJobs(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
-JobServiceClient::ListModelDeploymentMonitoringJobs(google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsRequest request, Options opts) {
+JobServiceClient::ListModelDeploymentMonitoringJobs(
+    google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsRequest
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListModelDeploymentMonitoringJobs(std::move(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>>
-JobServiceClient::UpdateModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob const& model_deployment_monitoring_job, google::protobuf::FieldMask const& update_mask, Options opts) {
+JobServiceClient::UpdateModelDeploymentMonitoringJob(
+    google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob const&
+        model_deployment_monitoring_job,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::aiplatform::v1::UpdateModelDeploymentMonitoringJobRequest request;
-  *request.mutable_model_deployment_monitoring_job() = model_deployment_monitoring_job;
+  google::cloud::aiplatform::v1::UpdateModelDeploymentMonitoringJobRequest
+      request;
+  *request.mutable_model_deployment_monitoring_job() =
+      model_deployment_monitoring_job;
   *request.mutable_update_mask() = update_mask;
   return connection_->UpdateModelDeploymentMonitoringJob(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>>
-JobServiceClient::UpdateModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::UpdateModelDeploymentMonitoringJobRequest const& request, Options opts) {
+JobServiceClient::UpdateModelDeploymentMonitoringJob(
+    google::cloud::aiplatform::v1::
+        UpdateModelDeploymentMonitoringJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateModelDeploymentMonitoringJob(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-JobServiceClient::DeleteModelDeploymentMonitoringJob(std::string const& name, Options opts) {
+JobServiceClient::DeleteModelDeploymentMonitoringJob(std::string const& name,
+                                                     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::aiplatform::v1::DeleteModelDeploymentMonitoringJobRequest request;
+  google::cloud::aiplatform::v1::DeleteModelDeploymentMonitoringJobRequest
+      request;
   request.set_name(name);
   return connection_->DeleteModelDeploymentMonitoringJob(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-JobServiceClient::DeleteModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::DeleteModelDeploymentMonitoringJobRequest const& request, Options opts) {
+JobServiceClient::DeleteModelDeploymentMonitoringJob(
+    google::cloud::aiplatform::v1::
+        DeleteModelDeploymentMonitoringJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteModelDeploymentMonitoringJob(request);
 }
 
-Status
-JobServiceClient::PauseModelDeploymentMonitoringJob(std::string const& name, Options opts) {
+Status JobServiceClient::PauseModelDeploymentMonitoringJob(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::aiplatform::v1::PauseModelDeploymentMonitoringJobRequest request;
+  google::cloud::aiplatform::v1::PauseModelDeploymentMonitoringJobRequest
+      request;
   request.set_name(name);
   return connection_->PauseModelDeploymentMonitoringJob(request);
 }
 
-Status
-JobServiceClient::PauseModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::PauseModelDeploymentMonitoringJobRequest const& request, Options opts) {
+Status JobServiceClient::PauseModelDeploymentMonitoringJob(
+    google::cloud::aiplatform::v1::
+        PauseModelDeploymentMonitoringJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PauseModelDeploymentMonitoringJob(request);
 }
 
-Status
-JobServiceClient::ResumeModelDeploymentMonitoringJob(std::string const& name, Options opts) {
+Status JobServiceClient::ResumeModelDeploymentMonitoringJob(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::aiplatform::v1::ResumeModelDeploymentMonitoringJobRequest request;
+  google::cloud::aiplatform::v1::ResumeModelDeploymentMonitoringJobRequest
+      request;
   request.set_name(name);
   return connection_->ResumeModelDeploymentMonitoringJob(request);
 }
 
-Status
-JobServiceClient::ResumeModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::ResumeModelDeploymentMonitoringJobRequest const& request, Options opts) {
+Status JobServiceClient::ResumeModelDeploymentMonitoringJob(
+    google::cloud::aiplatform::v1::
+        ResumeModelDeploymentMonitoringJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResumeModelDeploymentMonitoringJob(request);
 }

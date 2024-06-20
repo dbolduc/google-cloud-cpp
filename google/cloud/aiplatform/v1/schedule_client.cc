@@ -28,12 +28,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ScheduleServiceClient::ScheduleServiceClient(
     std::shared_ptr<ScheduleServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ScheduleServiceClient::~ScheduleServiceClient() = default;
 
 StatusOr<google::cloud::aiplatform::v1::Schedule>
-ScheduleServiceClient::CreateSchedule(std::string const& parent, google::cloud::aiplatform::v1::Schedule const& schedule, Options opts) {
+ScheduleServiceClient::CreateSchedule(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::Schedule const& schedule, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateScheduleRequest request;
   request.set_parent(parent);
@@ -42,7 +44,9 @@ ScheduleServiceClient::CreateSchedule(std::string const& parent, google::cloud::
 }
 
 StatusOr<google::cloud::aiplatform::v1::Schedule>
-ScheduleServiceClient::CreateSchedule(google::cloud::aiplatform::v1::CreateScheduleRequest const& request, Options opts) {
+ScheduleServiceClient::CreateSchedule(
+    google::cloud::aiplatform::v1::CreateScheduleRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSchedule(request);
 }
@@ -56,7 +60,9 @@ ScheduleServiceClient::DeleteSchedule(std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-ScheduleServiceClient::DeleteSchedule(google::cloud::aiplatform::v1::DeleteScheduleRequest const& request, Options opts) {
+ScheduleServiceClient::DeleteSchedule(
+    google::cloud::aiplatform::v1::DeleteScheduleRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSchedule(request);
 }
@@ -70,7 +76,9 @@ ScheduleServiceClient::GetSchedule(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::aiplatform::v1::Schedule>
-ScheduleServiceClient::GetSchedule(google::cloud::aiplatform::v1::GetScheduleRequest const& request, Options opts) {
+ScheduleServiceClient::GetSchedule(
+    google::cloud::aiplatform::v1::GetScheduleRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSchedule(request);
 }
@@ -84,35 +92,37 @@ ScheduleServiceClient::ListSchedules(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::aiplatform::v1::Schedule>
-ScheduleServiceClient::ListSchedules(google::cloud::aiplatform::v1::ListSchedulesRequest request, Options opts) {
+ScheduleServiceClient::ListSchedules(
+    google::cloud::aiplatform::v1::ListSchedulesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSchedules(std::move(request));
 }
 
-Status
-ScheduleServiceClient::PauseSchedule(std::string const& name, Options opts) {
+Status ScheduleServiceClient::PauseSchedule(std::string const& name,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::PauseScheduleRequest request;
   request.set_name(name);
   return connection_->PauseSchedule(request);
 }
 
-Status
-ScheduleServiceClient::PauseSchedule(google::cloud::aiplatform::v1::PauseScheduleRequest const& request, Options opts) {
+Status ScheduleServiceClient::PauseSchedule(
+    google::cloud::aiplatform::v1::PauseScheduleRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PauseSchedule(request);
 }
 
-Status
-ScheduleServiceClient::ResumeSchedule(std::string const& name, Options opts) {
+Status ScheduleServiceClient::ResumeSchedule(std::string const& name,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ResumeScheduleRequest request;
   request.set_name(name);
   return connection_->ResumeSchedule(request);
 }
 
-Status
-ScheduleServiceClient::ResumeSchedule(std::string const& name, bool catch_up, Options opts) {
+Status ScheduleServiceClient::ResumeSchedule(std::string const& name,
+                                             bool catch_up, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ResumeScheduleRequest request;
   request.set_name(name);
@@ -120,14 +130,17 @@ ScheduleServiceClient::ResumeSchedule(std::string const& name, bool catch_up, Op
   return connection_->ResumeSchedule(request);
 }
 
-Status
-ScheduleServiceClient::ResumeSchedule(google::cloud::aiplatform::v1::ResumeScheduleRequest const& request, Options opts) {
+Status ScheduleServiceClient::ResumeSchedule(
+    google::cloud::aiplatform::v1::ResumeScheduleRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResumeSchedule(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Schedule>
-ScheduleServiceClient::UpdateSchedule(google::cloud::aiplatform::v1::Schedule const& schedule, google::protobuf::FieldMask const& update_mask, Options opts) {
+ScheduleServiceClient::UpdateSchedule(
+    google::cloud::aiplatform::v1::Schedule const& schedule,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdateScheduleRequest request;
   *request.mutable_schedule() = schedule;
@@ -136,7 +149,9 @@ ScheduleServiceClient::UpdateSchedule(google::cloud::aiplatform::v1::Schedule co
 }
 
 StatusOr<google::cloud::aiplatform::v1::Schedule>
-ScheduleServiceClient::UpdateSchedule(google::cloud::aiplatform::v1::UpdateScheduleRequest const& request, Options opts) {
+ScheduleServiceClient::UpdateSchedule(
+    google::cloud::aiplatform::v1::UpdateScheduleRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSchedule(request);
 }

@@ -30,20 +30,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GenAiTuningServiceLogging::GenAiTuningServiceLogging(
     std::shared_ptr<GenAiTuningServiceStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options, std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::aiplatform::v1::TuningJob>
 GenAiTuningServiceLogging::CreateTuningJob(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateTuningJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::CreateTuningJobRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::CreateTuningJobRequest const&
+                 request) {
         return child_->CreateTuningJob(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -51,13 +48,12 @@ GenAiTuningServiceLogging::CreateTuningJob(
 
 StatusOr<google::cloud::aiplatform::v1::TuningJob>
 GenAiTuningServiceLogging::GetTuningJob(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetTuningJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::GetTuningJobRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::GetTuningJobRequest const& request) {
         return child_->GetTuningJob(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -65,27 +61,24 @@ GenAiTuningServiceLogging::GetTuningJob(
 
 StatusOr<google::cloud::aiplatform::v1::ListTuningJobsResponse>
 GenAiTuningServiceLogging::ListTuningJobs(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListTuningJobsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::ListTuningJobsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::ListTuningJobsRequest const& request) {
         return child_->ListTuningJobs(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-GenAiTuningServiceLogging::CancelTuningJob(
-    grpc::ClientContext& context,
-    Options const& options,
+Status GenAiTuningServiceLogging::CancelTuningJob(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelTuningJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::CancelTuningJobRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::CancelTuningJobRequest const&
+                 request) {
         return child_->CancelTuningJob(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

@@ -34,35 +34,36 @@ class EndpointServiceConnectionIdempotencyPolicy {
   virtual ~EndpointServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<EndpointServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<EndpointServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  CreateEndpoint(google::cloud::aiplatform::v1::CreateEndpointRequest const& request);
+  virtual google::cloud::Idempotency CreateEndpoint(
+      google::cloud::aiplatform::v1::CreateEndpointRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetEndpoint(google::cloud::aiplatform::v1::GetEndpointRequest const& request);
+  virtual google::cloud::Idempotency GetEndpoint(
+      google::cloud::aiplatform::v1::GetEndpointRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListEndpoints(google::cloud::aiplatform::v1::ListEndpointsRequest request);
+  virtual google::cloud::Idempotency ListEndpoints(
+      google::cloud::aiplatform::v1::ListEndpointsRequest request);
 
-  virtual google::cloud::Idempotency
-  UpdateEndpoint(google::cloud::aiplatform::v1::UpdateEndpointRequest const& request);
+  virtual google::cloud::Idempotency UpdateEndpoint(
+      google::cloud::aiplatform::v1::UpdateEndpointRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteEndpoint(google::cloud::aiplatform::v1::DeleteEndpointRequest const& request);
+  virtual google::cloud::Idempotency DeleteEndpoint(
+      google::cloud::aiplatform::v1::DeleteEndpointRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeployModel(google::cloud::aiplatform::v1::DeployModelRequest const& request);
+  virtual google::cloud::Idempotency DeployModel(
+      google::cloud::aiplatform::v1::DeployModelRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UndeployModel(google::cloud::aiplatform::v1::UndeployModelRequest const& request);
+  virtual google::cloud::Idempotency UndeployModel(
+      google::cloud::aiplatform::v1::UndeployModelRequest const& request);
 
-  virtual google::cloud::Idempotency
-  MutateDeployedModel(google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request);
+  virtual google::cloud::Idempotency MutateDeployedModel(
+      google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request);
 };
 
 std::unique_ptr<EndpointServiceConnectionIdempotencyPolicy>
-    MakeDefaultEndpointServiceConnectionIdempotencyPolicy();
+MakeDefaultEndpointServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

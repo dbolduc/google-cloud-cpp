@@ -65,14 +65,14 @@ class ApiKeysLimitedErrorCountRetryPolicy : public ApiKeysRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit ApiKeysLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ApiKeysLimitedErrorCountRetryPolicy(
       ApiKeysLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ApiKeysLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ApiKeysLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ApiKeysLimitedErrorCountRetryPolicy(
       ApiKeysLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ApiKeysLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ApiKeysLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,7 +92,9 @@ class ApiKeysLimitedErrorCountRetryPolicy : public ApiKeysRetryPolicy {
   using BaseType = ApiKeysRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<apikeys_v2_internal::ApiKeysRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      apikeys_v2_internal::ApiKeysRetryTraits>
+      impl_;
 };
 
 /**
@@ -130,12 +132,13 @@ class ApiKeysLimitedTimeRetryPolicy : public ApiKeysRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ApiKeysLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   ApiKeysLimitedTimeRetryPolicy(ApiKeysLimitedTimeRetryPolicy&& rhs) noexcept
-    : ApiKeysLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ApiKeysLimitedTimeRetryPolicy(ApiKeysLimitedTimeRetryPolicy const& rhs) noexcept
-    : ApiKeysLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : ApiKeysLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ApiKeysLimitedTimeRetryPolicy(
+      ApiKeysLimitedTimeRetryPolicy const& rhs) noexcept
+      : ApiKeysLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -149,15 +152,16 @@ class ApiKeysLimitedTimeRetryPolicy : public ApiKeysRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<ApiKeysRetryPolicy> clone() const override {
-    return std::make_unique<ApiKeysLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<ApiKeysLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = ApiKeysRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<apikeys_v2_internal::ApiKeysRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      apikeys_v2_internal::ApiKeysRetryTraits>
+      impl_;
 };
 
 /**
@@ -178,29 +182,29 @@ class ApiKeysConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual future<StatusOr<google::api::apikeys::v2::Key>>
-  CreateKey(google::api::apikeys::v2::CreateKeyRequest const& request);
+  virtual future<StatusOr<google::api::apikeys::v2::Key>> CreateKey(
+      google::api::apikeys::v2::CreateKeyRequest const& request);
 
-  virtual StreamRange<google::api::apikeys::v2::Key>
-  ListKeys(google::api::apikeys::v2::ListKeysRequest request);
+  virtual StreamRange<google::api::apikeys::v2::Key> ListKeys(
+      google::api::apikeys::v2::ListKeysRequest request);
 
-  virtual StatusOr<google::api::apikeys::v2::Key>
-  GetKey(google::api::apikeys::v2::GetKeyRequest const& request);
+  virtual StatusOr<google::api::apikeys::v2::Key> GetKey(
+      google::api::apikeys::v2::GetKeyRequest const& request);
 
-  virtual StatusOr<google::api::apikeys::v2::GetKeyStringResponse>
-  GetKeyString(google::api::apikeys::v2::GetKeyStringRequest const& request);
+  virtual StatusOr<google::api::apikeys::v2::GetKeyStringResponse> GetKeyString(
+      google::api::apikeys::v2::GetKeyStringRequest const& request);
 
-  virtual future<StatusOr<google::api::apikeys::v2::Key>>
-  UpdateKey(google::api::apikeys::v2::UpdateKeyRequest const& request);
+  virtual future<StatusOr<google::api::apikeys::v2::Key>> UpdateKey(
+      google::api::apikeys::v2::UpdateKeyRequest const& request);
 
-  virtual future<StatusOr<google::api::apikeys::v2::Key>>
-  DeleteKey(google::api::apikeys::v2::DeleteKeyRequest const& request);
+  virtual future<StatusOr<google::api::apikeys::v2::Key>> DeleteKey(
+      google::api::apikeys::v2::DeleteKeyRequest const& request);
 
-  virtual future<StatusOr<google::api::apikeys::v2::Key>>
-  UndeleteKey(google::api::apikeys::v2::UndeleteKeyRequest const& request);
+  virtual future<StatusOr<google::api::apikeys::v2::Key>> UndeleteKey(
+      google::api::apikeys::v2::UndeleteKeyRequest const& request);
 
-  virtual StatusOr<google::api::apikeys::v2::LookupKeyResponse>
-  LookupKey(google::api::apikeys::v2::LookupKeyRequest const& request);
+  virtual StatusOr<google::api::apikeys::v2::LookupKeyResponse> LookupKey(
+      google::api::apikeys::v2::LookupKeyRequest const& request);
 };
 
 /**
@@ -224,8 +228,7 @@ class ApiKeysConnection {
  * @param options (optional) Configure the `ApiKeysConnection` created by
  * this function.
  */
-std::shared_ptr<ApiKeysConnection> MakeApiKeysConnection(
-    Options options = {});
+std::shared_ptr<ApiKeysConnection> MakeApiKeysConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apikeys_v2

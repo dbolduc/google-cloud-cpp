@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `IndexEndpointServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `IndexEndpointServiceClient`. To do so,
- * construct an object of type `IndexEndpointServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * including errors, from an object of type `IndexEndpointServiceClient`. To do
+ * so, construct an object of type `IndexEndpointServiceClient` with an instance
+ * of this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,41 +42,60 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockIndexEndpointServiceConnection : public aiplatform_v1::IndexEndpointServiceConnection {
+class MockIndexEndpointServiceConnection
+    : public aiplatform_v1::IndexEndpointServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>>,
-  CreateIndexEndpoint,
-  (google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request), (override));
+              CreateIndexEndpoint,
+              (google::cloud::aiplatform::v1::CreateIndexEndpointRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>, GetIndexEndpoint,
+      (google::cloud::aiplatform::v1::GetIndexEndpointRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::aiplatform::v1::IndexEndpoint>),
+      ListIndexEndpoints,
+      (google::cloud::aiplatform::v1::ListIndexEndpointsRequest request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>,
-  GetIndexEndpoint,
-  (google::cloud::aiplatform::v1::GetIndexEndpointRequest const& request), (override));
+              UpdateIndexEndpoint,
+              (google::cloud::aiplatform::v1::UpdateIndexEndpointRequest const&
+                   request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::IndexEndpoint>),
-  ListIndexEndpoints,
-  (google::cloud::aiplatform::v1::ListIndexEndpointsRequest request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteIndexEndpoint,
+      (google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>,
-  UpdateIndexEndpoint,
-  (google::cloud::aiplatform::v1::UpdateIndexEndpointRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>,
+      DeployIndex,
+      (google::cloud::aiplatform::v1::DeployIndexRequest const& request),
+      (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-  DeleteIndexEndpoint,
-  (google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>,
+      UndeployIndex,
+      (google::cloud::aiplatform::v1::UndeployIndexRequest const& request),
+      (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>,
-  DeployIndex,
-  (google::cloud::aiplatform::v1::DeployIndexRequest const& request), (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>,
-  UndeployIndex,
-  (google::cloud::aiplatform::v1::UndeployIndexRequest const& request), (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>,
-  MutateDeployedIndex,
-  (google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request), (override));
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>,
+      MutateDeployedIndex,
+      (google::cloud::aiplatform::v1::MutateDeployedIndexRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -34,17 +34,18 @@ class MatchServiceConnectionIdempotencyPolicy {
   virtual ~MatchServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<MatchServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<MatchServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  FindNeighbors(google::cloud::aiplatform::v1::FindNeighborsRequest const& request);
+  virtual google::cloud::Idempotency FindNeighbors(
+      google::cloud::aiplatform::v1::FindNeighborsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ReadIndexDatapoints(google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request);
+  virtual google::cloud::Idempotency ReadIndexDatapoints(
+      google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request);
 };
 
 std::unique_ptr<MatchServiceConnectionIdempotencyPolicy>
-    MakeDefaultMatchServiceConnectionIdempotencyPolicy();
+MakeDefaultMatchServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

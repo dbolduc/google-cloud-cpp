@@ -63,7 +63,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class BackupDRClient {
  public:
-  explicit BackupDRClient(std::shared_ptr<BackupDRConnection> connection, Options opts = {});
+  explicit BackupDRClient(std::shared_ptr<BackupDRConnection> connection,
+                          Options opts = {});
   ~BackupDRClient();
 
   ///@{
@@ -159,7 +160,9 @@ class BackupDRClient {
   ///
   // clang-format on
   StreamRange<google::cloud::backupdr::v1::ManagementServer>
-  ListManagementServers(google::cloud::backupdr::v1::ListManagementServersRequest request, Options opts = {});
+  ListManagementServers(
+      google::cloud::backupdr::v1::ListManagementServersRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -184,8 +187,8 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.ManagementServer]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L143}
   ///
   // clang-format on
-  StatusOr<google::cloud::backupdr::v1::ManagementServer>
-  GetManagementServer(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::backupdr::v1::ManagementServer> GetManagementServer(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -214,8 +217,9 @@ class BackupDRClient {
   /// [google.cloud.backupdr.v1.ManagementServer]: @googleapis_reference_link{google/cloud/backupdr/v1/backupdr.proto#L143}
   ///
   // clang-format on
-  StatusOr<google::cloud::backupdr::v1::ManagementServer>
-  GetManagementServer(google::cloud::backupdr::v1::GetManagementServerRequest const& request, Options opts = {});
+  StatusOr<google::cloud::backupdr::v1::ManagementServer> GetManagementServer(
+      google::cloud::backupdr::v1::GetManagementServerRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -253,7 +257,10 @@ class BackupDRClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>
-  CreateManagementServer(std::string const& parent, google::cloud::backupdr::v1::ManagementServer const& management_server, std::string const& management_server_id, Options opts = {});
+  CreateManagementServer(
+      std::string const& parent,
+      google::cloud::backupdr::v1::ManagementServer const& management_server,
+      std::string const& management_server_id, Options opts = {});
 
   // clang-format off
   ///
@@ -290,7 +297,9 @@ class BackupDRClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>
-  CreateManagementServer(google::cloud::backupdr::v1::CreateManagementServerRequest const& request, Options opts = {});
+  CreateManagementServer(
+      google::cloud::backupdr::v1::CreateManagementServerRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -359,7 +368,9 @@ class BackupDRClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
-  DeleteManagementServer(google::cloud::backupdr::v1::DeleteManagementServerRequest const& request, Options opts = {});
+  DeleteManagementServer(
+      google::cloud::backupdr::v1::DeleteManagementServerRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<BackupDRConnection> connection_;

@@ -42,85 +42,117 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockDatasetServiceConnection : public aiplatform_v1::DatasetServiceConnection {
+class MockDatasetServiceConnection
+    : public aiplatform_v1::DatasetServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Dataset>>,
-  CreateDataset,
-  (google::cloud::aiplatform::v1::CreateDatasetRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::Dataset>>, CreateDataset,
+      (google::cloud::aiplatform::v1::CreateDatasetRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Dataset>,
-  GetDataset,
-  (google::cloud::aiplatform::v1::GetDatasetRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Dataset>, GetDataset,
+              (google::cloud::aiplatform::v1::GetDatasetRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Dataset>,
-  UpdateDataset,
-  (google::cloud::aiplatform::v1::UpdateDatasetRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::Dataset>, UpdateDataset,
+      (google::cloud::aiplatform::v1::UpdateDatasetRequest const& request),
+      (override));
 
   MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Dataset>),
-  ListDatasets,
-  (google::cloud::aiplatform::v1::ListDatasetsRequest request), (override));
+              ListDatasets,
+              (google::cloud::aiplatform::v1::ListDatasetsRequest request),
+              (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-  DeleteDataset,
-  (google::cloud::aiplatform::v1::DeleteDatasetRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteDataset,
+      (google::cloud::aiplatform::v1::DeleteDatasetRequest const& request),
+      (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>,
-  ImportData,
-  (google::cloud::aiplatform::v1::ImportDataRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>,
+      ImportData,
+      (google::cloud::aiplatform::v1::ImportDataRequest const& request),
+      (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>,
-  ExportData,
-  (google::cloud::aiplatform::v1::ExportDataRequest const& request), (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>,
-  CreateDatasetVersion,
-  (google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::DatasetVersion>,
-  UpdateDatasetVersion,
-  (google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request), (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-  DeleteDatasetVersion,
-  (google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::DatasetVersion>,
-  GetDatasetVersion,
-  (google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request), (override));
-
-  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::DatasetVersion>),
-  ListDatasetVersions,
-  (google::cloud::aiplatform::v1::ListDatasetVersionsRequest request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>,
+      ExportData,
+      (google::cloud::aiplatform::v1::ExportDataRequest const& request),
+      (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>,
-  RestoreDatasetVersion,
-  (google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const& request), (override));
+              CreateDatasetVersion,
+              (google::cloud::aiplatform::v1::CreateDatasetVersionRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::DatasetVersion>,
+              UpdateDatasetVersion,
+              (google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteDatasetVersion,
+      (google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::DatasetVersion>,
+      GetDatasetVersion,
+      (google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::aiplatform::v1::DatasetVersion>),
+      ListDatasetVersions,
+      (google::cloud::aiplatform::v1::ListDatasetVersionsRequest request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>,
+      RestoreDatasetVersion,
+      (google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
+           request),
+      (override));
 
   MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::DataItem>),
-  ListDataItems,
-  (google::cloud::aiplatform::v1::ListDataItemsRequest request), (override));
+              ListDataItems,
+              (google::cloud::aiplatform::v1::ListDataItemsRequest request),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::DataItemView>),
-  SearchDataItems,
-  (google::cloud::aiplatform::v1::SearchDataItemsRequest request), (override));
+              SearchDataItems,
+              (google::cloud::aiplatform::v1::SearchDataItemsRequest request),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::SavedQuery>),
-  ListSavedQueries,
-  (google::cloud::aiplatform::v1::ListSavedQueriesRequest request), (override));
+              ListSavedQueries,
+              (google::cloud::aiplatform::v1::ListSavedQueriesRequest request),
+              (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-  DeleteSavedQuery,
-  (google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteSavedQuery,
+      (google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>,
-  GetAnnotationSpec,
-  (google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>,
+      GetAnnotationSpec,
+      (google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request),
+      (override));
 
   MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Annotation>),
-  ListAnnotations,
-  (google::cloud::aiplatform::v1::ListAnnotationsRequest request), (override));
+              ListAnnotations,
+              (google::cloud::aiplatform::v1::ListAnnotationsRequest request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

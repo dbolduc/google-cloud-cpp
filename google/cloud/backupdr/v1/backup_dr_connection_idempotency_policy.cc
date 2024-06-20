@@ -26,31 +26,36 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-BackupDRConnectionIdempotencyPolicy::~BackupDRConnectionIdempotencyPolicy() = default;
+BackupDRConnectionIdempotencyPolicy::~BackupDRConnectionIdempotencyPolicy() =
+    default;
 
 std::unique_ptr<BackupDRConnectionIdempotencyPolicy>
 BackupDRConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<BackupDRConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::ListManagementServers(google::cloud::backupdr::v1::ListManagementServersRequest) {  // NOLINT
+Idempotency BackupDRConnectionIdempotencyPolicy::ListManagementServers(
+    google::cloud::backupdr::v1::ListManagementServersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::GetManagementServer(google::cloud::backupdr::v1::GetManagementServerRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::GetManagementServer(
+    google::cloud::backupdr::v1::GetManagementServerRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::CreateManagementServer(google::cloud::backupdr::v1::CreateManagementServerRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::CreateManagementServer(
+    google::cloud::backupdr::v1::CreateManagementServerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::DeleteManagementServer(google::cloud::backupdr::v1::DeleteManagementServerRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::DeleteManagementServer(
+    google::cloud::backupdr::v1::DeleteManagementServerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<BackupDRConnectionIdempotencyPolicy>
-    MakeDefaultBackupDRConnectionIdempotencyPolicy() {
+MakeDefaultBackupDRConnectionIdempotencyPolicy() {
   return std::make_unique<BackupDRConnectionIdempotencyPolicy>();
 }
 

@@ -31,34 +31,41 @@ FeatureOnlineStoreServiceTracingStub::FeatureOnlineStoreServiceTracingStub(
     std::shared_ptr<FeatureOnlineStoreServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse> FeatureOnlineStoreServiceTracingStub::FetchFeatureValues(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>
+FeatureOnlineStoreServiceTracingStub::FetchFeatureValues(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeatureOnlineStoreService", "FetchFeatureValues");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.FeatureOnlineStoreService",
+      "FetchFeatureValues");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->FetchFeatureValues(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->FetchFeatureValues(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse> FeatureOnlineStoreServiceTracingStub::SearchNearestEntities(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeatureOnlineStoreService", "SearchNearestEntities");
+StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
+FeatureOnlineStoreServiceTracingStub::SearchNearestEntities(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.FeatureOnlineStoreService",
+      "SearchNearestEntities");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->SearchNearestEntities(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->SearchNearestEntities(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<FeatureOnlineStoreServiceStub> MakeFeatureOnlineStoreServiceTracingStub(
+std::shared_ptr<FeatureOnlineStoreServiceStub>
+MakeFeatureOnlineStoreServiceTracingStub(
     std::shared_ptr<FeatureOnlineStoreServiceStub> stub) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-  return std::make_shared<FeatureOnlineStoreServiceTracingStub>(std::move(stub));
+  return std::make_shared<FeatureOnlineStoreServiceTracingStub>(
+      std::move(stub));
 #else
   return stub;
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

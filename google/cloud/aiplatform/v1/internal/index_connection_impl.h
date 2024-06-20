@@ -46,32 +46,37 @@ class IndexServiceConnectionImpl
   ~IndexServiceConnectionImpl() override = default;
 
   IndexServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<aiplatform_v1_internal::IndexServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<aiplatform_v1_internal::IndexServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  future<StatusOr<google::cloud::aiplatform::v1::Index>>
-  CreateIndex(google::cloud::aiplatform::v1::CreateIndexRequest const& request) override;
+  future<StatusOr<google::cloud::aiplatform::v1::Index>> CreateIndex(
+      google::cloud::aiplatform::v1::CreateIndexRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::Index>
-  GetIndex(google::cloud::aiplatform::v1::GetIndexRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::Index> GetIndex(
+      google::cloud::aiplatform::v1::GetIndexRequest const& request) override;
 
-  StreamRange<google::cloud::aiplatform::v1::Index>
-  ListIndexes(google::cloud::aiplatform::v1::ListIndexesRequest request) override;
+  StreamRange<google::cloud::aiplatform::v1::Index> ListIndexes(
+      google::cloud::aiplatform::v1::ListIndexesRequest request) override;
 
-  future<StatusOr<google::cloud::aiplatform::v1::Index>>
-  UpdateIndex(google::cloud::aiplatform::v1::UpdateIndexRequest const& request) override;
+  future<StatusOr<google::cloud::aiplatform::v1::Index>> UpdateIndex(
+      google::cloud::aiplatform::v1::UpdateIndexRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteIndex(google::cloud::aiplatform::v1::DeleteIndexRequest const& request) override;
+  DeleteIndex(google::cloud::aiplatform::v1::DeleteIndexRequest const& request)
+      override;
 
   StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>
-  UpsertDatapoints(google::cloud::aiplatform::v1::UpsertDatapointsRequest const& request) override;
+  UpsertDatapoints(google::cloud::aiplatform::v1::UpsertDatapointsRequest const&
+                       request) override;
 
   StatusOr<google::cloud::aiplatform::v1::RemoveDatapointsResponse>
-  RemoveDatapoints(google::cloud::aiplatform::v1::RemoveDatapointsRequest const& request) override;
+  RemoveDatapoints(google::cloud::aiplatform::v1::RemoveDatapointsRequest const&
+                       request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

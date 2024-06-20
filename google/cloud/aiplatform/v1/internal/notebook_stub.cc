@@ -33,116 +33,130 @@ NotebookServiceStub::~NotebookServiceStub() = default;
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNotebookServiceStub::AsyncCreateNotebookRuntimeTemplate(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const& request,
+             google::cloud::aiplatform::v1::
+                 CreateNotebookRuntimeTemplateRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncCreateNotebookRuntimeTemplate(context, request, cq);
+        return grpc_stub_->AsyncCreateNotebookRuntimeTemplate(context, request,
+                                                              cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultNotebookServiceStub::CreateNotebookRuntimeTemplate(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateNotebookRuntimeTemplate(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateNotebookRuntimeTemplate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
 DefaultNotebookServiceStub::GetNotebookRuntimeTemplate(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::GetNotebookRuntimeTemplateRequest const& request) {
-    google::cloud::aiplatform::v1::NotebookRuntimeTemplate response;
-    auto status =
-        grpc_stub_->GetNotebookRuntimeTemplate(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::GetNotebookRuntimeTemplateRequest const&
+        request) {
+  google::cloud::aiplatform::v1::NotebookRuntimeTemplate response;
+  auto status =
+      grpc_stub_->GetNotebookRuntimeTemplate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesResponse>
 DefaultNotebookServiceStub::ListNotebookRuntimeTemplates(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesRequest const& request) {
-    google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesResponse response;
-    auto status =
-        grpc_stub_->ListNotebookRuntimeTemplates(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesRequest const&
+        request) {
+  google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesResponse response;
+  auto status =
+      grpc_stub_->ListNotebookRuntimeTemplates(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNotebookServiceStub::AsyncDeleteNotebookRuntimeTemplate(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const& request,
+             google::cloud::aiplatform::v1::
+                 DeleteNotebookRuntimeTemplateRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncDeleteNotebookRuntimeTemplate(context, request, cq);
+        return grpc_stub_->AsyncDeleteNotebookRuntimeTemplate(context, request,
+                                                              cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultNotebookServiceStub::DeleteNotebookRuntimeTemplate(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteNotebookRuntimeTemplate(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteNotebookRuntimeTemplate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
 DefaultNotebookServiceStub::UpdateNotebookRuntimeTemplate(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const& request) {
-    google::cloud::aiplatform::v1::NotebookRuntimeTemplate response;
-    auto status =
-        grpc_stub_->UpdateNotebookRuntimeTemplate(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const&
+        request) {
+  google::cloud::aiplatform::v1::NotebookRuntimeTemplate response;
+  auto status =
+      grpc_stub_->UpdateNotebookRuntimeTemplate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNotebookServiceStub::AsyncAssignNotebookRuntime(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const& request,
+             google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncAssignNotebookRuntime(context, request, cq);
       },
@@ -151,55 +165,55 @@ DefaultNotebookServiceStub::AsyncAssignNotebookRuntime(
 
 StatusOr<google::longrunning::Operation>
 DefaultNotebookServiceStub::AssignNotebookRuntime(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->AssignNotebookRuntime(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->AssignNotebookRuntime(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>
 DefaultNotebookServiceStub::GetNotebookRuntime(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::GetNotebookRuntimeRequest const& request) {
-    google::cloud::aiplatform::v1::NotebookRuntime response;
-    auto status =
-        grpc_stub_->GetNotebookRuntime(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::GetNotebookRuntimeRequest const& request) {
+  google::cloud::aiplatform::v1::NotebookRuntime response;
+  auto status = grpc_stub_->GetNotebookRuntime(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListNotebookRuntimesResponse>
 DefaultNotebookServiceStub::ListNotebookRuntimes(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::ListNotebookRuntimesRequest const& request) {
-    google::cloud::aiplatform::v1::ListNotebookRuntimesResponse response;
-    auto status =
-        grpc_stub_->ListNotebookRuntimes(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::ListNotebookRuntimesRequest const& request) {
+  google::cloud::aiplatform::v1::ListNotebookRuntimesResponse response;
+  auto status = grpc_stub_->ListNotebookRuntimes(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNotebookServiceStub::AsyncDeleteNotebookRuntime(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const& request,
+             google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteNotebookRuntime(context, request, cq);
       },
@@ -208,29 +222,31 @@ DefaultNotebookServiceStub::AsyncDeleteNotebookRuntime(
 
 StatusOr<google::longrunning::Operation>
 DefaultNotebookServiceStub::DeleteNotebookRuntime(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteNotebookRuntime(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteNotebookRuntime(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNotebookServiceStub::AsyncUpgradeNotebookRuntime(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const& request,
+             google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpgradeNotebookRuntime(context, request, cq);
       },
@@ -239,29 +255,31 @@ DefaultNotebookServiceStub::AsyncUpgradeNotebookRuntime(
 
 StatusOr<google::longrunning::Operation>
 DefaultNotebookServiceStub::UpgradeNotebookRuntime(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpgradeNotebookRuntime(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpgradeNotebookRuntime(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNotebookServiceStub::AsyncStartNotebookRuntime(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::StartNotebookRuntimeRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::StartNotebookRuntimeRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request,
+             google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncStartNotebookRuntime(context, request, cq);
       },
@@ -270,16 +288,14 @@ DefaultNotebookServiceStub::AsyncStartNotebookRuntime(
 
 StatusOr<google::longrunning::Operation>
 DefaultNotebookServiceStub::StartNotebookRuntime(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->StartNotebookRuntime(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->StartNotebookRuntime(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -308,13 +324,13 @@ future<Status> DefaultNotebookServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_->AsyncCancelOperation(context, request, cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

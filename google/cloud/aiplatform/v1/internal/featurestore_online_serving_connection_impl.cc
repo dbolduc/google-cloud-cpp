@@ -35,70 +35,94 @@ namespace {
 
 std::unique_ptr<aiplatform_v1::FeaturestoreOnlineServingServiceRetryPolicy>
 retry_policy(Options const& options) {
-  return options.get<aiplatform_v1::FeaturestoreOnlineServingServiceRetryPolicyOption>()->clone();
+  return options
+      .get<aiplatform_v1::FeaturestoreOnlineServingServiceRetryPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<aiplatform_v1::FeaturestoreOnlineServingServiceBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<aiplatform_v1::FeaturestoreOnlineServingServiceBackoffPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<aiplatform_v1::FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy>
+std::unique_ptr<
+    aiplatform_v1::FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<aiplatform_v1::FeaturestoreOnlineServingServiceConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<
+          aiplatform_v1::
+              FeaturestoreOnlineServingServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 void FeaturestoreOnlineServingServiceStreamingReadFeatureValuesStreamingUpdater(
     google::cloud::aiplatform::v1::ReadFeatureValuesResponse const&,
     google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest&) {}
 
-FeaturestoreOnlineServingServiceConnectionImpl::FeaturestoreOnlineServingServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<aiplatform_v1_internal::FeaturestoreOnlineServingServiceStub> stub,
-    Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        FeaturestoreOnlineServingServiceConnection::options())) {}
+FeaturestoreOnlineServingServiceConnectionImpl::
+    FeaturestoreOnlineServingServiceConnectionImpl(
+        std::unique_ptr<google::cloud::BackgroundThreads> background,
+        std::shared_ptr<
+            aiplatform_v1_internal::FeaturestoreOnlineServingServiceStub>
+            stub,
+        Options options)
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options),
+          FeaturestoreOnlineServingServiceConnection::options())) {}
 
 StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
-FeaturestoreOnlineServingServiceConnectionImpl::ReadFeatureValues(google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) {
+FeaturestoreOnlineServingServiceConnectionImpl::ReadFeatureValues(
+    google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ReadFeatureValues(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) {
+             google::cloud::aiplatform::v1::ReadFeatureValuesRequest const&
+                 request) {
         return stub_->ReadFeatureValues(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
-FeaturestoreOnlineServingServiceConnectionImpl::StreamingReadFeatureValues(google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const& request) {
+FeaturestoreOnlineServingServiceConnectionImpl::StreamingReadFeatureValues(
+    google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto factory = [stub = stub_, current](google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const& request) {
+  auto factory = [stub = stub_, current](
+                     google::cloud::aiplatform::v1::
+                         StreamingReadFeatureValuesRequest const& request) {
     return stub->StreamingReadFeatureValues(
         std::make_shared<grpc::ClientContext>(), *current, request);
   };
-  auto resumable =
-      internal::MakeResumableStreamingReadRpc<google::cloud::aiplatform::v1::ReadFeatureValuesResponse, google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest>(
-          retry_policy(*current), backoff_policy(*current), factory,
-          FeaturestoreOnlineServingServiceStreamingReadFeatureValuesStreamingUpdater, request);
-  return internal::MakeStreamRange(internal::StreamReader<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>(
-      [resumable] { return resumable->Read(); }));
+  auto resumable = internal::MakeResumableStreamingReadRpc<
+      google::cloud::aiplatform::v1::ReadFeatureValuesResponse,
+      google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest>(
+      retry_policy(*current), backoff_policy(*current), factory,
+      FeaturestoreOnlineServingServiceStreamingReadFeatureValuesStreamingUpdater,
+      request);
+  return internal::MakeStreamRange(
+      internal::StreamReader<
+          google::cloud::aiplatform::v1::ReadFeatureValuesResponse>(
+          [resumable] { return resumable->Read(); }));
 }
 
 StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
-FeaturestoreOnlineServingServiceConnectionImpl::WriteFeatureValues(google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) {
+FeaturestoreOnlineServingServiceConnectionImpl::WriteFeatureValues(
+    google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->WriteFeatureValues(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) {
+             google::cloud::aiplatform::v1::WriteFeatureValuesRequest const&
+                 request) {
         return stub_->WriteFeatureValues(context, options, request);
       },
       *current, request, __func__);

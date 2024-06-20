@@ -61,23 +61,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ModelGardenServiceClient {
  public:
-  explicit ModelGardenServiceClient(std::shared_ptr<ModelGardenServiceConnection> connection, Options opts = {});
+  explicit ModelGardenServiceClient(
+      std::shared_ptr<ModelGardenServiceConnection> connection,
+      Options opts = {});
   ~ModelGardenServiceClient();
 
   ///@{
   /// @name Copy and move support
   ModelGardenServiceClient(ModelGardenServiceClient const&) = default;
-  ModelGardenServiceClient& operator=(ModelGardenServiceClient const&) = default;
+  ModelGardenServiceClient& operator=(ModelGardenServiceClient const&) =
+      default;
   ModelGardenServiceClient(ModelGardenServiceClient&&) = default;
   ModelGardenServiceClient& operator=(ModelGardenServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(ModelGardenServiceClient const& a, ModelGardenServiceClient const& b) {
+  friend bool operator==(ModelGardenServiceClient const& a,
+                         ModelGardenServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ModelGardenServiceClient const& a, ModelGardenServiceClient const& b) {
+  friend bool operator!=(ModelGardenServiceClient const& a,
+                         ModelGardenServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -106,8 +111,8 @@ class ModelGardenServiceClient {
   /// [google.cloud.aiplatform.v1.PublisherModel]: @googleapis_reference_link{google/cloud/aiplatform/v1/publisher_model.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::PublisherModel>
-  GetPublisherModel(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::PublisherModel> GetPublisherModel(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -136,8 +141,9 @@ class ModelGardenServiceClient {
   /// [google.cloud.aiplatform.v1.PublisherModel]: @googleapis_reference_link{google/cloud/aiplatform/v1/publisher_model.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::PublisherModel>
-  GetPublisherModel(google::cloud::aiplatform::v1::GetPublisherModelRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::PublisherModel> GetPublisherModel(
+      google::cloud::aiplatform::v1::GetPublisherModelRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ModelGardenServiceConnection> connection_;

@@ -42,37 +42,46 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockIndexServiceConnection : public aiplatform_v1::IndexServiceConnection {
+class MockIndexServiceConnection
+    : public aiplatform_v1::IndexServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Index>>,
-  CreateIndex,
-  (google::cloud::aiplatform::v1::CreateIndexRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::Index>>, CreateIndex,
+      (google::cloud::aiplatform::v1::CreateIndexRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Index>,
-  GetIndex,
-  (google::cloud::aiplatform::v1::GetIndexRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Index>, GetIndex,
+              (google::cloud::aiplatform::v1::GetIndexRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Index>),
-  ListIndexes,
-  (google::cloud::aiplatform::v1::ListIndexesRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Index>), ListIndexes,
+              (google::cloud::aiplatform::v1::ListIndexesRequest request),
+              (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Index>>,
-  UpdateIndex,
-  (google::cloud::aiplatform::v1::UpdateIndexRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::Index>>, UpdateIndex,
+      (google::cloud::aiplatform::v1::UpdateIndexRequest const& request),
+      (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-  DeleteIndex,
-  (google::cloud::aiplatform::v1::DeleteIndexRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteIndex,
+      (google::cloud::aiplatform::v1::DeleteIndexRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>,
-  UpsertDatapoints,
-  (google::cloud::aiplatform::v1::UpsertDatapointsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>,
+      UpsertDatapoints,
+      (google::cloud::aiplatform::v1::UpsertDatapointsRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::RemoveDatapointsResponse>,
-  RemoveDatapoints,
-  (google::cloud::aiplatform::v1::RemoveDatapointsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::RemoveDatapointsResponse>,
+      RemoveDatapoints,
+      (google::cloud::aiplatform::v1::RemoveDatapointsRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

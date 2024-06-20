@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `AppGatewaysServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `AppGatewaysServiceClient`. To do so,
- * construct an object of type `AppGatewaysServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * including errors, from an object of type `AppGatewaysServiceClient`. To do
+ * so, construct an object of type `AppGatewaysServiceClient` with an instance
+ * of this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,25 +42,38 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockAppGatewaysServiceConnection : public beyondcorp_appgateways_v1::AppGatewaysServiceConnection {
+class MockAppGatewaysServiceConnection
+    : public beyondcorp_appgateways_v1::AppGatewaysServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::beyondcorp::appgateways::v1::AppGateway>),
-  ListAppGateways,
-  (google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::beyondcorp::appgateways::v1::AppGateway>),
+      ListAppGateways,
+      (google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>,
-  GetAppGateway,
-  (google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>,
+      GetAppGateway,
+      (google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>,
-  CreateAppGateway,
-  (google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>,
+      CreateAppGateway,
+      (google::cloud::beyondcorp::appgateways::v1::
+           CreateAppGatewayRequest const& request),
+      (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>,
-  DeleteAppGateway,
-  (google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const& request), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appgateways::v1::
+                                  AppGatewayOperationMetadata>>,
+              DeleteAppGateway,
+              (google::cloud::beyondcorp::appgateways::v1::
+                   DeleteAppGatewayRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -34,17 +34,19 @@ class FeatureOnlineStoreServiceConnectionIdempotencyPolicy {
   virtual ~FeatureOnlineStoreServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<FeatureOnlineStoreServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<FeatureOnlineStoreServiceConnectionIdempotencyPolicy>
+  clone() const;
 
-  virtual google::cloud::Idempotency
-  FetchFeatureValues(google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request);
+  virtual google::cloud::Idempotency FetchFeatureValues(
+      google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SearchNearestEntities(google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const& request);
+  virtual google::cloud::Idempotency SearchNearestEntities(
+      google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
+          request);
 };
 
 std::unique_ptr<FeatureOnlineStoreServiceConnectionIdempotencyPolicy>
-    MakeDefaultFeatureOnlineStoreServiceConnectionIdempotencyPolicy();
+MakeDefaultFeatureOnlineStoreServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

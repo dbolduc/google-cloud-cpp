@@ -34,65 +34,71 @@ class ModelServiceConnectionIdempotencyPolicy {
   virtual ~ModelServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ModelServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<ModelServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  UploadModel(google::cloud::aiplatform::v1::UploadModelRequest const& request);
+  virtual google::cloud::Idempotency UploadModel(
+      google::cloud::aiplatform::v1::UploadModelRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetModel(google::cloud::aiplatform::v1::GetModelRequest const& request);
+  virtual google::cloud::Idempotency GetModel(
+      google::cloud::aiplatform::v1::GetModelRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListModels(google::cloud::aiplatform::v1::ListModelsRequest request);
+  virtual google::cloud::Idempotency ListModels(
+      google::cloud::aiplatform::v1::ListModelsRequest request);
 
-  virtual google::cloud::Idempotency
-  ListModelVersions(google::cloud::aiplatform::v1::ListModelVersionsRequest request);
+  virtual google::cloud::Idempotency ListModelVersions(
+      google::cloud::aiplatform::v1::ListModelVersionsRequest request);
 
-  virtual google::cloud::Idempotency
-  UpdateModel(google::cloud::aiplatform::v1::UpdateModelRequest const& request);
+  virtual google::cloud::Idempotency UpdateModel(
+      google::cloud::aiplatform::v1::UpdateModelRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateExplanationDataset(google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const& request);
+  virtual google::cloud::Idempotency UpdateExplanationDataset(
+      google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteModel(google::cloud::aiplatform::v1::DeleteModelRequest const& request);
+  virtual google::cloud::Idempotency DeleteModel(
+      google::cloud::aiplatform::v1::DeleteModelRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteModelVersion(google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request);
+  virtual google::cloud::Idempotency DeleteModelVersion(
+      google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  MergeVersionAliases(google::cloud::aiplatform::v1::MergeVersionAliasesRequest const& request);
+  virtual google::cloud::Idempotency MergeVersionAliases(
+      google::cloud::aiplatform::v1::MergeVersionAliasesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ExportModel(google::cloud::aiplatform::v1::ExportModelRequest const& request);
+  virtual google::cloud::Idempotency ExportModel(
+      google::cloud::aiplatform::v1::ExportModelRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CopyModel(google::cloud::aiplatform::v1::CopyModelRequest const& request);
+  virtual google::cloud::Idempotency CopyModel(
+      google::cloud::aiplatform::v1::CopyModelRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ImportModelEvaluation(google::cloud::aiplatform::v1::ImportModelEvaluationRequest const& request);
+  virtual google::cloud::Idempotency ImportModelEvaluation(
+      google::cloud::aiplatform::v1::ImportModelEvaluationRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  BatchImportModelEvaluationSlices(google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesRequest const& request);
+  virtual google::cloud::Idempotency BatchImportModelEvaluationSlices(
+      google::cloud::aiplatform::v1::
+          BatchImportModelEvaluationSlicesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  BatchImportEvaluatedAnnotations(google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsRequest const& request);
+  virtual google::cloud::Idempotency BatchImportEvaluatedAnnotations(
+      google::cloud::aiplatform::v1::
+          BatchImportEvaluatedAnnotationsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetModelEvaluation(google::cloud::aiplatform::v1::GetModelEvaluationRequest const& request);
+  virtual google::cloud::Idempotency GetModelEvaluation(
+      google::cloud::aiplatform::v1::GetModelEvaluationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListModelEvaluations(google::cloud::aiplatform::v1::ListModelEvaluationsRequest request);
+  virtual google::cloud::Idempotency ListModelEvaluations(
+      google::cloud::aiplatform::v1::ListModelEvaluationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetModelEvaluationSlice(google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const& request);
+  virtual google::cloud::Idempotency GetModelEvaluationSlice(
+      google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListModelEvaluationSlices(google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest request);
+  virtual google::cloud::Idempotency ListModelEvaluationSlices(
+      google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest request);
 };
 
 std::unique_ptr<ModelServiceConnectionIdempotencyPolicy>
-    MakeDefaultModelServiceConnectionIdempotencyPolicy();
+MakeDefaultModelServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

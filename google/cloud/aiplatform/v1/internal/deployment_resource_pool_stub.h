@@ -38,42 +38,49 @@ class DeploymentResourcePoolServiceStub {
  public:
   virtual ~DeploymentResourcePoolServiceStub() = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateDeploymentResourcePool(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateDeploymentResourcePool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const& request) = 0;
+      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateDeploymentResourcePool(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool> GetDeploymentResourcePool(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const& request) = 0;
+  virtual StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
+  GetDeploymentResourcePool(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::ListDeploymentResourcePoolsResponse> ListDeploymentResourcePools(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::aiplatform::v1::ListDeploymentResourcePoolsResponse>
+  ListDeploymentResourcePools(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteDeploymentResourcePool(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteDeploymentResourcePool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const& request) = 0;
+      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteDeploymentResourcePool(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -83,45 +90,54 @@ class DeploymentResourcePoolServiceStub {
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
-class DefaultDeploymentResourcePoolServiceStub : public DeploymentResourcePoolServiceStub {
+class DefaultDeploymentResourcePoolServiceStub
+    : public DeploymentResourcePoolServiceStub {
  public:
   DefaultDeploymentResourcePoolServiceStub(
-      std::unique_ptr<google::cloud::aiplatform::v1::DeploymentResourcePoolService::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations)
-      : grpc_stub_(std::move(grpc_stub)),
-        operations_(std::move(operations)) {}
+      std::unique_ptr<google::cloud::aiplatform::v1::
+                          DeploymentResourcePoolService::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations)
+      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
-  future<StatusOr<google::longrunning::Operation>> AsyncCreateDeploymentResourcePool(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateDeploymentResourcePool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const& request) override;
+      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateDeploymentResourcePool(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
+          request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool> GetDeploymentResourcePool(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
+  GetDeploymentResourcePool(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
+          request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::ListDeploymentResourcePoolsResponse> ListDeploymentResourcePools(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::ListDeploymentResourcePoolsResponse>
+  ListDeploymentResourcePools(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncDeleteDeploymentResourcePool(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteDeploymentResourcePool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const& request) override;
+      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteDeploymentResourcePool(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -136,7 +152,9 @@ class DefaultDeploymentResourcePoolServiceStub : public DeploymentResourcePoolSe
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::aiplatform::v1::DeploymentResourcePoolService::StubInterface> grpc_stub_;
+  std::unique_ptr<google::cloud::aiplatform::v1::DeploymentResourcePoolService::
+                      StubInterface>
+      grpc_stub_;
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 

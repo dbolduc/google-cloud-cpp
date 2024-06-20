@@ -31,7 +31,8 @@ namespace cloud {
 namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class FeaturestoreOnlineServingServiceMetadata : public FeaturestoreOnlineServingServiceStub {
+class FeaturestoreOnlineServingServiceMetadata
+    : public FeaturestoreOnlineServingServiceStub {
  public:
   ~FeaturestoreOnlineServingServiceMetadata() override = default;
   FeaturestoreOnlineServingServiceMetadata(
@@ -39,25 +40,27 @@ class FeaturestoreOnlineServingServiceMetadata : public FeaturestoreOnlineServin
       std::multimap<std::string, std::string> fixed_metadata,
       std::string api_client_header = "");
 
-  StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse> ReadFeatureValues(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
+  ReadFeatureValues(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request)
+      override;
 
-  std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>
   StreamingReadFeatureValues(
-      std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
-      google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const& request) override;
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse> WriteFeatureValues(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
+  WriteFeatureValues(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request)
+      override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

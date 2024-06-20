@@ -62,23 +62,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class GenAiTuningServiceClient {
  public:
-  explicit GenAiTuningServiceClient(std::shared_ptr<GenAiTuningServiceConnection> connection, Options opts = {});
+  explicit GenAiTuningServiceClient(
+      std::shared_ptr<GenAiTuningServiceConnection> connection,
+      Options opts = {});
   ~GenAiTuningServiceClient();
 
   ///@{
   /// @name Copy and move support
   GenAiTuningServiceClient(GenAiTuningServiceClient const&) = default;
-  GenAiTuningServiceClient& operator=(GenAiTuningServiceClient const&) = default;
+  GenAiTuningServiceClient& operator=(GenAiTuningServiceClient const&) =
+      default;
   GenAiTuningServiceClient(GenAiTuningServiceClient&&) = default;
   GenAiTuningServiceClient& operator=(GenAiTuningServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(GenAiTuningServiceClient const& a, GenAiTuningServiceClient const& b) {
+  friend bool operator==(GenAiTuningServiceClient const& a,
+                         GenAiTuningServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(GenAiTuningServiceClient const& a, GenAiTuningServiceClient const& b) {
+  friend bool operator!=(GenAiTuningServiceClient const& a,
+                         GenAiTuningServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -108,8 +113,10 @@ class GenAiTuningServiceClient {
   /// [google.cloud.aiplatform.v1.TuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::TuningJob>
-  CreateTuningJob(std::string const& parent, google::cloud::aiplatform::v1::TuningJob const& tuning_job, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::TuningJob> CreateTuningJob(
+      std::string const& parent,
+      google::cloud::aiplatform::v1::TuningJob const& tuning_job,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -139,8 +146,9 @@ class GenAiTuningServiceClient {
   /// [google.cloud.aiplatform.v1.TuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::TuningJob>
-  CreateTuningJob(google::cloud::aiplatform::v1::CreateTuningJobRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::TuningJob> CreateTuningJob(
+      google::cloud::aiplatform::v1::CreateTuningJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -165,8 +173,8 @@ class GenAiTuningServiceClient {
   /// [google.cloud.aiplatform.v1.TuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::TuningJob>
-  GetTuningJob(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::TuningJob> GetTuningJob(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -195,8 +203,9 @@ class GenAiTuningServiceClient {
   /// [google.cloud.aiplatform.v1.TuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::TuningJob>
-  GetTuningJob(google::cloud::aiplatform::v1::GetTuningJobRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::TuningJob> GetTuningJob(
+      google::cloud::aiplatform::v1::GetTuningJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -230,8 +239,8 @@ class GenAiTuningServiceClient {
   /// [google.cloud.aiplatform.v1.TuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L36}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::TuningJob>
-  ListTuningJobs(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::TuningJob> ListTuningJobs(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -269,8 +278,9 @@ class GenAiTuningServiceClient {
   /// [google.cloud.aiplatform.v1.TuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L36}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::TuningJob>
-  ListTuningJobs(google::cloud::aiplatform::v1::ListTuningJobsRequest request, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::TuningJob> ListTuningJobs(
+      google::cloud::aiplatform::v1::ListTuningJobsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -307,8 +317,7 @@ class GenAiTuningServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelTuningJob(std::string const& name, Options opts = {});
+  Status CancelTuningJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -349,8 +358,9 @@ class GenAiTuningServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelTuningJob(google::cloud::aiplatform::v1::CancelTuningJobRequest const& request, Options opts = {});
+  Status CancelTuningJob(
+      google::cloud::aiplatform::v1::CancelTuningJobRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<GenAiTuningServiceConnection> connection_;

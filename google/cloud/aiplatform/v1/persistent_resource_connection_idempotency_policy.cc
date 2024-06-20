@@ -26,40 +26,55 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-PersistentResourceServiceConnectionIdempotencyPolicy::~PersistentResourceServiceConnectionIdempotencyPolicy() = default;
+PersistentResourceServiceConnectionIdempotencyPolicy::
+    ~PersistentResourceServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<PersistentResourceServiceConnectionIdempotencyPolicy>
 PersistentResourceServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<PersistentResourceServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<PersistentResourceServiceConnectionIdempotencyPolicy>(
+      *this);
 }
 
-Idempotency PersistentResourceServiceConnectionIdempotencyPolicy::CreatePersistentResource(google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&) {
+Idempotency
+PersistentResourceServiceConnectionIdempotencyPolicy::CreatePersistentResource(
+    google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PersistentResourceServiceConnectionIdempotencyPolicy::GetPersistentResource(google::cloud::aiplatform::v1::GetPersistentResourceRequest const&) {
+Idempotency
+PersistentResourceServiceConnectionIdempotencyPolicy::GetPersistentResource(
+    google::cloud::aiplatform::v1::GetPersistentResourceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency PersistentResourceServiceConnectionIdempotencyPolicy::ListPersistentResources(google::cloud::aiplatform::v1::ListPersistentResourcesRequest) {  // NOLINT
+Idempotency
+PersistentResourceServiceConnectionIdempotencyPolicy::ListPersistentResources(
+    google::cloud::aiplatform::v1::ListPersistentResourcesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency PersistentResourceServiceConnectionIdempotencyPolicy::DeletePersistentResource(google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&) {
+Idempotency
+PersistentResourceServiceConnectionIdempotencyPolicy::DeletePersistentResource(
+    google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PersistentResourceServiceConnectionIdempotencyPolicy::UpdatePersistentResource(google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&) {
+Idempotency
+PersistentResourceServiceConnectionIdempotencyPolicy::UpdatePersistentResource(
+    google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PersistentResourceServiceConnectionIdempotencyPolicy::RebootPersistentResource(google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&) {
+Idempotency
+PersistentResourceServiceConnectionIdempotencyPolicy::RebootPersistentResource(
+    google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<PersistentResourceServiceConnectionIdempotencyPolicy>
-    MakeDefaultPersistentResourceServiceConnectionIdempotencyPolicy() {
-  return std::make_unique<PersistentResourceServiceConnectionIdempotencyPolicy>();
+MakeDefaultPersistentResourceServiceConnectionIdempotencyPolicy() {
+  return std::make_unique<
+      PersistentResourceServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

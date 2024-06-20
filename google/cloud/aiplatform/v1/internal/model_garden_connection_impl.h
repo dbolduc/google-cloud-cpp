@@ -42,14 +42,15 @@ class ModelGardenServiceConnectionImpl
   ~ModelGardenServiceConnectionImpl() override = default;
 
   ModelGardenServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<aiplatform_v1_internal::ModelGardenServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<aiplatform_v1_internal::ModelGardenServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::aiplatform::v1::PublisherModel>
-  GetPublisherModel(google::cloud::aiplatform::v1::GetPublisherModelRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::PublisherModel> GetPublisherModel(
+      google::cloud::aiplatform::v1::GetPublisherModelRequest const& request)
+      override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -43,23 +43,26 @@ class GenAiTuningServiceConnectionImpl
   ~GenAiTuningServiceConnectionImpl() override = default;
 
   GenAiTuningServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<aiplatform_v1_internal::GenAiTuningServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<aiplatform_v1_internal::GenAiTuningServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::aiplatform::v1::TuningJob>
-  CreateTuningJob(google::cloud::aiplatform::v1::CreateTuningJobRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::TuningJob> CreateTuningJob(
+      google::cloud::aiplatform::v1::CreateTuningJobRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::TuningJob>
-  GetTuningJob(google::cloud::aiplatform::v1::GetTuningJobRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::TuningJob> GetTuningJob(
+      google::cloud::aiplatform::v1::GetTuningJobRequest const& request)
+      override;
 
-  StreamRange<google::cloud::aiplatform::v1::TuningJob>
-  ListTuningJobs(google::cloud::aiplatform::v1::ListTuningJobsRequest request) override;
+  StreamRange<google::cloud::aiplatform::v1::TuningJob> ListTuningJobs(
+      google::cloud::aiplatform::v1::ListTuningJobsRequest request) override;
 
-  Status
-  CancelTuningJob(google::cloud::aiplatform::v1::CancelTuningJobRequest const& request) override;
+  Status CancelTuningJob(
+      google::cloud::aiplatform::v1::CancelTuningJobRequest const& request)
+      override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

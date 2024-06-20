@@ -44,33 +44,36 @@ FeatureOnlineStoreServiceMetadata::FeatureOnlineStoreServiceMetadata(
 
 StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>
 FeatureOnlineStoreServiceMetadata::FetchFeatureValues(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("feature_view=", internal::UrlEncode(request.feature_view())));
+  SetMetadata(context, options,
+              absl::StrCat("feature_view=",
+                           internal::UrlEncode(request.feature_view())));
   return child_->FetchFeatureValues(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
 FeatureOnlineStoreServiceMetadata::SearchNearestEntities(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("feature_view=", internal::UrlEncode(request.feature_view())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("feature_view=",
+                           internal::UrlEncode(request.feature_view())));
   return child_->SearchNearestEntities(context, options, request);
 }
 
-void FeatureOnlineStoreServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+void FeatureOnlineStoreServiceMetadata::SetMetadata(
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
-void FeatureOnlineStoreServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+void FeatureOnlineStoreServiceMetadata::SetMetadata(
+    grpc::ClientContext& context, Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

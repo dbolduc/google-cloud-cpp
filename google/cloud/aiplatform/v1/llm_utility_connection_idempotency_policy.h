@@ -34,17 +34,18 @@ class LlmUtilityServiceConnectionIdempotencyPolicy {
   virtual ~LlmUtilityServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<LlmUtilityServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<LlmUtilityServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  CountTokens(google::cloud::aiplatform::v1::CountTokensRequest const& request);
+  virtual google::cloud::Idempotency CountTokens(
+      google::cloud::aiplatform::v1::CountTokensRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ComputeTokens(google::cloud::aiplatform::v1::ComputeTokensRequest const& request);
+  virtual google::cloud::Idempotency ComputeTokens(
+      google::cloud::aiplatform::v1::ComputeTokensRequest const& request);
 };
 
 std::unique_ptr<LlmUtilityServiceConnectionIdempotencyPolicy>
-    MakeDefaultLlmUtilityServiceConnectionIdempotencyPolicy();
+MakeDefaultLlmUtilityServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

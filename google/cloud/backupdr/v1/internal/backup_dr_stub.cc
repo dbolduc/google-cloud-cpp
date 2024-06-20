@@ -33,41 +33,41 @@ BackupDRStub::~BackupDRStub() = default;
 
 StatusOr<google::cloud::backupdr::v1::ListManagementServersResponse>
 DefaultBackupDRStub::ListManagementServers(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::backupdr::v1::ListManagementServersRequest const& request) {
-    google::cloud::backupdr::v1::ListManagementServersResponse response;
-    auto status =
-        grpc_stub_->ListManagementServers(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::backupdr::v1::ListManagementServersRequest const& request) {
+  google::cloud::backupdr::v1::ListManagementServersResponse response;
+  auto status = grpc_stub_->ListManagementServers(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::backupdr::v1::ManagementServer>
 DefaultBackupDRStub::GetManagementServer(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::backupdr::v1::GetManagementServerRequest const& request) {
-    google::cloud::backupdr::v1::ManagementServer response;
-    auto status =
-        grpc_stub_->GetManagementServer(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::backupdr::v1::GetManagementServerRequest const& request) {
+  google::cloud::backupdr::v1::ManagementServer response;
+  auto status = grpc_stub_->GetManagementServer(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultBackupDRStub::AsyncCreateManagementServer(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::backupdr::v1::CreateManagementServerRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::backupdr::v1::CreateManagementServerRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::backupdr::v1::CreateManagementServerRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::backupdr::v1::CreateManagementServerRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::backupdr::v1::CreateManagementServerRequest const& request,
+             google::cloud::backupdr::v1::CreateManagementServerRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateManagementServer(context, request, cq);
       },
@@ -76,29 +76,30 @@ DefaultBackupDRStub::AsyncCreateManagementServer(
 
 StatusOr<google::longrunning::Operation>
 DefaultBackupDRStub::CreateManagementServer(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::backupdr::v1::CreateManagementServerRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateManagementServer(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::backupdr::v1::CreateManagementServerRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateManagementServer(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultBackupDRStub::AsyncDeleteManagementServer(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::backupdr::v1::DeleteManagementServerRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::backupdr::v1::DeleteManagementServerRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::backupdr::v1::DeleteManagementServerRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::backupdr::v1::DeleteManagementServerRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::backupdr::v1::DeleteManagementServerRequest const& request,
+             google::cloud::backupdr::v1::DeleteManagementServerRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteManagementServer(context, request, cq);
       },
@@ -107,16 +108,15 @@ DefaultBackupDRStub::AsyncDeleteManagementServer(
 
 StatusOr<google::longrunning::Operation>
 DefaultBackupDRStub::DeleteManagementServer(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::backupdr::v1::DeleteManagementServerRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteManagementServer(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::backupdr::v1::DeleteManagementServerRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteManagementServer(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -145,13 +145,13 @@ future<Status> DefaultBackupDRStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_->AsyncCancelOperation(context, request, cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

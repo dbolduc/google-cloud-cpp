@@ -33,8 +33,10 @@ ModelGardenServiceTracingConnection::ModelGardenServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::aiplatform::v1::PublisherModel>
-ModelGardenServiceTracingConnection::GetPublisherModel(google::cloud::aiplatform::v1::GetPublisherModelRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::ModelGardenServiceConnection::GetPublisherModel");
+ModelGardenServiceTracingConnection::GetPublisherModel(
+    google::cloud::aiplatform::v1::GetPublisherModelRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::ModelGardenServiceConnection::GetPublisherModel");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetPublisherModel(request));
 }
@@ -46,7 +48,8 @@ MakeModelGardenServiceTracingConnection(
     std::shared_ptr<aiplatform_v1::ModelGardenServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<ModelGardenServiceTracingConnection>(std::move(conn));
+    conn =
+        std::make_shared<ModelGardenServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

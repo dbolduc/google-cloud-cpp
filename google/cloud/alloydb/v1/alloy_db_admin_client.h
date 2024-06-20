@@ -63,7 +63,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class AlloyDBAdminClient {
  public:
-  explicit AlloyDBAdminClient(std::shared_ptr<AlloyDBAdminConnection> connection, Options opts = {});
+  explicit AlloyDBAdminClient(
+      std::shared_ptr<AlloyDBAdminConnection> connection, Options opts = {});
   ~AlloyDBAdminClient();
 
   ///@{
@@ -76,10 +77,12 @@ class AlloyDBAdminClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(AlloyDBAdminClient const& a, AlloyDBAdminClient const& b) {
+  friend bool operator==(AlloyDBAdminClient const& a,
+                         AlloyDBAdminClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(AlloyDBAdminClient const& a, AlloyDBAdminClient const& b) {
+  friend bool operator!=(AlloyDBAdminClient const& a,
+                         AlloyDBAdminClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -118,8 +121,8 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L416}
   ///
   // clang-format on
-  StreamRange<google::cloud::alloydb::v1::Cluster>
-  ListClusters(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::alloydb::v1::Cluster> ListClusters(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -157,8 +160,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L416}
   ///
   // clang-format on
-  StreamRange<google::cloud::alloydb::v1::Cluster>
-  ListClusters(google::cloud::alloydb::v1::ListClustersRequest request, Options opts = {});
+  StreamRange<google::cloud::alloydb::v1::Cluster> ListClusters(
+      google::cloud::alloydb::v1::ListClustersRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -183,8 +187,8 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L455}
   ///
   // clang-format on
-  StatusOr<google::cloud::alloydb::v1::Cluster>
-  GetCluster(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::alloydb::v1::Cluster> GetCluster(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -213,8 +217,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L455}
   ///
   // clang-format on
-  StatusOr<google::cloud::alloydb::v1::Cluster>
-  GetCluster(google::cloud::alloydb::v1::GetClusterRequest const& request, Options opts = {});
+  StatusOr<google::cloud::alloydb::v1::Cluster> GetCluster(
+      google::cloud::alloydb::v1::GetClusterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -248,8 +253,10 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L506}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::alloydb::v1::Cluster>>
-  CreateCluster(std::string const& parent, google::cloud::alloydb::v1::Cluster const& cluster, std::string const& cluster_id, Options opts = {});
+  future<StatusOr<google::cloud::alloydb::v1::Cluster>> CreateCluster(
+      std::string const& parent,
+      google::cloud::alloydb::v1::Cluster const& cluster,
+      std::string const& cluster_id, Options opts = {});
 
   // clang-format off
   ///
@@ -285,8 +292,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L506}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::alloydb::v1::Cluster>>
-  CreateCluster(google::cloud::alloydb::v1::CreateClusterRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::alloydb::v1::Cluster>> CreateCluster(
+      google::cloud::alloydb::v1::CreateClusterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -322,8 +330,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L544}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::alloydb::v1::Cluster>>
-  UpdateCluster(google::cloud::alloydb::v1::Cluster const& cluster, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::alloydb::v1::Cluster>> UpdateCluster(
+      google::cloud::alloydb::v1::Cluster const& cluster,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -359,8 +368,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L544}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::alloydb::v1::Cluster>>
-  UpdateCluster(google::cloud::alloydb::v1::UpdateClusterRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::alloydb::v1::Cluster>> UpdateCluster(
+      google::cloud::alloydb::v1::UpdateClusterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -392,8 +402,8 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1407}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
-  DeleteCluster(std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>> DeleteCluster(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -429,8 +439,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1407}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
-  DeleteCluster(google::cloud::alloydb::v1::DeleteClusterRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>> DeleteCluster(
+      google::cloud::alloydb::v1::DeleteClusterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -465,8 +476,8 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.PromoteClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L619}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::alloydb::v1::Cluster>>
-  PromoteCluster(std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::alloydb::v1::Cluster>> PromoteCluster(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -505,8 +516,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.PromoteClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L619}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::alloydb::v1::Cluster>>
-  PromoteCluster(google::cloud::alloydb::v1::PromoteClusterRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::alloydb::v1::Cluster>> PromoteCluster(
+      google::cloud::alloydb::v1::PromoteClusterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -544,8 +556,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.RestoreClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L654}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::alloydb::v1::Cluster>>
-  RestoreCluster(google::cloud::alloydb::v1::RestoreClusterRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::alloydb::v1::Cluster>> RestoreCluster(
+      google::cloud::alloydb::v1::RestoreClusterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -580,8 +593,10 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.CreateSecondaryClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L468}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::alloydb::v1::Cluster>>
-  CreateSecondaryCluster(std::string const& parent, google::cloud::alloydb::v1::Cluster const& cluster, std::string const& cluster_id, Options opts = {});
+  future<StatusOr<google::cloud::alloydb::v1::Cluster>> CreateSecondaryCluster(
+      std::string const& parent,
+      google::cloud::alloydb::v1::Cluster const& cluster,
+      std::string const& cluster_id, Options opts = {});
 
   // clang-format off
   ///
@@ -618,8 +633,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.CreateSecondaryClusterRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L468}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::alloydb::v1::Cluster>>
-  CreateSecondaryCluster(google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::alloydb::v1::Cluster>> CreateSecondaryCluster(
+      google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -657,8 +673,8 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L703}
   ///
   // clang-format on
-  StreamRange<google::cloud::alloydb::v1::Instance>
-  ListInstances(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::alloydb::v1::Instance> ListInstances(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -696,8 +712,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L703}
   ///
   // clang-format on
-  StreamRange<google::cloud::alloydb::v1::Instance>
-  ListInstances(google::cloud::alloydb::v1::ListInstancesRequest request, Options opts = {});
+  StreamRange<google::cloud::alloydb::v1::Instance> ListInstances(
+      google::cloud::alloydb::v1::ListInstancesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -722,8 +739,8 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L610}
   ///
   // clang-format on
-  StatusOr<google::cloud::alloydb::v1::Instance>
-  GetInstance(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::alloydb::v1::Instance> GetInstance(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -752,8 +769,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L610}
   ///
   // clang-format on
-  StatusOr<google::cloud::alloydb::v1::Instance>
-  GetInstance(google::cloud::alloydb::v1::GetInstanceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::alloydb::v1::Instance> GetInstance(
+      google::cloud::alloydb::v1::GetInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -787,8 +805,10 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L610}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::alloydb::v1::Instance>>
-  CreateInstance(std::string const& parent, google::cloud::alloydb::v1::Instance const& instance, std::string const& instance_id, Options opts = {});
+  future<StatusOr<google::cloud::alloydb::v1::Instance>> CreateInstance(
+      std::string const& parent,
+      google::cloud::alloydb::v1::Instance const& instance,
+      std::string const& instance_id, Options opts = {});
 
   // clang-format off
   ///
@@ -824,8 +844,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L610}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::alloydb::v1::Instance>>
-  CreateInstance(google::cloud::alloydb::v1::CreateInstanceRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::alloydb::v1::Instance>> CreateInstance(
+      google::cloud::alloydb::v1::CreateInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -860,7 +881,9 @@ class AlloyDBAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Instance>>
-  CreateSecondaryInstance(std::string const& parent, google::cloud::alloydb::v1::Instance const& instance, std::string const& instance_id, Options opts = {});
+  CreateSecondaryInstance(std::string const& parent,
+                          google::cloud::alloydb::v1::Instance const& instance,
+                          std::string const& instance_id, Options opts = {});
 
   // clang-format off
   ///
@@ -897,7 +920,9 @@ class AlloyDBAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Instance>>
-  CreateSecondaryInstance(google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request, Options opts = {});
+  CreateSecondaryInstance(
+      google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -943,7 +968,9 @@ class AlloyDBAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>
-  BatchCreateInstances(google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request, Options opts = {});
+  BatchCreateInstances(
+      google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -979,8 +1006,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L962}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::alloydb::v1::Instance>>
-  UpdateInstance(google::cloud::alloydb::v1::Instance const& instance, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::alloydb::v1::Instance>> UpdateInstance(
+      google::cloud::alloydb::v1::Instance const& instance,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1016,8 +1044,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L962}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::alloydb::v1::Instance>>
-  UpdateInstance(google::cloud::alloydb::v1::UpdateInstanceRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::alloydb::v1::Instance>> UpdateInstance(
+      google::cloud::alloydb::v1::UpdateInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1087,7 +1116,9 @@ class AlloyDBAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
-  DeleteInstance(google::cloud::alloydb::v1::DeleteInstanceRequest const& request, Options opts = {});
+  DeleteInstance(
+      google::cloud::alloydb::v1::DeleteInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1121,8 +1152,8 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L610}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::alloydb::v1::Instance>>
-  FailoverInstance(std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::alloydb::v1::Instance>> FailoverInstance(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1160,8 +1191,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L610}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::alloydb::v1::Instance>>
-  FailoverInstance(google::cloud::alloydb::v1::FailoverInstanceRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::alloydb::v1::Instance>> FailoverInstance(
+      google::cloud::alloydb::v1::FailoverInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1195,8 +1227,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L610}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::alloydb::v1::Instance>>
-  InjectFault(google::cloud::alloydb::v1::InjectFaultRequest::FaultType fault_type, std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::alloydb::v1::Instance>> InjectFault(
+      google::cloud::alloydb::v1::InjectFaultRequest::FaultType fault_type,
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1233,8 +1266,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.Instance]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L610}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::alloydb::v1::Instance>>
-  InjectFault(google::cloud::alloydb::v1::InjectFaultRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::alloydb::v1::Instance>> InjectFault(
+      google::cloud::alloydb::v1::InjectFaultRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1267,8 +1301,8 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.RestartInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1111}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::alloydb::v1::Instance>>
-  RestartInstance(std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::alloydb::v1::Instance>> RestartInstance(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1305,8 +1339,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.RestartInstanceRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1111}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::alloydb::v1::Instance>>
-  RestartInstance(google::cloud::alloydb::v1::RestartInstanceRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::alloydb::v1::Instance>> RestartInstance(
+      google::cloud::alloydb::v1::RestartInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1339,8 +1374,8 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1142}
   ///
   // clang-format on
-  StreamRange<google::cloud::alloydb::v1::Backup>
-  ListBackups(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::alloydb::v1::Backup> ListBackups(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1378,8 +1413,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1142}
   ///
   // clang-format on
-  StreamRange<google::cloud::alloydb::v1::Backup>
-  ListBackups(google::cloud::alloydb::v1::ListBackupsRequest request, Options opts = {});
+  StreamRange<google::cloud::alloydb::v1::Backup> ListBackups(
+      google::cloud::alloydb::v1::ListBackupsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1403,8 +1439,8 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1178}
   ///
   // clang-format on
-  StatusOr<google::cloud::alloydb::v1::Backup>
-  GetBackup(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::alloydb::v1::Backup> GetBackup(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1433,8 +1469,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1178}
   ///
   // clang-format on
-  StatusOr<google::cloud::alloydb::v1::Backup>
-  GetBackup(google::cloud::alloydb::v1::GetBackupRequest const& request, Options opts = {});
+  StatusOr<google::cloud::alloydb::v1::Backup> GetBackup(
+      google::cloud::alloydb::v1::GetBackupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1467,8 +1504,10 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1187}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::alloydb::v1::Backup>>
-  CreateBackup(std::string const& parent, google::cloud::alloydb::v1::Backup const& backup, std::string const& backup_id, Options opts = {});
+  future<StatusOr<google::cloud::alloydb::v1::Backup>> CreateBackup(
+      std::string const& parent,
+      google::cloud::alloydb::v1::Backup const& backup,
+      std::string const& backup_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1504,8 +1543,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1187}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::alloydb::v1::Backup>>
-  CreateBackup(google::cloud::alloydb::v1::CreateBackupRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::alloydb::v1::Backup>> CreateBackup(
+      google::cloud::alloydb::v1::CreateBackupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1541,8 +1581,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1223}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::alloydb::v1::Backup>>
-  UpdateBackup(google::cloud::alloydb::v1::Backup const& backup, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::alloydb::v1::Backup>> UpdateBackup(
+      google::cloud::alloydb::v1::Backup const& backup,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1578,8 +1619,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1223}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::alloydb::v1::Backup>>
-  UpdateBackup(google::cloud::alloydb::v1::UpdateBackupRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::alloydb::v1::Backup>> UpdateBackup(
+      google::cloud::alloydb::v1::UpdateBackupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1611,8 +1653,8 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1407}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
-  DeleteBackup(std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>> DeleteBackup(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1648,8 +1690,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1407}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
-  DeleteBackup(google::cloud::alloydb::v1::DeleteBackupRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>> DeleteBackup(
+      google::cloud::alloydb::v1::DeleteBackupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1728,7 +1771,9 @@ class AlloyDBAdminClient {
   ///
   // clang-format on
   StreamRange<google::cloud::alloydb::v1::SupportedDatabaseFlag>
-  ListSupportedDatabaseFlags(google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest request, Options opts = {});
+  ListSupportedDatabaseFlags(
+      google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1792,7 +1837,10 @@ class AlloyDBAdminClient {
   ///
   // clang-format on
   StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>
-  GenerateClientCertificate(google::cloud::alloydb::v1::GenerateClientCertificateRequest const& request, Options opts = {});
+  GenerateClientCertificate(
+      google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1817,8 +1865,8 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.GetConnectionInfoRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1380}
   ///
   // clang-format on
-  StatusOr<google::cloud::alloydb::v1::ConnectionInfo>
-  GetConnectionInfo(std::string const& parent, Options opts = {});
+  StatusOr<google::cloud::alloydb::v1::ConnectionInfo> GetConnectionInfo(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1847,8 +1895,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.GetConnectionInfoRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1380}
   ///
   // clang-format on
-  StatusOr<google::cloud::alloydb::v1::ConnectionInfo>
-  GetConnectionInfo(google::cloud::alloydb::v1::GetConnectionInfoRequest const& request, Options opts = {});
+  StatusOr<google::cloud::alloydb::v1::ConnectionInfo> GetConnectionInfo(
+      google::cloud::alloydb::v1::GetConnectionInfoRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1881,8 +1930,8 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.User]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1137}
   ///
   // clang-format on
-  StreamRange<google::cloud::alloydb::v1::User>
-  ListUsers(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::alloydb::v1::User> ListUsers(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1920,8 +1969,8 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.User]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1137}
   ///
   // clang-format on
-  StreamRange<google::cloud::alloydb::v1::User>
-  ListUsers(google::cloud::alloydb::v1::ListUsersRequest request, Options opts = {});
+  StreamRange<google::cloud::alloydb::v1::User> ListUsers(
+      google::cloud::alloydb::v1::ListUsersRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1946,8 +1995,8 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.User]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1137}
   ///
   // clang-format on
-  StatusOr<google::cloud::alloydb::v1::User>
-  GetUser(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::alloydb::v1::User> GetUser(std::string const& name,
+                                                     Options opts = {});
 
   // clang-format off
   ///
@@ -1976,8 +2025,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.User]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1137}
   ///
   // clang-format on
-  StatusOr<google::cloud::alloydb::v1::User>
-  GetUser(google::cloud::alloydb::v1::GetUserRequest const& request, Options opts = {});
+  StatusOr<google::cloud::alloydb::v1::User> GetUser(
+      google::cloud::alloydb::v1::GetUserRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2003,8 +2053,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.User]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1137}
   ///
   // clang-format on
-  StatusOr<google::cloud::alloydb::v1::User>
-  CreateUser(std::string const& parent, google::cloud::alloydb::v1::User const& user, std::string const& user_id, Options opts = {});
+  StatusOr<google::cloud::alloydb::v1::User> CreateUser(
+      std::string const& parent, google::cloud::alloydb::v1::User const& user,
+      std::string const& user_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2033,8 +2084,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.User]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1137}
   ///
   // clang-format on
-  StatusOr<google::cloud::alloydb::v1::User>
-  CreateUser(google::cloud::alloydb::v1::CreateUserRequest const& request, Options opts = {});
+  StatusOr<google::cloud::alloydb::v1::User> CreateUser(
+      google::cloud::alloydb::v1::CreateUserRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2063,8 +2115,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.User]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1137}
   ///
   // clang-format on
-  StatusOr<google::cloud::alloydb::v1::User>
-  UpdateUser(google::cloud::alloydb::v1::User const& user, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::alloydb::v1::User> UpdateUser(
+      google::cloud::alloydb::v1::User const& user,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2093,8 +2146,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.User]: @googleapis_reference_link{google/cloud/alloydb/v1/resources.proto#L1137}
   ///
   // clang-format on
-  StatusOr<google::cloud::alloydb::v1::User>
-  UpdateUser(google::cloud::alloydb::v1::UpdateUserRequest const& request, Options opts = {});
+  StatusOr<google::cloud::alloydb::v1::User> UpdateUser(
+      google::cloud::alloydb::v1::UpdateUserRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2116,8 +2170,7 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.DeleteUserRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1562}
   ///
   // clang-format on
-  Status
-  DeleteUser(std::string const& name, Options opts = {});
+  Status DeleteUser(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2143,8 +2196,9 @@ class AlloyDBAdminClient {
   /// [google.cloud.alloydb.v1.DeleteUserRequest]: @googleapis_reference_link{google/cloud/alloydb/v1/service.proto#L1562}
   ///
   // clang-format on
-  Status
-  DeleteUser(google::cloud::alloydb::v1::DeleteUserRequest const& request, Options opts = {});
+  Status DeleteUser(
+      google::cloud::alloydb::v1::DeleteUserRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<AlloyDBAdminConnection> connection_;

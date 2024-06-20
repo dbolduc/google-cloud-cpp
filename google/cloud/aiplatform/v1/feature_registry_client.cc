@@ -28,12 +28,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 FeatureRegistryServiceClient::FeatureRegistryServiceClient(
     std::shared_ptr<FeatureRegistryServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 FeatureRegistryServiceClient::~FeatureRegistryServiceClient() = default;
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
-FeatureRegistryServiceClient::CreateFeatureGroup(std::string const& parent, google::cloud::aiplatform::v1::FeatureGroup const& feature_group, std::string const& feature_group_id, Options opts) {
+FeatureRegistryServiceClient::CreateFeatureGroup(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::FeatureGroup const& feature_group,
+    std::string const& feature_group_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateFeatureGroupRequest request;
   request.set_parent(parent);
@@ -43,13 +46,16 @@ FeatureRegistryServiceClient::CreateFeatureGroup(std::string const& parent, goog
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
-FeatureRegistryServiceClient::CreateFeatureGroup(google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request, Options opts) {
+FeatureRegistryServiceClient::CreateFeatureGroup(
+    google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateFeatureGroup(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::FeatureGroup>
-FeatureRegistryServiceClient::GetFeatureGroup(std::string const& name, Options opts) {
+FeatureRegistryServiceClient::GetFeatureGroup(std::string const& name,
+                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::GetFeatureGroupRequest request;
   request.set_name(name);
@@ -57,13 +63,16 @@ FeatureRegistryServiceClient::GetFeatureGroup(std::string const& name, Options o
 }
 
 StatusOr<google::cloud::aiplatform::v1::FeatureGroup>
-FeatureRegistryServiceClient::GetFeatureGroup(google::cloud::aiplatform::v1::GetFeatureGroupRequest const& request, Options opts) {
+FeatureRegistryServiceClient::GetFeatureGroup(
+    google::cloud::aiplatform::v1::GetFeatureGroupRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetFeatureGroup(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::FeatureGroup>
-FeatureRegistryServiceClient::ListFeatureGroups(std::string const& parent, Options opts) {
+FeatureRegistryServiceClient::ListFeatureGroups(std::string const& parent,
+                                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListFeatureGroupsRequest request;
   request.set_parent(parent);
@@ -71,13 +80,17 @@ FeatureRegistryServiceClient::ListFeatureGroups(std::string const& parent, Optio
 }
 
 StreamRange<google::cloud::aiplatform::v1::FeatureGroup>
-FeatureRegistryServiceClient::ListFeatureGroups(google::cloud::aiplatform::v1::ListFeatureGroupsRequest request, Options opts) {
+FeatureRegistryServiceClient::ListFeatureGroups(
+    google::cloud::aiplatform::v1::ListFeatureGroupsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListFeatureGroups(std::move(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
-FeatureRegistryServiceClient::UpdateFeatureGroup(google::cloud::aiplatform::v1::FeatureGroup const& feature_group, google::protobuf::FieldMask const& update_mask, Options opts) {
+FeatureRegistryServiceClient::UpdateFeatureGroup(
+    google::cloud::aiplatform::v1::FeatureGroup const& feature_group,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdateFeatureGroupRequest request;
   *request.mutable_feature_group() = feature_group;
@@ -86,13 +99,16 @@ FeatureRegistryServiceClient::UpdateFeatureGroup(google::cloud::aiplatform::v1::
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
-FeatureRegistryServiceClient::UpdateFeatureGroup(google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request, Options opts) {
+FeatureRegistryServiceClient::UpdateFeatureGroup(
+    google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateFeatureGroup(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-FeatureRegistryServiceClient::DeleteFeatureGroup(std::string const& name, bool force, Options opts) {
+FeatureRegistryServiceClient::DeleteFeatureGroup(std::string const& name,
+                                                 bool force, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteFeatureGroupRequest request;
   request.set_name(name);
@@ -101,13 +117,18 @@ FeatureRegistryServiceClient::DeleteFeatureGroup(std::string const& name, bool f
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-FeatureRegistryServiceClient::DeleteFeatureGroup(google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request, Options opts) {
+FeatureRegistryServiceClient::DeleteFeatureGroup(
+    google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFeatureGroup(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Feature>>
-FeatureRegistryServiceClient::CreateFeature(std::string const& parent, google::cloud::aiplatform::v1::Feature const& feature, std::string const& feature_id, Options opts) {
+FeatureRegistryServiceClient::CreateFeature(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::Feature const& feature,
+    std::string const& feature_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateFeatureRequest request;
   request.set_parent(parent);
@@ -117,13 +138,16 @@ FeatureRegistryServiceClient::CreateFeature(std::string const& parent, google::c
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Feature>>
-FeatureRegistryServiceClient::CreateFeature(google::cloud::aiplatform::v1::CreateFeatureRequest const& request, Options opts) {
+FeatureRegistryServiceClient::CreateFeature(
+    google::cloud::aiplatform::v1::CreateFeatureRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateFeature(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Feature>
-FeatureRegistryServiceClient::GetFeature(std::string const& name, Options opts) {
+FeatureRegistryServiceClient::GetFeature(std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::GetFeatureRequest request;
   request.set_name(name);
@@ -131,13 +155,16 @@ FeatureRegistryServiceClient::GetFeature(std::string const& name, Options opts) 
 }
 
 StatusOr<google::cloud::aiplatform::v1::Feature>
-FeatureRegistryServiceClient::GetFeature(google::cloud::aiplatform::v1::GetFeatureRequest const& request, Options opts) {
+FeatureRegistryServiceClient::GetFeature(
+    google::cloud::aiplatform::v1::GetFeatureRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetFeature(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::Feature>
-FeatureRegistryServiceClient::ListFeatures(std::string const& parent, Options opts) {
+FeatureRegistryServiceClient::ListFeatures(std::string const& parent,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListFeaturesRequest request;
   request.set_parent(parent);
@@ -145,13 +172,16 @@ FeatureRegistryServiceClient::ListFeatures(std::string const& parent, Options op
 }
 
 StreamRange<google::cloud::aiplatform::v1::Feature>
-FeatureRegistryServiceClient::ListFeatures(google::cloud::aiplatform::v1::ListFeaturesRequest request, Options opts) {
+FeatureRegistryServiceClient::ListFeatures(
+    google::cloud::aiplatform::v1::ListFeaturesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListFeatures(std::move(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Feature>>
-FeatureRegistryServiceClient::UpdateFeature(google::cloud::aiplatform::v1::Feature const& feature, google::protobuf::FieldMask const& update_mask, Options opts) {
+FeatureRegistryServiceClient::UpdateFeature(
+    google::cloud::aiplatform::v1::Feature const& feature,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdateFeatureRequest request;
   *request.mutable_feature() = feature;
@@ -160,13 +190,16 @@ FeatureRegistryServiceClient::UpdateFeature(google::cloud::aiplatform::v1::Featu
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Feature>>
-FeatureRegistryServiceClient::UpdateFeature(google::cloud::aiplatform::v1::UpdateFeatureRequest const& request, Options opts) {
+FeatureRegistryServiceClient::UpdateFeature(
+    google::cloud::aiplatform::v1::UpdateFeatureRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateFeature(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-FeatureRegistryServiceClient::DeleteFeature(std::string const& name, Options opts) {
+FeatureRegistryServiceClient::DeleteFeature(std::string const& name,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteFeatureRequest request;
   request.set_name(name);
@@ -174,7 +207,9 @@ FeatureRegistryServiceClient::DeleteFeature(std::string const& name, Options opt
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-FeatureRegistryServiceClient::DeleteFeature(google::cloud::aiplatform::v1::DeleteFeatureRequest const& request, Options opts) {
+FeatureRegistryServiceClient::DeleteFeature(
+    google::cloud::aiplatform::v1::DeleteFeatureRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFeature(request);
 }

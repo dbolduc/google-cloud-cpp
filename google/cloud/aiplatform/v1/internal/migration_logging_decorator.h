@@ -36,24 +36,26 @@ class MigrationServiceLogging : public MigrationServiceStub {
  public:
   ~MigrationServiceLogging() override = default;
   MigrationServiceLogging(std::shared_ptr<MigrationServiceStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                          TracingOptions tracing_options,
+                          std::set<std::string> const& components);
 
-  StatusOr<google::cloud::aiplatform::v1::SearchMigratableResourcesResponse> SearchMigratableResources(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::SearchMigratableResourcesResponse>
+  SearchMigratableResources(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchMigrateResources(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request) override;
+      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> BatchMigrateResources(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

@@ -30,37 +30,53 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 AppGatewaysServiceTracingConnection::AppGatewaysServiceTracingConnection(
-    std::shared_ptr<beyondcorp_appgateways_v1::AppGatewaysServiceConnection> child)
+    std::shared_ptr<beyondcorp_appgateways_v1::AppGatewaysServiceConnection>
+        child)
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::beyondcorp::appgateways::v1::AppGateway>
-AppGatewaysServiceTracingConnection::ListAppGateways(google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest request) {
-  auto span = internal::MakeSpan("beyondcorp_appgateways_v1::AppGatewaysServiceConnection::ListAppGateways");
+AppGatewaysServiceTracingConnection::ListAppGateways(
+    google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::"
+      "ListAppGateways");
   internal::OTelScope scope(span);
   auto sr = child_->ListAppGateways(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::beyondcorp::appgateways::v1::AppGateway>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::beyondcorp::appgateways::v1::AppGateway>(std::move(span),
+                                                              std::move(sr));
 }
 
 StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>
-AppGatewaysServiceTracingConnection::GetAppGateway(google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const& request) {
-  auto span = internal::MakeSpan("beyondcorp_appgateways_v1::AppGatewaysServiceConnection::GetAppGateway");
+AppGatewaysServiceTracingConnection::GetAppGateway(
+    google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::GetAppGateway");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetAppGateway(request));
 }
 
 future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
-AppGatewaysServiceTracingConnection::CreateAppGateway(google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const& request) {
+AppGatewaysServiceTracingConnection::CreateAppGateway(
+    google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::CreateAppGateway");
+      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::"
+      "CreateAppGateway");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateAppGateway(request));
 }
 
-future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
-AppGatewaysServiceTracingConnection::DeleteAppGateway(google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const& request) {
+future<StatusOr<
+    google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
+AppGatewaysServiceTracingConnection::DeleteAppGateway(
+    google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::DeleteAppGateway");
+      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::"
+      "DeleteAppGateway");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteAppGateway(request));
 }
@@ -69,10 +85,12 @@ AppGatewaysServiceTracingConnection::DeleteAppGateway(google::cloud::beyondcorp:
 
 std::shared_ptr<beyondcorp_appgateways_v1::AppGatewaysServiceConnection>
 MakeAppGatewaysServiceTracingConnection(
-    std::shared_ptr<beyondcorp_appgateways_v1::AppGatewaysServiceConnection> conn) {
+    std::shared_ptr<beyondcorp_appgateways_v1::AppGatewaysServiceConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<AppGatewaysServiceTracingConnection>(std::move(conn));
+    conn =
+        std::make_shared<AppGatewaysServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

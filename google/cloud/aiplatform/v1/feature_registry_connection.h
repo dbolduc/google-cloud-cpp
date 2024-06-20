@@ -47,7 +47,8 @@ class FeatureRegistryServiceRetryPolicy : public ::google::cloud::RetryPolicy {
 };
 
 /**
- * A retry policy for `FeatureRegistryServiceConnection` based on counting errors.
+ * A retry policy for `FeatureRegistryServiceConnection` based on counting
+ * errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -56,7 +57,8 @@ class FeatureRegistryServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class FeatureRegistryServiceLimitedErrorCountRetryPolicy : public FeatureRegistryServiceRetryPolicy {
+class FeatureRegistryServiceLimitedErrorCountRetryPolicy
+    : public FeatureRegistryServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,15 +67,18 @@ class FeatureRegistryServiceLimitedErrorCountRetryPolicy : public FeatureRegistr
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit FeatureRegistryServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+  explicit FeatureRegistryServiceLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
   FeatureRegistryServiceLimitedErrorCountRetryPolicy(
       FeatureRegistryServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : FeatureRegistryServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : FeatureRegistryServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   FeatureRegistryServiceLimitedErrorCountRetryPolicy(
       FeatureRegistryServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : FeatureRegistryServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : FeatureRegistryServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +98,9 @@ class FeatureRegistryServiceLimitedErrorCountRetryPolicy : public FeatureRegistr
   using BaseType = FeatureRegistryServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<aiplatform_v1_internal::FeatureRegistryServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      aiplatform_v1_internal::FeatureRegistryServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -106,7 +113,8 @@ class FeatureRegistryServiceLimitedErrorCountRetryPolicy : public FeatureRegistr
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class FeatureRegistryServiceLimitedTimeRetryPolicy : public FeatureRegistryServiceRetryPolicy {
+class FeatureRegistryServiceLimitedTimeRetryPolicy
+    : public FeatureRegistryServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -131,12 +139,14 @@ class FeatureRegistryServiceLimitedTimeRetryPolicy : public FeatureRegistryServi
   template <typename DurationRep, typename DurationPeriod>
   explicit FeatureRegistryServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  FeatureRegistryServiceLimitedTimeRetryPolicy(FeatureRegistryServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : FeatureRegistryServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  FeatureRegistryServiceLimitedTimeRetryPolicy(FeatureRegistryServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : FeatureRegistryServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  FeatureRegistryServiceLimitedTimeRetryPolicy(
+      FeatureRegistryServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : FeatureRegistryServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  FeatureRegistryServiceLimitedTimeRetryPolicy(
+      FeatureRegistryServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : FeatureRegistryServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,16 +168,19 @@ class FeatureRegistryServiceLimitedTimeRetryPolicy : public FeatureRegistryServi
   using BaseType = FeatureRegistryServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<aiplatform_v1_internal::FeatureRegistryServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      aiplatform_v1_internal::FeatureRegistryServiceRetryTraits>
+      impl_;
 };
 
 /**
- * The `FeatureRegistryServiceConnection` object for `FeatureRegistryServiceClient`.
+ * The `FeatureRegistryServiceConnection` object for
+ * `FeatureRegistryServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `FeatureRegistryServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `FeatureRegistryServiceClient`.
+ * sets in `FeatureRegistryServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `FeatureRegistryServiceClient`.
  *
  * To create a concrete instance, see `MakeFeatureRegistryServiceConnection()`.
  *
@@ -180,45 +193,56 @@ class FeatureRegistryServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
-  CreateFeatureGroup(google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request);
+  CreateFeatureGroup(
+      google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::FeatureGroup>
-  GetFeatureGroup(google::cloud::aiplatform::v1::GetFeatureGroupRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::FeatureGroup> GetFeatureGroup(
+      google::cloud::aiplatform::v1::GetFeatureGroupRequest const& request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::FeatureGroup>
-  ListFeatureGroups(google::cloud::aiplatform::v1::ListFeatureGroupsRequest request);
+  ListFeatureGroups(
+      google::cloud::aiplatform::v1::ListFeatureGroupsRequest request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
-  UpdateFeatureGroup(google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request);
+  UpdateFeatureGroup(
+      google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeatureGroup(google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request);
-
-  virtual future<StatusOr<google::cloud::aiplatform::v1::Feature>>
-  CreateFeature(google::cloud::aiplatform::v1::CreateFeatureRequest const& request);
-
-  virtual StatusOr<google::cloud::aiplatform::v1::Feature>
-  GetFeature(google::cloud::aiplatform::v1::GetFeatureRequest const& request);
-
-  virtual StreamRange<google::cloud::aiplatform::v1::Feature>
-  ListFeatures(google::cloud::aiplatform::v1::ListFeaturesRequest request);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteFeatureGroup(
+      google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::Feature>>
-  UpdateFeature(google::cloud::aiplatform::v1::UpdateFeatureRequest const& request);
+  CreateFeature(
+      google::cloud::aiplatform::v1::CreateFeatureRequest const& request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeature(google::cloud::aiplatform::v1::DeleteFeatureRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(
+      google::cloud::aiplatform::v1::GetFeatureRequest const& request);
+
+  virtual StreamRange<google::cloud::aiplatform::v1::Feature> ListFeatures(
+      google::cloud::aiplatform::v1::ListFeaturesRequest request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::Feature>>
+  UpdateFeature(
+      google::cloud::aiplatform::v1::UpdateFeatureRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteFeature(
+      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `FeatureRegistryServiceConnection`.
+ * A factory function to construct an object of type
+ * `FeatureRegistryServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of FeatureRegistryServiceClient.
+ * should be passed as an argument to the constructor of
+ * FeatureRegistryServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `FeatureRegistryServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `FeatureRegistryServiceConnection`. Expected options are any of the
+ * types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -229,11 +253,12 @@ class FeatureRegistryServiceConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `FeatureRegistryServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `FeatureRegistryServiceConnection`
+ * created by this function.
  */
-std::shared_ptr<FeatureRegistryServiceConnection> MakeFeatureRegistryServiceConnection(
-    std::string const& location, Options options = {});
+std::shared_ptr<FeatureRegistryServiceConnection>
+MakeFeatureRegistryServiceConnection(std::string const& location,
+                                     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

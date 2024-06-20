@@ -45,17 +45,17 @@ class PredictionServiceConnectionImpl
   ~PredictionServiceConnectionImpl() override = default;
 
   PredictionServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<automl_v1_internal::PredictionServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<automl_v1_internal::PredictionServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::automl::v1::PredictResponse>
-  Predict(google::cloud::automl::v1::PredictRequest const& request) override;
+  StatusOr<google::cloud::automl::v1::PredictResponse> Predict(
+      google::cloud::automl::v1::PredictRequest const& request) override;
 
-  future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>
-  BatchPredict(google::cloud::automl::v1::BatchPredictRequest const& request) override;
+  future<StatusOr<google::cloud::automl::v1::BatchPredictResult>> BatchPredict(
+      google::cloud::automl::v1::BatchPredictRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

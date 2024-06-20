@@ -56,7 +56,8 @@ class ModelServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ModelServiceLimitedErrorCountRetryPolicy : public ModelServiceRetryPolicy {
+class ModelServiceLimitedErrorCountRetryPolicy
+    : public ModelServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +67,14 @@ class ModelServiceLimitedErrorCountRetryPolicy : public ModelServiceRetryPolicy 
    *     @p maximum_failures == 0.
    */
   explicit ModelServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ModelServiceLimitedErrorCountRetryPolicy(
       ModelServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ModelServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ModelServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ModelServiceLimitedErrorCountRetryPolicy(
       ModelServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ModelServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ModelServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +94,9 @@ class ModelServiceLimitedErrorCountRetryPolicy : public ModelServiceRetryPolicy 
   using BaseType = ModelServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<aiplatform_v1_internal::ModelServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      aiplatform_v1_internal::ModelServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -131,12 +134,14 @@ class ModelServiceLimitedTimeRetryPolicy : public ModelServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ModelServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ModelServiceLimitedTimeRetryPolicy(ModelServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : ModelServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ModelServiceLimitedTimeRetryPolicy(ModelServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : ModelServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ModelServiceLimitedTimeRetryPolicy(
+      ModelServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : ModelServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ModelServiceLimitedTimeRetryPolicy(
+      ModelServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : ModelServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +163,9 @@ class ModelServiceLimitedTimeRetryPolicy : public ModelServiceRetryPolicy {
   using BaseType = ModelServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<aiplatform_v1_internal::ModelServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      aiplatform_v1_internal::ModelServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -182,29 +189,35 @@ class ModelServiceConnection {
   virtual future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>
   UploadModel(google::cloud::aiplatform::v1::UploadModelRequest const& request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Model>
-  GetModel(google::cloud::aiplatform::v1::GetModelRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Model> GetModel(
+      google::cloud::aiplatform::v1::GetModelRequest const& request);
 
-  virtual StreamRange<google::cloud::aiplatform::v1::Model>
-  ListModels(google::cloud::aiplatform::v1::ListModelsRequest request);
+  virtual StreamRange<google::cloud::aiplatform::v1::Model> ListModels(
+      google::cloud::aiplatform::v1::ListModelsRequest request);
 
-  virtual StreamRange<google::cloud::aiplatform::v1::Model>
-  ListModelVersions(google::cloud::aiplatform::v1::ListModelVersionsRequest request);
+  virtual StreamRange<google::cloud::aiplatform::v1::Model> ListModelVersions(
+      google::cloud::aiplatform::v1::ListModelVersionsRequest request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Model>
-  UpdateModel(google::cloud::aiplatform::v1::UpdateModelRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Model> UpdateModel(
+      google::cloud::aiplatform::v1::UpdateModelRequest const& request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
-  UpdateExplanationDataset(google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
+  UpdateExplanationDataset(
+      google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteModel(google::cloud::aiplatform::v1::DeleteModelRequest const& request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteModelVersion(google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteModelVersion(
+      google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Model>
-  MergeVersionAliases(google::cloud::aiplatform::v1::MergeVersionAliasesRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Model> MergeVersionAliases(
+      google::cloud::aiplatform::v1::MergeVersionAliasesRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>
   ExportModel(google::cloud::aiplatform::v1::ExportModelRequest const& request);
@@ -213,25 +226,38 @@ class ModelServiceConnection {
   CopyModel(google::cloud::aiplatform::v1::CopyModelRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
-  ImportModelEvaluation(google::cloud::aiplatform::v1::ImportModelEvaluationRequest const& request);
+  ImportModelEvaluation(
+      google::cloud::aiplatform::v1::ImportModelEvaluationRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse>
-  BatchImportModelEvaluationSlices(google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesRequest const& request);
+  virtual StatusOr<
+      google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse>
+  BatchImportModelEvaluationSlices(
+      google::cloud::aiplatform::v1::
+          BatchImportModelEvaluationSlicesRequest const& request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsResponse>
-  BatchImportEvaluatedAnnotations(google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsRequest const& request);
+  virtual StatusOr<
+      google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsResponse>
+  BatchImportEvaluatedAnnotations(
+      google::cloud::aiplatform::v1::
+          BatchImportEvaluatedAnnotationsRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
-  GetModelEvaluation(google::cloud::aiplatform::v1::GetModelEvaluationRequest const& request);
+  GetModelEvaluation(
+      google::cloud::aiplatform::v1::GetModelEvaluationRequest const& request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::ModelEvaluation>
-  ListModelEvaluations(google::cloud::aiplatform::v1::ListModelEvaluationsRequest request);
+  ListModelEvaluations(
+      google::cloud::aiplatform::v1::ListModelEvaluationsRequest request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::ModelEvaluationSlice>
-  GetModelEvaluationSlice(google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const& request);
+  GetModelEvaluationSlice(
+      google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const&
+          request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::ModelEvaluationSlice>
-  ListModelEvaluationSlices(google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest request);
+  ListModelEvaluationSlices(
+      google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest request);
 };
 
 /**

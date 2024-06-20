@@ -17,12 +17,12 @@
 // source: google/cloud/backupdr/v1/backupdr.proto
 
 #include "google/cloud/backupdr/v1/backup_dr_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/backupdr/v1/backup_dr_options.h"
 #include "google/cloud/backupdr/v1/internal/backup_dr_connection_impl.h"
 #include "google/cloud/backupdr/v1/internal/backup_dr_option_defaults.h"
 #include "google/cloud/backupdr/v1/internal/backup_dr_stub_factory.h"
 #include "google/cloud/backupdr/v1/internal/backup_dr_tracing_connection.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BackupDRConnection::~BackupDRConnection() = default;
 
-StreamRange<google::cloud::backupdr::v1::ManagementServer> BackupDRConnection::ListManagementServers(
-    google::cloud::backupdr::v1::ListManagementServersRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::backupdr::v1::ManagementServer>
+BackupDRConnection::ListManagementServers(
+    google::cloud::backupdr::v1::
+        ListManagementServersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::backupdr::v1::ManagementServer>>();
 }
@@ -54,32 +56,30 @@ future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>
 BackupDRConnection::CreateManagementServer(
     google::cloud::backupdr::v1::CreateManagementServerRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::backupdr::v1::ManagementServer>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::backupdr::v1::ManagementServer>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
 BackupDRConnection::DeleteManagementServer(
     google::cloud::backupdr::v1::DeleteManagementServerRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::backupdr::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::backupdr::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-std::shared_ptr<BackupDRConnection> MakeBackupDRConnection(
-    Options options) {
+std::shared_ptr<BackupDRConnection> MakeBackupDRConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      BackupDRPolicyOptionList>(options, __func__);
-  options = backupdr_v1_internal::BackupDRDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 BackupDRPolicyOptionList>(options, __func__);
+  options = backupdr_v1_internal::BackupDRDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = backupdr_v1_internal::CreateDefaultBackupDRStub(
-    std::move(auth), options);
+  auto stub =
+      backupdr_v1_internal::CreateDefaultBackupDRStub(std::move(auth), options);
   return backupdr_v1_internal::MakeBackupDRTracingConnection(
       std::make_shared<backupdr_v1_internal::BackupDRConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -36,27 +36,40 @@ class PersistentResourceServiceTracingConnection
   ~PersistentResourceServiceTracingConnection() override = default;
 
   explicit PersistentResourceServiceTracingConnection(
-    std::shared_ptr<aiplatform_v1::PersistentResourceServiceConnection> child);
+      std::shared_ptr<aiplatform_v1::PersistentResourceServiceConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-  CreatePersistentResource(google::cloud::aiplatform::v1::CreatePersistentResourceRequest const& request) override;
+  CreatePersistentResource(
+      google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
+          request) override;
 
   StatusOr<google::cloud::aiplatform::v1::PersistentResource>
-  GetPersistentResource(google::cloud::aiplatform::v1::GetPersistentResourceRequest const& request) override;
+  GetPersistentResource(
+      google::cloud::aiplatform::v1::GetPersistentResourceRequest const&
+          request) override;
 
   StreamRange<google::cloud::aiplatform::v1::PersistentResource>
-  ListPersistentResources(google::cloud::aiplatform::v1::ListPersistentResourcesRequest request) override;
+  ListPersistentResources(
+      google::cloud::aiplatform::v1::ListPersistentResourcesRequest request)
+      override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeletePersistentResource(google::cloud::aiplatform::v1::DeletePersistentResourceRequest const& request) override;
+  DeletePersistentResource(
+      google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-  UpdatePersistentResource(google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const& request) override;
+  UpdatePersistentResource(
+      google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-  RebootPersistentResource(google::cloud::aiplatform::v1::RebootPersistentResourceRequest const& request) override;
+  RebootPersistentResource(
+      google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
+          request) override;
 
  private:
   std::shared_ptr<aiplatform_v1::PersistentResourceServiceConnection> child_;

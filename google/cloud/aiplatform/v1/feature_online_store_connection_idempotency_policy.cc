@@ -26,24 +26,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-FeatureOnlineStoreServiceConnectionIdempotencyPolicy::~FeatureOnlineStoreServiceConnectionIdempotencyPolicy() = default;
+FeatureOnlineStoreServiceConnectionIdempotencyPolicy::
+    ~FeatureOnlineStoreServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<FeatureOnlineStoreServiceConnectionIdempotencyPolicy>
 FeatureOnlineStoreServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<FeatureOnlineStoreServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<FeatureOnlineStoreServiceConnectionIdempotencyPolicy>(
+      *this);
 }
 
-Idempotency FeatureOnlineStoreServiceConnectionIdempotencyPolicy::FetchFeatureValues(google::cloud::aiplatform::v1::FetchFeatureValuesRequest const&) {
+Idempotency
+FeatureOnlineStoreServiceConnectionIdempotencyPolicy::FetchFeatureValues(
+    google::cloud::aiplatform::v1::FetchFeatureValuesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency FeatureOnlineStoreServiceConnectionIdempotencyPolicy::SearchNearestEntities(google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&) {
+Idempotency
+FeatureOnlineStoreServiceConnectionIdempotencyPolicy::SearchNearestEntities(
+    google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<FeatureOnlineStoreServiceConnectionIdempotencyPolicy>
-    MakeDefaultFeatureOnlineStoreServiceConnectionIdempotencyPolicy() {
-  return std::make_unique<FeatureOnlineStoreServiceConnectionIdempotencyPolicy>();
+MakeDefaultFeatureOnlineStoreServiceConnectionIdempotencyPolicy() {
+  return std::make_unique<
+      FeatureOnlineStoreServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

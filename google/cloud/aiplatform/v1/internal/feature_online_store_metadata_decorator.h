@@ -39,19 +39,20 @@ class FeatureOnlineStoreServiceMetadata : public FeatureOnlineStoreServiceStub {
       std::multimap<std::string, std::string> fixed_metadata,
       std::string api_client_header = "");
 
-  StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse> FetchFeatureValues(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>
+  FetchFeatureValues(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse> SearchNearestEntities(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
+  SearchNearestEntities(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
+          request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

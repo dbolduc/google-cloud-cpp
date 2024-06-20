@@ -29,28 +29,42 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-FeaturestoreOnlineServingServiceTracingConnection::FeaturestoreOnlineServingServiceTracingConnection(
-    std::shared_ptr<aiplatform_v1::FeaturestoreOnlineServingServiceConnection> child)
+FeaturestoreOnlineServingServiceTracingConnection::
+    FeaturestoreOnlineServingServiceTracingConnection(
+        std::shared_ptr<
+            aiplatform_v1::FeaturestoreOnlineServingServiceConnection>
+            child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
-FeaturestoreOnlineServingServiceTracingConnection::ReadFeatureValues(google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::FeaturestoreOnlineServingServiceConnection::ReadFeatureValues");
+FeaturestoreOnlineServingServiceTracingConnection::ReadFeatureValues(
+    google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::FeaturestoreOnlineServingServiceConnection::"
+      "ReadFeatureValues");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ReadFeatureValues(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
-FeaturestoreOnlineServingServiceTracingConnection::StreamingReadFeatureValues(google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::FeaturestoreOnlineServingServiceConnection::StreamingReadFeatureValues");
+FeaturestoreOnlineServingServiceTracingConnection::StreamingReadFeatureValues(
+    google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::FeaturestoreOnlineServingServiceConnection::"
+      "StreamingReadFeatureValues");
   internal::OTelScope scope(span);
   auto sr = child_->StreamingReadFeatureValues(request);
-  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::aiplatform::v1::ReadFeatureValuesResponse>(std::move(span),
+                                                                std::move(sr));
 }
 StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
-FeaturestoreOnlineServingServiceTracingConnection::WriteFeatureValues(google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::FeaturestoreOnlineServingServiceConnection::WriteFeatureValues");
+FeaturestoreOnlineServingServiceTracingConnection::WriteFeatureValues(
+    google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::FeaturestoreOnlineServingServiceConnection::"
+      "WriteFeatureValues");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->WriteFeatureValues(request));
 }
@@ -59,10 +73,12 @@ FeaturestoreOnlineServingServiceTracingConnection::WriteFeatureValues(google::cl
 
 std::shared_ptr<aiplatform_v1::FeaturestoreOnlineServingServiceConnection>
 MakeFeaturestoreOnlineServingServiceTracingConnection(
-    std::shared_ptr<aiplatform_v1::FeaturestoreOnlineServingServiceConnection> conn) {
+    std::shared_ptr<aiplatform_v1::FeaturestoreOnlineServingServiceConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<FeaturestoreOnlineServingServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<FeaturestoreOnlineServingServiceTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

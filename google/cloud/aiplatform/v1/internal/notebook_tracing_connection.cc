@@ -34,90 +34,126 @@ NotebookServiceTracingConnection::NotebookServiceTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>>
-NotebookServiceTracingConnection::CreateNotebookRuntimeTemplate(google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const& request) {
+NotebookServiceTracingConnection::CreateNotebookRuntimeTemplate(
+    google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "aiplatform_v1::NotebookServiceConnection::CreateNotebookRuntimeTemplate");
+      "aiplatform_v1::NotebookServiceConnection::"
+      "CreateNotebookRuntimeTemplate");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateNotebookRuntimeTemplate(request));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateNotebookRuntimeTemplate(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
-NotebookServiceTracingConnection::GetNotebookRuntimeTemplate(google::cloud::aiplatform::v1::GetNotebookRuntimeTemplateRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::NotebookServiceConnection::GetNotebookRuntimeTemplate");
+NotebookServiceTracingConnection::GetNotebookRuntimeTemplate(
+    google::cloud::aiplatform::v1::GetNotebookRuntimeTemplateRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::NotebookServiceConnection::GetNotebookRuntimeTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetNotebookRuntimeTemplate(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
-NotebookServiceTracingConnection::ListNotebookRuntimeTemplates(google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesRequest request) {
-  auto span = internal::MakeSpan("aiplatform_v1::NotebookServiceConnection::ListNotebookRuntimeTemplates");
+NotebookServiceTracingConnection::ListNotebookRuntimeTemplates(
+    google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::NotebookServiceConnection::ListNotebookRuntimeTemplates");
   internal::OTelScope scope(span);
   auto sr = child_->ListNotebookRuntimeTemplates(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::aiplatform::v1::NotebookRuntimeTemplate>(std::move(span),
+                                                              std::move(sr));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-NotebookServiceTracingConnection::DeleteNotebookRuntimeTemplate(google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const& request) {
+NotebookServiceTracingConnection::DeleteNotebookRuntimeTemplate(
+    google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "aiplatform_v1::NotebookServiceConnection::DeleteNotebookRuntimeTemplate");
+      "aiplatform_v1::NotebookServiceConnection::"
+      "DeleteNotebookRuntimeTemplate");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteNotebookRuntimeTemplate(request));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteNotebookRuntimeTemplate(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
-NotebookServiceTracingConnection::UpdateNotebookRuntimeTemplate(google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::NotebookServiceConnection::UpdateNotebookRuntimeTemplate");
+NotebookServiceTracingConnection::UpdateNotebookRuntimeTemplate(
+    google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::NotebookServiceConnection::"
+      "UpdateNotebookRuntimeTemplate");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->UpdateNotebookRuntimeTemplate(request));
+  return internal::EndSpan(*span,
+                           child_->UpdateNotebookRuntimeTemplate(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>
-NotebookServiceTracingConnection::AssignNotebookRuntime(google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const& request) {
+NotebookServiceTracingConnection::AssignNotebookRuntime(
+    google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::NotebookServiceConnection::AssignNotebookRuntime");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->AssignNotebookRuntime(request));
+  return internal::EndSpan(std::move(span),
+                           child_->AssignNotebookRuntime(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>
-NotebookServiceTracingConnection::GetNotebookRuntime(google::cloud::aiplatform::v1::GetNotebookRuntimeRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::NotebookServiceConnection::GetNotebookRuntime");
+NotebookServiceTracingConnection::GetNotebookRuntime(
+    google::cloud::aiplatform::v1::GetNotebookRuntimeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::NotebookServiceConnection::GetNotebookRuntime");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetNotebookRuntime(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::NotebookRuntime>
-NotebookServiceTracingConnection::ListNotebookRuntimes(google::cloud::aiplatform::v1::ListNotebookRuntimesRequest request) {
-  auto span = internal::MakeSpan("aiplatform_v1::NotebookServiceConnection::ListNotebookRuntimes");
+NotebookServiceTracingConnection::ListNotebookRuntimes(
+    google::cloud::aiplatform::v1::ListNotebookRuntimesRequest request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::NotebookServiceConnection::ListNotebookRuntimes");
   internal::OTelScope scope(span);
   auto sr = child_->ListNotebookRuntimes(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::NotebookRuntime>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::aiplatform::v1::NotebookRuntime>(std::move(span),
+                                                      std::move(sr));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-NotebookServiceTracingConnection::DeleteNotebookRuntime(google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const& request) {
+NotebookServiceTracingConnection::DeleteNotebookRuntime(
+    google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::NotebookServiceConnection::DeleteNotebookRuntime");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteNotebookRuntime(request));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteNotebookRuntime(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>
-NotebookServiceTracingConnection::UpgradeNotebookRuntime(google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const& request) {
+NotebookServiceTracingConnection::UpgradeNotebookRuntime(
+    google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::NotebookServiceConnection::UpgradeNotebookRuntime");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpgradeNotebookRuntime(request));
+  return internal::EndSpan(std::move(span),
+                           child_->UpgradeNotebookRuntime(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>
-NotebookServiceTracingConnection::StartNotebookRuntime(google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request) {
+NotebookServiceTracingConnection::StartNotebookRuntime(
+    google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::NotebookServiceConnection::StartNotebookRuntime");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->StartNotebookRuntime(request));
+  return internal::EndSpan(std::move(span),
+                           child_->StartNotebookRuntime(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

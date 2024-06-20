@@ -34,17 +34,19 @@ class MigrationServiceConnectionIdempotencyPolicy {
   virtual ~MigrationServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<MigrationServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<MigrationServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  SearchMigratableResources(google::cloud::aiplatform::v1::SearchMigratableResourcesRequest request);
+  virtual google::cloud::Idempotency SearchMigratableResources(
+      google::cloud::aiplatform::v1::SearchMigratableResourcesRequest request);
 
-  virtual google::cloud::Idempotency
-  BatchMigrateResources(google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request);
+  virtual google::cloud::Idempotency BatchMigrateResources(
+      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
+          request);
 };
 
 std::unique_ptr<MigrationServiceConnectionIdempotencyPolicy>
-    MakeDefaultMigrationServiceConnectionIdempotencyPolicy();
+MakeDefaultMigrationServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

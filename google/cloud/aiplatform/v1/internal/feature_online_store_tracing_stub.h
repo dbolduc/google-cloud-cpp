@@ -31,25 +31,30 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class FeatureOnlineStoreServiceTracingStub : public FeatureOnlineStoreServiceStub {
+class FeatureOnlineStoreServiceTracingStub
+    : public FeatureOnlineStoreServiceStub {
  public:
   ~FeatureOnlineStoreServiceTracingStub() override = default;
 
-  explicit FeatureOnlineStoreServiceTracingStub(std::shared_ptr<FeatureOnlineStoreServiceStub> child);
+  explicit FeatureOnlineStoreServiceTracingStub(
+      std::shared_ptr<FeatureOnlineStoreServiceStub> child);
 
-  StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse> FetchFeatureValues(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>
+  FetchFeatureValues(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse> SearchNearestEntities(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
+  SearchNearestEntities(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
+          request) override;
 
  private:
   std::shared_ptr<FeatureOnlineStoreServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -60,7 +65,8 @@ class FeatureOnlineStoreServiceTracingStub : public FeatureOnlineStoreServiceStu
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
-std::shared_ptr<FeatureOnlineStoreServiceStub> MakeFeatureOnlineStoreServiceTracingStub(
+std::shared_ptr<FeatureOnlineStoreServiceStub>
+MakeFeatureOnlineStoreServiceTracingStub(
     std::shared_ptr<FeatureOnlineStoreServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

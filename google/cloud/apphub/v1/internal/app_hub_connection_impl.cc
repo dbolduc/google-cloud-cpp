@@ -33,71 +33,82 @@ namespace apphub_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<apphub_v1::AppHubRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<apphub_v1::AppHubRetryPolicy> retry_policy(
+    Options const& options) {
   return options.get<apphub_v1::AppHubRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
   return options.get<apphub_v1::AppHubBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<apphub_v1::AppHubConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<apphub_v1::AppHubConnectionIdempotencyPolicyOption>()->clone();
+  return options.get<apphub_v1::AppHubConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
   return options.get<apphub_v1::AppHubPollingPolicyOption>()->clone();
 }
 
-} // namespace
+}  // namespace
 
 AppHubConnectionImpl::AppHubConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<apphub_v1_internal::AppHubStub> stub,
-    Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        AppHubConnection::options())) {}
+    std::shared_ptr<apphub_v1_internal::AppHubStub> stub, Options options)
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      AppHubConnection::options())) {}
 
 StatusOr<google::cloud::apphub::v1::LookupServiceProjectAttachmentResponse>
-AppHubConnectionImpl::LookupServiceProjectAttachment(google::cloud::apphub::v1::LookupServiceProjectAttachmentRequest const& request) {
+AppHubConnectionImpl::LookupServiceProjectAttachment(
+    google::cloud::apphub::v1::LookupServiceProjectAttachmentRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->LookupServiceProjectAttachment(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::apphub::v1::LookupServiceProjectAttachmentRequest const& request) {
+             google::cloud::apphub::v1::
+                 LookupServiceProjectAttachmentRequest const& request) {
         return stub_->LookupServiceProjectAttachment(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::apphub::v1::ServiceProjectAttachment>
-AppHubConnectionImpl::ListServiceProjectAttachments(google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest request) {
+AppHubConnectionImpl::ListServiceProjectAttachments(
+    google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListServiceProjectAttachments(request);
+  auto idempotency =
+      idempotency_policy(*current)->ListServiceProjectAttachments(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::apphub::v1::ServiceProjectAttachment>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::apphub::v1::ServiceProjectAttachment>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<apphub_v1::AppHubRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<apphub_v1::AppHubRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest const& r) {
+          Options const& options,
+          google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest const&
+              r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest const& request) {
-              return stub->ListServiceProjectAttachments(context, options, request);
+                   google::cloud::apphub::v1::
+                       ListServiceProjectAttachmentsRequest const& request) {
+              return stub->ListServiceProjectAttachments(context, options,
+                                                         request);
             },
             options, r, function_name);
       },
       [](google::cloud::apphub::v1::ListServiceProjectAttachmentsResponse r) {
-        std::vector<google::cloud::apphub::v1::ServiceProjectAttachment> result(r.service_project_attachments().size());
+        std::vector<google::cloud::apphub::v1::ServiceProjectAttachment> result(
+            r.service_project_attachments().size());
         auto& messages = *r.mutable_service_project_attachments();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -105,121 +116,150 @@ AppHubConnectionImpl::ListServiceProjectAttachments(google::cloud::apphub::v1::L
 }
 
 future<StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>
-AppHubConnectionImpl::CreateServiceProjectAttachment(google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const& request) {
+AppHubConnectionImpl::CreateServiceProjectAttachment(
+    google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
-      idempotency_policy(*current)->CreateServiceProjectAttachment(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::apphub::v1::ServiceProjectAttachment>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const& request) {
-     return stub->AsyncCreateServiceProjectAttachment(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::apphub::v1::ServiceProjectAttachment>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+      idempotency_policy(*current)->CreateServiceProjectAttachment(
+          request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::apphub::v1::ServiceProjectAttachment>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::apphub::v1::
+                         CreateServiceProjectAttachmentRequest const& request) {
+        return stub->AsyncCreateServiceProjectAttachment(
+            cq, std::move(context), std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::apphub::v1::ServiceProjectAttachment>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>
-AppHubConnectionImpl::GetServiceProjectAttachment(google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const& request) {
+AppHubConnectionImpl::GetServiceProjectAttachment(
+    google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetServiceProjectAttachment(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const&
+              request) {
         return stub_->GetServiceProjectAttachment(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
-AppHubConnectionImpl::DeleteServiceProjectAttachment(google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const& request) {
+AppHubConnectionImpl::DeleteServiceProjectAttachment(
+    google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
-      idempotency_policy(*current)->DeleteServiceProjectAttachment(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::apphub::v1::OperationMetadata>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const& request) {
-     return stub->AsyncDeleteServiceProjectAttachment(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::apphub::v1::OperationMetadata>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+      idempotency_policy(*current)->DeleteServiceProjectAttachment(
+          request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::apphub::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::apphub::v1::
+                         DeleteServiceProjectAttachmentRequest const& request) {
+        return stub->AsyncDeleteServiceProjectAttachment(
+            cq, std::move(context), std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::apphub::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::apphub::v1::DetachServiceProjectAttachmentResponse>
-AppHubConnectionImpl::DetachServiceProjectAttachment(google::cloud::apphub::v1::DetachServiceProjectAttachmentRequest const& request) {
+AppHubConnectionImpl::DetachServiceProjectAttachment(
+    google::cloud::apphub::v1::DetachServiceProjectAttachmentRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DetachServiceProjectAttachment(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::apphub::v1::DetachServiceProjectAttachmentRequest const& request) {
+             google::cloud::apphub::v1::
+                 DetachServiceProjectAttachmentRequest const& request) {
         return stub_->DetachServiceProjectAttachment(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::apphub::v1::DiscoveredService>
-AppHubConnectionImpl::ListDiscoveredServices(google::cloud::apphub::v1::ListDiscoveredServicesRequest request) {
+AppHubConnectionImpl::ListDiscoveredServices(
+    google::cloud::apphub::v1::ListDiscoveredServicesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListDiscoveredServices(request);
+  auto idempotency =
+      idempotency_policy(*current)->ListDiscoveredServices(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::apphub::v1::DiscoveredService>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::apphub::v1::DiscoveredService>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<apphub_v1::AppHubRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<apphub_v1::AppHubRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::apphub::v1::ListDiscoveredServicesRequest const& r) {
+          Options const& options,
+          google::cloud::apphub::v1::ListDiscoveredServicesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::apphub::v1::ListDiscoveredServicesRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::apphub::v1::ListDiscoveredServicesRequest const&
+                    request) {
               return stub->ListDiscoveredServices(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::apphub::v1::ListDiscoveredServicesResponse r) {
-        std::vector<google::cloud::apphub::v1::DiscoveredService> result(r.discovered_services().size());
+        std::vector<google::cloud::apphub::v1::DiscoveredService> result(
+            r.discovered_services().size());
         auto& messages = *r.mutable_discovered_services();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -227,53 +267,63 @@ AppHubConnectionImpl::ListDiscoveredServices(google::cloud::apphub::v1::ListDisc
 }
 
 StatusOr<google::cloud::apphub::v1::DiscoveredService>
-AppHubConnectionImpl::GetDiscoveredService(google::cloud::apphub::v1::GetDiscoveredServiceRequest const& request) {
+AppHubConnectionImpl::GetDiscoveredService(
+    google::cloud::apphub::v1::GetDiscoveredServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDiscoveredService(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::apphub::v1::GetDiscoveredServiceRequest const& request) {
+             google::cloud::apphub::v1::GetDiscoveredServiceRequest const&
+                 request) {
         return stub_->GetDiscoveredService(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::apphub::v1::LookupDiscoveredServiceResponse>
-AppHubConnectionImpl::LookupDiscoveredService(google::cloud::apphub::v1::LookupDiscoveredServiceRequest const& request) {
+AppHubConnectionImpl::LookupDiscoveredService(
+    google::cloud::apphub::v1::LookupDiscoveredServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->LookupDiscoveredService(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::apphub::v1::LookupDiscoveredServiceRequest const& request) {
+             google::cloud::apphub::v1::LookupDiscoveredServiceRequest const&
+                 request) {
         return stub_->LookupDiscoveredService(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::apphub::v1::Service>
-AppHubConnectionImpl::ListServices(google::cloud::apphub::v1::ListServicesRequest request) {
+AppHubConnectionImpl::ListServices(
+    google::cloud::apphub::v1::ListServicesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListServices(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::apphub::v1::Service>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::apphub::v1::Service>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<apphub_v1::AppHubRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<apphub_v1::AppHubRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::apphub::v1::ListServicesRequest const& r) {
+          Options const& options,
+          google::cloud::apphub::v1::ListServicesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::apphub::v1::ListServicesRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::apphub::v1::ListServicesRequest const& request) {
               return stub->ListServices(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::apphub::v1::ListServicesResponse r) {
-        std::vector<google::cloud::apphub::v1::Service> result(r.services().size());
+        std::vector<google::cloud::apphub::v1::Service> result(
+            r.services().size());
         auto& messages = *r.mutable_services();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -281,41 +331,46 @@ AppHubConnectionImpl::ListServices(google::cloud::apphub::v1::ListServicesReques
 }
 
 future<StatusOr<google::cloud::apphub::v1::Service>>
-AppHubConnectionImpl::CreateService(google::cloud::apphub::v1::CreateServiceRequest const& request) {
+AppHubConnectionImpl::CreateService(
+    google::cloud::apphub::v1::CreateServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateService(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::apphub::v1::Service>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::apphub::v1::CreateServiceRequest const& request) {
-     return stub->AsyncCreateService(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::apphub::v1::Service>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::apphub::v1::Service>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::apphub::v1::CreateServiceRequest const& request) {
+        return stub->AsyncCreateService(cq, std::move(context),
+                                        std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::apphub::v1::Service>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
-StatusOr<google::cloud::apphub::v1::Service>
-AppHubConnectionImpl::GetService(google::cloud::apphub::v1::GetServiceRequest const& request) {
+StatusOr<google::cloud::apphub::v1::Service> AppHubConnectionImpl::GetService(
+    google::cloud::apphub::v1::GetServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -328,95 +383,113 @@ AppHubConnectionImpl::GetService(google::cloud::apphub::v1::GetServiceRequest co
 }
 
 future<StatusOr<google::cloud::apphub::v1::Service>>
-AppHubConnectionImpl::UpdateService(google::cloud::apphub::v1::UpdateServiceRequest const& request) {
+AppHubConnectionImpl::UpdateService(
+    google::cloud::apphub::v1::UpdateServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateService(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::apphub::v1::Service>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::apphub::v1::UpdateServiceRequest const& request) {
-     return stub->AsyncUpdateService(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::apphub::v1::Service>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::apphub::v1::Service>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::apphub::v1::UpdateServiceRequest const& request) {
+        return stub->AsyncUpdateService(cq, std::move(context),
+                                        std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::apphub::v1::Service>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
-AppHubConnectionImpl::DeleteService(google::cloud::apphub::v1::DeleteServiceRequest const& request) {
+AppHubConnectionImpl::DeleteService(
+    google::cloud::apphub::v1::DeleteServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteService(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::apphub::v1::OperationMetadata>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::apphub::v1::DeleteServiceRequest const& request) {
-     return stub->AsyncDeleteService(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::apphub::v1::OperationMetadata>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::apphub::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::apphub::v1::DeleteServiceRequest const& request) {
+        return stub->AsyncDeleteService(cq, std::move(context),
+                                        std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::apphub::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::apphub::v1::DiscoveredWorkload>
-AppHubConnectionImpl::ListDiscoveredWorkloads(google::cloud::apphub::v1::ListDiscoveredWorkloadsRequest request) {
+AppHubConnectionImpl::ListDiscoveredWorkloads(
+    google::cloud::apphub::v1::ListDiscoveredWorkloadsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListDiscoveredWorkloads(request);
+  auto idempotency =
+      idempotency_policy(*current)->ListDiscoveredWorkloads(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::apphub::v1::DiscoveredWorkload>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::apphub::v1::DiscoveredWorkload>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<apphub_v1::AppHubRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<apphub_v1::AppHubRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::apphub::v1::ListDiscoveredWorkloadsRequest const& r) {
+          Options const& options,
+          google::cloud::apphub::v1::ListDiscoveredWorkloadsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::apphub::v1::ListDiscoveredWorkloadsRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::apphub::v1::ListDiscoveredWorkloadsRequest const&
+                    request) {
               return stub->ListDiscoveredWorkloads(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::apphub::v1::ListDiscoveredWorkloadsResponse r) {
-        std::vector<google::cloud::apphub::v1::DiscoveredWorkload> result(r.discovered_workloads().size());
+        std::vector<google::cloud::apphub::v1::DiscoveredWorkload> result(
+            r.discovered_workloads().size());
         auto& messages = *r.mutable_discovered_workloads();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -424,53 +497,63 @@ AppHubConnectionImpl::ListDiscoveredWorkloads(google::cloud::apphub::v1::ListDis
 }
 
 StatusOr<google::cloud::apphub::v1::DiscoveredWorkload>
-AppHubConnectionImpl::GetDiscoveredWorkload(google::cloud::apphub::v1::GetDiscoveredWorkloadRequest const& request) {
+AppHubConnectionImpl::GetDiscoveredWorkload(
+    google::cloud::apphub::v1::GetDiscoveredWorkloadRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDiscoveredWorkload(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::apphub::v1::GetDiscoveredWorkloadRequest const& request) {
+             google::cloud::apphub::v1::GetDiscoveredWorkloadRequest const&
+                 request) {
         return stub_->GetDiscoveredWorkload(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::apphub::v1::LookupDiscoveredWorkloadResponse>
-AppHubConnectionImpl::LookupDiscoveredWorkload(google::cloud::apphub::v1::LookupDiscoveredWorkloadRequest const& request) {
+AppHubConnectionImpl::LookupDiscoveredWorkload(
+    google::cloud::apphub::v1::LookupDiscoveredWorkloadRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->LookupDiscoveredWorkload(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::apphub::v1::LookupDiscoveredWorkloadRequest const& request) {
+             google::cloud::apphub::v1::LookupDiscoveredWorkloadRequest const&
+                 request) {
         return stub_->LookupDiscoveredWorkload(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::apphub::v1::Workload>
-AppHubConnectionImpl::ListWorkloads(google::cloud::apphub::v1::ListWorkloadsRequest request) {
+AppHubConnectionImpl::ListWorkloads(
+    google::cloud::apphub::v1::ListWorkloadsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListWorkloads(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::apphub::v1::Workload>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::apphub::v1::Workload>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<apphub_v1::AppHubRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<apphub_v1::AppHubRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::apphub::v1::ListWorkloadsRequest const& r) {
+          Options const& options,
+          google::cloud::apphub::v1::ListWorkloadsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::apphub::v1::ListWorkloadsRequest const& request) {
+                   google::cloud::apphub::v1::ListWorkloadsRequest const&
+                       request) {
               return stub->ListWorkloads(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::apphub::v1::ListWorkloadsResponse r) {
-        std::vector<google::cloud::apphub::v1::Workload> result(r.workloads().size());
+        std::vector<google::cloud::apphub::v1::Workload> result(
+            r.workloads().size());
         auto& messages = *r.mutable_workloads();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -478,41 +561,46 @@ AppHubConnectionImpl::ListWorkloads(google::cloud::apphub::v1::ListWorkloadsRequ
 }
 
 future<StatusOr<google::cloud::apphub::v1::Workload>>
-AppHubConnectionImpl::CreateWorkload(google::cloud::apphub::v1::CreateWorkloadRequest const& request) {
+AppHubConnectionImpl::CreateWorkload(
+    google::cloud::apphub::v1::CreateWorkloadRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateWorkload(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::apphub::v1::Workload>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::apphub::v1::CreateWorkloadRequest const& request) {
-     return stub->AsyncCreateWorkload(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::apphub::v1::Workload>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::apphub::v1::Workload>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::apphub::v1::CreateWorkloadRequest const& request) {
+        return stub->AsyncCreateWorkload(cq, std::move(context),
+                                         std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::apphub::v1::Workload>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
-StatusOr<google::cloud::apphub::v1::Workload>
-AppHubConnectionImpl::GetWorkload(google::cloud::apphub::v1::GetWorkloadRequest const& request) {
+StatusOr<google::cloud::apphub::v1::Workload> AppHubConnectionImpl::GetWorkload(
+    google::cloud::apphub::v1::GetWorkloadRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -525,95 +613,111 @@ AppHubConnectionImpl::GetWorkload(google::cloud::apphub::v1::GetWorkloadRequest 
 }
 
 future<StatusOr<google::cloud::apphub::v1::Workload>>
-AppHubConnectionImpl::UpdateWorkload(google::cloud::apphub::v1::UpdateWorkloadRequest const& request) {
+AppHubConnectionImpl::UpdateWorkload(
+    google::cloud::apphub::v1::UpdateWorkloadRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateWorkload(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::apphub::v1::Workload>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::apphub::v1::UpdateWorkloadRequest const& request) {
-     return stub->AsyncUpdateWorkload(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::apphub::v1::Workload>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::apphub::v1::Workload>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::apphub::v1::UpdateWorkloadRequest const& request) {
+        return stub->AsyncUpdateWorkload(cq, std::move(context),
+                                         std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::apphub::v1::Workload>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
-AppHubConnectionImpl::DeleteWorkload(google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
+AppHubConnectionImpl::DeleteWorkload(
+    google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteWorkload(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::apphub::v1::OperationMetadata>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
-     return stub->AsyncDeleteWorkload(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::apphub::v1::OperationMetadata>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::apphub::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
+        return stub->AsyncDeleteWorkload(cq, std::move(context),
+                                         std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::apphub::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::apphub::v1::Application>
-AppHubConnectionImpl::ListApplications(google::cloud::apphub::v1::ListApplicationsRequest request) {
+AppHubConnectionImpl::ListApplications(
+    google::cloud::apphub::v1::ListApplicationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListApplications(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::apphub::v1::Application>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::apphub::v1::Application>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<apphub_v1::AppHubRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<apphub_v1::AppHubRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::apphub::v1::ListApplicationsRequest const& r) {
+          Options const& options,
+          google::cloud::apphub::v1::ListApplicationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::apphub::v1::ListApplicationsRequest const& request) {
+                   google::cloud::apphub::v1::ListApplicationsRequest const&
+                       request) {
               return stub->ListApplications(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::apphub::v1::ListApplicationsResponse r) {
-        std::vector<google::cloud::apphub::v1::Application> result(r.applications().size());
+        std::vector<google::cloud::apphub::v1::Application> result(
+            r.applications().size());
         auto& messages = *r.mutable_applications();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -621,41 +725,47 @@ AppHubConnectionImpl::ListApplications(google::cloud::apphub::v1::ListApplicatio
 }
 
 future<StatusOr<google::cloud::apphub::v1::Application>>
-AppHubConnectionImpl::CreateApplication(google::cloud::apphub::v1::CreateApplicationRequest const& request) {
+AppHubConnectionImpl::CreateApplication(
+    google::cloud::apphub::v1::CreateApplicationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateApplication(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::apphub::v1::Application>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::apphub::v1::CreateApplicationRequest const& request) {
-     return stub->AsyncCreateApplication(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::apphub::v1::Application>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::apphub::v1::Application>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::apphub::v1::CreateApplicationRequest const& request) {
+        return stub->AsyncCreateApplication(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::apphub::v1::Application>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::apphub::v1::Application>
-AppHubConnectionImpl::GetApplication(google::cloud::apphub::v1::GetApplicationRequest const& request) {
+AppHubConnectionImpl::GetApplication(
+    google::cloud::apphub::v1::GetApplicationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -668,71 +778,81 @@ AppHubConnectionImpl::GetApplication(google::cloud::apphub::v1::GetApplicationRe
 }
 
 future<StatusOr<google::cloud::apphub::v1::Application>>
-AppHubConnectionImpl::UpdateApplication(google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
+AppHubConnectionImpl::UpdateApplication(
+    google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateApplication(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::apphub::v1::Application>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
-     return stub->AsyncUpdateApplication(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::apphub::v1::Application>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::apphub::v1::Application>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
+        return stub->AsyncUpdateApplication(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::apphub::v1::Application>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
-AppHubConnectionImpl::DeleteApplication(google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
+AppHubConnectionImpl::DeleteApplication(
+    google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteApplication(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::apphub::v1::OperationMetadata>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
-     return stub->AsyncDeleteApplication(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::apphub::v1::OperationMetadata>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::apphub::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
+        return stub->AsyncDeleteApplication(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::apphub::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -38,48 +38,54 @@ class FeatureRegistryServiceStub {
  public:
   virtual ~FeatureRegistryServiceStub() = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateFeatureGroup(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateFeatureGroup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request) = 0;
+      google::cloud::aiplatform::v1::CreateFeatureGroupRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateFeatureGroup(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreateFeatureGroupRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::FeatureGroup> GetFeatureGroup(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetFeatureGroupRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::ListFeatureGroupsResponse> ListFeatureGroups(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListFeatureGroupsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::aiplatform::v1::ListFeatureGroupsResponse>
+  ListFeatureGroups(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListFeatureGroupsRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateFeatureGroup(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateFeatureGroup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request) = 0;
+      google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateFeatureGroup(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteFeatureGroup(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteFeatureGroup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request) = 0;
+      google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteFeatureGroup(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateFeature(
       google::cloud::CompletionQueue& cq,
@@ -88,18 +94,16 @@ class FeatureRegistryServiceStub {
       google::cloud::aiplatform::v1::CreateFeatureRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateFeature(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::CreateFeatureRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetFeatureRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::ListFeaturesResponse> ListFeatures(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::aiplatform::v1::ListFeaturesResponse>
+  ListFeatures(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListFeaturesRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateFeature(
@@ -109,8 +113,7 @@ class FeatureRegistryServiceStub {
       google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateFeature(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteFeature(
@@ -120,14 +123,13 @@ class FeatureRegistryServiceStub {
       google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteFeature(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -140,96 +142,104 @@ class FeatureRegistryServiceStub {
 class DefaultFeatureRegistryServiceStub : public FeatureRegistryServiceStub {
  public:
   DefaultFeatureRegistryServiceStub(
-      std::unique_ptr<google::cloud::aiplatform::v1::FeatureRegistryService::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations)
-      : grpc_stub_(std::move(grpc_stub)),
-        operations_(std::move(operations)) {}
+      std::unique_ptr<
+          google::cloud::aiplatform::v1::FeatureRegistryService::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations)
+      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateFeatureGroup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request) override;
+      google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateFeatureGroup(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request)
+      override;
 
   StatusOr<google::cloud::aiplatform::v1::FeatureGroup> GetFeatureGroup(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::GetFeatureGroupRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::GetFeatureGroupRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::ListFeatureGroupsResponse> ListFeatureGroups(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListFeatureGroupsRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::ListFeatureGroupsResponse>
+  ListFeatureGroups(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListFeatureGroupsRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateFeatureGroup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request) override;
+      google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateFeatureGroup(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteFeatureGroup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request) override;
+      google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteFeatureGroup(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateFeature(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateFeatureRequest const& request) override;
+      google::cloud::aiplatform::v1::CreateFeatureRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateFeature(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CreateFeatureRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreateFeatureRequest const& request)
+      override;
 
   StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetFeatureRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListFeaturesResponse> ListFeatures(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListFeaturesRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListFeaturesRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateFeature(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) override;
+      google::cloud::aiplatform::v1::UpdateFeatureRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateFeature(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::UpdateFeatureRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteFeature(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) override;
+      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteFeature(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -244,7 +254,9 @@ class DefaultFeatureRegistryServiceStub : public FeatureRegistryServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::aiplatform::v1::FeatureRegistryService::StubInterface> grpc_stub_;
+  std::unique_ptr<
+      google::cloud::aiplatform::v1::FeatureRegistryService::StubInterface>
+      grpc_stub_;
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 

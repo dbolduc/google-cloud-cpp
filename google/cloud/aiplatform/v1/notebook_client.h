@@ -63,7 +63,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class NotebookServiceClient {
  public:
-  explicit NotebookServiceClient(std::shared_ptr<NotebookServiceConnection> connection, Options opts = {});
+  explicit NotebookServiceClient(
+      std::shared_ptr<NotebookServiceConnection> connection, Options opts = {});
   ~NotebookServiceClient();
 
   ///@{
@@ -76,10 +77,12 @@ class NotebookServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(NotebookServiceClient const& a, NotebookServiceClient const& b) {
+  friend bool operator==(NotebookServiceClient const& a,
+                         NotebookServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(NotebookServiceClient const& a, NotebookServiceClient const& b) {
+  friend bool operator!=(NotebookServiceClient const& a,
+                         NotebookServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -117,7 +120,11 @@ class NotebookServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>>
-  CreateNotebookRuntimeTemplate(std::string const& parent, google::cloud::aiplatform::v1::NotebookRuntimeTemplate const& notebook_runtime_template, std::string const& notebook_runtime_template_id, Options opts = {});
+  CreateNotebookRuntimeTemplate(
+      std::string const& parent,
+      google::cloud::aiplatform::v1::NotebookRuntimeTemplate const&
+          notebook_runtime_template,
+      std::string const& notebook_runtime_template_id, Options opts = {});
 
   // clang-format off
   ///
@@ -154,7 +161,10 @@ class NotebookServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>>
-  CreateNotebookRuntimeTemplate(google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const& request, Options opts = {});
+  CreateNotebookRuntimeTemplate(
+      google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -211,7 +221,10 @@ class NotebookServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
-  GetNotebookRuntimeTemplate(google::cloud::aiplatform::v1::GetNotebookRuntimeTemplateRequest const& request, Options opts = {});
+  GetNotebookRuntimeTemplate(
+      google::cloud::aiplatform::v1::GetNotebookRuntimeTemplateRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -286,7 +299,10 @@ class NotebookServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
-  ListNotebookRuntimeTemplates(google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesRequest request, Options opts = {});
+  ListNotebookRuntimeTemplates(
+      google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -357,7 +373,10 @@ class NotebookServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteNotebookRuntimeTemplate(google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const& request, Options opts = {});
+  DeleteNotebookRuntimeTemplate(
+      google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -389,7 +408,10 @@ class NotebookServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
-  UpdateNotebookRuntimeTemplate(google::cloud::aiplatform::v1::NotebookRuntimeTemplate const& notebook_runtime_template, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateNotebookRuntimeTemplate(
+      google::cloud::aiplatform::v1::NotebookRuntimeTemplate const&
+          notebook_runtime_template,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -419,7 +441,10 @@ class NotebookServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
-  UpdateNotebookRuntimeTemplate(google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const& request, Options opts = {});
+  UpdateNotebookRuntimeTemplate(
+      google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -458,7 +483,10 @@ class NotebookServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>
-  AssignNotebookRuntime(std::string const& parent, std::string const& notebook_runtime_template, google::cloud::aiplatform::v1::NotebookRuntime const& notebook_runtime, std::string const& notebook_runtime_id, Options opts = {});
+  AssignNotebookRuntime(
+      std::string const& parent, std::string const& notebook_runtime_template,
+      google::cloud::aiplatform::v1::NotebookRuntime const& notebook_runtime,
+      std::string const& notebook_runtime_id, Options opts = {});
 
   // clang-format off
   ///
@@ -496,7 +524,10 @@ class NotebookServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>
-  AssignNotebookRuntime(google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const& request, Options opts = {});
+  AssignNotebookRuntime(
+      google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -523,8 +554,8 @@ class NotebookServiceClient {
   /// [google.cloud.aiplatform.v1.NotebookRuntime]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L151}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>
-  GetNotebookRuntime(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::NotebookRuntime> GetNotebookRuntime(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -553,8 +584,9 @@ class NotebookServiceClient {
   /// [google.cloud.aiplatform.v1.NotebookRuntime]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L151}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>
-  GetNotebookRuntime(google::cloud::aiplatform::v1::GetNotebookRuntimeRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::NotebookRuntime> GetNotebookRuntime(
+      google::cloud::aiplatform::v1::GetNotebookRuntimeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -629,7 +661,9 @@ class NotebookServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::NotebookRuntime>
-  ListNotebookRuntimes(google::cloud::aiplatform::v1::ListNotebookRuntimesRequest request, Options opts = {});
+  ListNotebookRuntimes(
+      google::cloud::aiplatform::v1::ListNotebookRuntimesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -701,7 +735,10 @@ class NotebookServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteNotebookRuntime(google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const& request, Options opts = {});
+  DeleteNotebookRuntime(
+      google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -735,7 +772,8 @@ class NotebookServiceClient {
   /// [google.cloud.aiplatform.v1.UpgradeNotebookRuntimeResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L510}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>
+  future<
+      StatusOr<google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>
   UpgradeNotebookRuntime(std::string const& name, Options opts = {});
 
   // clang-format off
@@ -772,8 +810,12 @@ class NotebookServiceClient {
   /// [google.cloud.aiplatform.v1.UpgradeNotebookRuntimeResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L510}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>
-  UpgradeNotebookRuntime(google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const& request, Options opts = {});
+  future<
+      StatusOr<google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>
+  UpgradeNotebookRuntime(
+      google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -845,7 +887,9 @@ class NotebookServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>
-  StartNotebookRuntime(google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request, Options opts = {});
+  StartNotebookRuntime(
+      google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<NotebookServiceConnection> connection_;

@@ -62,7 +62,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class MatchServiceClient {
  public:
-  explicit MatchServiceClient(std::shared_ptr<MatchServiceConnection> connection, Options opts = {});
+  explicit MatchServiceClient(
+      std::shared_ptr<MatchServiceConnection> connection, Options opts = {});
   ~MatchServiceClient();
 
   ///@{
@@ -75,10 +76,12 @@ class MatchServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(MatchServiceClient const& a, MatchServiceClient const& b) {
+  friend bool operator==(MatchServiceClient const& a,
+                         MatchServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(MatchServiceClient const& a, MatchServiceClient const& b) {
+  friend bool operator!=(MatchServiceClient const& a,
+                         MatchServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -110,8 +113,9 @@ class MatchServiceClient {
   /// [google.cloud.aiplatform.v1.FindNeighborsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/match_service.proto#L138}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse>
-  FindNeighbors(google::cloud::aiplatform::v1::FindNeighborsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse> FindNeighbors(
+      google::cloud::aiplatform::v1::FindNeighborsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -142,7 +146,9 @@ class MatchServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>
-  ReadIndexDatapoints(google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request, Options opts = {});
+  ReadIndexDatapoints(
+      google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<MatchServiceConnection> connection_;

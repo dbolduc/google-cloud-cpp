@@ -46,17 +46,21 @@ class MigrationServiceConnectionImpl
   ~MigrationServiceConnectionImpl() override = default;
 
   MigrationServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<aiplatform_v1_internal::MigrationServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<aiplatform_v1_internal::MigrationServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StreamRange<google::cloud::aiplatform::v1::MigratableResource>
-  SearchMigratableResources(google::cloud::aiplatform::v1::SearchMigratableResourcesRequest request) override;
+  SearchMigratableResources(
+      google::cloud::aiplatform::v1::SearchMigratableResourcesRequest request)
+      override;
 
   future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
-  BatchMigrateResources(google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request) override;
+  BatchMigrateResources(
+      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
+          request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -28,12 +28,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DatasetServiceClient::DatasetServiceClient(
     std::shared_ptr<DatasetServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 DatasetServiceClient::~DatasetServiceClient() = default;
 
 future<StatusOr<google::cloud::aiplatform::v1::Dataset>>
-DatasetServiceClient::CreateDataset(std::string const& parent, google::cloud::aiplatform::v1::Dataset const& dataset, Options opts) {
+DatasetServiceClient::CreateDataset(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::Dataset const& dataset, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateDatasetRequest request;
   request.set_parent(parent);
@@ -42,7 +44,9 @@ DatasetServiceClient::CreateDataset(std::string const& parent, google::cloud::ai
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Dataset>>
-DatasetServiceClient::CreateDataset(google::cloud::aiplatform::v1::CreateDatasetRequest const& request, Options opts) {
+DatasetServiceClient::CreateDataset(
+    google::cloud::aiplatform::v1::CreateDatasetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDataset(request);
 }
@@ -56,13 +60,17 @@ DatasetServiceClient::GetDataset(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::aiplatform::v1::Dataset>
-DatasetServiceClient::GetDataset(google::cloud::aiplatform::v1::GetDatasetRequest const& request, Options opts) {
+DatasetServiceClient::GetDataset(
+    google::cloud::aiplatform::v1::GetDatasetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDataset(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Dataset>
-DatasetServiceClient::UpdateDataset(google::cloud::aiplatform::v1::Dataset const& dataset, google::protobuf::FieldMask const& update_mask, Options opts) {
+DatasetServiceClient::UpdateDataset(
+    google::cloud::aiplatform::v1::Dataset const& dataset,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdateDatasetRequest request;
   *request.mutable_dataset() = dataset;
@@ -71,7 +79,9 @@ DatasetServiceClient::UpdateDataset(google::cloud::aiplatform::v1::Dataset const
 }
 
 StatusOr<google::cloud::aiplatform::v1::Dataset>
-DatasetServiceClient::UpdateDataset(google::cloud::aiplatform::v1::UpdateDatasetRequest const& request, Options opts) {
+DatasetServiceClient::UpdateDataset(
+    google::cloud::aiplatform::v1::UpdateDatasetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDataset(request);
 }
@@ -85,7 +95,8 @@ DatasetServiceClient::ListDatasets(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::aiplatform::v1::Dataset>
-DatasetServiceClient::ListDatasets(google::cloud::aiplatform::v1::ListDatasetsRequest request, Options opts) {
+DatasetServiceClient::ListDatasets(
+    google::cloud::aiplatform::v1::ListDatasetsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDatasets(std::move(request));
 }
@@ -99,28 +110,40 @@ DatasetServiceClient::DeleteDataset(std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-DatasetServiceClient::DeleteDataset(google::cloud::aiplatform::v1::DeleteDatasetRequest const& request, Options opts) {
+DatasetServiceClient::DeleteDataset(
+    google::cloud::aiplatform::v1::DeleteDatasetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDataset(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
-DatasetServiceClient::ImportData(std::string const& name, std::vector<google::cloud::aiplatform::v1::ImportDataConfig> const& import_configs, Options opts) {
+DatasetServiceClient::ImportData(
+    std::string const& name,
+    std::vector<google::cloud::aiplatform::v1::ImportDataConfig> const&
+        import_configs,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ImportDataRequest request;
   request.set_name(name);
-  *request.mutable_import_configs() = {import_configs.begin(), import_configs.end()};
+  *request.mutable_import_configs() = {import_configs.begin(),
+                                       import_configs.end()};
   return connection_->ImportData(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
-DatasetServiceClient::ImportData(google::cloud::aiplatform::v1::ImportDataRequest const& request, Options opts) {
+DatasetServiceClient::ImportData(
+    google::cloud::aiplatform::v1::ImportDataRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportData(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
-DatasetServiceClient::ExportData(std::string const& name, google::cloud::aiplatform::v1::ExportDataConfig const& export_config, Options opts) {
+DatasetServiceClient::ExportData(
+    std::string const& name,
+    google::cloud::aiplatform::v1::ExportDataConfig const& export_config,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ExportDataRequest request;
   request.set_name(name);
@@ -129,13 +152,18 @@ DatasetServiceClient::ExportData(std::string const& name, google::cloud::aiplatf
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
-DatasetServiceClient::ExportData(google::cloud::aiplatform::v1::ExportDataRequest const& request, Options opts) {
+DatasetServiceClient::ExportData(
+    google::cloud::aiplatform::v1::ExportDataRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportData(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
-DatasetServiceClient::CreateDatasetVersion(std::string const& parent, google::cloud::aiplatform::v1::DatasetVersion const& dataset_version, Options opts) {
+DatasetServiceClient::CreateDatasetVersion(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::DatasetVersion const& dataset_version,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateDatasetVersionRequest request;
   request.set_parent(parent);
@@ -144,13 +172,17 @@ DatasetServiceClient::CreateDatasetVersion(std::string const& parent, google::cl
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
-DatasetServiceClient::CreateDatasetVersion(google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request, Options opts) {
+DatasetServiceClient::CreateDatasetVersion(
+    google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDatasetVersion(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
-DatasetServiceClient::UpdateDatasetVersion(google::cloud::aiplatform::v1::DatasetVersion const& dataset_version, google::protobuf::FieldMask const& update_mask, Options opts) {
+DatasetServiceClient::UpdateDatasetVersion(
+    google::cloud::aiplatform::v1::DatasetVersion const& dataset_version,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdateDatasetVersionRequest request;
   *request.mutable_dataset_version() = dataset_version;
@@ -159,13 +191,16 @@ DatasetServiceClient::UpdateDatasetVersion(google::cloud::aiplatform::v1::Datase
 }
 
 StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
-DatasetServiceClient::UpdateDatasetVersion(google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request, Options opts) {
+DatasetServiceClient::UpdateDatasetVersion(
+    google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDatasetVersion(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-DatasetServiceClient::DeleteDatasetVersion(std::string const& name, Options opts) {
+DatasetServiceClient::DeleteDatasetVersion(std::string const& name,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteDatasetVersionRequest request;
   request.set_name(name);
@@ -173,7 +208,9 @@ DatasetServiceClient::DeleteDatasetVersion(std::string const& name, Options opts
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-DatasetServiceClient::DeleteDatasetVersion(google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request, Options opts) {
+DatasetServiceClient::DeleteDatasetVersion(
+    google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDatasetVersion(request);
 }
@@ -187,13 +224,16 @@ DatasetServiceClient::GetDatasetVersion(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
-DatasetServiceClient::GetDatasetVersion(google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request, Options opts) {
+DatasetServiceClient::GetDatasetVersion(
+    google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDatasetVersion(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::DatasetVersion>
-DatasetServiceClient::ListDatasetVersions(std::string const& parent, Options opts) {
+DatasetServiceClient::ListDatasetVersions(std::string const& parent,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListDatasetVersionsRequest request;
   request.set_parent(parent);
@@ -201,13 +241,16 @@ DatasetServiceClient::ListDatasetVersions(std::string const& parent, Options opt
 }
 
 StreamRange<google::cloud::aiplatform::v1::DatasetVersion>
-DatasetServiceClient::ListDatasetVersions(google::cloud::aiplatform::v1::ListDatasetVersionsRequest request, Options opts) {
+DatasetServiceClient::ListDatasetVersions(
+    google::cloud::aiplatform::v1::ListDatasetVersionsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDatasetVersions(std::move(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
-DatasetServiceClient::RestoreDatasetVersion(std::string const& name, Options opts) {
+DatasetServiceClient::RestoreDatasetVersion(std::string const& name,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::RestoreDatasetVersionRequest request;
   request.set_name(name);
@@ -215,7 +258,9 @@ DatasetServiceClient::RestoreDatasetVersion(std::string const& name, Options opt
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
-DatasetServiceClient::RestoreDatasetVersion(google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const& request, Options opts) {
+DatasetServiceClient::RestoreDatasetVersion(
+    google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RestoreDatasetVersion(request);
 }
@@ -229,19 +274,23 @@ DatasetServiceClient::ListDataItems(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::aiplatform::v1::DataItem>
-DatasetServiceClient::ListDataItems(google::cloud::aiplatform::v1::ListDataItemsRequest request, Options opts) {
+DatasetServiceClient::ListDataItems(
+    google::cloud::aiplatform::v1::ListDataItemsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDataItems(std::move(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::DataItemView>
-DatasetServiceClient::SearchDataItems(google::cloud::aiplatform::v1::SearchDataItemsRequest request, Options opts) {
+DatasetServiceClient::SearchDataItems(
+    google::cloud::aiplatform::v1::SearchDataItemsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchDataItems(std::move(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::SavedQuery>
-DatasetServiceClient::ListSavedQueries(std::string const& parent, Options opts) {
+DatasetServiceClient::ListSavedQueries(std::string const& parent,
+                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListSavedQueriesRequest request;
   request.set_parent(parent);
@@ -249,7 +298,9 @@ DatasetServiceClient::ListSavedQueries(std::string const& parent, Options opts) 
 }
 
 StreamRange<google::cloud::aiplatform::v1::SavedQuery>
-DatasetServiceClient::ListSavedQueries(google::cloud::aiplatform::v1::ListSavedQueriesRequest request, Options opts) {
+DatasetServiceClient::ListSavedQueries(
+    google::cloud::aiplatform::v1::ListSavedQueriesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSavedQueries(std::move(request));
 }
@@ -263,7 +314,9 @@ DatasetServiceClient::DeleteSavedQuery(std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-DatasetServiceClient::DeleteSavedQuery(google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request, Options opts) {
+DatasetServiceClient::DeleteSavedQuery(
+    google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSavedQuery(request);
 }
@@ -277,7 +330,9 @@ DatasetServiceClient::GetAnnotationSpec(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
-DatasetServiceClient::GetAnnotationSpec(google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request, Options opts) {
+DatasetServiceClient::GetAnnotationSpec(
+    google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAnnotationSpec(request);
 }
@@ -291,7 +346,9 @@ DatasetServiceClient::ListAnnotations(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::aiplatform::v1::Annotation>
-DatasetServiceClient::ListAnnotations(google::cloud::aiplatform::v1::ListAnnotationsRequest request, Options opts) {
+DatasetServiceClient::ListAnnotations(
+    google::cloud::aiplatform::v1::ListAnnotationsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAnnotations(std::move(request));
 }

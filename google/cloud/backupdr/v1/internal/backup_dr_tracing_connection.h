@@ -30,27 +30,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class BackupDRTracingConnection
-    : public backupdr_v1::BackupDRConnection {
+class BackupDRTracingConnection : public backupdr_v1::BackupDRConnection {
  public:
   ~BackupDRTracingConnection() override = default;
 
   explicit BackupDRTracingConnection(
-    std::shared_ptr<backupdr_v1::BackupDRConnection> child);
+      std::shared_ptr<backupdr_v1::BackupDRConnection> child);
 
   Options options() override { return child_->options(); }
 
   StreamRange<google::cloud::backupdr::v1::ManagementServer>
-  ListManagementServers(google::cloud::backupdr::v1::ListManagementServersRequest request) override;
+  ListManagementServers(
+      google::cloud::backupdr::v1::ListManagementServersRequest request)
+      override;
 
-  StatusOr<google::cloud::backupdr::v1::ManagementServer>
-  GetManagementServer(google::cloud::backupdr::v1::GetManagementServerRequest const& request) override;
+  StatusOr<google::cloud::backupdr::v1::ManagementServer> GetManagementServer(
+      google::cloud::backupdr::v1::GetManagementServerRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>
-  CreateManagementServer(google::cloud::backupdr::v1::CreateManagementServerRequest const& request) override;
+  CreateManagementServer(
+      google::cloud::backupdr::v1::CreateManagementServerRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
-  DeleteManagementServer(google::cloud::backupdr::v1::DeleteManagementServerRequest const& request) override;
+  DeleteManagementServer(
+      google::cloud::backupdr::v1::DeleteManagementServerRequest const& request)
+      override;
 
  private:
   std::shared_ptr<backupdr_v1::BackupDRConnection> child_;
@@ -64,8 +70,7 @@ class BackupDRTracingConnection
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<backupdr_v1::BackupDRConnection>
-MakeBackupDRTracingConnection(
+std::shared_ptr<backupdr_v1::BackupDRConnection> MakeBackupDRTracingConnection(
     std::shared_ptr<backupdr_v1::BackupDRConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

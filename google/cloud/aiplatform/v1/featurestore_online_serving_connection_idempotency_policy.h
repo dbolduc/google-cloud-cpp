@@ -34,17 +34,19 @@ class FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy {
   virtual ~FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<
+      FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy>
+  clone() const;
 
-  virtual google::cloud::Idempotency
-  ReadFeatureValues(google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request);
+  virtual google::cloud::Idempotency ReadFeatureValues(
+      google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  WriteFeatureValues(google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request);
+  virtual google::cloud::Idempotency WriteFeatureValues(
+      google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request);
 };
 
 std::unique_ptr<FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy>
-    MakeDefaultFeaturestoreOnlineServingServiceConnectionIdempotencyPolicy();
+MakeDefaultFeaturestoreOnlineServingServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

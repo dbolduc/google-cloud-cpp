@@ -36,54 +36,55 @@ class GenAiTuningServiceStub {
   virtual ~GenAiTuningServiceStub() = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::TuningJob> CreateTuningJob(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CreateTuningJobRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::TuningJob> GetTuningJob(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetTuningJobRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::ListTuningJobsResponse> ListTuningJobs(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::aiplatform::v1::ListTuningJobsResponse>
+  ListTuningJobs(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListTuningJobsRequest const& request) = 0;
 
   virtual Status CancelTuningJob(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CancelTuningJobRequest const& request) = 0;
 };
 
 class DefaultGenAiTuningServiceStub : public GenAiTuningServiceStub {
  public:
   explicit DefaultGenAiTuningServiceStub(
-      std::unique_ptr<google::cloud::aiplatform::v1::GenAiTuningService::StubInterface> grpc_stub)
+      std::unique_ptr<
+          google::cloud::aiplatform::v1::GenAiTuningService::StubInterface>
+          grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::aiplatform::v1::TuningJob> CreateTuningJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::CreateTuningJobRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::CreateTuningJobRequest const& request)
+      override;
 
   StatusOr<google::cloud::aiplatform::v1::TuningJob> GetTuningJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::GetTuningJobRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::GetTuningJobRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::ListTuningJobsResponse> ListTuningJobs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListTuningJobsRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::ListTuningJobsResponse>
+  ListTuningJobs(grpc::ClientContext& context, Options const& options,
+                 google::cloud::aiplatform::v1::ListTuningJobsRequest const&
+                     request) override;
 
   Status CancelTuningJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::CancelTuningJobRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::CancelTuningJobRequest const& request)
+      override;
 
  private:
-  std::unique_ptr<google::cloud::aiplatform::v1::GenAiTuningService::StubInterface> grpc_stub_;
+  std::unique_ptr<
+      google::cloud::aiplatform::v1::GenAiTuningService::StubInterface>
+      grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

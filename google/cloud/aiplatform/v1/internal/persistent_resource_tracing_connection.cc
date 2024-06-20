@@ -29,56 +29,82 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-PersistentResourceServiceTracingConnection::PersistentResourceServiceTracingConnection(
-    std::shared_ptr<aiplatform_v1::PersistentResourceServiceConnection> child)
+PersistentResourceServiceTracingConnection::
+    PersistentResourceServiceTracingConnection(
+        std::shared_ptr<aiplatform_v1::PersistentResourceServiceConnection>
+            child)
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-PersistentResourceServiceTracingConnection::CreatePersistentResource(google::cloud::aiplatform::v1::CreatePersistentResourceRequest const& request) {
+PersistentResourceServiceTracingConnection::CreatePersistentResource(
+    google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "aiplatform_v1::PersistentResourceServiceConnection::CreatePersistentResource");
+      "aiplatform_v1::PersistentResourceServiceConnection::"
+      "CreatePersistentResource");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreatePersistentResource(request));
+  return internal::EndSpan(std::move(span),
+                           child_->CreatePersistentResource(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::PersistentResource>
-PersistentResourceServiceTracingConnection::GetPersistentResource(google::cloud::aiplatform::v1::GetPersistentResourceRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::PersistentResourceServiceConnection::GetPersistentResource");
+PersistentResourceServiceTracingConnection::GetPersistentResource(
+    google::cloud::aiplatform::v1::GetPersistentResourceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::PersistentResourceServiceConnection::"
+      "GetPersistentResource");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetPersistentResource(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::PersistentResource>
-PersistentResourceServiceTracingConnection::ListPersistentResources(google::cloud::aiplatform::v1::ListPersistentResourcesRequest request) {
-  auto span = internal::MakeSpan("aiplatform_v1::PersistentResourceServiceConnection::ListPersistentResources");
+PersistentResourceServiceTracingConnection::ListPersistentResources(
+    google::cloud::aiplatform::v1::ListPersistentResourcesRequest request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::PersistentResourceServiceConnection::"
+      "ListPersistentResources");
   internal::OTelScope scope(span);
   auto sr = child_->ListPersistentResources(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::PersistentResource>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::aiplatform::v1::PersistentResource>(std::move(span),
+                                                         std::move(sr));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-PersistentResourceServiceTracingConnection::DeletePersistentResource(google::cloud::aiplatform::v1::DeletePersistentResourceRequest const& request) {
+PersistentResourceServiceTracingConnection::DeletePersistentResource(
+    google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "aiplatform_v1::PersistentResourceServiceConnection::DeletePersistentResource");
+      "aiplatform_v1::PersistentResourceServiceConnection::"
+      "DeletePersistentResource");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeletePersistentResource(request));
+  return internal::EndSpan(std::move(span),
+                           child_->DeletePersistentResource(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-PersistentResourceServiceTracingConnection::UpdatePersistentResource(google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const& request) {
+PersistentResourceServiceTracingConnection::UpdatePersistentResource(
+    google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "aiplatform_v1::PersistentResourceServiceConnection::UpdatePersistentResource");
+      "aiplatform_v1::PersistentResourceServiceConnection::"
+      "UpdatePersistentResource");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdatePersistentResource(request));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdatePersistentResource(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-PersistentResourceServiceTracingConnection::RebootPersistentResource(google::cloud::aiplatform::v1::RebootPersistentResourceRequest const& request) {
+PersistentResourceServiceTracingConnection::RebootPersistentResource(
+    google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "aiplatform_v1::PersistentResourceServiceConnection::RebootPersistentResource");
+      "aiplatform_v1::PersistentResourceServiceConnection::"
+      "RebootPersistentResource");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->RebootPersistentResource(request));
+  return internal::EndSpan(std::move(span),
+                           child_->RebootPersistentResource(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -88,7 +114,8 @@ MakePersistentResourceServiceTracingConnection(
     std::shared_ptr<aiplatform_v1::PersistentResourceServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<PersistentResourceServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<PersistentResourceServiceTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

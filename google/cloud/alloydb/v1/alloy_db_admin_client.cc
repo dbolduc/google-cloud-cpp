@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AlloyDBAdminClient::AlloyDBAdminClient(
     std::shared_ptr<AlloyDBAdminConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 AlloyDBAdminClient::~AlloyDBAdminClient() = default;
 
 StreamRange<google::cloud::alloydb::v1::Cluster>
@@ -41,27 +41,32 @@ AlloyDBAdminClient::ListClusters(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::alloydb::v1::Cluster>
-AlloyDBAdminClient::ListClusters(google::cloud::alloydb::v1::ListClustersRequest request, Options opts) {
+AlloyDBAdminClient::ListClusters(
+    google::cloud::alloydb::v1::ListClustersRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListClusters(std::move(request));
 }
 
-StatusOr<google::cloud::alloydb::v1::Cluster>
-AlloyDBAdminClient::GetCluster(std::string const& name, Options opts) {
+StatusOr<google::cloud::alloydb::v1::Cluster> AlloyDBAdminClient::GetCluster(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::alloydb::v1::GetClusterRequest request;
   request.set_name(name);
   return connection_->GetCluster(request);
 }
 
-StatusOr<google::cloud::alloydb::v1::Cluster>
-AlloyDBAdminClient::GetCluster(google::cloud::alloydb::v1::GetClusterRequest const& request, Options opts) {
+StatusOr<google::cloud::alloydb::v1::Cluster> AlloyDBAdminClient::GetCluster(
+    google::cloud::alloydb::v1::GetClusterRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetCluster(request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
-AlloyDBAdminClient::CreateCluster(std::string const& parent, google::cloud::alloydb::v1::Cluster const& cluster, std::string const& cluster_id, Options opts) {
+AlloyDBAdminClient::CreateCluster(
+    std::string const& parent,
+    google::cloud::alloydb::v1::Cluster const& cluster,
+    std::string const& cluster_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::alloydb::v1::CreateClusterRequest request;
   request.set_parent(parent);
@@ -71,13 +76,17 @@ AlloyDBAdminClient::CreateCluster(std::string const& parent, google::cloud::allo
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
-AlloyDBAdminClient::CreateCluster(google::cloud::alloydb::v1::CreateClusterRequest const& request, Options opts) {
+AlloyDBAdminClient::CreateCluster(
+    google::cloud::alloydb::v1::CreateClusterRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCluster(request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
-AlloyDBAdminClient::UpdateCluster(google::cloud::alloydb::v1::Cluster const& cluster, google::protobuf::FieldMask const& update_mask, Options opts) {
+AlloyDBAdminClient::UpdateCluster(
+    google::cloud::alloydb::v1::Cluster const& cluster,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::alloydb::v1::UpdateClusterRequest request;
   *request.mutable_cluster() = cluster;
@@ -86,7 +95,9 @@ AlloyDBAdminClient::UpdateCluster(google::cloud::alloydb::v1::Cluster const& clu
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
-AlloyDBAdminClient::UpdateCluster(google::cloud::alloydb::v1::UpdateClusterRequest const& request, Options opts) {
+AlloyDBAdminClient::UpdateCluster(
+    google::cloud::alloydb::v1::UpdateClusterRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCluster(request);
 }
@@ -100,7 +111,9 @@ AlloyDBAdminClient::DeleteCluster(std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
-AlloyDBAdminClient::DeleteCluster(google::cloud::alloydb::v1::DeleteClusterRequest const& request, Options opts) {
+AlloyDBAdminClient::DeleteCluster(
+    google::cloud::alloydb::v1::DeleteClusterRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCluster(request);
 }
@@ -114,19 +127,26 @@ AlloyDBAdminClient::PromoteCluster(std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
-AlloyDBAdminClient::PromoteCluster(google::cloud::alloydb::v1::PromoteClusterRequest const& request, Options opts) {
+AlloyDBAdminClient::PromoteCluster(
+    google::cloud::alloydb::v1::PromoteClusterRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PromoteCluster(request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
-AlloyDBAdminClient::RestoreCluster(google::cloud::alloydb::v1::RestoreClusterRequest const& request, Options opts) {
+AlloyDBAdminClient::RestoreCluster(
+    google::cloud::alloydb::v1::RestoreClusterRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RestoreCluster(request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
-AlloyDBAdminClient::CreateSecondaryCluster(std::string const& parent, google::cloud::alloydb::v1::Cluster const& cluster, std::string const& cluster_id, Options opts) {
+AlloyDBAdminClient::CreateSecondaryCluster(
+    std::string const& parent,
+    google::cloud::alloydb::v1::Cluster const& cluster,
+    std::string const& cluster_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::alloydb::v1::CreateSecondaryClusterRequest request;
   request.set_parent(parent);
@@ -136,7 +156,9 @@ AlloyDBAdminClient::CreateSecondaryCluster(std::string const& parent, google::cl
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
-AlloyDBAdminClient::CreateSecondaryCluster(google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request, Options opts) {
+AlloyDBAdminClient::CreateSecondaryCluster(
+    google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSecondaryCluster(request);
 }
@@ -150,27 +172,32 @@ AlloyDBAdminClient::ListInstances(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::alloydb::v1::Instance>
-AlloyDBAdminClient::ListInstances(google::cloud::alloydb::v1::ListInstancesRequest request, Options opts) {
+AlloyDBAdminClient::ListInstances(
+    google::cloud::alloydb::v1::ListInstancesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListInstances(std::move(request));
 }
 
-StatusOr<google::cloud::alloydb::v1::Instance>
-AlloyDBAdminClient::GetInstance(std::string const& name, Options opts) {
+StatusOr<google::cloud::alloydb::v1::Instance> AlloyDBAdminClient::GetInstance(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::alloydb::v1::GetInstanceRequest request;
   request.set_name(name);
   return connection_->GetInstance(request);
 }
 
-StatusOr<google::cloud::alloydb::v1::Instance>
-AlloyDBAdminClient::GetInstance(google::cloud::alloydb::v1::GetInstanceRequest const& request, Options opts) {
+StatusOr<google::cloud::alloydb::v1::Instance> AlloyDBAdminClient::GetInstance(
+    google::cloud::alloydb::v1::GetInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetInstance(request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
-AlloyDBAdminClient::CreateInstance(std::string const& parent, google::cloud::alloydb::v1::Instance const& instance, std::string const& instance_id, Options opts) {
+AlloyDBAdminClient::CreateInstance(
+    std::string const& parent,
+    google::cloud::alloydb::v1::Instance const& instance,
+    std::string const& instance_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::alloydb::v1::CreateInstanceRequest request;
   request.set_parent(parent);
@@ -180,13 +207,18 @@ AlloyDBAdminClient::CreateInstance(std::string const& parent, google::cloud::all
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
-AlloyDBAdminClient::CreateInstance(google::cloud::alloydb::v1::CreateInstanceRequest const& request, Options opts) {
+AlloyDBAdminClient::CreateInstance(
+    google::cloud::alloydb::v1::CreateInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstance(request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
-AlloyDBAdminClient::CreateSecondaryInstance(std::string const& parent, google::cloud::alloydb::v1::Instance const& instance, std::string const& instance_id, Options opts) {
+AlloyDBAdminClient::CreateSecondaryInstance(
+    std::string const& parent,
+    google::cloud::alloydb::v1::Instance const& instance,
+    std::string const& instance_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::alloydb::v1::CreateSecondaryInstanceRequest request;
   request.set_parent(parent);
@@ -196,19 +228,25 @@ AlloyDBAdminClient::CreateSecondaryInstance(std::string const& parent, google::c
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
-AlloyDBAdminClient::CreateSecondaryInstance(google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request, Options opts) {
+AlloyDBAdminClient::CreateSecondaryInstance(
+    google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSecondaryInstance(request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>
-AlloyDBAdminClient::BatchCreateInstances(google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request, Options opts) {
+AlloyDBAdminClient::BatchCreateInstances(
+    google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchCreateInstances(request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
-AlloyDBAdminClient::UpdateInstance(google::cloud::alloydb::v1::Instance const& instance, google::protobuf::FieldMask const& update_mask, Options opts) {
+AlloyDBAdminClient::UpdateInstance(
+    google::cloud::alloydb::v1::Instance const& instance,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::alloydb::v1::UpdateInstanceRequest request;
   *request.mutable_instance() = instance;
@@ -217,7 +255,9 @@ AlloyDBAdminClient::UpdateInstance(google::cloud::alloydb::v1::Instance const& i
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
-AlloyDBAdminClient::UpdateInstance(google::cloud::alloydb::v1::UpdateInstanceRequest const& request, Options opts) {
+AlloyDBAdminClient::UpdateInstance(
+    google::cloud::alloydb::v1::UpdateInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateInstance(request);
 }
@@ -231,7 +271,9 @@ AlloyDBAdminClient::DeleteInstance(std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
-AlloyDBAdminClient::DeleteInstance(google::cloud::alloydb::v1::DeleteInstanceRequest const& request, Options opts) {
+AlloyDBAdminClient::DeleteInstance(
+    google::cloud::alloydb::v1::DeleteInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstance(request);
 }
@@ -245,13 +287,17 @@ AlloyDBAdminClient::FailoverInstance(std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
-AlloyDBAdminClient::FailoverInstance(google::cloud::alloydb::v1::FailoverInstanceRequest const& request, Options opts) {
+AlloyDBAdminClient::FailoverInstance(
+    google::cloud::alloydb::v1::FailoverInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FailoverInstance(request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
-AlloyDBAdminClient::InjectFault(google::cloud::alloydb::v1::InjectFaultRequest::FaultType fault_type, std::string const& name, Options opts) {
+AlloyDBAdminClient::InjectFault(
+    google::cloud::alloydb::v1::InjectFaultRequest::FaultType fault_type,
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::alloydb::v1::InjectFaultRequest request;
   request.set_fault_type(fault_type);
@@ -260,7 +306,9 @@ AlloyDBAdminClient::InjectFault(google::cloud::alloydb::v1::InjectFaultRequest::
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
-AlloyDBAdminClient::InjectFault(google::cloud::alloydb::v1::InjectFaultRequest const& request, Options opts) {
+AlloyDBAdminClient::InjectFault(
+    google::cloud::alloydb::v1::InjectFaultRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InjectFault(request);
 }
@@ -274,41 +322,45 @@ AlloyDBAdminClient::RestartInstance(std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
-AlloyDBAdminClient::RestartInstance(google::cloud::alloydb::v1::RestartInstanceRequest const& request, Options opts) {
+AlloyDBAdminClient::RestartInstance(
+    google::cloud::alloydb::v1::RestartInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RestartInstance(request);
 }
 
-StreamRange<google::cloud::alloydb::v1::Backup>
-AlloyDBAdminClient::ListBackups(std::string const& parent, Options opts) {
+StreamRange<google::cloud::alloydb::v1::Backup> AlloyDBAdminClient::ListBackups(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::alloydb::v1::ListBackupsRequest request;
   request.set_parent(parent);
   return connection_->ListBackups(request);
 }
 
-StreamRange<google::cloud::alloydb::v1::Backup>
-AlloyDBAdminClient::ListBackups(google::cloud::alloydb::v1::ListBackupsRequest request, Options opts) {
+StreamRange<google::cloud::alloydb::v1::Backup> AlloyDBAdminClient::ListBackups(
+    google::cloud::alloydb::v1::ListBackupsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListBackups(std::move(request));
 }
 
-StatusOr<google::cloud::alloydb::v1::Backup>
-AlloyDBAdminClient::GetBackup(std::string const& name, Options opts) {
+StatusOr<google::cloud::alloydb::v1::Backup> AlloyDBAdminClient::GetBackup(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::alloydb::v1::GetBackupRequest request;
   request.set_name(name);
   return connection_->GetBackup(request);
 }
 
-StatusOr<google::cloud::alloydb::v1::Backup>
-AlloyDBAdminClient::GetBackup(google::cloud::alloydb::v1::GetBackupRequest const& request, Options opts) {
+StatusOr<google::cloud::alloydb::v1::Backup> AlloyDBAdminClient::GetBackup(
+    google::cloud::alloydb::v1::GetBackupRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetBackup(request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Backup>>
-AlloyDBAdminClient::CreateBackup(std::string const& parent, google::cloud::alloydb::v1::Backup const& backup, std::string const& backup_id, Options opts) {
+AlloyDBAdminClient::CreateBackup(
+    std::string const& parent, google::cloud::alloydb::v1::Backup const& backup,
+    std::string const& backup_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::alloydb::v1::CreateBackupRequest request;
   request.set_parent(parent);
@@ -318,13 +370,17 @@ AlloyDBAdminClient::CreateBackup(std::string const& parent, google::cloud::alloy
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Backup>>
-AlloyDBAdminClient::CreateBackup(google::cloud::alloydb::v1::CreateBackupRequest const& request, Options opts) {
+AlloyDBAdminClient::CreateBackup(
+    google::cloud::alloydb::v1::CreateBackupRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBackup(request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Backup>>
-AlloyDBAdminClient::UpdateBackup(google::cloud::alloydb::v1::Backup const& backup, google::protobuf::FieldMask const& update_mask, Options opts) {
+AlloyDBAdminClient::UpdateBackup(
+    google::cloud::alloydb::v1::Backup const& backup,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::alloydb::v1::UpdateBackupRequest request;
   *request.mutable_backup() = backup;
@@ -333,7 +389,9 @@ AlloyDBAdminClient::UpdateBackup(google::cloud::alloydb::v1::Backup const& backu
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Backup>>
-AlloyDBAdminClient::UpdateBackup(google::cloud::alloydb::v1::UpdateBackupRequest const& request, Options opts) {
+AlloyDBAdminClient::UpdateBackup(
+    google::cloud::alloydb::v1::UpdateBackupRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateBackup(request);
 }
@@ -347,13 +405,16 @@ AlloyDBAdminClient::DeleteBackup(std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
-AlloyDBAdminClient::DeleteBackup(google::cloud::alloydb::v1::DeleteBackupRequest const& request, Options opts) {
+AlloyDBAdminClient::DeleteBackup(
+    google::cloud::alloydb::v1::DeleteBackupRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBackup(request);
 }
 
 StreamRange<google::cloud::alloydb::v1::SupportedDatabaseFlag>
-AlloyDBAdminClient::ListSupportedDatabaseFlags(std::string const& parent, Options opts) {
+AlloyDBAdminClient::ListSupportedDatabaseFlags(std::string const& parent,
+                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest request;
   request.set_parent(parent);
@@ -361,13 +422,16 @@ AlloyDBAdminClient::ListSupportedDatabaseFlags(std::string const& parent, Option
 }
 
 StreamRange<google::cloud::alloydb::v1::SupportedDatabaseFlag>
-AlloyDBAdminClient::ListSupportedDatabaseFlags(google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest request, Options opts) {
+AlloyDBAdminClient::ListSupportedDatabaseFlags(
+    google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSupportedDatabaseFlags(std::move(request));
 }
 
 StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>
-AlloyDBAdminClient::GenerateClientCertificate(std::string const& parent, Options opts) {
+AlloyDBAdminClient::GenerateClientCertificate(std::string const& parent,
+                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::alloydb::v1::GenerateClientCertificateRequest request;
   request.set_parent(parent);
@@ -375,7 +439,9 @@ AlloyDBAdminClient::GenerateClientCertificate(std::string const& parent, Options
 }
 
 StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>
-AlloyDBAdminClient::GenerateClientCertificate(google::cloud::alloydb::v1::GenerateClientCertificateRequest const& request, Options opts) {
+AlloyDBAdminClient::GenerateClientCertificate(
+    google::cloud::alloydb::v1::GenerateClientCertificateRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GenerateClientCertificate(request);
 }
@@ -389,41 +455,44 @@ AlloyDBAdminClient::GetConnectionInfo(std::string const& parent, Options opts) {
 }
 
 StatusOr<google::cloud::alloydb::v1::ConnectionInfo>
-AlloyDBAdminClient::GetConnectionInfo(google::cloud::alloydb::v1::GetConnectionInfoRequest const& request, Options opts) {
+AlloyDBAdminClient::GetConnectionInfo(
+    google::cloud::alloydb::v1::GetConnectionInfoRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetConnectionInfo(request);
 }
 
-StreamRange<google::cloud::alloydb::v1::User>
-AlloyDBAdminClient::ListUsers(std::string const& parent, Options opts) {
+StreamRange<google::cloud::alloydb::v1::User> AlloyDBAdminClient::ListUsers(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::alloydb::v1::ListUsersRequest request;
   request.set_parent(parent);
   return connection_->ListUsers(request);
 }
 
-StreamRange<google::cloud::alloydb::v1::User>
-AlloyDBAdminClient::ListUsers(google::cloud::alloydb::v1::ListUsersRequest request, Options opts) {
+StreamRange<google::cloud::alloydb::v1::User> AlloyDBAdminClient::ListUsers(
+    google::cloud::alloydb::v1::ListUsersRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListUsers(std::move(request));
 }
 
-StatusOr<google::cloud::alloydb::v1::User>
-AlloyDBAdminClient::GetUser(std::string const& name, Options opts) {
+StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminClient::GetUser(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::alloydb::v1::GetUserRequest request;
   request.set_name(name);
   return connection_->GetUser(request);
 }
 
-StatusOr<google::cloud::alloydb::v1::User>
-AlloyDBAdminClient::GetUser(google::cloud::alloydb::v1::GetUserRequest const& request, Options opts) {
+StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminClient::GetUser(
+    google::cloud::alloydb::v1::GetUserRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetUser(request);
 }
 
-StatusOr<google::cloud::alloydb::v1::User>
-AlloyDBAdminClient::CreateUser(std::string const& parent, google::cloud::alloydb::v1::User const& user, std::string const& user_id, Options opts) {
+StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminClient::CreateUser(
+    std::string const& parent, google::cloud::alloydb::v1::User const& user,
+    std::string const& user_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::alloydb::v1::CreateUserRequest request;
   request.set_parent(parent);
@@ -432,14 +501,16 @@ AlloyDBAdminClient::CreateUser(std::string const& parent, google::cloud::alloydb
   return connection_->CreateUser(request);
 }
 
-StatusOr<google::cloud::alloydb::v1::User>
-AlloyDBAdminClient::CreateUser(google::cloud::alloydb::v1::CreateUserRequest const& request, Options opts) {
+StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminClient::CreateUser(
+    google::cloud::alloydb::v1::CreateUserRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateUser(request);
 }
 
-StatusOr<google::cloud::alloydb::v1::User>
-AlloyDBAdminClient::UpdateUser(google::cloud::alloydb::v1::User const& user, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminClient::UpdateUser(
+    google::cloud::alloydb::v1::User const& user,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::alloydb::v1::UpdateUserRequest request;
   *request.mutable_user() = user;
@@ -447,22 +518,23 @@ AlloyDBAdminClient::UpdateUser(google::cloud::alloydb::v1::User const& user, goo
   return connection_->UpdateUser(request);
 }
 
-StatusOr<google::cloud::alloydb::v1::User>
-AlloyDBAdminClient::UpdateUser(google::cloud::alloydb::v1::UpdateUserRequest const& request, Options opts) {
+StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminClient::UpdateUser(
+    google::cloud::alloydb::v1::UpdateUserRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateUser(request);
 }
 
-Status
-AlloyDBAdminClient::DeleteUser(std::string const& name, Options opts) {
+Status AlloyDBAdminClient::DeleteUser(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::alloydb::v1::DeleteUserRequest request;
   request.set_name(name);
   return connection_->DeleteUser(request);
 }
 
-Status
-AlloyDBAdminClient::DeleteUser(google::cloud::alloydb::v1::DeleteUserRequest const& request, Options opts) {
+Status AlloyDBAdminClient::DeleteUser(
+    google::cloud::alloydb::v1::DeleteUserRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteUser(request);
 }

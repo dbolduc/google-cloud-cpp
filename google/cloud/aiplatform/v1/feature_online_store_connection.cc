@@ -35,7 +35,8 @@ namespace cloud {
 namespace aiplatform_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-FeatureOnlineStoreServiceConnection::~FeatureOnlineStoreServiceConnection() = default;
+FeatureOnlineStoreServiceConnection::~FeatureOnlineStoreServiceConnection() =
+    default;
 
 StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>
 FeatureOnlineStoreServiceConnection::FetchFeatureValues(
@@ -49,20 +50,24 @@ FeatureOnlineStoreServiceConnection::SearchNearestEntities(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<FeatureOnlineStoreServiceConnection> MakeFeatureOnlineStoreServiceConnection(
-    std::string const& location, Options options) {
+std::shared_ptr<FeatureOnlineStoreServiceConnection>
+MakeFeatureOnlineStoreServiceConnection(std::string const& location,
+                                        Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      FeatureOnlineStoreServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 FeatureOnlineStoreServicePolicyOptionList>(
+      options, __func__);
   options = aiplatform_v1_internal::FeatureOnlineStoreServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = aiplatform_v1_internal::CreateDefaultFeatureOnlineStoreServiceStub(
-    std::move(auth), options);
+  auto stub =
+      aiplatform_v1_internal::CreateDefaultFeatureOnlineStoreServiceStub(
+          std::move(auth), options);
   return aiplatform_v1_internal::MakeFeatureOnlineStoreServiceTracingConnection(
-      std::make_shared<aiplatform_v1_internal::FeatureOnlineStoreServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          aiplatform_v1_internal::FeatureOnlineStoreServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

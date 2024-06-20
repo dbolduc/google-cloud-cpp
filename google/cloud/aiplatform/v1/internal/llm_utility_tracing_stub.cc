@@ -31,22 +31,24 @@ LlmUtilityServiceTracingStub::LlmUtilityServiceTracingStub(
     std::shared_ptr<LlmUtilityServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::aiplatform::v1::CountTokensResponse> LlmUtilityServiceTracingStub::CountTokens(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::aiplatform::v1::CountTokensResponse>
+LlmUtilityServiceTracingStub::CountTokens(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CountTokensRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.LlmUtilityService", "CountTokens");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.LlmUtilityService", "CountTokens");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CountTokens(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse> LlmUtilityServiceTracingStub::ComputeTokens(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse>
+LlmUtilityServiceTracingStub::ComputeTokens(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ComputeTokensRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.LlmUtilityService", "ComputeTokens");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.LlmUtilityService", "ComputeTokens");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

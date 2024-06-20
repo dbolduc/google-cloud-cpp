@@ -61,23 +61,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class FeaturestoreOnlineServingServiceClient {
  public:
-  explicit FeaturestoreOnlineServingServiceClient(std::shared_ptr<FeaturestoreOnlineServingServiceConnection> connection, Options opts = {});
+  explicit FeaturestoreOnlineServingServiceClient(
+      std::shared_ptr<FeaturestoreOnlineServingServiceConnection> connection,
+      Options opts = {});
   ~FeaturestoreOnlineServingServiceClient();
 
   ///@{
   /// @name Copy and move support
-  FeaturestoreOnlineServingServiceClient(FeaturestoreOnlineServingServiceClient const&) = default;
-  FeaturestoreOnlineServingServiceClient& operator=(FeaturestoreOnlineServingServiceClient const&) = default;
-  FeaturestoreOnlineServingServiceClient(FeaturestoreOnlineServingServiceClient&&) = default;
-  FeaturestoreOnlineServingServiceClient& operator=(FeaturestoreOnlineServingServiceClient&&) = default;
+  FeaturestoreOnlineServingServiceClient(
+      FeaturestoreOnlineServingServiceClient const&) = default;
+  FeaturestoreOnlineServingServiceClient& operator=(
+      FeaturestoreOnlineServingServiceClient const&) = default;
+  FeaturestoreOnlineServingServiceClient(
+      FeaturestoreOnlineServingServiceClient&&) = default;
+  FeaturestoreOnlineServingServiceClient& operator=(
+      FeaturestoreOnlineServingServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(FeaturestoreOnlineServingServiceClient const& a, FeaturestoreOnlineServingServiceClient const& b) {
+  friend bool operator==(FeaturestoreOnlineServingServiceClient const& a,
+                         FeaturestoreOnlineServingServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(FeaturestoreOnlineServingServiceClient const& a, FeaturestoreOnlineServingServiceClient const& b) {
+  friend bool operator!=(FeaturestoreOnlineServingServiceClient const& a,
+                         FeaturestoreOnlineServingServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -143,7 +151,9 @@ class FeaturestoreOnlineServingServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
-  ReadFeatureValues(google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request, Options opts = {});
+  ReadFeatureValues(
+      google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -207,7 +217,10 @@ class FeaturestoreOnlineServingServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
-  StreamingReadFeatureValues(google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const& request, Options opts = {});
+  StreamingReadFeatureValues(
+      google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -243,7 +256,12 @@ class FeaturestoreOnlineServingServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
-  WriteFeatureValues(std::string const& entity_type, std::vector<google::cloud::aiplatform::v1::WriteFeatureValuesPayload> const& payloads, Options opts = {});
+  WriteFeatureValues(
+      std::string const& entity_type,
+      std::vector<
+          google::cloud::aiplatform::v1::WriteFeatureValuesPayload> const&
+          payloads,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -277,7 +295,9 @@ class FeaturestoreOnlineServingServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
-  WriteFeatureValues(google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request, Options opts = {});
+  WriteFeatureValues(
+      google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<FeaturestoreOnlineServingServiceConnection> connection_;

@@ -32,28 +32,26 @@ LlmUtilityServiceStub::~LlmUtilityServiceStub() = default;
 
 StatusOr<google::cloud::aiplatform::v1::CountTokensResponse>
 DefaultLlmUtilityServiceStub::CountTokens(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::CountTokensRequest const& request) {
-    google::cloud::aiplatform::v1::CountTokensResponse response;
-    auto status =
-        grpc_stub_->CountTokens(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::CountTokensRequest const& request) {
+  google::cloud::aiplatform::v1::CountTokensResponse response;
+  auto status = grpc_stub_->CountTokens(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse>
 DefaultLlmUtilityServiceStub::ComputeTokens(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::ComputeTokensRequest const& request) {
-    google::cloud::aiplatform::v1::ComputeTokensResponse response;
-    auto status =
-        grpc_stub_->ComputeTokens(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::ComputeTokensRequest const& request) {
+  google::cloud::aiplatform::v1::ComputeTokensResponse response;
+  auto status = grpc_stub_->ComputeTokens(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

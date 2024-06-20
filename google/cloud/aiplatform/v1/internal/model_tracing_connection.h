@@ -36,63 +36,88 @@ class ModelServiceTracingConnection
   ~ModelServiceTracingConnection() override = default;
 
   explicit ModelServiceTracingConnection(
-    std::shared_ptr<aiplatform_v1::ModelServiceConnection> child);
+      std::shared_ptr<aiplatform_v1::ModelServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>
-  UploadModel(google::cloud::aiplatform::v1::UploadModelRequest const& request) override;
+  UploadModel(google::cloud::aiplatform::v1::UploadModelRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::Model>
-  GetModel(google::cloud::aiplatform::v1::GetModelRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::Model> GetModel(
+      google::cloud::aiplatform::v1::GetModelRequest const& request) override;
 
-  StreamRange<google::cloud::aiplatform::v1::Model>
-  ListModels(google::cloud::aiplatform::v1::ListModelsRequest request) override;
+  StreamRange<google::cloud::aiplatform::v1::Model> ListModels(
+      google::cloud::aiplatform::v1::ListModelsRequest request) override;
 
-  StreamRange<google::cloud::aiplatform::v1::Model>
-  ListModelVersions(google::cloud::aiplatform::v1::ListModelVersionsRequest request) override;
+  StreamRange<google::cloud::aiplatform::v1::Model> ListModelVersions(
+      google::cloud::aiplatform::v1::ListModelVersionsRequest request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::Model>
-  UpdateModel(google::cloud::aiplatform::v1::UpdateModelRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::Model> UpdateModel(
+      google::cloud::aiplatform::v1::UpdateModelRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
-  UpdateExplanationDataset(google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const& request) override;
+  future<
+      StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
+  UpdateExplanationDataset(
+      google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteModel(google::cloud::aiplatform::v1::DeleteModelRequest const& request) override;
+  DeleteModel(google::cloud::aiplatform::v1::DeleteModelRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteModelVersion(google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request) override;
+  DeleteModelVersion(
+      google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::Model>
-  MergeVersionAliases(google::cloud::aiplatform::v1::MergeVersionAliasesRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::Model> MergeVersionAliases(
+      google::cloud::aiplatform::v1::MergeVersionAliasesRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>
-  ExportModel(google::cloud::aiplatform::v1::ExportModelRequest const& request) override;
+  ExportModel(google::cloud::aiplatform::v1::ExportModelRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>
-  CopyModel(google::cloud::aiplatform::v1::CopyModelRequest const& request) override;
-
-  StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
-  ImportModelEvaluation(google::cloud::aiplatform::v1::ImportModelEvaluationRequest const& request) override;
-
-  StatusOr<google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse>
-  BatchImportModelEvaluationSlices(google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesRequest const& request) override;
-
-  StatusOr<google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsResponse>
-  BatchImportEvaluatedAnnotations(google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsRequest const& request) override;
+  future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>> CopyModel(
+      google::cloud::aiplatform::v1::CopyModelRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
-  GetModelEvaluation(google::cloud::aiplatform::v1::GetModelEvaluationRequest const& request) override;
+  ImportModelEvaluation(
+      google::cloud::aiplatform::v1::ImportModelEvaluationRequest const&
+          request) override;
+
+  StatusOr<
+      google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse>
+  BatchImportModelEvaluationSlices(
+      google::cloud::aiplatform::v1::
+          BatchImportModelEvaluationSlicesRequest const& request) override;
+
+  StatusOr<
+      google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsResponse>
+  BatchImportEvaluatedAnnotations(
+      google::cloud::aiplatform::v1::
+          BatchImportEvaluatedAnnotationsRequest const& request) override;
+
+  StatusOr<google::cloud::aiplatform::v1::ModelEvaluation> GetModelEvaluation(
+      google::cloud::aiplatform::v1::GetModelEvaluationRequest const& request)
+      override;
 
   StreamRange<google::cloud::aiplatform::v1::ModelEvaluation>
-  ListModelEvaluations(google::cloud::aiplatform::v1::ListModelEvaluationsRequest request) override;
+  ListModelEvaluations(
+      google::cloud::aiplatform::v1::ListModelEvaluationsRequest request)
+      override;
 
   StatusOr<google::cloud::aiplatform::v1::ModelEvaluationSlice>
-  GetModelEvaluationSlice(google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const& request) override;
+  GetModelEvaluationSlice(
+      google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const&
+          request) override;
 
   StreamRange<google::cloud::aiplatform::v1::ModelEvaluationSlice>
-  ListModelEvaluationSlices(google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest request) override;
+  ListModelEvaluationSlices(
+      google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest request)
+      override;
 
  private:
   std::shared_ptr<aiplatform_v1::ModelServiceConnection> child_;

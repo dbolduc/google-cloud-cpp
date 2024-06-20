@@ -42,17 +42,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockMatchServiceConnection : public aiplatform_v1::MatchServiceConnection {
+class MockMatchServiceConnection
+    : public aiplatform_v1::MatchServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse>,
-  FindNeighbors,
-  (google::cloud::aiplatform::v1::FindNeighborsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse>,
+      FindNeighbors,
+      (google::cloud::aiplatform::v1::FindNeighborsRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>,
-  ReadIndexDatapoints,
-  (google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>,
+      ReadIndexDatapoints,
+      (google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

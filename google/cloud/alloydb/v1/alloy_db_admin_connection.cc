@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AlloyDBAdminConnection::~AlloyDBAdminConnection() = default;
 
-StreamRange<google::cloud::alloydb::v1::Cluster> AlloyDBAdminConnection::ListClusters(
-    google::cloud::alloydb::v1::ListClustersRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::alloydb::v1::Cluster>
+AlloyDBAdminConnection::ListClusters(
+    google::cloud::alloydb::v1::
+        ListClustersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::alloydb::v1::Cluster>>();
 }
@@ -54,52 +56,54 @@ future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminConnection::CreateCluster(
     google::cloud::alloydb::v1::CreateClusterRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::alloydb::v1::Cluster>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::alloydb::v1::Cluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminConnection::UpdateCluster(
     google::cloud::alloydb::v1::UpdateClusterRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::alloydb::v1::Cluster>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::alloydb::v1::Cluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
 AlloyDBAdminConnection::DeleteCluster(
     google::cloud::alloydb::v1::DeleteClusterRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::alloydb::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::alloydb::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminConnection::PromoteCluster(
     google::cloud::alloydb::v1::PromoteClusterRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::alloydb::v1::Cluster>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::alloydb::v1::Cluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminConnection::RestoreCluster(
     google::cloud::alloydb::v1::RestoreClusterRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::alloydb::v1::Cluster>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::alloydb::v1::Cluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminConnection::CreateSecondaryCluster(
     google::cloud::alloydb::v1::CreateSecondaryClusterRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::alloydb::v1::Cluster>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::alloydb::v1::Cluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::alloydb::v1::Instance> AlloyDBAdminConnection::ListInstances(
-    google::cloud::alloydb::v1::ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::alloydb::v1::Instance>
+AlloyDBAdminConnection::ListInstances(
+    google::cloud::alloydb::v1::
+        ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::alloydb::v1::Instance>>();
 }
@@ -114,74 +118,75 @@ future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminConnection::CreateInstance(
     google::cloud::alloydb::v1::CreateInstanceRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::alloydb::v1::Instance>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::alloydb::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminConnection::CreateSecondaryInstance(
     google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::alloydb::v1::Instance>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::alloydb::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>
 AlloyDBAdminConnection::BatchCreateInstances(
     google::cloud::alloydb::v1::BatchCreateInstancesRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminConnection::UpdateInstance(
     google::cloud::alloydb::v1::UpdateInstanceRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::alloydb::v1::Instance>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::alloydb::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
 AlloyDBAdminConnection::DeleteInstance(
     google::cloud::alloydb::v1::DeleteInstanceRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::alloydb::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::alloydb::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminConnection::FailoverInstance(
     google::cloud::alloydb::v1::FailoverInstanceRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::alloydb::v1::Instance>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::alloydb::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminConnection::InjectFault(
     google::cloud::alloydb::v1::InjectFaultRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::alloydb::v1::Instance>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::alloydb::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminConnection::RestartInstance(
     google::cloud::alloydb::v1::RestartInstanceRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::alloydb::v1::Instance>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::alloydb::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::alloydb::v1::Backup> AlloyDBAdminConnection::ListBackups(
-    google::cloud::alloydb::v1::ListBackupsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::alloydb::v1::Backup>
+AlloyDBAdminConnection::ListBackups(
+    google::cloud::alloydb::v1::
+        ListBackupsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::alloydb::v1::Backup>>();
 }
 
-StatusOr<google::cloud::alloydb::v1::Backup>
-AlloyDBAdminConnection::GetBackup(
+StatusOr<google::cloud::alloydb::v1::Backup> AlloyDBAdminConnection::GetBackup(
     google::cloud::alloydb::v1::GetBackupRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -190,28 +195,30 @@ future<StatusOr<google::cloud::alloydb::v1::Backup>>
 AlloyDBAdminConnection::CreateBackup(
     google::cloud::alloydb::v1::CreateBackupRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::alloydb::v1::Backup>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::alloydb::v1::Backup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Backup>>
 AlloyDBAdminConnection::UpdateBackup(
     google::cloud::alloydb::v1::UpdateBackupRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::alloydb::v1::Backup>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::alloydb::v1::Backup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
 AlloyDBAdminConnection::DeleteBackup(
     google::cloud::alloydb::v1::DeleteBackupRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::alloydb::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::alloydb::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::alloydb::v1::SupportedDatabaseFlag> AlloyDBAdminConnection::ListSupportedDatabaseFlags(
-    google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::alloydb::v1::SupportedDatabaseFlag>
+AlloyDBAdminConnection::ListSupportedDatabaseFlags(
+    google::cloud::alloydb::v1::
+        ListSupportedDatabaseFlagsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::alloydb::v1::SupportedDatabaseFlag>>();
 }
@@ -229,31 +236,28 @@ AlloyDBAdminConnection::GetConnectionInfo(
 }
 
 StreamRange<google::cloud::alloydb::v1::User> AlloyDBAdminConnection::ListUsers(
-    google::cloud::alloydb::v1::ListUsersRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::cloud::alloydb::v1::
+        ListUsersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::alloydb::v1::User>>();
 }
 
-StatusOr<google::cloud::alloydb::v1::User>
-AlloyDBAdminConnection::GetUser(
+StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminConnection::GetUser(
     google::cloud::alloydb::v1::GetUserRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::alloydb::v1::User>
-AlloyDBAdminConnection::CreateUser(
+StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminConnection::CreateUser(
     google::cloud::alloydb::v1::CreateUserRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::alloydb::v1::User>
-AlloyDBAdminConnection::UpdateUser(
+StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminConnection::UpdateUser(
     google::cloud::alloydb::v1::UpdateUserRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-AlloyDBAdminConnection::DeleteUser(
+Status AlloyDBAdminConnection::DeleteUser(
     google::cloud::alloydb::v1::DeleteUserRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -261,17 +265,17 @@ AlloyDBAdminConnection::DeleteUser(
 std::shared_ptr<AlloyDBAdminConnection> MakeAlloyDBAdminConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      AlloyDBAdminPolicyOptionList>(options, __func__);
-  options = alloydb_v1_internal::AlloyDBAdminDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 AlloyDBAdminPolicyOptionList>(options,
+                                                               __func__);
+  options = alloydb_v1_internal::AlloyDBAdminDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = alloydb_v1_internal::CreateDefaultAlloyDBAdminStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return alloydb_v1_internal::MakeAlloyDBAdminTracingConnection(
       std::make_shared<alloydb_v1_internal::AlloyDBAdminConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

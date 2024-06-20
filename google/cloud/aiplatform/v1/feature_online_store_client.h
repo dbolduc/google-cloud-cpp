@@ -61,23 +61,30 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class FeatureOnlineStoreServiceClient {
  public:
-  explicit FeatureOnlineStoreServiceClient(std::shared_ptr<FeatureOnlineStoreServiceConnection> connection, Options opts = {});
+  explicit FeatureOnlineStoreServiceClient(
+      std::shared_ptr<FeatureOnlineStoreServiceConnection> connection,
+      Options opts = {});
   ~FeatureOnlineStoreServiceClient();
 
   ///@{
   /// @name Copy and move support
-  FeatureOnlineStoreServiceClient(FeatureOnlineStoreServiceClient const&) = default;
-  FeatureOnlineStoreServiceClient& operator=(FeatureOnlineStoreServiceClient const&) = default;
+  FeatureOnlineStoreServiceClient(FeatureOnlineStoreServiceClient const&) =
+      default;
+  FeatureOnlineStoreServiceClient& operator=(
+      FeatureOnlineStoreServiceClient const&) = default;
   FeatureOnlineStoreServiceClient(FeatureOnlineStoreServiceClient&&) = default;
-  FeatureOnlineStoreServiceClient& operator=(FeatureOnlineStoreServiceClient&&) = default;
+  FeatureOnlineStoreServiceClient& operator=(
+      FeatureOnlineStoreServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(FeatureOnlineStoreServiceClient const& a, FeatureOnlineStoreServiceClient const& b) {
+  friend bool operator==(FeatureOnlineStoreServiceClient const& a,
+                         FeatureOnlineStoreServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(FeatureOnlineStoreServiceClient const& a, FeatureOnlineStoreServiceClient const& b) {
+  friend bool operator!=(FeatureOnlineStoreServiceClient const& a,
+                         FeatureOnlineStoreServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -107,7 +114,10 @@ class FeatureOnlineStoreServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>
-  FetchFeatureValues(std::string const& feature_view, google::cloud::aiplatform::v1::FeatureViewDataKey const& data_key, Options opts = {});
+  FetchFeatureValues(
+      std::string const& feature_view,
+      google::cloud::aiplatform::v1::FeatureViewDataKey const& data_key,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -137,7 +147,9 @@ class FeatureOnlineStoreServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>
-  FetchFeatureValues(google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request, Options opts = {});
+  FetchFeatureValues(
+      google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -169,7 +181,10 @@ class FeatureOnlineStoreServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
-  SearchNearestEntities(google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const& request, Options opts = {});
+  SearchNearestEntities(
+      google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<FeatureOnlineStoreServiceConnection> connection_;

@@ -26,31 +26,39 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-AppGatewaysServiceConnectionIdempotencyPolicy::~AppGatewaysServiceConnectionIdempotencyPolicy() = default;
+AppGatewaysServiceConnectionIdempotencyPolicy::
+    ~AppGatewaysServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<AppGatewaysServiceConnectionIdempotencyPolicy>
 AppGatewaysServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<AppGatewaysServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::ListAppGateways(google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest) {  // NOLINT
+Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::ListAppGateways(
+    google::cloud::beyondcorp::appgateways::v1::
+        ListAppGatewaysRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::GetAppGateway(google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&) {
+Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::GetAppGateway(
+    google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::CreateAppGateway(google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&) {
+Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::CreateAppGateway(
+    google::cloud::beyondcorp::appgateways::v1::
+        CreateAppGatewayRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::DeleteAppGateway(google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&) {
+Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::DeleteAppGateway(
+    google::cloud::beyondcorp::appgateways::v1::
+        DeleteAppGatewayRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<AppGatewaysServiceConnectionIdempotencyPolicy>
-    MakeDefaultAppGatewaysServiceConnectionIdempotencyPolicy() {
+MakeDefaultAppGatewaysServiceConnectionIdempotencyPolicy() {
   return std::make_unique<AppGatewaysServiceConnectionIdempotencyPolicy>();
 }
 

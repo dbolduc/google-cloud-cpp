@@ -31,28 +31,32 @@ namespace cloud {
 namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class FeaturestoreOnlineServingServiceAuth : public FeaturestoreOnlineServingServiceStub {
+class FeaturestoreOnlineServingServiceAuth
+    : public FeaturestoreOnlineServingServiceStub {
  public:
   ~FeaturestoreOnlineServingServiceAuth() override = default;
   FeaturestoreOnlineServingServiceAuth(
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<FeaturestoreOnlineServingServiceStub> child);
 
-  StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse> ReadFeatureValues(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
+  ReadFeatureValues(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request)
+      override;
 
-  std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>
   StreamingReadFeatureValues(
-      std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
-      google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const& request) override;
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse> WriteFeatureValues(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
+  WriteFeatureValues(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request)
+      override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

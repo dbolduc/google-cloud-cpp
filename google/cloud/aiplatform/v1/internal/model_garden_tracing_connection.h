@@ -36,12 +36,13 @@ class ModelGardenServiceTracingConnection
   ~ModelGardenServiceTracingConnection() override = default;
 
   explicit ModelGardenServiceTracingConnection(
-    std::shared_ptr<aiplatform_v1::ModelGardenServiceConnection> child);
+      std::shared_ptr<aiplatform_v1::ModelGardenServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::aiplatform::v1::PublisherModel>
-  GetPublisherModel(google::cloud::aiplatform::v1::GetPublisherModelRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::PublisherModel> GetPublisherModel(
+      google::cloud::aiplatform::v1::GetPublisherModelRequest const& request)
+      override;
 
  private:
   std::shared_ptr<aiplatform_v1::ModelGardenServiceConnection> child_;

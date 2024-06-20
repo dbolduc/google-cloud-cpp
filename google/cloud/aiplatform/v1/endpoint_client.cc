@@ -28,12 +28,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 EndpointServiceClient::EndpointServiceClient(
     std::shared_ptr<EndpointServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 EndpointServiceClient::~EndpointServiceClient() = default;
 
 future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
-EndpointServiceClient::CreateEndpoint(std::string const& parent, google::cloud::aiplatform::v1::Endpoint const& endpoint, Options opts) {
+EndpointServiceClient::CreateEndpoint(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::Endpoint const& endpoint, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateEndpointRequest request;
   request.set_parent(parent);
@@ -42,7 +44,10 @@ EndpointServiceClient::CreateEndpoint(std::string const& parent, google::cloud::
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
-EndpointServiceClient::CreateEndpoint(std::string const& parent, google::cloud::aiplatform::v1::Endpoint const& endpoint, std::string const& endpoint_id, Options opts) {
+EndpointServiceClient::CreateEndpoint(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::Endpoint const& endpoint,
+    std::string const& endpoint_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateEndpointRequest request;
   request.set_parent(parent);
@@ -52,7 +57,9 @@ EndpointServiceClient::CreateEndpoint(std::string const& parent, google::cloud::
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
-EndpointServiceClient::CreateEndpoint(google::cloud::aiplatform::v1::CreateEndpointRequest const& request, Options opts) {
+EndpointServiceClient::CreateEndpoint(
+    google::cloud::aiplatform::v1::CreateEndpointRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEndpoint(request);
 }
@@ -66,7 +73,9 @@ EndpointServiceClient::GetEndpoint(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::aiplatform::v1::Endpoint>
-EndpointServiceClient::GetEndpoint(google::cloud::aiplatform::v1::GetEndpointRequest const& request, Options opts) {
+EndpointServiceClient::GetEndpoint(
+    google::cloud::aiplatform::v1::GetEndpointRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetEndpoint(request);
 }
@@ -80,13 +89,16 @@ EndpointServiceClient::ListEndpoints(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::aiplatform::v1::Endpoint>
-EndpointServiceClient::ListEndpoints(google::cloud::aiplatform::v1::ListEndpointsRequest request, Options opts) {
+EndpointServiceClient::ListEndpoints(
+    google::cloud::aiplatform::v1::ListEndpointsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListEndpoints(std::move(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Endpoint>
-EndpointServiceClient::UpdateEndpoint(google::cloud::aiplatform::v1::Endpoint const& endpoint, google::protobuf::FieldMask const& update_mask, Options opts) {
+EndpointServiceClient::UpdateEndpoint(
+    google::cloud::aiplatform::v1::Endpoint const& endpoint,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdateEndpointRequest request;
   *request.mutable_endpoint() = endpoint;
@@ -95,7 +107,9 @@ EndpointServiceClient::UpdateEndpoint(google::cloud::aiplatform::v1::Endpoint co
 }
 
 StatusOr<google::cloud::aiplatform::v1::Endpoint>
-EndpointServiceClient::UpdateEndpoint(google::cloud::aiplatform::v1::UpdateEndpointRequest const& request, Options opts) {
+EndpointServiceClient::UpdateEndpoint(
+    google::cloud::aiplatform::v1::UpdateEndpointRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateEndpoint(request);
 }
@@ -109,45 +123,61 @@ EndpointServiceClient::DeleteEndpoint(std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-EndpointServiceClient::DeleteEndpoint(google::cloud::aiplatform::v1::DeleteEndpointRequest const& request, Options opts) {
+EndpointServiceClient::DeleteEndpoint(
+    google::cloud::aiplatform::v1::DeleteEndpointRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEndpoint(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>
-EndpointServiceClient::DeployModel(std::string const& endpoint, google::cloud::aiplatform::v1::DeployedModel const& deployed_model, std::map<std::string, std::int32_t> const& traffic_split, Options opts) {
+EndpointServiceClient::DeployModel(
+    std::string const& endpoint,
+    google::cloud::aiplatform::v1::DeployedModel const& deployed_model,
+    std::map<std::string, std::int32_t> const& traffic_split, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeployModelRequest request;
   request.set_endpoint(endpoint);
   *request.mutable_deployed_model() = deployed_model;
-  *request.mutable_traffic_split() = {traffic_split.begin(), traffic_split.end()};
+  *request.mutable_traffic_split() = {traffic_split.begin(),
+                                      traffic_split.end()};
   return connection_->DeployModel(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>
-EndpointServiceClient::DeployModel(google::cloud::aiplatform::v1::DeployModelRequest const& request, Options opts) {
+EndpointServiceClient::DeployModel(
+    google::cloud::aiplatform::v1::DeployModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeployModel(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>
-EndpointServiceClient::UndeployModel(std::string const& endpoint, std::string const& deployed_model_id, std::map<std::string, std::int32_t> const& traffic_split, Options opts) {
+EndpointServiceClient::UndeployModel(
+    std::string const& endpoint, std::string const& deployed_model_id,
+    std::map<std::string, std::int32_t> const& traffic_split, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UndeployModelRequest request;
   request.set_endpoint(endpoint);
   request.set_deployed_model_id(deployed_model_id);
-  *request.mutable_traffic_split() = {traffic_split.begin(), traffic_split.end()};
+  *request.mutable_traffic_split() = {traffic_split.begin(),
+                                      traffic_split.end()};
   return connection_->UndeployModel(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>
-EndpointServiceClient::UndeployModel(google::cloud::aiplatform::v1::UndeployModelRequest const& request, Options opts) {
+EndpointServiceClient::UndeployModel(
+    google::cloud::aiplatform::v1::UndeployModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeployModel(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>
-EndpointServiceClient::MutateDeployedModel(std::string const& endpoint, google::cloud::aiplatform::v1::DeployedModel const& deployed_model, google::protobuf::FieldMask const& update_mask, Options opts) {
+EndpointServiceClient::MutateDeployedModel(
+    std::string const& endpoint,
+    google::cloud::aiplatform::v1::DeployedModel const& deployed_model,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::MutateDeployedModelRequest request;
   request.set_endpoint(endpoint);
@@ -157,7 +187,9 @@ EndpointServiceClient::MutateDeployedModel(std::string const& endpoint, google::
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>
-EndpointServiceClient::MutateDeployedModel(google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request, Options opts) {
+EndpointServiceClient::MutateDeployedModel(
+    google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->MutateDeployedModel(request);
 }

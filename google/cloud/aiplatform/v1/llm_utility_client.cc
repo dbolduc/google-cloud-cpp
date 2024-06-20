@@ -28,12 +28,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 LlmUtilityServiceClient::LlmUtilityServiceClient(
     std::shared_ptr<LlmUtilityServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 LlmUtilityServiceClient::~LlmUtilityServiceClient() = default;
 
 StatusOr<google::cloud::aiplatform::v1::CountTokensResponse>
-LlmUtilityServiceClient::CountTokens(std::string const& endpoint, std::vector<google::protobuf::Value> const& instances, Options opts) {
+LlmUtilityServiceClient::CountTokens(
+    std::string const& endpoint,
+    std::vector<google::protobuf::Value> const& instances, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CountTokensRequest request;
   request.set_endpoint(endpoint);
@@ -42,13 +44,17 @@ LlmUtilityServiceClient::CountTokens(std::string const& endpoint, std::vector<go
 }
 
 StatusOr<google::cloud::aiplatform::v1::CountTokensResponse>
-LlmUtilityServiceClient::CountTokens(google::cloud::aiplatform::v1::CountTokensRequest const& request, Options opts) {
+LlmUtilityServiceClient::CountTokens(
+    google::cloud::aiplatform::v1::CountTokensRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CountTokens(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse>
-LlmUtilityServiceClient::ComputeTokens(std::string const& endpoint, std::vector<google::protobuf::Value> const& instances, Options opts) {
+LlmUtilityServiceClient::ComputeTokens(
+    std::string const& endpoint,
+    std::vector<google::protobuf::Value> const& instances, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ComputeTokensRequest request;
   request.set_endpoint(endpoint);
@@ -57,7 +63,9 @@ LlmUtilityServiceClient::ComputeTokens(std::string const& endpoint, std::vector<
 }
 
 StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse>
-LlmUtilityServiceClient::ComputeTokens(google::cloud::aiplatform::v1::ComputeTokensRequest const& request, Options opts) {
+LlmUtilityServiceClient::ComputeTokens(
+    google::cloud::aiplatform::v1::ComputeTokensRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ComputeTokens(request);
 }

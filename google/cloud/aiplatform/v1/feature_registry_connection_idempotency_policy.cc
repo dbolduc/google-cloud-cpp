@@ -26,55 +26,71 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-FeatureRegistryServiceConnectionIdempotencyPolicy::~FeatureRegistryServiceConnectionIdempotencyPolicy() = default;
+FeatureRegistryServiceConnectionIdempotencyPolicy::
+    ~FeatureRegistryServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<FeatureRegistryServiceConnectionIdempotencyPolicy>
 FeatureRegistryServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<FeatureRegistryServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<FeatureRegistryServiceConnectionIdempotencyPolicy>(
+      *this);
 }
 
-Idempotency FeatureRegistryServiceConnectionIdempotencyPolicy::CreateFeatureGroup(google::cloud::aiplatform::v1::CreateFeatureGroupRequest const&) {
+Idempotency
+FeatureRegistryServiceConnectionIdempotencyPolicy::CreateFeatureGroup(
+    google::cloud::aiplatform::v1::CreateFeatureGroupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency FeatureRegistryServiceConnectionIdempotencyPolicy::GetFeatureGroup(google::cloud::aiplatform::v1::GetFeatureGroupRequest const&) {
+Idempotency FeatureRegistryServiceConnectionIdempotencyPolicy::GetFeatureGroup(
+    google::cloud::aiplatform::v1::GetFeatureGroupRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency FeatureRegistryServiceConnectionIdempotencyPolicy::ListFeatureGroups(google::cloud::aiplatform::v1::ListFeatureGroupsRequest) {  // NOLINT
+Idempotency
+FeatureRegistryServiceConnectionIdempotencyPolicy::ListFeatureGroups(
+    google::cloud::aiplatform::v1::ListFeatureGroupsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency FeatureRegistryServiceConnectionIdempotencyPolicy::UpdateFeatureGroup(google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const&) {
+Idempotency
+FeatureRegistryServiceConnectionIdempotencyPolicy::UpdateFeatureGroup(
+    google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency FeatureRegistryServiceConnectionIdempotencyPolicy::DeleteFeatureGroup(google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const&) {
+Idempotency
+FeatureRegistryServiceConnectionIdempotencyPolicy::DeleteFeatureGroup(
+    google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency FeatureRegistryServiceConnectionIdempotencyPolicy::CreateFeature(google::cloud::aiplatform::v1::CreateFeatureRequest const&) {
+Idempotency FeatureRegistryServiceConnectionIdempotencyPolicy::CreateFeature(
+    google::cloud::aiplatform::v1::CreateFeatureRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency FeatureRegistryServiceConnectionIdempotencyPolicy::GetFeature(google::cloud::aiplatform::v1::GetFeatureRequest const&) {
+Idempotency FeatureRegistryServiceConnectionIdempotencyPolicy::GetFeature(
+    google::cloud::aiplatform::v1::GetFeatureRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency FeatureRegistryServiceConnectionIdempotencyPolicy::ListFeatures(google::cloud::aiplatform::v1::ListFeaturesRequest) {  // NOLINT
+Idempotency FeatureRegistryServiceConnectionIdempotencyPolicy::ListFeatures(
+    google::cloud::aiplatform::v1::ListFeaturesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency FeatureRegistryServiceConnectionIdempotencyPolicy::UpdateFeature(google::cloud::aiplatform::v1::UpdateFeatureRequest const&) {
+Idempotency FeatureRegistryServiceConnectionIdempotencyPolicy::UpdateFeature(
+    google::cloud::aiplatform::v1::UpdateFeatureRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency FeatureRegistryServiceConnectionIdempotencyPolicy::DeleteFeature(google::cloud::aiplatform::v1::DeleteFeatureRequest const&) {
+Idempotency FeatureRegistryServiceConnectionIdempotencyPolicy::DeleteFeature(
+    google::cloud::aiplatform::v1::DeleteFeatureRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<FeatureRegistryServiceConnectionIdempotencyPolicy>
-    MakeDefaultFeatureRegistryServiceConnectionIdempotencyPolicy() {
+MakeDefaultFeatureRegistryServiceConnectionIdempotencyPolicy() {
   return std::make_unique<FeatureRegistryServiceConnectionIdempotencyPolicy>();
 }
 

@@ -42,24 +42,27 @@ future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>
 ModelServiceConnection::UploadModel(
     google::cloud::aiplatform::v1::UploadModelRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::cloud::aiplatform::v1::Model>
-ModelServiceConnection::GetModel(
+StatusOr<google::cloud::aiplatform::v1::Model> ModelServiceConnection::GetModel(
     google::cloud::aiplatform::v1::GetModelRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::Model> ModelServiceConnection::ListModels(
-    google::cloud::aiplatform::v1::ListModelsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::Model>
+ModelServiceConnection::ListModels(
+    google::cloud::aiplatform::v1::
+        ListModelsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Model>>();
 }
 
-StreamRange<google::cloud::aiplatform::v1::Model> ModelServiceConnection::ListModelVersions(
-    google::cloud::aiplatform::v1::ListModelVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::Model>
+ModelServiceConnection::ListModelVersions(
+    google::cloud::aiplatform::v1::
+        ListModelVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Model>>();
 }
@@ -70,28 +73,29 @@ ModelServiceConnection::UpdateModel(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-future<StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
+future<
+    StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
 ModelServiceConnection::UpdateExplanationDataset(
     google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 ModelServiceConnection::DeleteModel(
     google::cloud::aiplatform::v1::DeleteModelRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 ModelServiceConnection::DeleteModelVersion(
     google::cloud::aiplatform::v1::DeleteModelVersionRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Model>
@@ -104,16 +108,16 @@ future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>
 ModelServiceConnection::ExportModel(
     google::cloud::aiplatform::v1::ExportModelRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>
 ModelServiceConnection::CopyModel(
     google::cloud::aiplatform::v1::CopyModelRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
@@ -122,15 +126,18 @@ ModelServiceConnection::ImportModelEvaluation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse>
+StatusOr<
+    google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse>
 ModelServiceConnection::BatchImportModelEvaluationSlices(
-    google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesRequest const&) {
+    google::cloud::aiplatform::v1::
+        BatchImportModelEvaluationSlicesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsResponse>
 ModelServiceConnection::BatchImportEvaluatedAnnotations(
-    google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsRequest const&) {
+    google::cloud::aiplatform::v1::
+        BatchImportEvaluatedAnnotationsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -140,8 +147,10 @@ ModelServiceConnection::GetModelEvaluation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::ModelEvaluation> ModelServiceConnection::ListModelEvaluations(
-    google::cloud::aiplatform::v1::ListModelEvaluationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::ModelEvaluation>
+ModelServiceConnection::ListModelEvaluations(
+    google::cloud::aiplatform::v1::
+        ListModelEvaluationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::ModelEvaluation>>();
 }
@@ -152,8 +161,10 @@ ModelServiceConnection::GetModelEvaluationSlice(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::ModelEvaluationSlice> ModelServiceConnection::ListModelEvaluationSlices(
-    google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::ModelEvaluationSlice>
+ModelServiceConnection::ListModelEvaluationSlices(
+    google::cloud::aiplatform::v1::
+        ListModelEvaluationSlicesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::ModelEvaluationSlice>>();
 }
@@ -161,17 +172,18 @@ StreamRange<google::cloud::aiplatform::v1::ModelEvaluationSlice> ModelServiceCon
 std::shared_ptr<ModelServiceConnection> MakeModelServiceConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ModelServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 ModelServicePolicyOptionList>(options,
+                                                               __func__);
   options = aiplatform_v1_internal::ModelServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = aiplatform_v1_internal::CreateDefaultModelServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return aiplatform_v1_internal::MakeModelServiceTracingConnection(
       std::make_shared<aiplatform_v1_internal::ModelServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

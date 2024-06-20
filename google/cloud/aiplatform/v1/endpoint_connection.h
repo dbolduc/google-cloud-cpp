@@ -56,7 +56,8 @@ class EndpointServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class EndpointServiceLimitedErrorCountRetryPolicy : public EndpointServiceRetryPolicy {
+class EndpointServiceLimitedErrorCountRetryPolicy
+    : public EndpointServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +67,14 @@ class EndpointServiceLimitedErrorCountRetryPolicy : public EndpointServiceRetryP
    *     @p maximum_failures == 0.
    */
   explicit EndpointServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   EndpointServiceLimitedErrorCountRetryPolicy(
       EndpointServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : EndpointServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : EndpointServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   EndpointServiceLimitedErrorCountRetryPolicy(
       EndpointServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : EndpointServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : EndpointServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +94,9 @@ class EndpointServiceLimitedErrorCountRetryPolicy : public EndpointServiceRetryP
   using BaseType = EndpointServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<aiplatform_v1_internal::EndpointServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      aiplatform_v1_internal::EndpointServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -106,7 +109,8 @@ class EndpointServiceLimitedErrorCountRetryPolicy : public EndpointServiceRetryP
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class EndpointServiceLimitedTimeRetryPolicy : public EndpointServiceRetryPolicy {
+class EndpointServiceLimitedTimeRetryPolicy
+    : public EndpointServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -131,12 +135,14 @@ class EndpointServiceLimitedTimeRetryPolicy : public EndpointServiceRetryPolicy 
   template <typename DurationRep, typename DurationPeriod>
   explicit EndpointServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  EndpointServiceLimitedTimeRetryPolicy(EndpointServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : EndpointServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  EndpointServiceLimitedTimeRetryPolicy(EndpointServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : EndpointServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  EndpointServiceLimitedTimeRetryPolicy(
+      EndpointServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : EndpointServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  EndpointServiceLimitedTimeRetryPolicy(
+      EndpointServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : EndpointServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +164,9 @@ class EndpointServiceLimitedTimeRetryPolicy : public EndpointServiceRetryPolicy 
   using BaseType = EndpointServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<aiplatform_v1_internal::EndpointServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      aiplatform_v1_internal::EndpointServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -180,39 +188,46 @@ class EndpointServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
-  CreateEndpoint(google::cloud::aiplatform::v1::CreateEndpointRequest const& request);
+  CreateEndpoint(
+      google::cloud::aiplatform::v1::CreateEndpointRequest const& request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Endpoint>
-  GetEndpoint(google::cloud::aiplatform::v1::GetEndpointRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Endpoint> GetEndpoint(
+      google::cloud::aiplatform::v1::GetEndpointRequest const& request);
 
-  virtual StreamRange<google::cloud::aiplatform::v1::Endpoint>
-  ListEndpoints(google::cloud::aiplatform::v1::ListEndpointsRequest request);
+  virtual StreamRange<google::cloud::aiplatform::v1::Endpoint> ListEndpoints(
+      google::cloud::aiplatform::v1::ListEndpointsRequest request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Endpoint>
-  UpdateEndpoint(google::cloud::aiplatform::v1::UpdateEndpointRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Endpoint> UpdateEndpoint(
+      google::cloud::aiplatform::v1::UpdateEndpointRequest const& request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteEndpoint(google::cloud::aiplatform::v1::DeleteEndpointRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteEndpoint(
+      google::cloud::aiplatform::v1::DeleteEndpointRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>
   DeployModel(google::cloud::aiplatform::v1::DeployModelRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>
-  UndeployModel(google::cloud::aiplatform::v1::UndeployModelRequest const& request);
+  UndeployModel(
+      google::cloud::aiplatform::v1::UndeployModelRequest const& request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>
-  MutateDeployedModel(google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>
+  MutateDeployedModel(
+      google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `EndpointServiceConnection`.
+ * A factory function to construct an object of type
+ * `EndpointServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of EndpointServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `EndpointServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `EndpointServiceConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -223,8 +238,8 @@ class EndpointServiceConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `EndpointServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `EndpointServiceConnection` created
+ * by this function.
  */
 std::shared_ptr<EndpointServiceConnection> MakeEndpointServiceConnection(
     std::string const& location, Options options = {});

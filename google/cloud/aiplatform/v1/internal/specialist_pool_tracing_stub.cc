@@ -33,99 +33,114 @@ SpecialistPoolServiceTracingStub::SpecialistPoolServiceTracingStub(
 
 future<StatusOr<google::longrunning::Operation>>
 SpecialistPoolServiceTracingStub::AsyncCreateSpecialistPool(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.SpecialistPoolService", "CreateSpecialistPool");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.aiplatform.v1.SpecialistPoolService",
+                             "CreateSpecialistPool");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateSpecialistPool(cq, context, std::move(options), request);
+  auto f = child_->AsyncCreateSpecialistPool(cq, context, std::move(options),
+                                             request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 SpecialistPoolServiceTracingStub::CreateSpecialistPool(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.SpecialistPoolService", "CreateSpecialistPool");
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.aiplatform.v1.SpecialistPoolService",
+                             "CreateSpecialistPool");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateSpecialistPool(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateSpecialistPool(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::SpecialistPool> SpecialistPoolServiceTracingStub::GetSpecialistPool(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
+SpecialistPoolServiceTracingStub::GetSpecialistPool(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.SpecialistPoolService", "GetSpecialistPool");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.SpecialistPoolService", "GetSpecialistPool");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetSpecialistPool(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->GetSpecialistPool(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::ListSpecialistPoolsResponse> SpecialistPoolServiceTracingStub::ListSpecialistPools(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::aiplatform::v1::ListSpecialistPoolsResponse>
+SpecialistPoolServiceTracingStub::ListSpecialistPools(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListSpecialistPoolsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.SpecialistPoolService", "ListSpecialistPools");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.aiplatform.v1.SpecialistPoolService",
+                             "ListSpecialistPools");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListSpecialistPools(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ListSpecialistPools(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 SpecialistPoolServiceTracingStub::AsyncDeleteSpecialistPool(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.SpecialistPoolService", "DeleteSpecialistPool");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.aiplatform.v1.SpecialistPoolService",
+                             "DeleteSpecialistPool");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteSpecialistPool(cq, context, std::move(options), request);
+  auto f = child_->AsyncDeleteSpecialistPool(cq, context, std::move(options),
+                                             request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 SpecialistPoolServiceTracingStub::DeleteSpecialistPool(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.SpecialistPoolService", "DeleteSpecialistPool");
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.aiplatform.v1.SpecialistPoolService",
+                             "DeleteSpecialistPool");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteSpecialistPool(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->DeleteSpecialistPool(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 SpecialistPoolServiceTracingStub::AsyncUpdateSpecialistPool(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.SpecialistPoolService", "UpdateSpecialistPool");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.aiplatform.v1.SpecialistPoolService",
+                             "UpdateSpecialistPool");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateSpecialistPool(cq, context, std::move(options), request);
+  auto f = child_->AsyncUpdateSpecialistPool(cq, context, std::move(options),
+                                             request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 SpecialistPoolServiceTracingStub::UpdateSpecialistPool(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.SpecialistPoolService", "UpdateSpecialistPool");
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.aiplatform.v1.SpecialistPoolService",
+                             "UpdateSpecialistPool");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateSpecialistPool(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->UpdateSpecialistPool(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -138,8 +153,7 @@ SpecialistPoolServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -152,8 +166,8 @@ future<Status> SpecialistPoolServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

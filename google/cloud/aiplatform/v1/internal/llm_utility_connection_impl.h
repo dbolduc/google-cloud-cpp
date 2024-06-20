@@ -42,17 +42,19 @@ class LlmUtilityServiceConnectionImpl
   ~LlmUtilityServiceConnectionImpl() override = default;
 
   LlmUtilityServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<aiplatform_v1_internal::LlmUtilityServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<aiplatform_v1_internal::LlmUtilityServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::aiplatform::v1::CountTokensResponse>
-  CountTokens(google::cloud::aiplatform::v1::CountTokensRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::CountTokensResponse> CountTokens(
+      google::cloud::aiplatform::v1::CountTokensRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse>
-  ComputeTokens(google::cloud::aiplatform::v1::ComputeTokensRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse> ComputeTokens(
+      google::cloud::aiplatform::v1::ComputeTokensRequest const& request)
+      override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

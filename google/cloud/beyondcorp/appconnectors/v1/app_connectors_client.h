@@ -76,23 +76,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class AppConnectorsServiceClient {
  public:
-  explicit AppConnectorsServiceClient(std::shared_ptr<AppConnectorsServiceConnection> connection, Options opts = {});
+  explicit AppConnectorsServiceClient(
+      std::shared_ptr<AppConnectorsServiceConnection> connection,
+      Options opts = {});
   ~AppConnectorsServiceClient();
 
   ///@{
   /// @name Copy and move support
   AppConnectorsServiceClient(AppConnectorsServiceClient const&) = default;
-  AppConnectorsServiceClient& operator=(AppConnectorsServiceClient const&) = default;
+  AppConnectorsServiceClient& operator=(AppConnectorsServiceClient const&) =
+      default;
   AppConnectorsServiceClient(AppConnectorsServiceClient&&) = default;
   AppConnectorsServiceClient& operator=(AppConnectorsServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(AppConnectorsServiceClient const& a, AppConnectorsServiceClient const& b) {
+  friend bool operator==(AppConnectorsServiceClient const& a,
+                         AppConnectorsServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(AppConnectorsServiceClient const& a, AppConnectorsServiceClient const& b) {
+  friend bool operator!=(AppConnectorsServiceClient const& a,
+                         AppConnectorsServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -169,7 +174,10 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
-  ListAppConnectors(google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest request, Options opts = {});
+  ListAppConnectors(
+      google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -225,7 +233,9 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
-  GetAppConnector(google::cloud::beyondcorp::appconnectors::v1::GetAppConnectorRequest const& request, Options opts = {});
+  GetAppConnector(google::cloud::beyondcorp::appconnectors::v1::
+                      GetAppConnectorRequest const& request,
+                  Options opts = {});
 
   // clang-format off
   ///
@@ -264,7 +274,11 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  CreateAppConnector(std::string const& parent, google::cloud::beyondcorp::appconnectors::v1::AppConnector const& app_connector, std::string const& app_connector_id, Options opts = {});
+  CreateAppConnector(
+      std::string const& parent,
+      google::cloud::beyondcorp::appconnectors::v1::AppConnector const&
+          app_connector,
+      std::string const& app_connector_id, Options opts = {});
 
   // clang-format off
   ///
@@ -301,7 +315,9 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  CreateAppConnector(google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest const& request, Options opts = {});
+  CreateAppConnector(google::cloud::beyondcorp::appconnectors::v1::
+                         CreateAppConnectorRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -339,7 +355,10 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  UpdateAppConnector(google::cloud::beyondcorp::appconnectors::v1::AppConnector const& app_connector, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateAppConnector(
+      google::cloud::beyondcorp::appconnectors::v1::AppConnector const&
+          app_connector,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -376,7 +395,9 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  UpdateAppConnector(google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest const& request, Options opts = {});
+  UpdateAppConnector(google::cloud::beyondcorp::appconnectors::v1::
+                         UpdateAppConnectorRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -408,7 +429,8 @@ class AppConnectorsServiceClient {
   /// [google.cloud.beyondcorp.appconnectors.v1.DeleteAppConnectorRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L263}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnectorOperationMetadata>>
+  future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
+                      AppConnectorOperationMetadata>>
   DeleteAppConnector(std::string const& name, Options opts = {});
 
   // clang-format off
@@ -445,8 +467,11 @@ class AppConnectorsServiceClient {
   /// [google.cloud.beyondcorp.appconnectors.v1.DeleteAppConnectorRequest]: @googleapis_reference_link{google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto#L263}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnectorOperationMetadata>>
-  DeleteAppConnector(google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
+                      AppConnectorOperationMetadata>>
+  DeleteAppConnector(google::cloud::beyondcorp::appconnectors::v1::
+                         DeleteAppConnectorRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -480,7 +505,10 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  ReportStatus(std::string const& app_connector, google::cloud::beyondcorp::appconnectors::v1::ResourceInfo const& resource_info, Options opts = {});
+  ReportStatus(std::string const& app_connector,
+               google::cloud::beyondcorp::appconnectors::v1::ResourceInfo const&
+                   resource_info,
+               Options opts = {});
 
   // clang-format off
   ///
@@ -517,7 +545,10 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  ReportStatus(google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const& request, Options opts = {});
+  ReportStatus(
+      google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<AppConnectorsServiceConnection> connection_;

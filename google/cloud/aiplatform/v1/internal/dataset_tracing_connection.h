@@ -36,66 +36,82 @@ class DatasetServiceTracingConnection
   ~DatasetServiceTracingConnection() override = default;
 
   explicit DatasetServiceTracingConnection(
-    std::shared_ptr<aiplatform_v1::DatasetServiceConnection> child);
+      std::shared_ptr<aiplatform_v1::DatasetServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::aiplatform::v1::Dataset>>
-  CreateDataset(google::cloud::aiplatform::v1::CreateDatasetRequest const& request) override;
+  future<StatusOr<google::cloud::aiplatform::v1::Dataset>> CreateDataset(
+      google::cloud::aiplatform::v1::CreateDatasetRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::Dataset>
-  GetDataset(google::cloud::aiplatform::v1::GetDatasetRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::Dataset> GetDataset(
+      google::cloud::aiplatform::v1::GetDatasetRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::Dataset>
-  UpdateDataset(google::cloud::aiplatform::v1::UpdateDatasetRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::Dataset> UpdateDataset(
+      google::cloud::aiplatform::v1::UpdateDatasetRequest const& request)
+      override;
 
-  StreamRange<google::cloud::aiplatform::v1::Dataset>
-  ListDatasets(google::cloud::aiplatform::v1::ListDatasetsRequest request) override;
+  StreamRange<google::cloud::aiplatform::v1::Dataset> ListDatasets(
+      google::cloud::aiplatform::v1::ListDatasetsRequest request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDataset(google::cloud::aiplatform::v1::DeleteDatasetRequest const& request) override;
+  DeleteDataset(google::cloud::aiplatform::v1::DeleteDatasetRequest const&
+                    request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
-  ImportData(google::cloud::aiplatform::v1::ImportDataRequest const& request) override;
+  ImportData(
+      google::cloud::aiplatform::v1::ImportDataRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
-  ExportData(google::cloud::aiplatform::v1::ExportDataRequest const& request) override;
+  ExportData(
+      google::cloud::aiplatform::v1::ExportDataRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
-  CreateDatasetVersion(google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) override;
+  CreateDatasetVersion(
+      google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
-  UpdateDatasetVersion(google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::DatasetVersion> UpdateDatasetVersion(
+      google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDatasetVersion(google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) override;
+  DeleteDatasetVersion(
+      google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
-  GetDatasetVersion(google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::DatasetVersion> GetDatasetVersion(
+      google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request)
+      override;
 
   StreamRange<google::cloud::aiplatform::v1::DatasetVersion>
-  ListDatasetVersions(google::cloud::aiplatform::v1::ListDatasetVersionsRequest request) override;
+  ListDatasetVersions(google::cloud::aiplatform::v1::ListDatasetVersionsRequest
+                          request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
-  RestoreDatasetVersion(google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const& request) override;
+  RestoreDatasetVersion(
+      google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
+          request) override;
 
-  StreamRange<google::cloud::aiplatform::v1::DataItem>
-  ListDataItems(google::cloud::aiplatform::v1::ListDataItemsRequest request) override;
+  StreamRange<google::cloud::aiplatform::v1::DataItem> ListDataItems(
+      google::cloud::aiplatform::v1::ListDataItemsRequest request) override;
 
-  StreamRange<google::cloud::aiplatform::v1::DataItemView>
-  SearchDataItems(google::cloud::aiplatform::v1::SearchDataItemsRequest request) override;
+  StreamRange<google::cloud::aiplatform::v1::DataItemView> SearchDataItems(
+      google::cloud::aiplatform::v1::SearchDataItemsRequest request) override;
 
-  StreamRange<google::cloud::aiplatform::v1::SavedQuery>
-  ListSavedQueries(google::cloud::aiplatform::v1::ListSavedQueriesRequest request) override;
+  StreamRange<google::cloud::aiplatform::v1::SavedQuery> ListSavedQueries(
+      google::cloud::aiplatform::v1::ListSavedQueriesRequest request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteSavedQuery(google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) override;
+  DeleteSavedQuery(google::cloud::aiplatform::v1::DeleteSavedQueryRequest const&
+                       request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
-  GetAnnotationSpec(google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::AnnotationSpec> GetAnnotationSpec(
+      google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request)
+      override;
 
-  StreamRange<google::cloud::aiplatform::v1::Annotation>
-  ListAnnotations(google::cloud::aiplatform::v1::ListAnnotationsRequest request) override;
+  StreamRange<google::cloud::aiplatform::v1::Annotation> ListAnnotations(
+      google::cloud::aiplatform::v1::ListAnnotationsRequest request) override;
 
  private:
   std::shared_ptr<aiplatform_v1::DatasetServiceConnection> child_;

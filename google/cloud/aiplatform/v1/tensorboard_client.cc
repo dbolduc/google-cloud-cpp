@@ -28,12 +28,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TensorboardServiceClient::TensorboardServiceClient(
     std::shared_ptr<TensorboardServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 TensorboardServiceClient::~TensorboardServiceClient() = default;
 
 future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
-TensorboardServiceClient::CreateTensorboard(std::string const& parent, google::cloud::aiplatform::v1::Tensorboard const& tensorboard, Options opts) {
+TensorboardServiceClient::CreateTensorboard(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::Tensorboard const& tensorboard,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateTensorboardRequest request;
   request.set_parent(parent);
@@ -42,13 +45,16 @@ TensorboardServiceClient::CreateTensorboard(std::string const& parent, google::c
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
-TensorboardServiceClient::CreateTensorboard(google::cloud::aiplatform::v1::CreateTensorboardRequest const& request, Options opts) {
+TensorboardServiceClient::CreateTensorboard(
+    google::cloud::aiplatform::v1::CreateTensorboardRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTensorboard(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Tensorboard>
-TensorboardServiceClient::GetTensorboard(std::string const& name, Options opts) {
+TensorboardServiceClient::GetTensorboard(std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::GetTensorboardRequest request;
   request.set_name(name);
@@ -56,13 +62,17 @@ TensorboardServiceClient::GetTensorboard(std::string const& name, Options opts) 
 }
 
 StatusOr<google::cloud::aiplatform::v1::Tensorboard>
-TensorboardServiceClient::GetTensorboard(google::cloud::aiplatform::v1::GetTensorboardRequest const& request, Options opts) {
+TensorboardServiceClient::GetTensorboard(
+    google::cloud::aiplatform::v1::GetTensorboardRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTensorboard(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
-TensorboardServiceClient::UpdateTensorboard(google::cloud::aiplatform::v1::Tensorboard const& tensorboard, google::protobuf::FieldMask const& update_mask, Options opts) {
+TensorboardServiceClient::UpdateTensorboard(
+    google::cloud::aiplatform::v1::Tensorboard const& tensorboard,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdateTensorboardRequest request;
   *request.mutable_tensorboard() = tensorboard;
@@ -71,13 +81,16 @@ TensorboardServiceClient::UpdateTensorboard(google::cloud::aiplatform::v1::Tenso
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
-TensorboardServiceClient::UpdateTensorboard(google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request, Options opts) {
+TensorboardServiceClient::UpdateTensorboard(
+    google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTensorboard(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::Tensorboard>
-TensorboardServiceClient::ListTensorboards(std::string const& parent, Options opts) {
+TensorboardServiceClient::ListTensorboards(std::string const& parent,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListTensorboardsRequest request;
   request.set_parent(parent);
@@ -85,13 +98,16 @@ TensorboardServiceClient::ListTensorboards(std::string const& parent, Options op
 }
 
 StreamRange<google::cloud::aiplatform::v1::Tensorboard>
-TensorboardServiceClient::ListTensorboards(google::cloud::aiplatform::v1::ListTensorboardsRequest request, Options opts) {
+TensorboardServiceClient::ListTensorboards(
+    google::cloud::aiplatform::v1::ListTensorboardsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTensorboards(std::move(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-TensorboardServiceClient::DeleteTensorboard(std::string const& name, Options opts) {
+TensorboardServiceClient::DeleteTensorboard(std::string const& name,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteTensorboardRequest request;
   request.set_name(name);
@@ -99,13 +115,16 @@ TensorboardServiceClient::DeleteTensorboard(std::string const& name, Options opt
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-TensorboardServiceClient::DeleteTensorboard(google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request, Options opts) {
+TensorboardServiceClient::DeleteTensorboard(
+    google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTensorboard(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
-TensorboardServiceClient::ReadTensorboardUsage(std::string const& tensorboard, Options opts) {
+TensorboardServiceClient::ReadTensorboardUsage(std::string const& tensorboard,
+                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ReadTensorboardUsageRequest request;
   request.set_tensorboard(tensorboard);
@@ -113,13 +132,16 @@ TensorboardServiceClient::ReadTensorboardUsage(std::string const& tensorboard, O
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
-TensorboardServiceClient::ReadTensorboardUsage(google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request, Options opts) {
+TensorboardServiceClient::ReadTensorboardUsage(
+    google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReadTensorboardUsage(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardSizeResponse>
-TensorboardServiceClient::ReadTensorboardSize(std::string const& tensorboard, Options opts) {
+TensorboardServiceClient::ReadTensorboardSize(std::string const& tensorboard,
+                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ReadTensorboardSizeRequest request;
   request.set_tensorboard(tensorboard);
@@ -127,13 +149,19 @@ TensorboardServiceClient::ReadTensorboardSize(std::string const& tensorboard, Op
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardSizeResponse>
-TensorboardServiceClient::ReadTensorboardSize(google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const& request, Options opts) {
+TensorboardServiceClient::ReadTensorboardSize(
+    google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReadTensorboardSize(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
-TensorboardServiceClient::CreateTensorboardExperiment(std::string const& parent, google::cloud::aiplatform::v1::TensorboardExperiment const& tensorboard_experiment, std::string const& tensorboard_experiment_id, Options opts) {
+TensorboardServiceClient::CreateTensorboardExperiment(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::TensorboardExperiment const&
+        tensorboard_experiment,
+    std::string const& tensorboard_experiment_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateTensorboardExperimentRequest request;
   request.set_parent(parent);
@@ -143,13 +171,17 @@ TensorboardServiceClient::CreateTensorboardExperiment(std::string const& parent,
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
-TensorboardServiceClient::CreateTensorboardExperiment(google::cloud::aiplatform::v1::CreateTensorboardExperimentRequest const& request, Options opts) {
+TensorboardServiceClient::CreateTensorboardExperiment(
+    google::cloud::aiplatform::v1::CreateTensorboardExperimentRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTensorboardExperiment(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
-TensorboardServiceClient::GetTensorboardExperiment(std::string const& name, Options opts) {
+TensorboardServiceClient::GetTensorboardExperiment(std::string const& name,
+                                                   Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::GetTensorboardExperimentRequest request;
   request.set_name(name);
@@ -157,13 +189,19 @@ TensorboardServiceClient::GetTensorboardExperiment(std::string const& name, Opti
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
-TensorboardServiceClient::GetTensorboardExperiment(google::cloud::aiplatform::v1::GetTensorboardExperimentRequest const& request, Options opts) {
+TensorboardServiceClient::GetTensorboardExperiment(
+    google::cloud::aiplatform::v1::GetTensorboardExperimentRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTensorboardExperiment(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
-TensorboardServiceClient::UpdateTensorboardExperiment(google::cloud::aiplatform::v1::TensorboardExperiment const& tensorboard_experiment, google::protobuf::FieldMask const& update_mask, Options opts) {
+TensorboardServiceClient::UpdateTensorboardExperiment(
+    google::cloud::aiplatform::v1::TensorboardExperiment const&
+        tensorboard_experiment,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdateTensorboardExperimentRequest request;
   *request.mutable_tensorboard_experiment() = tensorboard_experiment;
@@ -172,13 +210,17 @@ TensorboardServiceClient::UpdateTensorboardExperiment(google::cloud::aiplatform:
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
-TensorboardServiceClient::UpdateTensorboardExperiment(google::cloud::aiplatform::v1::UpdateTensorboardExperimentRequest const& request, Options opts) {
+TensorboardServiceClient::UpdateTensorboardExperiment(
+    google::cloud::aiplatform::v1::UpdateTensorboardExperimentRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTensorboardExperiment(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::TensorboardExperiment>
-TensorboardServiceClient::ListTensorboardExperiments(std::string const& parent, Options opts) {
+TensorboardServiceClient::ListTensorboardExperiments(std::string const& parent,
+                                                     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListTensorboardExperimentsRequest request;
   request.set_parent(parent);
@@ -186,13 +228,16 @@ TensorboardServiceClient::ListTensorboardExperiments(std::string const& parent, 
 }
 
 StreamRange<google::cloud::aiplatform::v1::TensorboardExperiment>
-TensorboardServiceClient::ListTensorboardExperiments(google::cloud::aiplatform::v1::ListTensorboardExperimentsRequest request, Options opts) {
+TensorboardServiceClient::ListTensorboardExperiments(
+    google::cloud::aiplatform::v1::ListTensorboardExperimentsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTensorboardExperiments(std::move(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-TensorboardServiceClient::DeleteTensorboardExperiment(std::string const& name, Options opts) {
+TensorboardServiceClient::DeleteTensorboardExperiment(std::string const& name,
+                                                      Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest request;
   request.set_name(name);
@@ -200,13 +245,19 @@ TensorboardServiceClient::DeleteTensorboardExperiment(std::string const& name, O
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-TensorboardServiceClient::DeleteTensorboardExperiment(google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const& request, Options opts) {
+TensorboardServiceClient::DeleteTensorboardExperiment(
+    google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTensorboardExperiment(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
-TensorboardServiceClient::CreateTensorboardRun(std::string const& parent, google::cloud::aiplatform::v1::TensorboardRun const& tensorboard_run, std::string const& tensorboard_run_id, Options opts) {
+TensorboardServiceClient::CreateTensorboardRun(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::TensorboardRun const& tensorboard_run,
+    std::string const& tensorboard_run_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateTensorboardRunRequest request;
   request.set_parent(parent);
@@ -216,13 +267,20 @@ TensorboardServiceClient::CreateTensorboardRun(std::string const& parent, google
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
-TensorboardServiceClient::CreateTensorboardRun(google::cloud::aiplatform::v1::CreateTensorboardRunRequest const& request, Options opts) {
+TensorboardServiceClient::CreateTensorboardRun(
+    google::cloud::aiplatform::v1::CreateTensorboardRunRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTensorboardRun(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::BatchCreateTensorboardRunsResponse>
-TensorboardServiceClient::BatchCreateTensorboardRuns(std::string const& parent, std::vector<google::cloud::aiplatform::v1::CreateTensorboardRunRequest> const& requests, Options opts) {
+TensorboardServiceClient::BatchCreateTensorboardRuns(
+    std::string const& parent,
+    std::vector<
+        google::cloud::aiplatform::v1::CreateTensorboardRunRequest> const&
+        requests,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::BatchCreateTensorboardRunsRequest request;
   request.set_parent(parent);
@@ -231,13 +289,17 @@ TensorboardServiceClient::BatchCreateTensorboardRuns(std::string const& parent, 
 }
 
 StatusOr<google::cloud::aiplatform::v1::BatchCreateTensorboardRunsResponse>
-TensorboardServiceClient::BatchCreateTensorboardRuns(google::cloud::aiplatform::v1::BatchCreateTensorboardRunsRequest const& request, Options opts) {
+TensorboardServiceClient::BatchCreateTensorboardRuns(
+    google::cloud::aiplatform::v1::BatchCreateTensorboardRunsRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchCreateTensorboardRuns(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
-TensorboardServiceClient::GetTensorboardRun(std::string const& name, Options opts) {
+TensorboardServiceClient::GetTensorboardRun(std::string const& name,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::GetTensorboardRunRequest request;
   request.set_name(name);
@@ -245,13 +307,17 @@ TensorboardServiceClient::GetTensorboardRun(std::string const& name, Options opt
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
-TensorboardServiceClient::GetTensorboardRun(google::cloud::aiplatform::v1::GetTensorboardRunRequest const& request, Options opts) {
+TensorboardServiceClient::GetTensorboardRun(
+    google::cloud::aiplatform::v1::GetTensorboardRunRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTensorboardRun(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
-TensorboardServiceClient::UpdateTensorboardRun(google::cloud::aiplatform::v1::TensorboardRun const& tensorboard_run, google::protobuf::FieldMask const& update_mask, Options opts) {
+TensorboardServiceClient::UpdateTensorboardRun(
+    google::cloud::aiplatform::v1::TensorboardRun const& tensorboard_run,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdateTensorboardRunRequest request;
   *request.mutable_tensorboard_run() = tensorboard_run;
@@ -260,13 +326,16 @@ TensorboardServiceClient::UpdateTensorboardRun(google::cloud::aiplatform::v1::Te
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
-TensorboardServiceClient::UpdateTensorboardRun(google::cloud::aiplatform::v1::UpdateTensorboardRunRequest const& request, Options opts) {
+TensorboardServiceClient::UpdateTensorboardRun(
+    google::cloud::aiplatform::v1::UpdateTensorboardRunRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTensorboardRun(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::TensorboardRun>
-TensorboardServiceClient::ListTensorboardRuns(std::string const& parent, Options opts) {
+TensorboardServiceClient::ListTensorboardRuns(std::string const& parent,
+                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListTensorboardRunsRequest request;
   request.set_parent(parent);
@@ -274,13 +343,16 @@ TensorboardServiceClient::ListTensorboardRuns(std::string const& parent, Options
 }
 
 StreamRange<google::cloud::aiplatform::v1::TensorboardRun>
-TensorboardServiceClient::ListTensorboardRuns(google::cloud::aiplatform::v1::ListTensorboardRunsRequest request, Options opts) {
+TensorboardServiceClient::ListTensorboardRuns(
+    google::cloud::aiplatform::v1::ListTensorboardRunsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTensorboardRuns(std::move(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-TensorboardServiceClient::DeleteTensorboardRun(std::string const& name, Options opts) {
+TensorboardServiceClient::DeleteTensorboardRun(std::string const& name,
+                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteTensorboardRunRequest request;
   request.set_name(name);
@@ -288,28 +360,44 @@ TensorboardServiceClient::DeleteTensorboardRun(std::string const& name, Options 
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-TensorboardServiceClient::DeleteTensorboardRun(google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request, Options opts) {
+TensorboardServiceClient::DeleteTensorboardRun(
+    google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTensorboardRun(request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesResponse>
-TensorboardServiceClient::BatchCreateTensorboardTimeSeries(std::string const& parent, std::vector<google::cloud::aiplatform::v1::CreateTensorboardTimeSeriesRequest> const& requests, Options opts) {
+StatusOr<
+    google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesResponse>
+TensorboardServiceClient::BatchCreateTensorboardTimeSeries(
+    std::string const& parent,
+    std::vector<google::cloud::aiplatform::v1::
+                    CreateTensorboardTimeSeriesRequest> const& requests,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesRequest request;
+  google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesRequest
+      request;
   request.set_parent(parent);
   *request.mutable_requests() = {requests.begin(), requests.end()};
   return connection_->BatchCreateTensorboardTimeSeries(request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesResponse>
-TensorboardServiceClient::BatchCreateTensorboardTimeSeries(google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesRequest const& request, Options opts) {
+StatusOr<
+    google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesResponse>
+TensorboardServiceClient::BatchCreateTensorboardTimeSeries(
+    google::cloud::aiplatform::v1::
+        BatchCreateTensorboardTimeSeriesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchCreateTensorboardTimeSeries(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
-TensorboardServiceClient::CreateTensorboardTimeSeries(std::string const& parent, google::cloud::aiplatform::v1::TensorboardTimeSeries const& tensorboard_time_series, Options opts) {
+TensorboardServiceClient::CreateTensorboardTimeSeries(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::TensorboardTimeSeries const&
+        tensorboard_time_series,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateTensorboardTimeSeriesRequest request;
   request.set_parent(parent);
@@ -318,13 +406,17 @@ TensorboardServiceClient::CreateTensorboardTimeSeries(std::string const& parent,
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
-TensorboardServiceClient::CreateTensorboardTimeSeries(google::cloud::aiplatform::v1::CreateTensorboardTimeSeriesRequest const& request, Options opts) {
+TensorboardServiceClient::CreateTensorboardTimeSeries(
+    google::cloud::aiplatform::v1::CreateTensorboardTimeSeriesRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTensorboardTimeSeries(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
-TensorboardServiceClient::GetTensorboardTimeSeries(std::string const& name, Options opts) {
+TensorboardServiceClient::GetTensorboardTimeSeries(std::string const& name,
+                                                   Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::GetTensorboardTimeSeriesRequest request;
   request.set_name(name);
@@ -332,13 +424,19 @@ TensorboardServiceClient::GetTensorboardTimeSeries(std::string const& name, Opti
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
-TensorboardServiceClient::GetTensorboardTimeSeries(google::cloud::aiplatform::v1::GetTensorboardTimeSeriesRequest const& request, Options opts) {
+TensorboardServiceClient::GetTensorboardTimeSeries(
+    google::cloud::aiplatform::v1::GetTensorboardTimeSeriesRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTensorboardTimeSeries(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
-TensorboardServiceClient::UpdateTensorboardTimeSeries(google::cloud::aiplatform::v1::TensorboardTimeSeries const& tensorboard_time_series, google::protobuf::FieldMask const& update_mask, Options opts) {
+TensorboardServiceClient::UpdateTensorboardTimeSeries(
+    google::cloud::aiplatform::v1::TensorboardTimeSeries const&
+        tensorboard_time_series,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdateTensorboardTimeSeriesRequest request;
   *request.mutable_tensorboard_time_series() = tensorboard_time_series;
@@ -347,13 +445,17 @@ TensorboardServiceClient::UpdateTensorboardTimeSeries(google::cloud::aiplatform:
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
-TensorboardServiceClient::UpdateTensorboardTimeSeries(google::cloud::aiplatform::v1::UpdateTensorboardTimeSeriesRequest const& request, Options opts) {
+TensorboardServiceClient::UpdateTensorboardTimeSeries(
+    google::cloud::aiplatform::v1::UpdateTensorboardTimeSeriesRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTensorboardTimeSeries(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::TensorboardTimeSeries>
-TensorboardServiceClient::ListTensorboardTimeSeries(std::string const& parent, Options opts) {
+TensorboardServiceClient::ListTensorboardTimeSeries(std::string const& parent,
+                                                    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListTensorboardTimeSeriesRequest request;
   request.set_parent(parent);
@@ -361,13 +463,16 @@ TensorboardServiceClient::ListTensorboardTimeSeries(std::string const& parent, O
 }
 
 StreamRange<google::cloud::aiplatform::v1::TensorboardTimeSeries>
-TensorboardServiceClient::ListTensorboardTimeSeries(google::cloud::aiplatform::v1::ListTensorboardTimeSeriesRequest request, Options opts) {
+TensorboardServiceClient::ListTensorboardTimeSeries(
+    google::cloud::aiplatform::v1::ListTensorboardTimeSeriesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTensorboardTimeSeries(std::move(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-TensorboardServiceClient::DeleteTensorboardTimeSeries(std::string const& name, Options opts) {
+TensorboardServiceClient::DeleteTensorboardTimeSeries(std::string const& name,
+                                                      Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest request;
   request.set_name(name);
@@ -375,27 +480,38 @@ TensorboardServiceClient::DeleteTensorboardTimeSeries(std::string const& name, O
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-TensorboardServiceClient::DeleteTensorboardTimeSeries(google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const& request, Options opts) {
+TensorboardServiceClient::DeleteTensorboardTimeSeries(
+    google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTensorboardTimeSeries(request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataResponse>
-TensorboardServiceClient::BatchReadTensorboardTimeSeriesData(std::string const& tensorboard, Options opts) {
+StatusOr<
+    google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataResponse>
+TensorboardServiceClient::BatchReadTensorboardTimeSeriesData(
+    std::string const& tensorboard, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataRequest request;
+  google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataRequest
+      request;
   request.set_tensorboard(tensorboard);
   return connection_->BatchReadTensorboardTimeSeriesData(request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataResponse>
-TensorboardServiceClient::BatchReadTensorboardTimeSeriesData(google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataRequest const& request, Options opts) {
+StatusOr<
+    google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataResponse>
+TensorboardServiceClient::BatchReadTensorboardTimeSeriesData(
+    google::cloud::aiplatform::v1::
+        BatchReadTensorboardTimeSeriesDataRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchReadTensorboardTimeSeriesData(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataResponse>
-TensorboardServiceClient::ReadTensorboardTimeSeriesData(std::string const& tensorboard_time_series, Options opts) {
+TensorboardServiceClient::ReadTensorboardTimeSeriesData(
+    std::string const& tensorboard_time_series, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataRequest request;
   request.set_tensorboard_time_series(tensorboard_time_series);
@@ -403,13 +519,17 @@ TensorboardServiceClient::ReadTensorboardTimeSeriesData(std::string const& tenso
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataResponse>
-TensorboardServiceClient::ReadTensorboardTimeSeriesData(google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataRequest const& request, Options opts) {
+TensorboardServiceClient::ReadTensorboardTimeSeriesData(
+    google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReadTensorboardTimeSeriesData(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>
-TensorboardServiceClient::ReadTensorboardBlobData(std::string const& time_series, Options opts) {
+TensorboardServiceClient::ReadTensorboardBlobData(
+    std::string const& time_series, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest request;
   request.set_time_series(time_series);
@@ -417,43 +537,64 @@ TensorboardServiceClient::ReadTensorboardBlobData(std::string const& time_series
 }
 
 StreamRange<google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>
-TensorboardServiceClient::ReadTensorboardBlobData(google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest const& request, Options opts) {
+TensorboardServiceClient::ReadTensorboardBlobData(
+    google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReadTensorboardBlobData(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::WriteTensorboardExperimentDataResponse>
-TensorboardServiceClient::WriteTensorboardExperimentData(std::string const& tensorboard_experiment, std::vector<google::cloud::aiplatform::v1::WriteTensorboardRunDataRequest> const& write_run_data_requests, Options opts) {
+TensorboardServiceClient::WriteTensorboardExperimentData(
+    std::string const& tensorboard_experiment,
+    std::vector<
+        google::cloud::aiplatform::v1::WriteTensorboardRunDataRequest> const&
+        write_run_data_requests,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::WriteTensorboardExperimentDataRequest request;
   request.set_tensorboard_experiment(tensorboard_experiment);
-  *request.mutable_write_run_data_requests() = {write_run_data_requests.begin(), write_run_data_requests.end()};
+  *request.mutable_write_run_data_requests() = {write_run_data_requests.begin(),
+                                                write_run_data_requests.end()};
   return connection_->WriteTensorboardExperimentData(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::WriteTensorboardExperimentDataResponse>
-TensorboardServiceClient::WriteTensorboardExperimentData(google::cloud::aiplatform::v1::WriteTensorboardExperimentDataRequest const& request, Options opts) {
+TensorboardServiceClient::WriteTensorboardExperimentData(
+    google::cloud::aiplatform::v1::WriteTensorboardExperimentDataRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->WriteTensorboardExperimentData(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::WriteTensorboardRunDataResponse>
-TensorboardServiceClient::WriteTensorboardRunData(std::string const& tensorboard_run, std::vector<google::cloud::aiplatform::v1::TimeSeriesData> const& time_series_data, Options opts) {
+TensorboardServiceClient::WriteTensorboardRunData(
+    std::string const& tensorboard_run,
+    std::vector<google::cloud::aiplatform::v1::TimeSeriesData> const&
+        time_series_data,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::WriteTensorboardRunDataRequest request;
   request.set_tensorboard_run(tensorboard_run);
-  *request.mutable_time_series_data() = {time_series_data.begin(), time_series_data.end()};
+  *request.mutable_time_series_data() = {time_series_data.begin(),
+                                         time_series_data.end()};
   return connection_->WriteTensorboardRunData(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::WriteTensorboardRunDataResponse>
-TensorboardServiceClient::WriteTensorboardRunData(google::cloud::aiplatform::v1::WriteTensorboardRunDataRequest const& request, Options opts) {
+TensorboardServiceClient::WriteTensorboardRunData(
+    google::cloud::aiplatform::v1::WriteTensorboardRunDataRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->WriteTensorboardRunData(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::TimeSeriesDataPoint>
-TensorboardServiceClient::ExportTensorboardTimeSeriesData(std::string const& tensorboard_time_series, Options opts) {
+TensorboardServiceClient::ExportTensorboardTimeSeriesData(
+    std::string const& tensorboard_time_series, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataRequest request;
   request.set_tensorboard_time_series(tensorboard_time_series);
@@ -461,7 +602,10 @@ TensorboardServiceClient::ExportTensorboardTimeSeriesData(std::string const& ten
 }
 
 StreamRange<google::cloud::aiplatform::v1::TimeSeriesDataPoint>
-TensorboardServiceClient::ExportTensorboardTimeSeriesData(google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataRequest request, Options opts) {
+TensorboardServiceClient::ExportTensorboardTimeSeriesData(
+    google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataRequest
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportTensorboardTimeSeriesData(std::move(request));
 }

@@ -34,29 +34,30 @@ class BatchServiceConnectionIdempotencyPolicy {
   virtual ~BatchServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<BatchServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<BatchServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  CreateJob(google::cloud::batch::v1::CreateJobRequest const& request);
+  virtual google::cloud::Idempotency CreateJob(
+      google::cloud::batch::v1::CreateJobRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetJob(google::cloud::batch::v1::GetJobRequest const& request);
+  virtual google::cloud::Idempotency GetJob(
+      google::cloud::batch::v1::GetJobRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteJob(google::cloud::batch::v1::DeleteJobRequest const& request);
+  virtual google::cloud::Idempotency DeleteJob(
+      google::cloud::batch::v1::DeleteJobRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListJobs(google::cloud::batch::v1::ListJobsRequest request);
+  virtual google::cloud::Idempotency ListJobs(
+      google::cloud::batch::v1::ListJobsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetTask(google::cloud::batch::v1::GetTaskRequest const& request);
+  virtual google::cloud::Idempotency GetTask(
+      google::cloud::batch::v1::GetTaskRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListTasks(google::cloud::batch::v1::ListTasksRequest request);
+  virtual google::cloud::Idempotency ListTasks(
+      google::cloud::batch::v1::ListTasksRequest request);
 };
 
 std::unique_ptr<BatchServiceConnectionIdempotencyPolicy>
-    MakeDefaultBatchServiceConnectionIdempotencyPolicy();
+MakeDefaultBatchServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace batch_v1
