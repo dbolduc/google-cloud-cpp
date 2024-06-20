@@ -34,28 +34,23 @@ class AppGatewaysServiceConnectionIdempotencyPolicy {
   virtual ~AppGatewaysServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<AppGatewaysServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<AppGatewaysServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListAppGateways(
-      google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListAppGateways(google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest request);
 
-  virtual google::cloud::Idempotency GetAppGateway(
-      google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetAppGateway(google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const& request);
 
-  virtual google::cloud::Idempotency CreateAppGateway(
-      google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateAppGateway(google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteAppGateway(
-      google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteAppGateway(google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const& request);
 };
 
 std::unique_ptr<AppGatewaysServiceConnectionIdempotencyPolicy>
-MakeDefaultAppGatewaysServiceConnectionIdempotencyPolicy();
+    MakeDefaultAppGatewaysServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_appgateways_v1

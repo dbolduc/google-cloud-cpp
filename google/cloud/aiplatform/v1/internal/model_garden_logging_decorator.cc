@@ -30,17 +30,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ModelGardenServiceLogging::ModelGardenServiceLogging(
     std::shared_ptr<ModelGardenServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::aiplatform::v1::PublisherModel>
 ModelGardenServiceLogging::GetPublisherModel(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetPublisherModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::GetPublisherModelRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::GetPublisherModelRequest const& request) {
         return child_->GetPublisherModel(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

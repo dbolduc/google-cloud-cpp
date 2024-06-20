@@ -42,24 +42,21 @@ AppConnectorsServiceMetadata::AppConnectorsServiceMetadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-StatusOr<
-    google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsResponse>
+StatusOr<google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsResponse>
 AppConnectorsServiceMetadata::ListAppConnectors(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::beyondcorp::appconnectors::v1::
-        ListAppConnectorsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAppConnectors(context, options, request);
 }
 
 StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
 AppConnectorsServiceMetadata::GetAppConnector(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::beyondcorp::appconnectors::v1::GetAppConnectorRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::beyondcorp::appconnectors::v1::GetAppConnectorRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAppConnector(context, options, request);
 }
 
@@ -68,21 +65,18 @@ AppConnectorsServiceMetadata::AsyncCreateAppConnector(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::beyondcorp::appconnectors::v1::
-        CreateAppConnectorRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateAppConnector(cq, std::move(context),
-                                         std::move(options), request);
+    google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateAppConnector(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceMetadata::CreateAppConnector(
-    grpc::ClientContext& context, Options options,
-    google::cloud::beyondcorp::appconnectors::v1::
-        CreateAppConnectorRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateAppConnector(context, options, request);
 }
 
@@ -91,25 +85,18 @@ AppConnectorsServiceMetadata::AsyncUpdateAppConnector(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::beyondcorp::appconnectors::v1::
-        UpdateAppConnectorRequest const& request) {
-  SetMetadata(
-      *context, *options,
-      absl::StrCat("app_connector.name=",
-                   internal::UrlEncode(request.app_connector().name())));
-  return child_->AsyncUpdateAppConnector(cq, std::move(context),
-                                         std::move(options), request);
+    google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("app_connector.name=", internal::UrlEncode(request.app_connector().name())));
+  return child_->AsyncUpdateAppConnector(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceMetadata::UpdateAppConnector(
-    grpc::ClientContext& context, Options options,
-    google::cloud::beyondcorp::appconnectors::v1::
-        UpdateAppConnectorRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("app_connector.name=",
-                   internal::UrlEncode(request.app_connector().name())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("app_connector.name=", internal::UrlEncode(request.app_connector().name())));
   return child_->UpdateAppConnector(context, options, request);
 }
 
@@ -118,21 +105,18 @@ AppConnectorsServiceMetadata::AsyncDeleteAppConnector(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::beyondcorp::appconnectors::v1::
-        DeleteAppConnectorRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteAppConnector(cq, std::move(context),
-                                         std::move(options), request);
+    google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteAppConnector(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceMetadata::DeleteAppConnector(
-    grpc::ClientContext& context, Options options,
-    google::cloud::beyondcorp::appconnectors::v1::
-        DeleteAppConnectorRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteAppConnector(context, options, request);
 }
 
@@ -141,23 +125,18 @@ AppConnectorsServiceMetadata::AsyncReportStatus(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("app_connector=",
-                           internal::UrlEncode(request.app_connector())));
-  return child_->AsyncReportStatus(cq, std::move(context), std::move(options),
-                                   request);
+    google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("app_connector=", internal::UrlEncode(request.app_connector())));
+  return child_->AsyncReportStatus(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceMetadata::ReportStatus(
-    grpc::ClientContext& context, Options options,
-    google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("app_connector=",
-                           internal::UrlEncode(request.app_connector())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("app_connector=", internal::UrlEncode(request.app_connector())));
   return child_->ReportStatus(context, options, request);
 }
 
@@ -169,8 +148,8 @@ AppConnectorsServiceMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> AppConnectorsServiceMetadata::AsyncCancelOperation(
@@ -180,21 +159,21 @@ future<Status> AppConnectorsServiceMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
-void AppConnectorsServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, Options const& options,
-    std::string const& request_params) {
+void AppConnectorsServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void AppConnectorsServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                               Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

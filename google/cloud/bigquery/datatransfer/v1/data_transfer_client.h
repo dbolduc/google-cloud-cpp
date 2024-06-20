@@ -61,28 +61,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DataTransferServiceClient {
  public:
-  explicit DataTransferServiceClient(
-      std::shared_ptr<DataTransferServiceConnection> connection,
-      Options opts = {});
+  explicit DataTransferServiceClient(std::shared_ptr<DataTransferServiceConnection> connection, Options opts = {});
   ~DataTransferServiceClient();
 
   ///@{
   /// @name Copy and move support
   DataTransferServiceClient(DataTransferServiceClient const&) = default;
-  DataTransferServiceClient& operator=(DataTransferServiceClient const&) =
-      default;
+  DataTransferServiceClient& operator=(DataTransferServiceClient const&) = default;
   DataTransferServiceClient(DataTransferServiceClient&&) = default;
   DataTransferServiceClient& operator=(DataTransferServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(DataTransferServiceClient const& a,
-                         DataTransferServiceClient const& b) {
+  friend bool operator==(DataTransferServiceClient const& a, DataTransferServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(DataTransferServiceClient const& a,
-                         DataTransferServiceClient const& b) {
+  friend bool operator!=(DataTransferServiceClient const& a, DataTransferServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -111,8 +106,8 @@ class DataTransferServiceClient {
   /// [google.cloud.bigquery.datatransfer.v1.GetDataSourceRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L446}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource> GetDataSource(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource>
+  GetDataSource(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -141,10 +136,8 @@ class DataTransferServiceClient {
   /// [google.cloud.bigquery.datatransfer.v1.GetDataSourceRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L446}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource> GetDataSource(
-      google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource>
+  GetDataSource(google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -219,9 +212,7 @@ class DataTransferServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::datatransfer::v1::DataSource>
-  ListDataSources(
-      google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest request,
-      Options opts = {});
+  ListDataSources(google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -251,11 +242,7 @@ class DataTransferServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
-  CreateTransferConfig(
-      std::string const& parent,
-      google::cloud::bigquery::datatransfer::v1::TransferConfig const&
-          transfer_config,
-      Options opts = {});
+  CreateTransferConfig(std::string const& parent, google::cloud::bigquery::datatransfer::v1::TransferConfig const& transfer_config, Options opts = {});
 
   // clang-format off
   ///
@@ -285,9 +272,7 @@ class DataTransferServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
-  CreateTransferConfig(google::cloud::bigquery::datatransfer::v1::
-                           CreateTransferConfigRequest const& request,
-                       Options opts = {});
+  CreateTransferConfig(google::cloud::bigquery::datatransfer::v1::CreateTransferConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -314,10 +299,7 @@ class DataTransferServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
-  UpdateTransferConfig(
-      google::cloud::bigquery::datatransfer::v1::TransferConfig const&
-          transfer_config,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateTransferConfig(google::cloud::bigquery::datatransfer::v1::TransferConfig const& transfer_config, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -348,9 +330,7 @@ class DataTransferServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
-  UpdateTransferConfig(google::cloud::bigquery::datatransfer::v1::
-                           UpdateTransferConfigRequest const& request,
-                       Options opts = {});
+  UpdateTransferConfig(google::cloud::bigquery::datatransfer::v1::UpdateTransferConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -374,7 +354,8 @@ class DataTransferServiceClient {
   /// [google.cloud.bigquery.datatransfer.v1.DeleteTransferConfigRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L628}
   ///
   // clang-format on
-  Status DeleteTransferConfig(std::string const& name, Options opts = {});
+  Status
+  DeleteTransferConfig(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -401,9 +382,8 @@ class DataTransferServiceClient {
   /// [google.cloud.bigquery.datatransfer.v1.DeleteTransferConfigRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L628}
   ///
   // clang-format on
-  Status DeleteTransferConfig(google::cloud::bigquery::datatransfer::v1::
-                                  DeleteTransferConfigRequest const& request,
-                              Options opts = {});
+  Status
+  DeleteTransferConfig(google::cloud::bigquery::datatransfer::v1::DeleteTransferConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -460,10 +440,7 @@ class DataTransferServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
-  GetTransferConfig(
-      google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest const&
-          request,
-      Options opts = {});
+  GetTransferConfig(google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -540,10 +517,7 @@ class DataTransferServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::datatransfer::v1::TransferConfig>
-  ListTransferConfigs(
-      google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest
-          request,
-      Options opts = {});
+  ListTransferConfigs(google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -577,12 +551,8 @@ class DataTransferServiceClient {
   /// [google.cloud.bigquery.datatransfer.v1.ScheduleTransferRunsResponse]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L847}
   ///
   // clang-format on
-  StatusOr<
-      google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse>
-  ScheduleTransferRuns(std::string const& parent,
-                       google::protobuf::Timestamp const& start_time,
-                       google::protobuf::Timestamp const& end_time,
-                       Options opts = {});
+  StatusOr<google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse>
+  ScheduleTransferRuns(std::string const& parent, google::protobuf::Timestamp const& start_time, google::protobuf::Timestamp const& end_time, Options opts = {});
 
   // clang-format off
   ///
@@ -615,11 +585,8 @@ class DataTransferServiceClient {
   /// [google.cloud.bigquery.datatransfer.v1.ScheduleTransferRunsResponse]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L847}
   ///
   // clang-format on
-  StatusOr<
-      google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse>
-  ScheduleTransferRuns(google::cloud::bigquery::datatransfer::v1::
-                           ScheduleTransferRunsRequest const& request,
-                       Options opts = {});
+  StatusOr<google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse>
+  ScheduleTransferRuns(google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -651,11 +618,8 @@ class DataTransferServiceClient {
   /// [google.cloud.bigquery.datatransfer.v1.StartManualTransferRunsResponse]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L898}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::datatransfer::v1::
-               StartManualTransferRunsResponse>
-  StartManualTransferRuns(google::cloud::bigquery::datatransfer::v1::
-                              StartManualTransferRunsRequest const& request,
-                          Options opts = {});
+  StatusOr<google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsResponse>
+  StartManualTransferRuns(google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -713,10 +677,7 @@ class DataTransferServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::datatransfer::v1::TransferRun>
-  GetTransferRun(
-      google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const&
-          request,
-      Options opts = {});
+  GetTransferRun(google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -740,7 +701,8 @@ class DataTransferServiceClient {
   /// [google.cloud.bigquery.datatransfer.v1.DeleteTransferRunRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L655}
   ///
   // clang-format on
-  Status DeleteTransferRun(std::string const& name, Options opts = {});
+  Status
+  DeleteTransferRun(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -766,10 +728,8 @@ class DataTransferServiceClient {
   /// [google.cloud.bigquery.datatransfer.v1.DeleteTransferRunRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L655}
   ///
   // clang-format on
-  Status DeleteTransferRun(
-      google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest const&
-          request,
-      Options opts = {});
+  Status
+  DeleteTransferRun(google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -845,10 +805,7 @@ class DataTransferServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::datatransfer::v1::TransferRun>
-  ListTransferRuns(
-      google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest
-          request,
-      Options opts = {});
+  ListTransferRuns(google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -923,10 +880,7 @@ class DataTransferServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::datatransfer::v1::TransferMessage>
-  ListTransferLogs(
-      google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest
-          request,
-      Options opts = {});
+  ListTransferLogs(google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -985,10 +939,7 @@ class DataTransferServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse>
-  CheckValidCreds(
-      google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const&
-          request,
-      Options opts = {});
+  CheckValidCreds(google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1021,10 +972,8 @@ class DataTransferServiceClient {
   /// [google.cloud.bigquery.datatransfer.v1.EnrollDataSourcesRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L905}
   ///
   // clang-format on
-  Status EnrollDataSources(
-      google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const&
-          request,
-      Options opts = {});
+  Status
+  EnrollDataSources(google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1054,9 +1003,8 @@ class DataTransferServiceClient {
   /// [google.cloud.bigquery.datatransfer.v1.UnenrollDataSourcesRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L917}
   ///
   // clang-format on
-  Status UnenrollDataSources(google::cloud::bigquery::datatransfer::v1::
-                                 UnenrollDataSourcesRequest const& request,
-                             Options opts = {});
+  Status
+  UnenrollDataSources(google::cloud::bigquery::datatransfer::v1::UnenrollDataSourcesRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<DataTransferServiceConnection> connection_;

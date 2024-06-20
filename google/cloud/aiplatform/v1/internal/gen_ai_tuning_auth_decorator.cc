@@ -31,27 +31,27 @@ GenAiTuningServiceAuth::GenAiTuningServiceAuth(
     std::shared_ptr<GenAiTuningServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::aiplatform::v1::TuningJob>
-GenAiTuningServiceAuth::CreateTuningJob(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::TuningJob> GenAiTuningServiceAuth::CreateTuningJob(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::CreateTuningJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateTuningJob(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::TuningJob>
-GenAiTuningServiceAuth::GetTuningJob(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::TuningJob> GenAiTuningServiceAuth::GetTuningJob(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetTuningJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetTuningJob(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::ListTuningJobsResponse>
-GenAiTuningServiceAuth::ListTuningJobs(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::ListTuningJobsResponse> GenAiTuningServiceAuth::ListTuningJobs(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListTuningJobsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -59,7 +59,8 @@ GenAiTuningServiceAuth::ListTuningJobs(
 }
 
 Status GenAiTuningServiceAuth::CancelTuningJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::CancelTuningJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

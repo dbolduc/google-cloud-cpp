@@ -42,22 +42,17 @@ class FeatureOnlineStoreServiceConnectionImpl
   ~FeatureOnlineStoreServiceConnectionImpl() override = default;
 
   FeatureOnlineStoreServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<aiplatform_v1_internal::FeatureOnlineStoreServiceStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<aiplatform_v1_internal::FeatureOnlineStoreServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>
-  FetchFeatureValues(
-      google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request)
-      override;
+  FetchFeatureValues(google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
-  SearchNearestEntities(
-      google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
-          request) override;
+  SearchNearestEntities(google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

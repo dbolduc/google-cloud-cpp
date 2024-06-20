@@ -36,35 +36,24 @@ class AppGatewaysServiceTracingConnection
   ~AppGatewaysServiceTracingConnection() override = default;
 
   explicit AppGatewaysServiceTracingConnection(
-      std::shared_ptr<beyondcorp_appgateways_v1::AppGatewaysServiceConnection>
-          child);
+    std::shared_ptr<beyondcorp_appgateways_v1::AppGatewaysServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
   StreamRange<google::cloud::beyondcorp::appgateways::v1::AppGateway>
-  ListAppGateways(
-      google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest
-          request) override;
+  ListAppGateways(google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest request) override;
 
   StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>
-  GetAppGateway(
-      google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
-          request) override;
+  GetAppGateway(google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const& request) override;
 
   future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
-  CreateAppGateway(
-      google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
-          request) override;
+  CreateAppGateway(google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const& request) override;
 
-  future<StatusOr<
-      google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
-  DeleteAppGateway(
-      google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
-          request) override;
+  future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
+  DeleteAppGateway(google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const& request) override;
 
  private:
-  std::shared_ptr<beyondcorp_appgateways_v1::AppGatewaysServiceConnection>
-      child_;
+  std::shared_ptr<beyondcorp_appgateways_v1::AppGatewaysServiceConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -77,8 +66,7 @@ class AppGatewaysServiceTracingConnection
  */
 std::shared_ptr<beyondcorp_appgateways_v1::AppGatewaysServiceConnection>
 MakeAppGatewaysServiceTracingConnection(
-    std::shared_ptr<beyondcorp_appgateways_v1::AppGatewaysServiceConnection>
-        conn);
+    std::shared_ptr<beyondcorp_appgateways_v1::AppGatewaysServiceConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_appgateways_v1_internal

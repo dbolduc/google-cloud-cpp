@@ -28,28 +28,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-FeatureOnlineStoreServiceTracingConnection::
-    FeatureOnlineStoreServiceTracingConnection(
-        std::shared_ptr<aiplatform_v1::FeatureOnlineStoreServiceConnection>
-            child)
+FeatureOnlineStoreServiceTracingConnection::FeatureOnlineStoreServiceTracingConnection(
+    std::shared_ptr<aiplatform_v1::FeatureOnlineStoreServiceConnection> child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>
-FeatureOnlineStoreServiceTracingConnection::FetchFeatureValues(
-    google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreServiceConnection::FetchFeatureValues");
+FeatureOnlineStoreServiceTracingConnection::FetchFeatureValues(google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeatureOnlineStoreServiceConnection::FetchFeatureValues");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->FetchFeatureValues(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
-FeatureOnlineStoreServiceTracingConnection::SearchNearestEntities(
-    google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::FeatureOnlineStoreServiceConnection::"
-      "SearchNearestEntities");
+FeatureOnlineStoreServiceTracingConnection::SearchNearestEntities(google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::FeatureOnlineStoreServiceConnection::SearchNearestEntities");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SearchNearestEntities(request));
 }
@@ -61,8 +53,7 @@ MakeFeatureOnlineStoreServiceTracingConnection(
     std::shared_ptr<aiplatform_v1::FeatureOnlineStoreServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<FeatureOnlineStoreServiceTracingConnection>(
-        std::move(conn));
+    conn = std::make_shared<FeatureOnlineStoreServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

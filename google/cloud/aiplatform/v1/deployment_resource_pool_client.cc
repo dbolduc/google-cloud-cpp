@@ -26,20 +26,14 @@ namespace aiplatform_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DeploymentResourcePoolServiceClient::DeploymentResourcePoolServiceClient(
-    std::shared_ptr<DeploymentResourcePoolServiceConnection> connection,
-    Options opts)
+    std::shared_ptr<DeploymentResourcePoolServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
-DeploymentResourcePoolServiceClient::~DeploymentResourcePoolServiceClient() =
-    default;
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
+DeploymentResourcePoolServiceClient::~DeploymentResourcePoolServiceClient() = default;
 
 future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
-DeploymentResourcePoolServiceClient::CreateDeploymentResourcePool(
-    std::string const& parent,
-    google::cloud::aiplatform::v1::DeploymentResourcePool const&
-        deployment_resource_pool,
-    std::string const& deployment_resource_pool_id, Options opts) {
+DeploymentResourcePoolServiceClient::CreateDeploymentResourcePool(std::string const& parent, google::cloud::aiplatform::v1::DeploymentResourcePool const& deployment_resource_pool, std::string const& deployment_resource_pool_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest request;
   request.set_parent(parent);
@@ -49,17 +43,13 @@ DeploymentResourcePoolServiceClient::CreateDeploymentResourcePool(
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
-DeploymentResourcePoolServiceClient::CreateDeploymentResourcePool(
-    google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
-        request,
-    Options opts) {
+DeploymentResourcePoolServiceClient::CreateDeploymentResourcePool(google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDeploymentResourcePool(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
-DeploymentResourcePoolServiceClient::GetDeploymentResourcePool(
-    std::string const& name, Options opts) {
+DeploymentResourcePoolServiceClient::GetDeploymentResourcePool(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest request;
   request.set_name(name);
@@ -67,17 +57,13 @@ DeploymentResourcePoolServiceClient::GetDeploymentResourcePool(
 }
 
 StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
-DeploymentResourcePoolServiceClient::GetDeploymentResourcePool(
-    google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
-        request,
-    Options opts) {
+DeploymentResourcePoolServiceClient::GetDeploymentResourcePool(google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDeploymentResourcePool(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::DeploymentResourcePool>
-DeploymentResourcePoolServiceClient::ListDeploymentResourcePools(
-    std::string const& parent, Options opts) {
+DeploymentResourcePoolServiceClient::ListDeploymentResourcePools(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest request;
   request.set_parent(parent);
@@ -85,16 +71,13 @@ DeploymentResourcePoolServiceClient::ListDeploymentResourcePools(
 }
 
 StreamRange<google::cloud::aiplatform::v1::DeploymentResourcePool>
-DeploymentResourcePoolServiceClient::ListDeploymentResourcePools(
-    google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest request,
-    Options opts) {
+DeploymentResourcePoolServiceClient::ListDeploymentResourcePools(google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDeploymentResourcePools(std::move(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-DeploymentResourcePoolServiceClient::DeleteDeploymentResourcePool(
-    std::string const& name, Options opts) {
+DeploymentResourcePoolServiceClient::DeleteDeploymentResourcePool(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest request;
   request.set_name(name);
@@ -102,10 +85,7 @@ DeploymentResourcePoolServiceClient::DeleteDeploymentResourcePool(
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-DeploymentResourcePoolServiceClient::DeleteDeploymentResourcePool(
-    google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
-        request,
-    Options opts) {
+DeploymentResourcePoolServiceClient::DeleteDeploymentResourcePool(google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDeploymentResourcePool(request);
 }

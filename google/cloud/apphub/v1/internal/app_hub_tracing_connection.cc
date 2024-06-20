@@ -34,264 +34,221 @@ AppHubTracingConnection::AppHubTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::apphub::v1::LookupServiceProjectAttachmentResponse>
-AppHubTracingConnection::LookupServiceProjectAttachment(
-    google::cloud::apphub::v1::LookupServiceProjectAttachmentRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "apphub_v1::AppHubConnection::LookupServiceProjectAttachment");
+AppHubTracingConnection::LookupServiceProjectAttachment(google::cloud::apphub::v1::LookupServiceProjectAttachmentRequest const& request) {
+  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::LookupServiceProjectAttachment");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->LookupServiceProjectAttachment(request));
+  return internal::EndSpan(*span, child_->LookupServiceProjectAttachment(request));
 }
 
 StreamRange<google::cloud::apphub::v1::ServiceProjectAttachment>
-AppHubTracingConnection::ListServiceProjectAttachments(
-    google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest request) {
-  auto span = internal::MakeSpan(
-      "apphub_v1::AppHubConnection::ListServiceProjectAttachments");
+AppHubTracingConnection::ListServiceProjectAttachments(google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest request) {
+  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::ListServiceProjectAttachments");
   internal::OTelScope scope(span);
   auto sr = child_->ListServiceProjectAttachments(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::apphub::v1::ServiceProjectAttachment>(std::move(span),
-                                                           std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::apphub::v1::ServiceProjectAttachment>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>
-AppHubTracingConnection::CreateServiceProjectAttachment(
-    google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
-        request) {
+AppHubTracingConnection::CreateServiceProjectAttachment(google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const& request) {
   auto span = internal::MakeSpan(
       "apphub_v1::AppHubConnection::CreateServiceProjectAttachment");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateServiceProjectAttachment(request));
+  return internal::EndSpan(std::move(span), child_->CreateServiceProjectAttachment(request));
 }
 
 StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>
-AppHubTracingConnection::GetServiceProjectAttachment(
-    google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "apphub_v1::AppHubConnection::GetServiceProjectAttachment");
+AppHubTracingConnection::GetServiceProjectAttachment(google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const& request) {
+  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::GetServiceProjectAttachment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetServiceProjectAttachment(request));
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
-AppHubTracingConnection::DeleteServiceProjectAttachment(
-    google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
-        request) {
+AppHubTracingConnection::DeleteServiceProjectAttachment(google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const& request) {
   auto span = internal::MakeSpan(
       "apphub_v1::AppHubConnection::DeleteServiceProjectAttachment");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteServiceProjectAttachment(request));
+  return internal::EndSpan(std::move(span), child_->DeleteServiceProjectAttachment(request));
 }
 
 StatusOr<google::cloud::apphub::v1::DetachServiceProjectAttachmentResponse>
-AppHubTracingConnection::DetachServiceProjectAttachment(
-    google::cloud::apphub::v1::DetachServiceProjectAttachmentRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "apphub_v1::AppHubConnection::DetachServiceProjectAttachment");
+AppHubTracingConnection::DetachServiceProjectAttachment(google::cloud::apphub::v1::DetachServiceProjectAttachmentRequest const& request) {
+  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::DetachServiceProjectAttachment");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->DetachServiceProjectAttachment(request));
+  return internal::EndSpan(*span, child_->DetachServiceProjectAttachment(request));
 }
 
 StreamRange<google::cloud::apphub::v1::DiscoveredService>
-AppHubTracingConnection::ListDiscoveredServices(
-    google::cloud::apphub::v1::ListDiscoveredServicesRequest request) {
-  auto span =
-      internal::MakeSpan("apphub_v1::AppHubConnection::ListDiscoveredServices");
+AppHubTracingConnection::ListDiscoveredServices(google::cloud::apphub::v1::ListDiscoveredServicesRequest request) {
+  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::ListDiscoveredServices");
   internal::OTelScope scope(span);
   auto sr = child_->ListDiscoveredServices(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::apphub::v1::DiscoveredService>(std::move(span),
-                                                    std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::apphub::v1::DiscoveredService>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::apphub::v1::DiscoveredService>
-AppHubTracingConnection::GetDiscoveredService(
-    google::cloud::apphub::v1::GetDiscoveredServiceRequest const& request) {
-  auto span =
-      internal::MakeSpan("apphub_v1::AppHubConnection::GetDiscoveredService");
+AppHubTracingConnection::GetDiscoveredService(google::cloud::apphub::v1::GetDiscoveredServiceRequest const& request) {
+  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::GetDiscoveredService");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDiscoveredService(request));
 }
 
 StatusOr<google::cloud::apphub::v1::LookupDiscoveredServiceResponse>
-AppHubTracingConnection::LookupDiscoveredService(
-    google::cloud::apphub::v1::LookupDiscoveredServiceRequest const& request) {
-  auto span = internal::MakeSpan(
-      "apphub_v1::AppHubConnection::LookupDiscoveredService");
+AppHubTracingConnection::LookupDiscoveredService(google::cloud::apphub::v1::LookupDiscoveredServiceRequest const& request) {
+  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::LookupDiscoveredService");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->LookupDiscoveredService(request));
 }
 
 StreamRange<google::cloud::apphub::v1::Service>
-AppHubTracingConnection::ListServices(
-    google::cloud::apphub::v1::ListServicesRequest request) {
+AppHubTracingConnection::ListServices(google::cloud::apphub::v1::ListServicesRequest request) {
   auto span = internal::MakeSpan("apphub_v1::AppHubConnection::ListServices");
   internal::OTelScope scope(span);
   auto sr = child_->ListServices(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::apphub::v1::Service>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::apphub::v1::Service>>
-AppHubTracingConnection::CreateService(
-    google::cloud::apphub::v1::CreateServiceRequest const& request) {
-  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::CreateService");
+AppHubTracingConnection::CreateService(google::cloud::apphub::v1::CreateServiceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "apphub_v1::AppHubConnection::CreateService");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateService(request));
 }
 
 StatusOr<google::cloud::apphub::v1::Service>
-AppHubTracingConnection::GetService(
-    google::cloud::apphub::v1::GetServiceRequest const& request) {
+AppHubTracingConnection::GetService(google::cloud::apphub::v1::GetServiceRequest const& request) {
   auto span = internal::MakeSpan("apphub_v1::AppHubConnection::GetService");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetService(request));
 }
 
 future<StatusOr<google::cloud::apphub::v1::Service>>
-AppHubTracingConnection::UpdateService(
-    google::cloud::apphub::v1::UpdateServiceRequest const& request) {
-  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::UpdateService");
+AppHubTracingConnection::UpdateService(google::cloud::apphub::v1::UpdateServiceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "apphub_v1::AppHubConnection::UpdateService");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateService(request));
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
-AppHubTracingConnection::DeleteService(
-    google::cloud::apphub::v1::DeleteServiceRequest const& request) {
-  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::DeleteService");
+AppHubTracingConnection::DeleteService(google::cloud::apphub::v1::DeleteServiceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "apphub_v1::AppHubConnection::DeleteService");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteService(request));
 }
 
 StreamRange<google::cloud::apphub::v1::DiscoveredWorkload>
-AppHubTracingConnection::ListDiscoveredWorkloads(
-    google::cloud::apphub::v1::ListDiscoveredWorkloadsRequest request) {
-  auto span = internal::MakeSpan(
-      "apphub_v1::AppHubConnection::ListDiscoveredWorkloads");
+AppHubTracingConnection::ListDiscoveredWorkloads(google::cloud::apphub::v1::ListDiscoveredWorkloadsRequest request) {
+  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::ListDiscoveredWorkloads");
   internal::OTelScope scope(span);
   auto sr = child_->ListDiscoveredWorkloads(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::apphub::v1::DiscoveredWorkload>(std::move(span),
-                                                     std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::apphub::v1::DiscoveredWorkload>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::apphub::v1::DiscoveredWorkload>
-AppHubTracingConnection::GetDiscoveredWorkload(
-    google::cloud::apphub::v1::GetDiscoveredWorkloadRequest const& request) {
-  auto span =
-      internal::MakeSpan("apphub_v1::AppHubConnection::GetDiscoveredWorkload");
+AppHubTracingConnection::GetDiscoveredWorkload(google::cloud::apphub::v1::GetDiscoveredWorkloadRequest const& request) {
+  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::GetDiscoveredWorkload");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDiscoveredWorkload(request));
 }
 
 StatusOr<google::cloud::apphub::v1::LookupDiscoveredWorkloadResponse>
-AppHubTracingConnection::LookupDiscoveredWorkload(
-    google::cloud::apphub::v1::LookupDiscoveredWorkloadRequest const& request) {
-  auto span = internal::MakeSpan(
-      "apphub_v1::AppHubConnection::LookupDiscoveredWorkload");
+AppHubTracingConnection::LookupDiscoveredWorkload(google::cloud::apphub::v1::LookupDiscoveredWorkloadRequest const& request) {
+  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::LookupDiscoveredWorkload");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->LookupDiscoveredWorkload(request));
 }
 
 StreamRange<google::cloud::apphub::v1::Workload>
-AppHubTracingConnection::ListWorkloads(
-    google::cloud::apphub::v1::ListWorkloadsRequest request) {
+AppHubTracingConnection::ListWorkloads(google::cloud::apphub::v1::ListWorkloadsRequest request) {
   auto span = internal::MakeSpan("apphub_v1::AppHubConnection::ListWorkloads");
   internal::OTelScope scope(span);
   auto sr = child_->ListWorkloads(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::apphub::v1::Workload>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::apphub::v1::Workload>>
-AppHubTracingConnection::CreateWorkload(
-    google::cloud::apphub::v1::CreateWorkloadRequest const& request) {
-  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::CreateWorkload");
+AppHubTracingConnection::CreateWorkload(google::cloud::apphub::v1::CreateWorkloadRequest const& request) {
+  auto span = internal::MakeSpan(
+      "apphub_v1::AppHubConnection::CreateWorkload");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateWorkload(request));
 }
 
 StatusOr<google::cloud::apphub::v1::Workload>
-AppHubTracingConnection::GetWorkload(
-    google::cloud::apphub::v1::GetWorkloadRequest const& request) {
+AppHubTracingConnection::GetWorkload(google::cloud::apphub::v1::GetWorkloadRequest const& request) {
   auto span = internal::MakeSpan("apphub_v1::AppHubConnection::GetWorkload");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetWorkload(request));
 }
 
 future<StatusOr<google::cloud::apphub::v1::Workload>>
-AppHubTracingConnection::UpdateWorkload(
-    google::cloud::apphub::v1::UpdateWorkloadRequest const& request) {
-  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::UpdateWorkload");
+AppHubTracingConnection::UpdateWorkload(google::cloud::apphub::v1::UpdateWorkloadRequest const& request) {
+  auto span = internal::MakeSpan(
+      "apphub_v1::AppHubConnection::UpdateWorkload");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateWorkload(request));
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
-AppHubTracingConnection::DeleteWorkload(
-    google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
-  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::DeleteWorkload");
+AppHubTracingConnection::DeleteWorkload(google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
+  auto span = internal::MakeSpan(
+      "apphub_v1::AppHubConnection::DeleteWorkload");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteWorkload(request));
 }
 
 StreamRange<google::cloud::apphub::v1::Application>
-AppHubTracingConnection::ListApplications(
-    google::cloud::apphub::v1::ListApplicationsRequest request) {
-  auto span =
-      internal::MakeSpan("apphub_v1::AppHubConnection::ListApplications");
+AppHubTracingConnection::ListApplications(google::cloud::apphub::v1::ListApplicationsRequest request) {
+  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::ListApplications");
   internal::OTelScope scope(span);
   auto sr = child_->ListApplications(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::apphub::v1::Application>(std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::apphub::v1::Application>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::apphub::v1::Application>>
-AppHubTracingConnection::CreateApplication(
-    google::cloud::apphub::v1::CreateApplicationRequest const& request) {
-  auto span =
-      internal::MakeSpan("apphub_v1::AppHubConnection::CreateApplication");
+AppHubTracingConnection::CreateApplication(google::cloud::apphub::v1::CreateApplicationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "apphub_v1::AppHubConnection::CreateApplication");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateApplication(request));
 }
 
 StatusOr<google::cloud::apphub::v1::Application>
-AppHubTracingConnection::GetApplication(
-    google::cloud::apphub::v1::GetApplicationRequest const& request) {
+AppHubTracingConnection::GetApplication(google::cloud::apphub::v1::GetApplicationRequest const& request) {
   auto span = internal::MakeSpan("apphub_v1::AppHubConnection::GetApplication");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetApplication(request));
 }
 
 future<StatusOr<google::cloud::apphub::v1::Application>>
-AppHubTracingConnection::UpdateApplication(
-    google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
-  auto span =
-      internal::MakeSpan("apphub_v1::AppHubConnection::UpdateApplication");
+AppHubTracingConnection::UpdateApplication(google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "apphub_v1::AppHubConnection::UpdateApplication");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateApplication(request));
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
-AppHubTracingConnection::DeleteApplication(
-    google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
-  auto span =
-      internal::MakeSpan("apphub_v1::AppHubConnection::DeleteApplication");
+AppHubTracingConnection::DeleteApplication(google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "apphub_v1::AppHubConnection::DeleteApplication");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteApplication(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<apphub_v1::AppHubConnection> MakeAppHubTracingConnection(
+std::shared_ptr<apphub_v1::AppHubConnection>
+MakeAppHubTracingConnection(
     std::shared_ptr<apphub_v1::AppHubConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {

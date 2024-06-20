@@ -42,20 +42,17 @@ class MatchServiceConnectionImpl
   ~MatchServiceConnectionImpl() override = default;
 
   MatchServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<aiplatform_v1_internal::MatchServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<aiplatform_v1_internal::MatchServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse> FindNeighbors(
-      google::cloud::aiplatform::v1::FindNeighborsRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse>
+  FindNeighbors(google::cloud::aiplatform::v1::FindNeighborsRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>
-  ReadIndexDatapoints(
-      google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request)
-      override;
+  ReadIndexDatapoints(google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

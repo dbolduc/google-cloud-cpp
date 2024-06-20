@@ -35,33 +35,31 @@ class GenAiTuningServiceTracingStub : public GenAiTuningServiceStub {
  public:
   ~GenAiTuningServiceTracingStub() override = default;
 
-  explicit GenAiTuningServiceTracingStub(
-      std::shared_ptr<GenAiTuningServiceStub> child);
+  explicit GenAiTuningServiceTracingStub(std::shared_ptr<GenAiTuningServiceStub> child);
 
   StatusOr<google::cloud::aiplatform::v1::TuningJob> CreateTuningJob(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::CreateTuningJobRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::CreateTuningJobRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::TuningJob> GetTuningJob(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::GetTuningJobRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::GetTuningJobRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::ListTuningJobsResponse>
-  ListTuningJobs(grpc::ClientContext& context, Options const& options,
-                 google::cloud::aiplatform::v1::ListTuningJobsRequest const&
-                     request) override;
+  StatusOr<google::cloud::aiplatform::v1::ListTuningJobsResponse> ListTuningJobs(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::ListTuningJobsRequest const& request) override;
 
   Status CancelTuningJob(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::CancelTuningJobRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::CancelTuningJobRequest const& request) override;
 
  private:
   std::shared_ptr<GenAiTuningServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -32,14 +32,15 @@ ModelGardenServiceStub::~ModelGardenServiceStub() = default;
 
 StatusOr<google::cloud::aiplatform::v1::PublisherModel>
 DefaultModelGardenServiceStub::GetPublisherModel(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::GetPublisherModelRequest const& request) {
-  google::cloud::aiplatform::v1::PublisherModel response;
-  auto status = grpc_stub_->GetPublisherModel(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::GetPublisherModelRequest const& request) {
+    google::cloud::aiplatform::v1::PublisherModel response;
+    auto status =
+        grpc_stub_->GetPublisherModel(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

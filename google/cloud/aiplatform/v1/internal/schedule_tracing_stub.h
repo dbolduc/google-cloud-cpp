@@ -35,50 +35,48 @@ class ScheduleServiceTracingStub : public ScheduleServiceStub {
  public:
   ~ScheduleServiceTracingStub() override = default;
 
-  explicit ScheduleServiceTracingStub(
-      std::shared_ptr<ScheduleServiceStub> child);
+  explicit ScheduleServiceTracingStub(std::shared_ptr<ScheduleServiceStub> child);
 
   StatusOr<google::cloud::aiplatform::v1::Schedule> CreateSchedule(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::CreateScheduleRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::CreateScheduleRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteSchedule(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteScheduleRequest const& request)
-      override;
+      google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteSchedule(
-      grpc::ClientContext& context, Options options,
-      google::cloud::aiplatform::v1::DeleteScheduleRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::Schedule> GetSchedule(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::GetScheduleRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::GetScheduleRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListSchedulesResponse> ListSchedules(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::ListSchedulesRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::ListSchedulesRequest const& request) override;
 
   Status PauseSchedule(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::PauseScheduleRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::PauseScheduleRequest const& request) override;
 
   Status ResumeSchedule(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::ResumeScheduleRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::ResumeScheduleRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::Schedule> UpdateSchedule(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::UpdateScheduleRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::UpdateScheduleRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -94,8 +92,7 @@ class ScheduleServiceTracingStub : public ScheduleServiceStub {
 
  private:
   std::shared_ptr<ScheduleServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

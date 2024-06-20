@@ -31,11 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `FeaturestoreOnlineServingServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type
- * `FeaturestoreOnlineServingServiceClient`. To do so, construct an object of
- * type `FeaturestoreOnlineServingServiceClient` with an instance of this class.
- * Then use the Google Test framework functions to program the behavior of this
- * mock.
+ * including errors, from an object of type `FeaturestoreOnlineServingServiceClient`. To do so,
+ * construct an object of type `FeaturestoreOnlineServingServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -43,29 +42,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockFeaturestoreOnlineServingServiceConnection
-    : public aiplatform_v1::FeaturestoreOnlineServingServiceConnection {
+class MockFeaturestoreOnlineServingServiceConnection : public aiplatform_v1::FeaturestoreOnlineServingServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>,
-      ReadFeatureValues,
-      (google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>,
+  ReadFeatureValues,
+  (google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request), (override));
 
-  MOCK_METHOD(
-      StreamRange<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>,
-      StreamingReadFeatureValues,
-      (google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StreamRange<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>,
+  StreamingReadFeatureValues,
+  (google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>,
-      WriteFeatureValues,
-      (google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>,
+  WriteFeatureValues,
+  (google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

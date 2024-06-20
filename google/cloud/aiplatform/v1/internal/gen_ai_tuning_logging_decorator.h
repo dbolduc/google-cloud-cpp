@@ -35,28 +35,28 @@ class GenAiTuningServiceLogging : public GenAiTuningServiceStub {
  public:
   ~GenAiTuningServiceLogging() override = default;
   GenAiTuningServiceLogging(std::shared_ptr<GenAiTuningServiceStub> child,
-                            TracingOptions tracing_options,
-                            std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::aiplatform::v1::TuningJob> CreateTuningJob(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::CreateTuningJobRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::CreateTuningJobRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::TuningJob> GetTuningJob(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::GetTuningJobRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::GetTuningJobRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::ListTuningJobsResponse>
-  ListTuningJobs(grpc::ClientContext& context, Options const& options,
-                 google::cloud::aiplatform::v1::ListTuningJobsRequest const&
-                     request) override;
+  StatusOr<google::cloud::aiplatform::v1::ListTuningJobsResponse> ListTuningJobs(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::ListTuningJobsRequest const& request) override;
 
   Status CancelTuningJob(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::CancelTuningJobRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::CancelTuningJobRequest const& request) override;
 
  private:
   std::shared_ptr<GenAiTuningServiceStub> child_;

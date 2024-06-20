@@ -40,17 +40,14 @@ namespace aiplatform_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `FeatureOnlineStoreAdminServiceConnection`.
-class FeatureOnlineStoreAdminServiceRetryPolicy
-    : public ::google::cloud::RetryPolicy {
+class FeatureOnlineStoreAdminServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  public:
   /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<FeatureOnlineStoreAdminServiceRetryPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<FeatureOnlineStoreAdminServiceRetryPolicy> clone() const = 0;
 };
 
 /**
- * A retry policy for `FeatureOnlineStoreAdminServiceConnection` based on
- * counting errors.
+ * A retry policy for `FeatureOnlineStoreAdminServiceConnection` based on counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -59,8 +56,7 @@ class FeatureOnlineStoreAdminServiceRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class FeatureOnlineStoreAdminServiceLimitedErrorCountRetryPolicy
-    : public FeatureOnlineStoreAdminServiceRetryPolicy {
+class FeatureOnlineStoreAdminServiceLimitedErrorCountRetryPolicy : public FeatureOnlineStoreAdminServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -69,19 +65,15 @@ class FeatureOnlineStoreAdminServiceLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit FeatureOnlineStoreAdminServiceLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit FeatureOnlineStoreAdminServiceLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   FeatureOnlineStoreAdminServiceLimitedErrorCountRetryPolicy(
       FeatureOnlineStoreAdminServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : FeatureOnlineStoreAdminServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : FeatureOnlineStoreAdminServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   FeatureOnlineStoreAdminServiceLimitedErrorCountRetryPolicy(
-      FeatureOnlineStoreAdminServiceLimitedErrorCountRetryPolicy const&
-          rhs) noexcept
-      : FeatureOnlineStoreAdminServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+      FeatureOnlineStoreAdminServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
+    : FeatureOnlineStoreAdminServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,10 +84,8 @@ class FeatureOnlineStoreAdminServiceLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<FeatureOnlineStoreAdminServiceRetryPolicy> clone()
-      const override {
-    return std::make_unique<
-        FeatureOnlineStoreAdminServiceLimitedErrorCountRetryPolicy>(
+  std::unique_ptr<FeatureOnlineStoreAdminServiceRetryPolicy> clone() const override {
+    return std::make_unique<FeatureOnlineStoreAdminServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -103,14 +93,11 @@ class FeatureOnlineStoreAdminServiceLimitedErrorCountRetryPolicy
   using BaseType = FeatureOnlineStoreAdminServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      aiplatform_v1_internal::FeatureOnlineStoreAdminServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<aiplatform_v1_internal::FeatureOnlineStoreAdminServiceRetryTraits> impl_;
 };
 
 /**
- * A retry policy for `FeatureOnlineStoreAdminServiceConnection` based on
- * elapsed time.
+ * A retry policy for `FeatureOnlineStoreAdminServiceConnection` based on elapsed time.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -119,8 +106,7 @@ class FeatureOnlineStoreAdminServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class FeatureOnlineStoreAdminServiceLimitedTimeRetryPolicy
-    : public FeatureOnlineStoreAdminServiceRetryPolicy {
+class FeatureOnlineStoreAdminServiceLimitedTimeRetryPolicy : public FeatureOnlineStoreAdminServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -145,16 +131,12 @@ class FeatureOnlineStoreAdminServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit FeatureOnlineStoreAdminServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  FeatureOnlineStoreAdminServiceLimitedTimeRetryPolicy(
-      FeatureOnlineStoreAdminServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : FeatureOnlineStoreAdminServiceLimitedTimeRetryPolicy(
-            rhs.maximum_duration()) {}
-  FeatureOnlineStoreAdminServiceLimitedTimeRetryPolicy(
-      FeatureOnlineStoreAdminServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : FeatureOnlineStoreAdminServiceLimitedTimeRetryPolicy(
-            rhs.maximum_duration()) {}
+  FeatureOnlineStoreAdminServiceLimitedTimeRetryPolicy(FeatureOnlineStoreAdminServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : FeatureOnlineStoreAdminServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  FeatureOnlineStoreAdminServiceLimitedTimeRetryPolicy(FeatureOnlineStoreAdminServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : FeatureOnlineStoreAdminServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -167,10 +149,8 @@ class FeatureOnlineStoreAdminServiceLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<FeatureOnlineStoreAdminServiceRetryPolicy> clone()
-      const override {
-    return std::make_unique<
-        FeatureOnlineStoreAdminServiceLimitedTimeRetryPolicy>(
+  std::unique_ptr<FeatureOnlineStoreAdminServiceRetryPolicy> clone() const override {
+    return std::make_unique<FeatureOnlineStoreAdminServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }
 
@@ -178,25 +158,20 @@ class FeatureOnlineStoreAdminServiceLimitedTimeRetryPolicy
   using BaseType = FeatureOnlineStoreAdminServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      aiplatform_v1_internal::FeatureOnlineStoreAdminServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<aiplatform_v1_internal::FeatureOnlineStoreAdminServiceRetryTraits> impl_;
 };
 
 /**
- * The `FeatureOnlineStoreAdminServiceConnection` object for
- * `FeatureOnlineStoreAdminServiceClient`.
+ * The `FeatureOnlineStoreAdminServiceConnection` object for `FeatureOnlineStoreAdminServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `FeatureOnlineStoreAdminServiceClient`. This allows users to inject
- * custom behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `FeatureOnlineStoreAdminServiceClient`.
+ * sets in `FeatureOnlineStoreAdminServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `FeatureOnlineStoreAdminServiceClient`.
  *
- * To create a concrete instance, see
- * `MakeFeatureOnlineStoreAdminServiceConnection()`.
+ * To create a concrete instance, see `MakeFeatureOnlineStoreAdminServiceConnection()`.
  *
- * For mocking, see
- * `aiplatform_v1_mocks::MockFeatureOnlineStoreAdminServiceConnection`.
+ * For mocking, see `aiplatform_v1_mocks::MockFeatureOnlineStoreAdminServiceConnection`.
  */
 class FeatureOnlineStoreAdminServiceConnection {
  public:
@@ -205,91 +180,69 @@ class FeatureOnlineStoreAdminServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
-  CreateFeatureOnlineStore(
-      google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
-          request);
+  CreateFeatureOnlineStore(google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>
-  GetFeatureOnlineStore(
-      google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const&
-          request);
+  GetFeatureOnlineStore(google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const& request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::FeatureOnlineStore>
-  ListFeatureOnlineStores(
-      google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest request);
+  ListFeatureOnlineStores(google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
-  UpdateFeatureOnlineStore(
-      google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
-          request);
+  UpdateFeatureOnlineStore(google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeatureOnlineStore(
-      google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteFeatureOnlineStore(google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
-  CreateFeatureView(
-      google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request);
+  CreateFeatureView(google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::FeatureView> GetFeatureView(
-      google::cloud::aiplatform::v1::GetFeatureViewRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::FeatureView>
+  GetFeatureView(google::cloud::aiplatform::v1::GetFeatureViewRequest const& request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::FeatureView>
-  ListFeatureViews(
-      google::cloud::aiplatform::v1::ListFeatureViewsRequest request);
+  ListFeatureViews(google::cloud::aiplatform::v1::ListFeatureViewsRequest request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
-  UpdateFeatureView(
-      google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request);
+  UpdateFeatureView(google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeatureView(
-      google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteFeatureView(google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse>
-  SyncFeatureView(
-      google::cloud::aiplatform::v1::SyncFeatureViewRequest const& request);
+  SyncFeatureView(google::cloud::aiplatform::v1::SyncFeatureViewRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::FeatureViewSync>
-  GetFeatureViewSync(
-      google::cloud::aiplatform::v1::GetFeatureViewSyncRequest const& request);
+  GetFeatureViewSync(google::cloud::aiplatform::v1::GetFeatureViewSyncRequest const& request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::FeatureViewSync>
-  ListFeatureViewSyncs(
-      google::cloud::aiplatform::v1::ListFeatureViewSyncsRequest request);
+  ListFeatureViewSyncs(google::cloud::aiplatform::v1::ListFeatureViewSyncsRequest request);
 };
 
 /**
- * A factory function to construct an object of type
- * `FeatureOnlineStoreAdminServiceConnection`.
+ * A factory function to construct an object of type `FeatureOnlineStoreAdminServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * FeatureOnlineStoreAdminServiceClient.
+ * should be passed as an argument to the constructor of FeatureOnlineStoreAdminServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `FeatureOnlineStoreAdminServiceConnection`. Expected options are any
- * of the types in the following option lists:
+ * returned `FeatureOnlineStoreAdminServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * -
- * `google::cloud::aiplatform_v1::FeatureOnlineStoreAdminServicePolicyOptionList`
+ * - `google::cloud::aiplatform_v1::FeatureOnlineStoreAdminServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the
- * `FeatureOnlineStoreAdminServiceConnection` created by this function.
+ * @param options (optional) Configure the `FeatureOnlineStoreAdminServiceConnection` created by
+ * this function.
  */
-std::shared_ptr<FeatureOnlineStoreAdminServiceConnection>
-MakeFeatureOnlineStoreAdminServiceConnection(std::string const& location,
-                                             Options options = {});
+std::shared_ptr<FeatureOnlineStoreAdminServiceConnection> MakeFeatureOnlineStoreAdminServiceConnection(
+    std::string const& location, Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

@@ -41,46 +41,45 @@ class ScheduleServiceMetadata : public ScheduleServiceStub {
       std::string api_client_header = "");
 
   StatusOr<google::cloud::aiplatform::v1::Schedule> CreateSchedule(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::CreateScheduleRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::CreateScheduleRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteSchedule(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteScheduleRequest const& request)
-      override;
+      google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteSchedule(
-      grpc::ClientContext& context, Options options,
-      google::cloud::aiplatform::v1::DeleteScheduleRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::Schedule> GetSchedule(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::GetScheduleRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::GetScheduleRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListSchedulesResponse> ListSchedules(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::ListSchedulesRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::ListSchedulesRequest const& request) override;
 
   Status PauseSchedule(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::PauseScheduleRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::PauseScheduleRequest const& request) override;
 
   Status ResumeSchedule(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::ResumeScheduleRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::ResumeScheduleRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::Schedule> UpdateSchedule(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::UpdateScheduleRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::UpdateScheduleRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -95,7 +94,8 @@ class ScheduleServiceMetadata : public ScheduleServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

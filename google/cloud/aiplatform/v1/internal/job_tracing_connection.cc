@@ -34,370 +34,271 @@ JobServiceTracingConnection::JobServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::aiplatform::v1::CustomJob>
-JobServiceTracingConnection::CreateCustomJob(
-    google::cloud::aiplatform::v1::CreateCustomJobRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::JobServiceConnection::CreateCustomJob");
+JobServiceTracingConnection::CreateCustomJob(google::cloud::aiplatform::v1::CreateCustomJobRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::JobServiceConnection::CreateCustomJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateCustomJob(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::CustomJob>
-JobServiceTracingConnection::GetCustomJob(
-    google::cloud::aiplatform::v1::GetCustomJobRequest const& request) {
-  auto span =
-      internal::MakeSpan("aiplatform_v1::JobServiceConnection::GetCustomJob");
+JobServiceTracingConnection::GetCustomJob(google::cloud::aiplatform::v1::GetCustomJobRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::JobServiceConnection::GetCustomJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetCustomJob(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::CustomJob>
-JobServiceTracingConnection::ListCustomJobs(
-    google::cloud::aiplatform::v1::ListCustomJobsRequest request) {
-  auto span =
-      internal::MakeSpan("aiplatform_v1::JobServiceConnection::ListCustomJobs");
+JobServiceTracingConnection::ListCustomJobs(google::cloud::aiplatform::v1::ListCustomJobsRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::JobServiceConnection::ListCustomJobs");
   internal::OTelScope scope(span);
   auto sr = child_->ListCustomJobs(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::aiplatform::v1::CustomJob>(std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::CustomJob>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-JobServiceTracingConnection::DeleteCustomJob(
-    google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request) {
+JobServiceTracingConnection::DeleteCustomJob(google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::JobServiceConnection::DeleteCustomJob");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteCustomJob(request));
 }
 
-Status JobServiceTracingConnection::CancelCustomJob(
-    google::cloud::aiplatform::v1::CancelCustomJobRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::JobServiceConnection::CancelCustomJob");
+Status
+JobServiceTracingConnection::CancelCustomJob(google::cloud::aiplatform::v1::CancelCustomJobRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::JobServiceConnection::CancelCustomJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelCustomJob(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
-JobServiceTracingConnection::CreateDataLabelingJob(
-    google::cloud::aiplatform::v1::CreateDataLabelingJobRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::JobServiceConnection::CreateDataLabelingJob");
+JobServiceTracingConnection::CreateDataLabelingJob(google::cloud::aiplatform::v1::CreateDataLabelingJobRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::JobServiceConnection::CreateDataLabelingJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateDataLabelingJob(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
-JobServiceTracingConnection::GetDataLabelingJob(
-    google::cloud::aiplatform::v1::GetDataLabelingJobRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::JobServiceConnection::GetDataLabelingJob");
+JobServiceTracingConnection::GetDataLabelingJob(google::cloud::aiplatform::v1::GetDataLabelingJobRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::JobServiceConnection::GetDataLabelingJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDataLabelingJob(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::DataLabelingJob>
-JobServiceTracingConnection::ListDataLabelingJobs(
-    google::cloud::aiplatform::v1::ListDataLabelingJobsRequest request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::JobServiceConnection::ListDataLabelingJobs");
+JobServiceTracingConnection::ListDataLabelingJobs(google::cloud::aiplatform::v1::ListDataLabelingJobsRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::JobServiceConnection::ListDataLabelingJobs");
   internal::OTelScope scope(span);
   auto sr = child_->ListDataLabelingJobs(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::aiplatform::v1::DataLabelingJob>(std::move(span),
-                                                      std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::DataLabelingJob>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-JobServiceTracingConnection::DeleteDataLabelingJob(
-    google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
-        request) {
+JobServiceTracingConnection::DeleteDataLabelingJob(google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::JobServiceConnection::DeleteDataLabelingJob");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteDataLabelingJob(request));
+  return internal::EndSpan(std::move(span), child_->DeleteDataLabelingJob(request));
 }
 
-Status JobServiceTracingConnection::CancelDataLabelingJob(
-    google::cloud::aiplatform::v1::CancelDataLabelingJobRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::JobServiceConnection::CancelDataLabelingJob");
+Status
+JobServiceTracingConnection::CancelDataLabelingJob(google::cloud::aiplatform::v1::CancelDataLabelingJobRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::JobServiceConnection::CancelDataLabelingJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelDataLabelingJob(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
-JobServiceTracingConnection::CreateHyperparameterTuningJob(
-    google::cloud::aiplatform::v1::CreateHyperparameterTuningJobRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::JobServiceConnection::CreateHyperparameterTuningJob");
+JobServiceTracingConnection::CreateHyperparameterTuningJob(google::cloud::aiplatform::v1::CreateHyperparameterTuningJobRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::JobServiceConnection::CreateHyperparameterTuningJob");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->CreateHyperparameterTuningJob(request));
+  return internal::EndSpan(*span, child_->CreateHyperparameterTuningJob(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
-JobServiceTracingConnection::GetHyperparameterTuningJob(
-    google::cloud::aiplatform::v1::GetHyperparameterTuningJobRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::JobServiceConnection::GetHyperparameterTuningJob");
+JobServiceTracingConnection::GetHyperparameterTuningJob(google::cloud::aiplatform::v1::GetHyperparameterTuningJobRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::JobServiceConnection::GetHyperparameterTuningJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetHyperparameterTuningJob(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::HyperparameterTuningJob>
-JobServiceTracingConnection::ListHyperparameterTuningJobs(
-    google::cloud::aiplatform::v1::ListHyperparameterTuningJobsRequest
-        request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::JobServiceConnection::ListHyperparameterTuningJobs");
+JobServiceTracingConnection::ListHyperparameterTuningJobs(google::cloud::aiplatform::v1::ListHyperparameterTuningJobsRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::JobServiceConnection::ListHyperparameterTuningJobs");
   internal::OTelScope scope(span);
   auto sr = child_->ListHyperparameterTuningJobs(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::aiplatform::v1::HyperparameterTuningJob>(std::move(span),
-                                                              std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::HyperparameterTuningJob>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-JobServiceTracingConnection::DeleteHyperparameterTuningJob(
-    google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
-        request) {
+JobServiceTracingConnection::DeleteHyperparameterTuningJob(google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::JobServiceConnection::DeleteHyperparameterTuningJob");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteHyperparameterTuningJob(request));
+  return internal::EndSpan(std::move(span), child_->DeleteHyperparameterTuningJob(request));
 }
 
-Status JobServiceTracingConnection::CancelHyperparameterTuningJob(
-    google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::JobServiceConnection::CancelHyperparameterTuningJob");
+Status
+JobServiceTracingConnection::CancelHyperparameterTuningJob(google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::JobServiceConnection::CancelHyperparameterTuningJob");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->CancelHyperparameterTuningJob(request));
+  return internal::EndSpan(*span, child_->CancelHyperparameterTuningJob(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::NasJob>
-JobServiceTracingConnection::CreateNasJob(
-    google::cloud::aiplatform::v1::CreateNasJobRequest const& request) {
-  auto span =
-      internal::MakeSpan("aiplatform_v1::JobServiceConnection::CreateNasJob");
+JobServiceTracingConnection::CreateNasJob(google::cloud::aiplatform::v1::CreateNasJobRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::JobServiceConnection::CreateNasJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateNasJob(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::NasJob>
-JobServiceTracingConnection::GetNasJob(
-    google::cloud::aiplatform::v1::GetNasJobRequest const& request) {
-  auto span =
-      internal::MakeSpan("aiplatform_v1::JobServiceConnection::GetNasJob");
+JobServiceTracingConnection::GetNasJob(google::cloud::aiplatform::v1::GetNasJobRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::JobServiceConnection::GetNasJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetNasJob(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::NasJob>
-JobServiceTracingConnection::ListNasJobs(
-    google::cloud::aiplatform::v1::ListNasJobsRequest request) {
-  auto span =
-      internal::MakeSpan("aiplatform_v1::JobServiceConnection::ListNasJobs");
+JobServiceTracingConnection::ListNasJobs(google::cloud::aiplatform::v1::ListNasJobsRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::JobServiceConnection::ListNasJobs");
   internal::OTelScope scope(span);
   auto sr = child_->ListNasJobs(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::NasJob>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-JobServiceTracingConnection::DeleteNasJob(
-    google::cloud::aiplatform::v1::DeleteNasJobRequest const& request) {
-  auto span =
-      internal::MakeSpan("aiplatform_v1::JobServiceConnection::DeleteNasJob");
+JobServiceTracingConnection::DeleteNasJob(google::cloud::aiplatform::v1::DeleteNasJobRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::JobServiceConnection::DeleteNasJob");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteNasJob(request));
 }
 
-Status JobServiceTracingConnection::CancelNasJob(
-    google::cloud::aiplatform::v1::CancelNasJobRequest const& request) {
-  auto span =
-      internal::MakeSpan("aiplatform_v1::JobServiceConnection::CancelNasJob");
+Status
+JobServiceTracingConnection::CancelNasJob(google::cloud::aiplatform::v1::CancelNasJobRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::JobServiceConnection::CancelNasJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelNasJob(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::NasTrialDetail>
-JobServiceTracingConnection::GetNasTrialDetail(
-    google::cloud::aiplatform::v1::GetNasTrialDetailRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::JobServiceConnection::GetNasTrialDetail");
+JobServiceTracingConnection::GetNasTrialDetail(google::cloud::aiplatform::v1::GetNasTrialDetailRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::JobServiceConnection::GetNasTrialDetail");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetNasTrialDetail(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::NasTrialDetail>
-JobServiceTracingConnection::ListNasTrialDetails(
-    google::cloud::aiplatform::v1::ListNasTrialDetailsRequest request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::JobServiceConnection::ListNasTrialDetails");
+JobServiceTracingConnection::ListNasTrialDetails(google::cloud::aiplatform::v1::ListNasTrialDetailsRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::JobServiceConnection::ListNasTrialDetails");
   internal::OTelScope scope(span);
   auto sr = child_->ListNasTrialDetails(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::aiplatform::v1::NasTrialDetail>(std::move(span),
-                                                     std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::NasTrialDetail>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
-JobServiceTracingConnection::CreateBatchPredictionJob(
-    google::cloud::aiplatform::v1::CreateBatchPredictionJobRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::JobServiceConnection::CreateBatchPredictionJob");
+JobServiceTracingConnection::CreateBatchPredictionJob(google::cloud::aiplatform::v1::CreateBatchPredictionJobRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::JobServiceConnection::CreateBatchPredictionJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateBatchPredictionJob(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
-JobServiceTracingConnection::GetBatchPredictionJob(
-    google::cloud::aiplatform::v1::GetBatchPredictionJobRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::JobServiceConnection::GetBatchPredictionJob");
+JobServiceTracingConnection::GetBatchPredictionJob(google::cloud::aiplatform::v1::GetBatchPredictionJobRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::JobServiceConnection::GetBatchPredictionJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetBatchPredictionJob(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::BatchPredictionJob>
-JobServiceTracingConnection::ListBatchPredictionJobs(
-    google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::JobServiceConnection::ListBatchPredictionJobs");
+JobServiceTracingConnection::ListBatchPredictionJobs(google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::JobServiceConnection::ListBatchPredictionJobs");
   internal::OTelScope scope(span);
   auto sr = child_->ListBatchPredictionJobs(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::aiplatform::v1::BatchPredictionJob>(std::move(span),
-                                                         std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::BatchPredictionJob>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-JobServiceTracingConnection::DeleteBatchPredictionJob(
-    google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
-        request) {
+JobServiceTracingConnection::DeleteBatchPredictionJob(google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::JobServiceConnection::DeleteBatchPredictionJob");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteBatchPredictionJob(request));
+  return internal::EndSpan(std::move(span), child_->DeleteBatchPredictionJob(request));
 }
 
-Status JobServiceTracingConnection::CancelBatchPredictionJob(
-    google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::JobServiceConnection::CancelBatchPredictionJob");
+Status
+JobServiceTracingConnection::CancelBatchPredictionJob(google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::JobServiceConnection::CancelBatchPredictionJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelBatchPredictionJob(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
-JobServiceTracingConnection::CreateModelDeploymentMonitoringJob(
-    google::cloud::aiplatform::v1::
-        CreateModelDeploymentMonitoringJobRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::JobServiceConnection::"
-      "CreateModelDeploymentMonitoringJob");
+JobServiceTracingConnection::CreateModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::CreateModelDeploymentMonitoringJobRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::JobServiceConnection::CreateModelDeploymentMonitoringJob");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->CreateModelDeploymentMonitoringJob(request));
+  return internal::EndSpan(*span, child_->CreateModelDeploymentMonitoringJob(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::ModelMonitoringStatsAnomalies>
-JobServiceTracingConnection::SearchModelDeploymentMonitoringStatsAnomalies(
-    google::cloud::aiplatform::v1::
-        SearchModelDeploymentMonitoringStatsAnomaliesRequest request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::JobServiceConnection::"
-      "SearchModelDeploymentMonitoringStatsAnomalies");
+JobServiceTracingConnection::SearchModelDeploymentMonitoringStatsAnomalies(google::cloud::aiplatform::v1::SearchModelDeploymentMonitoringStatsAnomaliesRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::JobServiceConnection::SearchModelDeploymentMonitoringStatsAnomalies");
   internal::OTelScope scope(span);
-  auto sr =
-      child_->SearchModelDeploymentMonitoringStatsAnomalies(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::aiplatform::v1::ModelMonitoringStatsAnomalies>(
-      std::move(span), std::move(sr));
+  auto sr = child_->SearchModelDeploymentMonitoringStatsAnomalies(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::ModelMonitoringStatsAnomalies>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
-JobServiceTracingConnection::GetModelDeploymentMonitoringJob(
-    google::cloud::aiplatform::v1::GetModelDeploymentMonitoringJobRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::JobServiceConnection::GetModelDeploymentMonitoringJob");
+JobServiceTracingConnection::GetModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::GetModelDeploymentMonitoringJobRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::JobServiceConnection::GetModelDeploymentMonitoringJob");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->GetModelDeploymentMonitoringJob(request));
+  return internal::EndSpan(*span, child_->GetModelDeploymentMonitoringJob(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
-JobServiceTracingConnection::ListModelDeploymentMonitoringJobs(
-    google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsRequest
-        request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::JobServiceConnection::ListModelDeploymentMonitoringJobs");
+JobServiceTracingConnection::ListModelDeploymentMonitoringJobs(google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::JobServiceConnection::ListModelDeploymentMonitoringJobs");
   internal::OTelScope scope(span);
   auto sr = child_->ListModelDeploymentMonitoringJobs(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>(
-      std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>>
-JobServiceTracingConnection::UpdateModelDeploymentMonitoringJob(
-    google::cloud::aiplatform::v1::
-        UpdateModelDeploymentMonitoringJobRequest const& request) {
+JobServiceTracingConnection::UpdateModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::UpdateModelDeploymentMonitoringJobRequest const& request) {
   auto span = internal::MakeSpan(
-      "aiplatform_v1::JobServiceConnection::"
-      "UpdateModelDeploymentMonitoringJob");
+      "aiplatform_v1::JobServiceConnection::UpdateModelDeploymentMonitoringJob");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateModelDeploymentMonitoringJob(request));
+  return internal::EndSpan(std::move(span), child_->UpdateModelDeploymentMonitoringJob(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-JobServiceTracingConnection::DeleteModelDeploymentMonitoringJob(
-    google::cloud::aiplatform::v1::
-        DeleteModelDeploymentMonitoringJobRequest const& request) {
+JobServiceTracingConnection::DeleteModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::DeleteModelDeploymentMonitoringJobRequest const& request) {
   auto span = internal::MakeSpan(
-      "aiplatform_v1::JobServiceConnection::"
-      "DeleteModelDeploymentMonitoringJob");
+      "aiplatform_v1::JobServiceConnection::DeleteModelDeploymentMonitoringJob");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteModelDeploymentMonitoringJob(request));
+  return internal::EndSpan(std::move(span), child_->DeleteModelDeploymentMonitoringJob(request));
 }
 
-Status JobServiceTracingConnection::PauseModelDeploymentMonitoringJob(
-    google::cloud::aiplatform::v1::
-        PauseModelDeploymentMonitoringJobRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::JobServiceConnection::PauseModelDeploymentMonitoringJob");
+Status
+JobServiceTracingConnection::PauseModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::PauseModelDeploymentMonitoringJobRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::JobServiceConnection::PauseModelDeploymentMonitoringJob");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->PauseModelDeploymentMonitoringJob(request));
+  return internal::EndSpan(*span, child_->PauseModelDeploymentMonitoringJob(request));
 }
 
-Status JobServiceTracingConnection::ResumeModelDeploymentMonitoringJob(
-    google::cloud::aiplatform::v1::
-        ResumeModelDeploymentMonitoringJobRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::JobServiceConnection::"
-      "ResumeModelDeploymentMonitoringJob");
+Status
+JobServiceTracingConnection::ResumeModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::ResumeModelDeploymentMonitoringJobRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::JobServiceConnection::ResumeModelDeploymentMonitoringJob");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->ResumeModelDeploymentMonitoringJob(request));
+  return internal::EndSpan(*span, child_->ResumeModelDeploymentMonitoringJob(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

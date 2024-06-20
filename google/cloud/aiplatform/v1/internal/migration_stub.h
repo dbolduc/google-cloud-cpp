@@ -38,30 +38,26 @@ class MigrationServiceStub {
  public:
   virtual ~MigrationServiceStub() = 0;
 
-  virtual StatusOr<
-      google::cloud::aiplatform::v1::SearchMigratableResourcesResponse>
-  SearchMigratableResources(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::aiplatform::v1::SearchMigratableResourcesResponse> SearchMigratableResources(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncBatchMigrateResources(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncBatchMigrateResources(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
-          request) = 0;
+      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> BatchMigrateResources(
-      grpc::ClientContext& context, Options options,
-      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
+    google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -74,30 +70,26 @@ class MigrationServiceStub {
 class DefaultMigrationServiceStub : public MigrationServiceStub {
  public:
   DefaultMigrationServiceStub(
-      std::unique_ptr<
-          google::cloud::aiplatform::v1::MigrationService::StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations)
-      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
+      std::unique_ptr<google::cloud::aiplatform::v1::MigrationService::StubInterface> grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations)
+      : grpc_stub_(std::move(grpc_stub)),
+        operations_(std::move(operations)) {}
 
-  StatusOr<google::cloud::aiplatform::v1::SearchMigratableResourcesResponse>
-  SearchMigratableResources(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const&
-          request) override;
+  StatusOr<google::cloud::aiplatform::v1::SearchMigratableResourcesResponse> SearchMigratableResources(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchMigrateResources(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
-          request) override;
+      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> BatchMigrateResources(
-      grpc::ClientContext& context, Options options,
-      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -112,9 +104,7 @@ class DefaultMigrationServiceStub : public MigrationServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<
-      google::cloud::aiplatform::v1::MigrationService::StubInterface>
-      grpc_stub_;
+  std::unique_ptr<google::cloud::aiplatform::v1::MigrationService::StubInterface> grpc_stub_;
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 

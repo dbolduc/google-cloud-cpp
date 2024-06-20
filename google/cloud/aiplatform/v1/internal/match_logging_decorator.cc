@@ -29,18 +29,21 @@ namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 MatchServiceLogging::MatchServiceLogging(
-    std::shared_ptr<MatchServiceStub> child, TracingOptions tracing_options,
+    std::shared_ptr<MatchServiceStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse>
 MatchServiceLogging::FindNeighbors(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::FindNeighborsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::FindNeighborsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::FindNeighborsRequest const& request) {
         return child_->FindNeighbors(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -48,12 +51,13 @@ MatchServiceLogging::FindNeighbors(
 
 StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>
 MatchServiceLogging::ReadIndexDatapoints(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request) {
         return child_->ReadIndexDatapoints(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

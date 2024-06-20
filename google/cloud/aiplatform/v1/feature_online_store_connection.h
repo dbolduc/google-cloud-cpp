@@ -36,17 +36,14 @@ namespace aiplatform_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `FeatureOnlineStoreServiceConnection`.
-class FeatureOnlineStoreServiceRetryPolicy
-    : public ::google::cloud::RetryPolicy {
+class FeatureOnlineStoreServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  public:
   /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<FeatureOnlineStoreServiceRetryPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<FeatureOnlineStoreServiceRetryPolicy> clone() const = 0;
 };
 
 /**
- * A retry policy for `FeatureOnlineStoreServiceConnection` based on counting
- * errors.
+ * A retry policy for `FeatureOnlineStoreServiceConnection` based on counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -55,8 +52,7 @@ class FeatureOnlineStoreServiceRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class FeatureOnlineStoreServiceLimitedErrorCountRetryPolicy
-    : public FeatureOnlineStoreServiceRetryPolicy {
+class FeatureOnlineStoreServiceLimitedErrorCountRetryPolicy : public FeatureOnlineStoreServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,18 +61,15 @@ class FeatureOnlineStoreServiceLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit FeatureOnlineStoreServiceLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit FeatureOnlineStoreServiceLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   FeatureOnlineStoreServiceLimitedErrorCountRetryPolicy(
       FeatureOnlineStoreServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : FeatureOnlineStoreServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : FeatureOnlineStoreServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   FeatureOnlineStoreServiceLimitedErrorCountRetryPolicy(
       FeatureOnlineStoreServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : FeatureOnlineStoreServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : FeatureOnlineStoreServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -88,8 +81,7 @@ class FeatureOnlineStoreServiceLimitedErrorCountRetryPolicy
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<FeatureOnlineStoreServiceRetryPolicy> clone() const override {
-    return std::make_unique<
-        FeatureOnlineStoreServiceLimitedErrorCountRetryPolicy>(
+    return std::make_unique<FeatureOnlineStoreServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -97,14 +89,11 @@ class FeatureOnlineStoreServiceLimitedErrorCountRetryPolicy
   using BaseType = FeatureOnlineStoreServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      aiplatform_v1_internal::FeatureOnlineStoreServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<aiplatform_v1_internal::FeatureOnlineStoreServiceRetryTraits> impl_;
 };
 
 /**
- * A retry policy for `FeatureOnlineStoreServiceConnection` based on elapsed
- * time.
+ * A retry policy for `FeatureOnlineStoreServiceConnection` based on elapsed time.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -113,8 +102,7 @@ class FeatureOnlineStoreServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class FeatureOnlineStoreServiceLimitedTimeRetryPolicy
-    : public FeatureOnlineStoreServiceRetryPolicy {
+class FeatureOnlineStoreServiceLimitedTimeRetryPolicy : public FeatureOnlineStoreServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -139,16 +127,12 @@ class FeatureOnlineStoreServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit FeatureOnlineStoreServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  FeatureOnlineStoreServiceLimitedTimeRetryPolicy(
-      FeatureOnlineStoreServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : FeatureOnlineStoreServiceLimitedTimeRetryPolicy(
-            rhs.maximum_duration()) {}
-  FeatureOnlineStoreServiceLimitedTimeRetryPolicy(
-      FeatureOnlineStoreServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : FeatureOnlineStoreServiceLimitedTimeRetryPolicy(
-            rhs.maximum_duration()) {}
+  FeatureOnlineStoreServiceLimitedTimeRetryPolicy(FeatureOnlineStoreServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : FeatureOnlineStoreServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  FeatureOnlineStoreServiceLimitedTimeRetryPolicy(FeatureOnlineStoreServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : FeatureOnlineStoreServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -170,25 +154,20 @@ class FeatureOnlineStoreServiceLimitedTimeRetryPolicy
   using BaseType = FeatureOnlineStoreServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      aiplatform_v1_internal::FeatureOnlineStoreServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<aiplatform_v1_internal::FeatureOnlineStoreServiceRetryTraits> impl_;
 };
 
 /**
- * The `FeatureOnlineStoreServiceConnection` object for
- * `FeatureOnlineStoreServiceClient`.
+ * The `FeatureOnlineStoreServiceConnection` object for `FeatureOnlineStoreServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `FeatureOnlineStoreServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `FeatureOnlineStoreServiceClient`.
+ * sets in `FeatureOnlineStoreServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `FeatureOnlineStoreServiceClient`.
  *
- * To create a concrete instance, see
- * `MakeFeatureOnlineStoreServiceConnection()`.
+ * To create a concrete instance, see `MakeFeatureOnlineStoreServiceConnection()`.
  *
- * For mocking, see
- * `aiplatform_v1_mocks::MockFeatureOnlineStoreServiceConnection`.
+ * For mocking, see `aiplatform_v1_mocks::MockFeatureOnlineStoreServiceConnection`.
  */
 class FeatureOnlineStoreServiceConnection {
  public:
@@ -197,26 +176,21 @@ class FeatureOnlineStoreServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>
-  FetchFeatureValues(
-      google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request);
+  FetchFeatureValues(google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
-  SearchNearestEntities(
-      google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
-          request);
+  SearchNearestEntities(google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `FeatureOnlineStoreServiceConnection`.
+ * A factory function to construct an object of type `FeatureOnlineStoreServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * FeatureOnlineStoreServiceClient.
+ * should be passed as an argument to the constructor of FeatureOnlineStoreServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `FeatureOnlineStoreServiceConnection`. Expected options are any of
- * the types in the following option lists:
+ * returned `FeatureOnlineStoreServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -227,12 +201,11 @@ class FeatureOnlineStoreServiceConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `FeatureOnlineStoreServiceConnection`
- * created by this function.
+ * @param options (optional) Configure the `FeatureOnlineStoreServiceConnection` created by
+ * this function.
  */
-std::shared_ptr<FeatureOnlineStoreServiceConnection>
-MakeFeatureOnlineStoreServiceConnection(std::string const& location,
-                                        Options options = {});
+std::shared_ptr<FeatureOnlineStoreServiceConnection> MakeFeatureOnlineStoreServiceConnection(
+    std::string const& location, Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

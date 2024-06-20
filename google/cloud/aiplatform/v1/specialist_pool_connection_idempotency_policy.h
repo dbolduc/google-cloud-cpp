@@ -34,30 +34,26 @@ class SpecialistPoolServiceConnectionIdempotencyPolicy {
   virtual ~SpecialistPoolServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<SpecialistPoolServiceConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<SpecialistPoolServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateSpecialistPool(
-      google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateSpecialistPool(google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request);
 
-  virtual google::cloud::Idempotency GetSpecialistPool(
-      google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request);
+  virtual google::cloud::Idempotency
+  GetSpecialistPool(google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request);
 
-  virtual google::cloud::Idempotency ListSpecialistPools(
-      google::cloud::aiplatform::v1::ListSpecialistPoolsRequest request);
+  virtual google::cloud::Idempotency
+  ListSpecialistPools(google::cloud::aiplatform::v1::ListSpecialistPoolsRequest request);
 
-  virtual google::cloud::Idempotency DeleteSpecialistPool(
-      google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteSpecialistPool(google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateSpecialistPool(
-      google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateSpecialistPool(google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request);
 };
 
 std::unique_ptr<SpecialistPoolServiceConnectionIdempotencyPolicy>
-MakeDefaultSpecialistPoolServiceConnectionIdempotencyPolicy();
+    MakeDefaultSpecialistPoolServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

@@ -28,13 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ModelGardenServiceClient::ModelGardenServiceClient(
     std::shared_ptr<ModelGardenServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 ModelGardenServiceClient::~ModelGardenServiceClient() = default;
 
 StatusOr<google::cloud::aiplatform::v1::PublisherModel>
-ModelGardenServiceClient::GetPublisherModel(std::string const& name,
-                                            Options opts) {
+ModelGardenServiceClient::GetPublisherModel(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::GetPublisherModelRequest request;
   request.set_name(name);
@@ -42,9 +41,7 @@ ModelGardenServiceClient::GetPublisherModel(std::string const& name,
 }
 
 StatusOr<google::cloud::aiplatform::v1::PublisherModel>
-ModelGardenServiceClient::GetPublisherModel(
-    google::cloud::aiplatform::v1::GetPublisherModelRequest const& request,
-    Options opts) {
+ModelGardenServiceClient::GetPublisherModel(google::cloud::aiplatform::v1::GetPublisherModelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetPublisherModel(request);
 }

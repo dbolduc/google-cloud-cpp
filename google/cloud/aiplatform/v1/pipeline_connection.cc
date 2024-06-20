@@ -50,10 +50,8 @@ PipelineServiceConnection::GetTrainingPipeline(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::TrainingPipeline>
-PipelineServiceConnection::ListTrainingPipelines(
-    google::cloud::aiplatform::v1::
-        ListTrainingPipelinesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::TrainingPipeline> PipelineServiceConnection::ListTrainingPipelines(
+    google::cloud::aiplatform::v1::ListTrainingPipelinesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::TrainingPipeline>>();
 }
@@ -62,11 +60,12 @@ future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 PipelineServiceConnection::DeleteTrainingPipeline(
     google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-Status PipelineServiceConnection::CancelTrainingPipeline(
+Status
+PipelineServiceConnection::CancelTrainingPipeline(
     google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -83,10 +82,8 @@ PipelineServiceConnection::GetPipelineJob(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::PipelineJob>
-PipelineServiceConnection::ListPipelineJobs(
-    google::cloud::aiplatform::v1::
-        ListPipelineJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::PipelineJob> PipelineServiceConnection::ListPipelineJobs(
+    google::cloud::aiplatform::v1::ListPipelineJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::PipelineJob>>();
 }
@@ -95,19 +92,20 @@ future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 PipelineServiceConnection::DeletePipelineJob(
     google::cloud::aiplatform::v1::DeletePipelineJobRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
 PipelineServiceConnection::BatchDeletePipelineJobs(
     google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-Status PipelineServiceConnection::CancelPipelineJob(
+Status
+PipelineServiceConnection::CancelPipelineJob(
     google::cloud::aiplatform::v1::CancelPipelineJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -116,25 +114,24 @@ future<StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
 PipelineServiceConnection::BatchCancelPipelineJobs(
     google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 std::shared_ptr<PipelineServiceConnection> MakePipelineServiceConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 PipelineServicePolicyOptionList>(options,
-                                                                  __func__);
+      UnifiedCredentialsOptionList,
+      PipelineServicePolicyOptionList>(options, __func__);
   options = aiplatform_v1_internal::PipelineServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = aiplatform_v1_internal::CreateDefaultPipelineServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return aiplatform_v1_internal::MakePipelineServiceTracingConnection(
       std::make_shared<aiplatform_v1_internal::PipelineServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

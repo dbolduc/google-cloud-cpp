@@ -63,8 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class EndpointServiceClient {
  public:
-  explicit EndpointServiceClient(
-      std::shared_ptr<EndpointServiceConnection> connection, Options opts = {});
+  explicit EndpointServiceClient(std::shared_ptr<EndpointServiceConnection> connection, Options opts = {});
   ~EndpointServiceClient();
 
   ///@{
@@ -77,12 +76,10 @@ class EndpointServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(EndpointServiceClient const& a,
-                         EndpointServiceClient const& b) {
+  friend bool operator==(EndpointServiceClient const& a, EndpointServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(EndpointServiceClient const& a,
-                         EndpointServiceClient const& b) {
+  friend bool operator!=(EndpointServiceClient const& a, EndpointServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -118,10 +115,8 @@ class EndpointServiceClient {
   /// [google.cloud.aiplatform.v1.Endpoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint.proto#L38}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::Endpoint>> CreateEndpoint(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::Endpoint const& endpoint,
-      Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
+  CreateEndpoint(std::string const& parent, google::cloud::aiplatform::v1::Endpoint const& endpoint, Options opts = {});
 
   // clang-format off
   ///
@@ -168,10 +163,8 @@ class EndpointServiceClient {
   /// [google.cloud.aiplatform.v1.Endpoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint.proto#L38}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::Endpoint>> CreateEndpoint(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::Endpoint const& endpoint,
-      std::string const& endpoint_id, Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
+  CreateEndpoint(std::string const& parent, google::cloud::aiplatform::v1::Endpoint const& endpoint, std::string const& endpoint_id, Options opts = {});
 
   // clang-format off
   ///
@@ -207,9 +200,8 @@ class EndpointServiceClient {
   /// [google.cloud.aiplatform.v1.Endpoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint.proto#L38}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::Endpoint>> CreateEndpoint(
-      google::cloud::aiplatform::v1::CreateEndpointRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
+  CreateEndpoint(google::cloud::aiplatform::v1::CreateEndpointRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -235,8 +227,8 @@ class EndpointServiceClient {
   /// [google.cloud.aiplatform.v1.GetEndpointRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L186}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Endpoint> GetEndpoint(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Endpoint>
+  GetEndpoint(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -265,9 +257,8 @@ class EndpointServiceClient {
   /// [google.cloud.aiplatform.v1.GetEndpointRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L186}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Endpoint> GetEndpoint(
-      google::cloud::aiplatform::v1::GetEndpointRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Endpoint>
+  GetEndpoint(google::cloud::aiplatform::v1::GetEndpointRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -301,8 +292,8 @@ class EndpointServiceClient {
   /// [google.cloud.aiplatform.v1.ListEndpointsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L200}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Endpoint> ListEndpoints(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Endpoint>
+  ListEndpoints(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -340,9 +331,8 @@ class EndpointServiceClient {
   /// [google.cloud.aiplatform.v1.ListEndpointsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L200}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Endpoint> ListEndpoints(
-      google::cloud::aiplatform::v1::ListEndpointsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Endpoint>
+  ListEndpoints(google::cloud::aiplatform::v1::ListEndpointsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -369,9 +359,8 @@ class EndpointServiceClient {
   /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Endpoint> UpdateEndpoint(
-      google::cloud::aiplatform::v1::Endpoint const& endpoint,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Endpoint>
+  UpdateEndpoint(google::cloud::aiplatform::v1::Endpoint const& endpoint, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -400,9 +389,8 @@ class EndpointServiceClient {
   /// [google.cloud.aiplatform.v1.UpdateEndpointRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L273}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Endpoint> UpdateEndpoint(
-      google::cloud::aiplatform::v1::UpdateEndpointRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Endpoint>
+  UpdateEndpoint(google::cloud::aiplatform::v1::UpdateEndpointRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -473,9 +461,7 @@ class EndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteEndpoint(
-      google::cloud::aiplatform::v1::DeleteEndpointRequest const& request,
-      Options opts = {});
+  DeleteEndpoint(google::cloud::aiplatform::v1::DeleteEndpointRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -529,11 +515,7 @@ class EndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>
-  DeployModel(
-      std::string const& endpoint,
-      google::cloud::aiplatform::v1::DeployedModel const& deployed_model,
-      std::map<std::string, std::int32_t> const& traffic_split,
-      Options opts = {});
+  DeployModel(std::string const& endpoint, google::cloud::aiplatform::v1::DeployedModel const& deployed_model, std::map<std::string, std::int32_t> const& traffic_split, Options opts = {});
 
   // clang-format off
   ///
@@ -570,8 +552,7 @@ class EndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>
-  DeployModel(google::cloud::aiplatform::v1::DeployModelRequest const& request,
-              Options opts = {});
+  DeployModel(google::cloud::aiplatform::v1::DeployModelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -615,10 +596,7 @@ class EndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>
-  UndeployModel(std::string const& endpoint,
-                std::string const& deployed_model_id,
-                std::map<std::string, std::int32_t> const& traffic_split,
-                Options opts = {});
+  UndeployModel(std::string const& endpoint, std::string const& deployed_model_id, std::map<std::string, std::int32_t> const& traffic_split, Options opts = {});
 
   // clang-format off
   ///
@@ -656,9 +634,7 @@ class EndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>
-  UndeployModel(
-      google::cloud::aiplatform::v1::UndeployModelRequest const& request,
-      Options opts = {});
+  UndeployModel(google::cloud::aiplatform::v1::UndeployModelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -713,10 +689,7 @@ class EndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>
-  MutateDeployedModel(
-      std::string const& endpoint,
-      google::cloud::aiplatform::v1::DeployedModel const& deployed_model,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  MutateDeployedModel(std::string const& endpoint, google::cloud::aiplatform::v1::DeployedModel const& deployed_model, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -756,9 +729,7 @@ class EndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>
-  MutateDeployedModel(
-      google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request,
-      Options opts = {});
+  MutateDeployedModel(google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<EndpointServiceConnection> connection_;

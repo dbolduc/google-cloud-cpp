@@ -38,75 +38,64 @@ class PersistentResourceServiceStub {
  public:
   virtual ~PersistentResourceServiceStub() = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncCreatePersistentResource(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreatePersistentResource(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
-          request) = 0;
+      google::cloud::aiplatform::v1::CreatePersistentResourceRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreatePersistentResource(
-      grpc::ClientContext& context, Options options,
-      google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::CreatePersistentResourceRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::PersistentResource>
-  GetPersistentResource(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::GetPersistentResourceRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::aiplatform::v1::PersistentResource> GetPersistentResource(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::GetPersistentResourceRequest const& request) = 0;
 
-  virtual StatusOr<
-      google::cloud::aiplatform::v1::ListPersistentResourcesResponse>
-  ListPersistentResources(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::ListPersistentResourcesRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::aiplatform::v1::ListPersistentResourcesResponse> ListPersistentResources(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::ListPersistentResourcesRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncDeletePersistentResource(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeletePersistentResource(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
-          request) = 0;
+      google::cloud::aiplatform::v1::DeletePersistentResourceRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeletePersistentResource(
-      grpc::ClientContext& context, Options options,
-      google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeletePersistentResourceRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncUpdatePersistentResource(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdatePersistentResource(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
-          request) = 0;
+      google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdatePersistentResource(
-      grpc::ClientContext& context, Options options,
-      google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncRebootPersistentResource(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncRebootPersistentResource(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
-          request) = 0;
+      google::cloud::aiplatform::v1::RebootPersistentResourceRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> RebootPersistentResource(
-      grpc::ClientContext& context, Options options,
-      google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::RebootPersistentResourceRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
+    google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -116,80 +105,67 @@ class PersistentResourceServiceStub {
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
-class DefaultPersistentResourceServiceStub
-    : public PersistentResourceServiceStub {
+class DefaultPersistentResourceServiceStub : public PersistentResourceServiceStub {
  public:
   DefaultPersistentResourceServiceStub(
-      std::unique_ptr<google::cloud::aiplatform::v1::PersistentResourceService::
-                          StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations)
-      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
+      std::unique_ptr<google::cloud::aiplatform::v1::PersistentResourceService::StubInterface> grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations)
+      : grpc_stub_(std::move(grpc_stub)),
+        operations_(std::move(operations)) {}
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncCreatePersistentResource(
+  future<StatusOr<google::longrunning::Operation>> AsyncCreatePersistentResource(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
-          request) override;
+      google::cloud::aiplatform::v1::CreatePersistentResourceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreatePersistentResource(
-      grpc::ClientContext& context, Options options,
-      google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::CreatePersistentResourceRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::PersistentResource>
-  GetPersistentResource(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::GetPersistentResourceRequest const&
-          request) override;
+  StatusOr<google::cloud::aiplatform::v1::PersistentResource> GetPersistentResource(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::GetPersistentResourceRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::ListPersistentResourcesResponse>
-  ListPersistentResources(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::ListPersistentResourcesRequest const&
-          request) override;
+  StatusOr<google::cloud::aiplatform::v1::ListPersistentResourcesResponse> ListPersistentResources(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::ListPersistentResourcesRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncDeletePersistentResource(
+  future<StatusOr<google::longrunning::Operation>> AsyncDeletePersistentResource(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
-          request) override;
+      google::cloud::aiplatform::v1::DeletePersistentResourceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeletePersistentResource(
-      grpc::ClientContext& context, Options options,
-      google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeletePersistentResourceRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncUpdatePersistentResource(
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdatePersistentResource(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
-          request) override;
+      google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdatePersistentResource(
-      grpc::ClientContext& context, Options options,
-      google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncRebootPersistentResource(
+  future<StatusOr<google::longrunning::Operation>> AsyncRebootPersistentResource(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
-          request) override;
+      google::cloud::aiplatform::v1::RebootPersistentResourceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RebootPersistentResource(
-      grpc::ClientContext& context, Options options,
-      google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::RebootPersistentResourceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -204,9 +180,7 @@ class DefaultPersistentResourceServiceStub
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<
-      google::cloud::aiplatform::v1::PersistentResourceService::StubInterface>
-      grpc_stub_;
+  std::unique_ptr<google::cloud::aiplatform::v1::PersistentResourceService::StubInterface> grpc_stub_;
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 

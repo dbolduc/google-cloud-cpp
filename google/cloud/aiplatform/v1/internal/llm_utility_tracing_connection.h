@@ -36,17 +36,15 @@ class LlmUtilityServiceTracingConnection
   ~LlmUtilityServiceTracingConnection() override = default;
 
   explicit LlmUtilityServiceTracingConnection(
-      std::shared_ptr<aiplatform_v1::LlmUtilityServiceConnection> child);
+    std::shared_ptr<aiplatform_v1::LlmUtilityServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::aiplatform::v1::CountTokensResponse> CountTokens(
-      google::cloud::aiplatform::v1::CountTokensRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::CountTokensResponse>
+  CountTokens(google::cloud::aiplatform::v1::CountTokensRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse> ComputeTokens(
-      google::cloud::aiplatform::v1::ComputeTokensRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse>
+  ComputeTokens(google::cloud::aiplatform::v1::ComputeTokensRequest const& request) override;
 
  private:
   std::shared_ptr<aiplatform_v1::LlmUtilityServiceConnection> child_;

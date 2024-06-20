@@ -31,77 +31,65 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class PersistentResourceServiceTracingStub
-    : public PersistentResourceServiceStub {
+class PersistentResourceServiceTracingStub : public PersistentResourceServiceStub {
  public:
   ~PersistentResourceServiceTracingStub() override = default;
 
-  explicit PersistentResourceServiceTracingStub(
-      std::shared_ptr<PersistentResourceServiceStub> child);
+  explicit PersistentResourceServiceTracingStub(std::shared_ptr<PersistentResourceServiceStub> child);
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncCreatePersistentResource(
+  future<StatusOr<google::longrunning::Operation>> AsyncCreatePersistentResource(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
-          request) override;
+      google::cloud::aiplatform::v1::CreatePersistentResourceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreatePersistentResource(
-      grpc::ClientContext& context, Options options,
-      google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::CreatePersistentResourceRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::PersistentResource>
-  GetPersistentResource(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::GetPersistentResourceRequest const&
-          request) override;
+  StatusOr<google::cloud::aiplatform::v1::PersistentResource> GetPersistentResource(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::GetPersistentResourceRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::ListPersistentResourcesResponse>
-  ListPersistentResources(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::ListPersistentResourcesRequest const&
-          request) override;
+  StatusOr<google::cloud::aiplatform::v1::ListPersistentResourcesResponse> ListPersistentResources(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::ListPersistentResourcesRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncDeletePersistentResource(
+  future<StatusOr<google::longrunning::Operation>> AsyncDeletePersistentResource(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
-          request) override;
+      google::cloud::aiplatform::v1::DeletePersistentResourceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeletePersistentResource(
-      grpc::ClientContext& context, Options options,
-      google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeletePersistentResourceRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncUpdatePersistentResource(
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdatePersistentResource(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
-          request) override;
+      google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdatePersistentResource(
-      grpc::ClientContext& context, Options options,
-      google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncRebootPersistentResource(
+  future<StatusOr<google::longrunning::Operation>> AsyncRebootPersistentResource(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
-          request) override;
+      google::cloud::aiplatform::v1::RebootPersistentResourceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RebootPersistentResource(
-      grpc::ClientContext& context, Options options,
-      google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::RebootPersistentResourceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -117,8 +105,7 @@ class PersistentResourceServiceTracingStub
 
  private:
   std::shared_ptr<PersistentResourceServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -129,8 +116,7 @@ class PersistentResourceServiceTracingStub
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
-std::shared_ptr<PersistentResourceServiceStub>
-MakePersistentResourceServiceTracingStub(
+std::shared_ptr<PersistentResourceServiceStub> MakePersistentResourceServiceTracingStub(
     std::shared_ptr<PersistentResourceServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

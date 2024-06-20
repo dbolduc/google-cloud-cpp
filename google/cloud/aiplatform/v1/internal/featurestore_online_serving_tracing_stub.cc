@@ -28,62 +28,51 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-FeaturestoreOnlineServingServiceTracingStub::
-    FeaturestoreOnlineServingServiceTracingStub(
-        std::shared_ptr<FeaturestoreOnlineServingServiceStub> child)
+FeaturestoreOnlineServingServiceTracingStub::FeaturestoreOnlineServingServiceTracingStub(
+    std::shared_ptr<FeaturestoreOnlineServingServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
-FeaturestoreOnlineServingServiceTracingStub::ReadFeatureValues(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse> FeaturestoreOnlineServingServiceTracingStub::ReadFeatureValues(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreOnlineServingService",
-      "ReadFeatureValues");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreOnlineServingService", "ReadFeatureValues");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ReadFeatureValues(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ReadFeatureValues(context, options, request));
 }
 
-std::unique_ptr<google::cloud::internal::StreamingReadRpc<
-    google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>
 FeaturestoreOnlineServingServiceTracingStub::StreamingReadFeatureValues(
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
-    google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreOnlineServingService",
-      "StreamingReadFeatureValues");
+    std::shared_ptr<grpc::ClientContext> context,
+    Options const& options,
+    google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreOnlineServingService", "StreamingReadFeatureValues");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->StreamingReadFeatureValues(context, options, request);
-  return std::make_unique<internal::StreamingReadRpcTracing<
-      google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>(
+  return std::make_unique<internal::StreamingReadRpcTracing<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>(
       std::move(context), std::move(stream), std::move(span));
 }
 
-StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
-FeaturestoreOnlineServingServiceTracingStub::WriteFeatureValues(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse> FeaturestoreOnlineServingServiceTracingStub::WriteFeatureValues(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.FeaturestoreOnlineServingService",
-      "WriteFeatureValues");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeaturestoreOnlineServingService", "WriteFeatureValues");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->WriteFeatureValues(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->WriteFeatureValues(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<FeaturestoreOnlineServingServiceStub>
-MakeFeaturestoreOnlineServingServiceTracingStub(
+std::shared_ptr<FeaturestoreOnlineServingServiceStub> MakeFeaturestoreOnlineServingServiceTracingStub(
     std::shared_ptr<FeaturestoreOnlineServingServiceStub> stub) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-  return std::make_shared<FeaturestoreOnlineServingServiceTracingStub>(
-      std::move(stub));
+  return std::make_shared<FeaturestoreOnlineServingServiceTracingStub>(std::move(stub));
 #else
   return stub;
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

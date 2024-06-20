@@ -41,14 +41,11 @@ std::shared_ptr<FeaturestoreOnlineServingServiceStub>
 CreateDefaultFeaturestoreOnlineServingServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::aiplatform::v1::FeaturestoreOnlineServingService::NewStub(
-          channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::aiplatform::v1::FeaturestoreOnlineServingService::NewStub(channel);
   std::shared_ptr<FeaturestoreOnlineServingServiceStub> stub =
-      std::make_shared<DefaultFeaturestoreOnlineServingServiceStub>(
-          std::move(service_grpc_stub));
+    std::make_shared<DefaultFeaturestoreOnlineServingServiceStub>(std::move(service_grpc_stub));
 
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<FeaturestoreOnlineServingServiceAuth>(
@@ -56,10 +53,12 @@ CreateDefaultFeaturestoreOnlineServingServiceStub(
   }
   stub = std::make_shared<FeaturestoreOnlineServingServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<FeaturestoreOnlineServingServiceLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

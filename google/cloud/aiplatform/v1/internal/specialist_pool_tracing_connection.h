@@ -36,32 +36,24 @@ class SpecialistPoolServiceTracingConnection
   ~SpecialistPoolServiceTracingConnection() override = default;
 
   explicit SpecialistPoolServiceTracingConnection(
-      std::shared_ptr<aiplatform_v1::SpecialistPoolServiceConnection> child);
+    std::shared_ptr<aiplatform_v1::SpecialistPoolServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-  CreateSpecialistPool(
-      google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request)
-      override;
+  CreateSpecialistPool(google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::SpecialistPool> GetSpecialistPool(
-      google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
+  GetSpecialistPool(google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request) override;
 
   StreamRange<google::cloud::aiplatform::v1::SpecialistPool>
-  ListSpecialistPools(google::cloud::aiplatform::v1::ListSpecialistPoolsRequest
-                          request) override;
+  ListSpecialistPools(google::cloud::aiplatform::v1::ListSpecialistPoolsRequest request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteSpecialistPool(
-      google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request)
-      override;
+  DeleteSpecialistPool(google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-  UpdateSpecialistPool(
-      google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request)
-      override;
+  UpdateSpecialistPool(google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) override;
 
  private:
   std::shared_ptr<aiplatform_v1::SpecialistPoolServiceConnection> child_;

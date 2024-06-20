@@ -31,48 +31,40 @@ MigrationServiceTracingStub::MigrationServiceTracingStub(
     std::shared_ptr<MigrationServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::aiplatform::v1::SearchMigratableResourcesResponse>
-MigrationServiceTracingStub::SearchMigratableResources(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const&
-        request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MigrationService",
-                             "SearchMigratableResources");
+StatusOr<google::cloud::aiplatform::v1::SearchMigratableResourcesResponse> MigrationServiceTracingStub::SearchMigratableResources(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MigrationService", "SearchMigratableResources");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->SearchMigratableResources(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->SearchMigratableResources(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 MigrationServiceTracingStub::AsyncBatchMigrateResources(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MigrationService", "BatchMigrateResources");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MigrationService", "BatchMigrateResources");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncBatchMigrateResources(cq, context, std::move(options),
-                                              request);
+  auto f = child_->AsyncBatchMigrateResources(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 MigrationServiceTracingStub::BatchMigrateResources(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MigrationService", "BatchMigrateResources");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MigrationService", "BatchMigrateResources");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->BatchMigrateResources(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->BatchMigrateResources(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -85,7 +77,8 @@ MigrationServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -98,8 +91,8 @@ future<Status> MigrationServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncCancelOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

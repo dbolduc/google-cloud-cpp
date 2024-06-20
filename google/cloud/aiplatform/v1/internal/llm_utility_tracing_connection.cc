@@ -33,19 +33,15 @@ LlmUtilityServiceTracingConnection::LlmUtilityServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::aiplatform::v1::CountTokensResponse>
-LlmUtilityServiceTracingConnection::CountTokens(
-    google::cloud::aiplatform::v1::CountTokensRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::LlmUtilityServiceConnection::CountTokens");
+LlmUtilityServiceTracingConnection::CountTokens(google::cloud::aiplatform::v1::CountTokensRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::LlmUtilityServiceConnection::CountTokens");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CountTokens(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse>
-LlmUtilityServiceTracingConnection::ComputeTokens(
-    google::cloud::aiplatform::v1::ComputeTokensRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::LlmUtilityServiceConnection::ComputeTokens");
+LlmUtilityServiceTracingConnection::ComputeTokens(google::cloud::aiplatform::v1::ComputeTokensRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::LlmUtilityServiceConnection::ComputeTokens");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ComputeTokens(request));
 }
@@ -57,8 +53,7 @@ MakeLlmUtilityServiceTracingConnection(
     std::shared_ptr<aiplatform_v1::LlmUtilityServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn =
-        std::make_shared<LlmUtilityServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<LlmUtilityServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

@@ -35,40 +35,35 @@ class MatchServiceStub {
  public:
   virtual ~MatchServiceStub() = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse>
-  FindNeighbors(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse> FindNeighbors(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::aiplatform::v1::FindNeighborsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>
-  ReadIndexDatapoints(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse> ReadIndexDatapoints(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request) = 0;
 };
 
 class DefaultMatchServiceStub : public MatchServiceStub {
  public:
   explicit DefaultMatchServiceStub(
-      std::unique_ptr<
-          google::cloud::aiplatform::v1::MatchService::StubInterface>
-          grpc_stub)
+      std::unique_ptr<google::cloud::aiplatform::v1::MatchService::StubInterface> grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse> FindNeighbors(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::FindNeighborsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::FindNeighborsRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>
-  ReadIndexDatapoints(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse> ReadIndexDatapoints(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::aiplatform::v1::MatchService::StubInterface>
-      grpc_stub_;
+  std::unique_ptr<google::cloud::aiplatform::v1::MatchService::StubInterface> grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

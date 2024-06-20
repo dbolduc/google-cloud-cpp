@@ -34,64 +34,62 @@ ApiKeysTracingConnection::ApiKeysTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::api::apikeys::v2::Key>>
-ApiKeysTracingConnection::CreateKey(
-    google::api::apikeys::v2::CreateKeyRequest const& request) {
-  auto span = internal::MakeSpan("apikeys_v2::ApiKeysConnection::CreateKey");
+ApiKeysTracingConnection::CreateKey(google::api::apikeys::v2::CreateKeyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "apikeys_v2::ApiKeysConnection::CreateKey");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateKey(request));
 }
 
-StreamRange<google::api::apikeys::v2::Key> ApiKeysTracingConnection::ListKeys(
-    google::api::apikeys::v2::ListKeysRequest request) {
+StreamRange<google::api::apikeys::v2::Key>
+ApiKeysTracingConnection::ListKeys(google::api::apikeys::v2::ListKeysRequest request) {
   auto span = internal::MakeSpan("apikeys_v2::ApiKeysConnection::ListKeys");
   internal::OTelScope scope(span);
   auto sr = child_->ListKeys(std::move(request));
   return internal::MakeTracedStreamRange<google::api::apikeys::v2::Key>(
-      std::move(span), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
-StatusOr<google::api::apikeys::v2::Key> ApiKeysTracingConnection::GetKey(
-    google::api::apikeys::v2::GetKeyRequest const& request) {
+StatusOr<google::api::apikeys::v2::Key>
+ApiKeysTracingConnection::GetKey(google::api::apikeys::v2::GetKeyRequest const& request) {
   auto span = internal::MakeSpan("apikeys_v2::ApiKeysConnection::GetKey");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetKey(request));
 }
 
 StatusOr<google::api::apikeys::v2::GetKeyStringResponse>
-ApiKeysTracingConnection::GetKeyString(
-    google::api::apikeys::v2::GetKeyStringRequest const& request) {
+ApiKeysTracingConnection::GetKeyString(google::api::apikeys::v2::GetKeyStringRequest const& request) {
   auto span = internal::MakeSpan("apikeys_v2::ApiKeysConnection::GetKeyString");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetKeyString(request));
 }
 
 future<StatusOr<google::api::apikeys::v2::Key>>
-ApiKeysTracingConnection::UpdateKey(
-    google::api::apikeys::v2::UpdateKeyRequest const& request) {
-  auto span = internal::MakeSpan("apikeys_v2::ApiKeysConnection::UpdateKey");
+ApiKeysTracingConnection::UpdateKey(google::api::apikeys::v2::UpdateKeyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "apikeys_v2::ApiKeysConnection::UpdateKey");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateKey(request));
 }
 
 future<StatusOr<google::api::apikeys::v2::Key>>
-ApiKeysTracingConnection::DeleteKey(
-    google::api::apikeys::v2::DeleteKeyRequest const& request) {
-  auto span = internal::MakeSpan("apikeys_v2::ApiKeysConnection::DeleteKey");
+ApiKeysTracingConnection::DeleteKey(google::api::apikeys::v2::DeleteKeyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "apikeys_v2::ApiKeysConnection::DeleteKey");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteKey(request));
 }
 
 future<StatusOr<google::api::apikeys::v2::Key>>
-ApiKeysTracingConnection::UndeleteKey(
-    google::api::apikeys::v2::UndeleteKeyRequest const& request) {
-  auto span = internal::MakeSpan("apikeys_v2::ApiKeysConnection::UndeleteKey");
+ApiKeysTracingConnection::UndeleteKey(google::api::apikeys::v2::UndeleteKeyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "apikeys_v2::ApiKeysConnection::UndeleteKey");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UndeleteKey(request));
 }
 
 StatusOr<google::api::apikeys::v2::LookupKeyResponse>
-ApiKeysTracingConnection::LookupKey(
-    google::api::apikeys::v2::LookupKeyRequest const& request) {
+ApiKeysTracingConnection::LookupKey(google::api::apikeys::v2::LookupKeyRequest const& request) {
   auto span = internal::MakeSpan("apikeys_v2::ApiKeysConnection::LookupKey");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->LookupKey(request));
@@ -99,7 +97,8 @@ ApiKeysTracingConnection::LookupKey(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<apikeys_v2::ApiKeysConnection> MakeApiKeysTracingConnection(
+std::shared_ptr<apikeys_v2::ApiKeysConnection>
+MakeApiKeysTracingConnection(
     std::shared_ptr<apikeys_v2::ApiKeysConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {

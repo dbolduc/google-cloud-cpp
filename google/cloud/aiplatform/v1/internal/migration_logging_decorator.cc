@@ -29,20 +29,21 @@ namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 MigrationServiceLogging::MigrationServiceLogging(
-    std::shared_ptr<MigrationServiceStub> child, TracingOptions tracing_options,
+    std::shared_ptr<MigrationServiceStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::aiplatform::v1::SearchMigratableResourcesResponse>
 MigrationServiceLogging::SearchMigratableResources(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const& request) {
         return child_->SearchMigratableResources(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -50,19 +51,17 @@ MigrationServiceLogging::SearchMigratableResources(
 
 future<StatusOr<google::longrunning::Operation>>
 MigrationServiceLogging::AsyncBatchMigrateResources(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
-                 request) {
-        return child_->AsyncBatchMigrateResources(cq, std::move(context),
-                                                  std::move(options), request);
+             google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request) {
+        return child_->AsyncBatchMigrateResources(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -70,13 +69,13 @@ MigrationServiceLogging::AsyncBatchMigrateResources(
 
 StatusOr<google::longrunning::Operation>
 MigrationServiceLogging::BatchMigrateResources(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request) {
         return child_->BatchMigrateResources(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -93,8 +92,8 @@ MigrationServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -110,8 +109,8 @@ future<Status> MigrationServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

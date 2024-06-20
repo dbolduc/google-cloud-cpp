@@ -30,32 +30,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class BatchServiceTracingConnection : public batch_v1::BatchServiceConnection {
+class BatchServiceTracingConnection
+    : public batch_v1::BatchServiceConnection {
  public:
   ~BatchServiceTracingConnection() override = default;
 
   explicit BatchServiceTracingConnection(
-      std::shared_ptr<batch_v1::BatchServiceConnection> child);
+    std::shared_ptr<batch_v1::BatchServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::batch::v1::Job> CreateJob(
-      google::cloud::batch::v1::CreateJobRequest const& request) override;
+  StatusOr<google::cloud::batch::v1::Job>
+  CreateJob(google::cloud::batch::v1::CreateJobRequest const& request) override;
 
-  StatusOr<google::cloud::batch::v1::Job> GetJob(
-      google::cloud::batch::v1::GetJobRequest const& request) override;
+  StatusOr<google::cloud::batch::v1::Job>
+  GetJob(google::cloud::batch::v1::GetJobRequest const& request) override;
 
-  future<StatusOr<google::cloud::batch::v1::OperationMetadata>> DeleteJob(
-      google::cloud::batch::v1::DeleteJobRequest const& request) override;
+  future<StatusOr<google::cloud::batch::v1::OperationMetadata>>
+  DeleteJob(google::cloud::batch::v1::DeleteJobRequest const& request) override;
 
-  StreamRange<google::cloud::batch::v1::Job> ListJobs(
-      google::cloud::batch::v1::ListJobsRequest request) override;
+  StreamRange<google::cloud::batch::v1::Job>
+  ListJobs(google::cloud::batch::v1::ListJobsRequest request) override;
 
-  StatusOr<google::cloud::batch::v1::Task> GetTask(
-      google::cloud::batch::v1::GetTaskRequest const& request) override;
+  StatusOr<google::cloud::batch::v1::Task>
+  GetTask(google::cloud::batch::v1::GetTaskRequest const& request) override;
 
-  StreamRange<google::cloud::batch::v1::Task> ListTasks(
-      google::cloud::batch::v1::ListTasksRequest request) override;
+  StreamRange<google::cloud::batch::v1::Task>
+  ListTasks(google::cloud::batch::v1::ListTasksRequest request) override;
 
  private:
   std::shared_ptr<batch_v1::BatchServiceConnection> child_;

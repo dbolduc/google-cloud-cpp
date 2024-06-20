@@ -66,14 +66,14 @@ class JobServiceLimitedErrorCountRetryPolicy : public JobServiceRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit JobServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   JobServiceLimitedErrorCountRetryPolicy(
       JobServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : JobServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : JobServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   JobServiceLimitedErrorCountRetryPolicy(
       JobServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : JobServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : JobServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +93,7 @@ class JobServiceLimitedErrorCountRetryPolicy : public JobServiceRetryPolicy {
   using BaseType = JobServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      aiplatform_v1_internal::JobServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<aiplatform_v1_internal::JobServiceRetryTraits> impl_;
 };
 
 /**
@@ -133,14 +131,12 @@ class JobServiceLimitedTimeRetryPolicy : public JobServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit JobServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  JobServiceLimitedTimeRetryPolicy(
-      JobServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : JobServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  JobServiceLimitedTimeRetryPolicy(
-      JobServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : JobServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  JobServiceLimitedTimeRetryPolicy(JobServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : JobServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  JobServiceLimitedTimeRetryPolicy(JobServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : JobServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -162,9 +158,7 @@ class JobServiceLimitedTimeRetryPolicy : public JobServiceRetryPolicy {
   using BaseType = JobServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      aiplatform_v1_internal::JobServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<aiplatform_v1_internal::JobServiceRetryTraits> impl_;
 };
 
 /**
@@ -185,161 +179,110 @@ class JobServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::aiplatform::v1::CustomJob> CreateCustomJob(
-      google::cloud::aiplatform::v1::CreateCustomJobRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::CustomJob>
+  CreateCustomJob(google::cloud::aiplatform::v1::CreateCustomJobRequest const& request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::CustomJob> GetCustomJob(
-      google::cloud::aiplatform::v1::GetCustomJobRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::CustomJob>
+  GetCustomJob(google::cloud::aiplatform::v1::GetCustomJobRequest const& request);
 
-  virtual StreamRange<google::cloud::aiplatform::v1::CustomJob> ListCustomJobs(
-      google::cloud::aiplatform::v1::ListCustomJobsRequest request);
+  virtual StreamRange<google::cloud::aiplatform::v1::CustomJob>
+  ListCustomJobs(google::cloud::aiplatform::v1::ListCustomJobsRequest request);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteCustomJob(
-      google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteCustomJob(google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request);
 
-  virtual Status CancelCustomJob(
-      google::cloud::aiplatform::v1::CancelCustomJobRequest const& request);
+  virtual Status
+  CancelCustomJob(google::cloud::aiplatform::v1::CancelCustomJobRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
-  CreateDataLabelingJob(
-      google::cloud::aiplatform::v1::CreateDataLabelingJobRequest const&
-          request);
+  CreateDataLabelingJob(google::cloud::aiplatform::v1::CreateDataLabelingJobRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
-  GetDataLabelingJob(
-      google::cloud::aiplatform::v1::GetDataLabelingJobRequest const& request);
+  GetDataLabelingJob(google::cloud::aiplatform::v1::GetDataLabelingJobRequest const& request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::DataLabelingJob>
-  ListDataLabelingJobs(
-      google::cloud::aiplatform::v1::ListDataLabelingJobsRequest request);
+  ListDataLabelingJobs(google::cloud::aiplatform::v1::ListDataLabelingJobsRequest request);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDataLabelingJob(
-      google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteDataLabelingJob(google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const& request);
 
-  virtual Status CancelDataLabelingJob(
-      google::cloud::aiplatform::v1::CancelDataLabelingJobRequest const&
-          request);
+  virtual Status
+  CancelDataLabelingJob(google::cloud::aiplatform::v1::CancelDataLabelingJobRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
-  CreateHyperparameterTuningJob(
-      google::cloud::aiplatform::v1::CreateHyperparameterTuningJobRequest const&
-          request);
+  CreateHyperparameterTuningJob(google::cloud::aiplatform::v1::CreateHyperparameterTuningJobRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
-  GetHyperparameterTuningJob(
-      google::cloud::aiplatform::v1::GetHyperparameterTuningJobRequest const&
-          request);
+  GetHyperparameterTuningJob(google::cloud::aiplatform::v1::GetHyperparameterTuningJobRequest const& request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::HyperparameterTuningJob>
-  ListHyperparameterTuningJobs(
-      google::cloud::aiplatform::v1::ListHyperparameterTuningJobsRequest
-          request);
+  ListHyperparameterTuningJobs(google::cloud::aiplatform::v1::ListHyperparameterTuningJobsRequest request);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteHyperparameterTuningJob(
-      google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteHyperparameterTuningJob(google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const& request);
 
-  virtual Status CancelHyperparameterTuningJob(
-      google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const&
-          request);
+  virtual Status
+  CancelHyperparameterTuningJob(google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const& request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::NasJob> CreateNasJob(
-      google::cloud::aiplatform::v1::CreateNasJobRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::NasJob>
+  CreateNasJob(google::cloud::aiplatform::v1::CreateNasJobRequest const& request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::NasJob> GetNasJob(
-      google::cloud::aiplatform::v1::GetNasJobRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::NasJob>
+  GetNasJob(google::cloud::aiplatform::v1::GetNasJobRequest const& request);
 
-  virtual StreamRange<google::cloud::aiplatform::v1::NasJob> ListNasJobs(
-      google::cloud::aiplatform::v1::ListNasJobsRequest request);
+  virtual StreamRange<google::cloud::aiplatform::v1::NasJob>
+  ListNasJobs(google::cloud::aiplatform::v1::ListNasJobsRequest request);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteNasJob(
-      google::cloud::aiplatform::v1::DeleteNasJobRequest const& request);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteNasJob(google::cloud::aiplatform::v1::DeleteNasJobRequest const& request);
 
-  virtual Status CancelNasJob(
-      google::cloud::aiplatform::v1::CancelNasJobRequest const& request);
+  virtual Status
+  CancelNasJob(google::cloud::aiplatform::v1::CancelNasJobRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::NasTrialDetail>
-  GetNasTrialDetail(
-      google::cloud::aiplatform::v1::GetNasTrialDetailRequest const& request);
+  GetNasTrialDetail(google::cloud::aiplatform::v1::GetNasTrialDetailRequest const& request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::NasTrialDetail>
-  ListNasTrialDetails(
-      google::cloud::aiplatform::v1::ListNasTrialDetailsRequest request);
+  ListNasTrialDetails(google::cloud::aiplatform::v1::ListNasTrialDetailsRequest request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
-  CreateBatchPredictionJob(
-      google::cloud::aiplatform::v1::CreateBatchPredictionJobRequest const&
-          request);
+  CreateBatchPredictionJob(google::cloud::aiplatform::v1::CreateBatchPredictionJobRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
-  GetBatchPredictionJob(
-      google::cloud::aiplatform::v1::GetBatchPredictionJobRequest const&
-          request);
+  GetBatchPredictionJob(google::cloud::aiplatform::v1::GetBatchPredictionJobRequest const& request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::BatchPredictionJob>
-  ListBatchPredictionJobs(
-      google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest request);
+  ListBatchPredictionJobs(google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest request);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteBatchPredictionJob(
-      google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteBatchPredictionJob(google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const& request);
 
-  virtual Status CancelBatchPredictionJob(
-      google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const&
-          request);
+  virtual Status
+  CancelBatchPredictionJob(google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
-  CreateModelDeploymentMonitoringJob(
-      google::cloud::aiplatform::v1::
-          CreateModelDeploymentMonitoringJobRequest const& request);
+  CreateModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::CreateModelDeploymentMonitoringJobRequest const& request);
 
-  virtual StreamRange<
-      google::cloud::aiplatform::v1::ModelMonitoringStatsAnomalies>
-  SearchModelDeploymentMonitoringStatsAnomalies(
-      google::cloud::aiplatform::v1::
-          SearchModelDeploymentMonitoringStatsAnomaliesRequest request);
+  virtual StreamRange<google::cloud::aiplatform::v1::ModelMonitoringStatsAnomalies>
+  SearchModelDeploymentMonitoringStatsAnomalies(google::cloud::aiplatform::v1::SearchModelDeploymentMonitoringStatsAnomaliesRequest request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
-  GetModelDeploymentMonitoringJob(
-      google::cloud::aiplatform::v1::
-          GetModelDeploymentMonitoringJobRequest const& request);
+  GetModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::GetModelDeploymentMonitoringJobRequest const& request);
 
-  virtual StreamRange<
-      google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
-  ListModelDeploymentMonitoringJobs(
-      google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsRequest
-          request);
+  virtual StreamRange<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
+  ListModelDeploymentMonitoringJobs(google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsRequest request);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>>
-  UpdateModelDeploymentMonitoringJob(
-      google::cloud::aiplatform::v1::
-          UpdateModelDeploymentMonitoringJobRequest const& request);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>>
+  UpdateModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::UpdateModelDeploymentMonitoringJobRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteModelDeploymentMonitoringJob(
-      google::cloud::aiplatform::v1::
-          DeleteModelDeploymentMonitoringJobRequest const& request);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::DeleteModelDeploymentMonitoringJobRequest const& request);
 
-  virtual Status PauseModelDeploymentMonitoringJob(
-      google::cloud::aiplatform::v1::
-          PauseModelDeploymentMonitoringJobRequest const& request);
+  virtual Status
+  PauseModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::PauseModelDeploymentMonitoringJobRequest const& request);
 
-  virtual Status ResumeModelDeploymentMonitoringJob(
-      google::cloud::aiplatform::v1::
-          ResumeModelDeploymentMonitoringJobRequest const& request);
+  virtual Status
+  ResumeModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::ResumeModelDeploymentMonitoringJobRequest const& request);
 };
 
 /**

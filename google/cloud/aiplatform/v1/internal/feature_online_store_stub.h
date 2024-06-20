@@ -35,44 +35,35 @@ class FeatureOnlineStoreServiceStub {
  public:
   virtual ~FeatureOnlineStoreServiceStub() = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>
-  FetchFeatureValues(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::FetchFeatureValuesRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse> FetchFeatureValues(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
-  SearchNearestEntities(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse> SearchNearestEntities(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const& request) = 0;
 };
 
-class DefaultFeatureOnlineStoreServiceStub
-    : public FeatureOnlineStoreServiceStub {
+class DefaultFeatureOnlineStoreServiceStub : public FeatureOnlineStoreServiceStub {
  public:
   explicit DefaultFeatureOnlineStoreServiceStub(
-      std::unique_ptr<google::cloud::aiplatform::v1::FeatureOnlineStoreService::
-                          StubInterface>
-          grpc_stub)
+      std::unique_ptr<google::cloud::aiplatform::v1::FeatureOnlineStoreService::StubInterface> grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
-  StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>
-  FetchFeatureValues(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse> FetchFeatureValues(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
-  SearchNearestEntities(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
-          request) override;
+  StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse> SearchNearestEntities(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const& request) override;
 
  private:
-  std::unique_ptr<
-      google::cloud::aiplatform::v1::FeatureOnlineStoreService::StubInterface>
-      grpc_stub_;
+  std::unique_ptr<google::cloud::aiplatform::v1::FeatureOnlineStoreService::StubInterface> grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

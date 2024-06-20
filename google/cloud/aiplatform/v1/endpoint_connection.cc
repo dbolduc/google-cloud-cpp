@@ -42,8 +42,8 @@ future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
 EndpointServiceConnection::CreateEndpoint(
     google::cloud::aiplatform::v1::CreateEndpointRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::Endpoint>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::Endpoint>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Endpoint>
@@ -52,10 +52,8 @@ EndpointServiceConnection::GetEndpoint(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::Endpoint>
-EndpointServiceConnection::ListEndpoints(
-    google::cloud::aiplatform::v1::
-        ListEndpointsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::Endpoint> EndpointServiceConnection::ListEndpoints(
+    google::cloud::aiplatform::v1::ListEndpointsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Endpoint>>();
 }
@@ -70,49 +68,48 @@ future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 EndpointServiceConnection::DeleteEndpoint(
     google::cloud::aiplatform::v1::DeleteEndpointRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>
 EndpointServiceConnection::DeployModel(
     google::cloud::aiplatform::v1::DeployModelRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>
 EndpointServiceConnection::UndeployModel(
     google::cloud::aiplatform::v1::UndeployModelRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>
 EndpointServiceConnection::MutateDeployedModel(
     google::cloud::aiplatform::v1::MutateDeployedModelRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 std::shared_ptr<EndpointServiceConnection> MakeEndpointServiceConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 EndpointServicePolicyOptionList>(options,
-                                                                  __func__);
+      UnifiedCredentialsOptionList,
+      EndpointServicePolicyOptionList>(options, __func__);
   options = aiplatform_v1_internal::EndpointServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = aiplatform_v1_internal::CreateDefaultEndpointServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return aiplatform_v1_internal::MakeEndpointServiceTracingConnection(
       std::make_shared<aiplatform_v1_internal::EndpointServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

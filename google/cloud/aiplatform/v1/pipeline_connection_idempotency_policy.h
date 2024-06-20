@@ -34,53 +34,47 @@ class PipelineServiceConnectionIdempotencyPolicy {
   virtual ~PipelineServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<PipelineServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<PipelineServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateTrainingPipeline(
-      google::cloud::aiplatform::v1::CreateTrainingPipelineRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateTrainingPipeline(google::cloud::aiplatform::v1::CreateTrainingPipelineRequest const& request);
 
-  virtual google::cloud::Idempotency GetTrainingPipeline(
-      google::cloud::aiplatform::v1::GetTrainingPipelineRequest const& request);
+  virtual google::cloud::Idempotency
+  GetTrainingPipeline(google::cloud::aiplatform::v1::GetTrainingPipelineRequest const& request);
 
-  virtual google::cloud::Idempotency ListTrainingPipelines(
-      google::cloud::aiplatform::v1::ListTrainingPipelinesRequest request);
+  virtual google::cloud::Idempotency
+  ListTrainingPipelines(google::cloud::aiplatform::v1::ListTrainingPipelinesRequest request);
 
-  virtual google::cloud::Idempotency DeleteTrainingPipeline(
-      google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteTrainingPipeline(google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const& request);
 
-  virtual google::cloud::Idempotency CancelTrainingPipeline(
-      google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CancelTrainingPipeline(google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const& request);
 
-  virtual google::cloud::Idempotency CreatePipelineJob(
-      google::cloud::aiplatform::v1::CreatePipelineJobRequest const& request);
+  virtual google::cloud::Idempotency
+  CreatePipelineJob(google::cloud::aiplatform::v1::CreatePipelineJobRequest const& request);
 
-  virtual google::cloud::Idempotency GetPipelineJob(
-      google::cloud::aiplatform::v1::GetPipelineJobRequest const& request);
+  virtual google::cloud::Idempotency
+  GetPipelineJob(google::cloud::aiplatform::v1::GetPipelineJobRequest const& request);
 
-  virtual google::cloud::Idempotency ListPipelineJobs(
-      google::cloud::aiplatform::v1::ListPipelineJobsRequest request);
+  virtual google::cloud::Idempotency
+  ListPipelineJobs(google::cloud::aiplatform::v1::ListPipelineJobsRequest request);
 
-  virtual google::cloud::Idempotency DeletePipelineJob(
-      google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request);
+  virtual google::cloud::Idempotency
+  DeletePipelineJob(google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request);
 
-  virtual google::cloud::Idempotency BatchDeletePipelineJobs(
-      google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  BatchDeletePipelineJobs(google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const& request);
 
-  virtual google::cloud::Idempotency CancelPipelineJob(
-      google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelPipelineJob(google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request);
 
-  virtual google::cloud::Idempotency BatchCancelPipelineJobs(
-      google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  BatchCancelPipelineJobs(google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const& request);
 };
 
 std::unique_ptr<PipelineServiceConnectionIdempotencyPolicy>
-MakeDefaultPipelineServiceConnectionIdempotencyPolicy();
+    MakeDefaultPipelineServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

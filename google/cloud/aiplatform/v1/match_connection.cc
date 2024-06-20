@@ -52,18 +52,17 @@ MatchServiceConnection::ReadIndexDatapoints(
 std::shared_ptr<MatchServiceConnection> MakeMatchServiceConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 MatchServicePolicyOptionList>(options,
-                                                               __func__);
+      UnifiedCredentialsOptionList,
+      MatchServicePolicyOptionList>(options, __func__);
   options = aiplatform_v1_internal::MatchServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = aiplatform_v1_internal::CreateDefaultMatchServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return aiplatform_v1_internal::MakeMatchServiceTracingConnection(
       std::make_shared<aiplatform_v1_internal::MatchServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -28,27 +28,26 @@ namespace cloud {
 namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-FeaturestoreOnlineServingServiceStub::~FeaturestoreOnlineServingServiceStub() =
-    default;
+FeaturestoreOnlineServingServiceStub::~FeaturestoreOnlineServingServiceStub() = default;
 
 StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
 DefaultFeaturestoreOnlineServingServiceStub::ReadFeatureValues(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) {
-  google::cloud::aiplatform::v1::ReadFeatureValuesResponse response;
-  auto status = grpc_stub_->ReadFeatureValues(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) {
+    google::cloud::aiplatform::v1::ReadFeatureValuesResponse response;
+    auto status =
+        grpc_stub_->ReadFeatureValues(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-std::unique_ptr<google::cloud::internal::StreamingReadRpc<
-    google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>
 DefaultFeaturestoreOnlineServingServiceStub::StreamingReadFeatureValues(
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
-    google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
-        request) {
+    std::shared_ptr<grpc::ClientContext> context,
+    Options const&,
+    google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const& request) {
   auto stream = grpc_stub_->StreamingReadFeatureValues(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
       google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>(
@@ -57,14 +56,15 @@ DefaultFeaturestoreOnlineServingServiceStub::StreamingReadFeatureValues(
 
 StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
 DefaultFeaturestoreOnlineServingServiceStub::WriteFeatureValues(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) {
-  google::cloud::aiplatform::v1::WriteFeatureValuesResponse response;
-  auto status = grpc_stub_->WriteFeatureValues(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) {
+    google::cloud::aiplatform::v1::WriteFeatureValuesResponse response;
+    auto status =
+        grpc_stub_->WriteFeatureValues(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

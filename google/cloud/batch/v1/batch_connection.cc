@@ -17,12 +17,12 @@
 // source: google/cloud/batch/v1/batch.proto
 
 #include "google/cloud/batch/v1/batch_connection.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/batch/v1/batch_options.h"
 #include "google/cloud/batch/v1/internal/batch_connection_impl.h"
 #include "google/cloud/batch/v1/internal/batch_option_defaults.h"
 #include "google/cloud/batch/v1/internal/batch_stub_factory.h"
 #include "google/cloud/batch/v1/internal/batch_tracing_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -38,12 +38,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BatchServiceConnection::~BatchServiceConnection() = default;
 
-StatusOr<google::cloud::batch::v1::Job> BatchServiceConnection::CreateJob(
+StatusOr<google::cloud::batch::v1::Job>
+BatchServiceConnection::CreateJob(
     google::cloud::batch::v1::CreateJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::batch::v1::Job> BatchServiceConnection::GetJob(
+StatusOr<google::cloud::batch::v1::Job>
+BatchServiceConnection::GetJob(
     google::cloud::batch::v1::GetJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -52,25 +54,24 @@ future<StatusOr<google::cloud::batch::v1::OperationMetadata>>
 BatchServiceConnection::DeleteJob(
     google::cloud::batch::v1::DeleteJobRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::batch::v1::OperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::batch::v1::OperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StreamRange<google::cloud::batch::v1::Job> BatchServiceConnection::ListJobs(
-    google::cloud::batch::v1::
-        ListJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::cloud::batch::v1::ListJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::batch::v1::Job>>();
 }
 
-StatusOr<google::cloud::batch::v1::Task> BatchServiceConnection::GetTask(
+StatusOr<google::cloud::batch::v1::Task>
+BatchServiceConnection::GetTask(
     google::cloud::batch::v1::GetTaskRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StreamRange<google::cloud::batch::v1::Task> BatchServiceConnection::ListTasks(
-    google::cloud::batch::v1::
-        ListTasksRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::cloud::batch::v1::ListTasksRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::batch::v1::Task>>();
 }
@@ -78,17 +79,17 @@ StreamRange<google::cloud::batch::v1::Task> BatchServiceConnection::ListTasks(
 std::shared_ptr<BatchServiceConnection> MakeBatchServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 BatchServicePolicyOptionList>(options,
-                                                               __func__);
-  options = batch_v1_internal::BatchServiceDefaultOptions(std::move(options));
+      UnifiedCredentialsOptionList,
+      BatchServicePolicyOptionList>(options, __func__);
+  options = batch_v1_internal::BatchServiceDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = batch_v1_internal::CreateDefaultBatchServiceStub(std::move(auth),
-                                                               options);
+  auto stub = batch_v1_internal::CreateDefaultBatchServiceStub(
+    std::move(auth), options);
   return batch_v1_internal::MakeBatchServiceTracingConnection(
       std::make_shared<batch_v1_internal::BatchServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

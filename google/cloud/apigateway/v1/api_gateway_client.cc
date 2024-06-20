@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ApiGatewayServiceClient::ApiGatewayServiceClient(
     std::shared_ptr<ApiGatewayServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 ApiGatewayServiceClient::~ApiGatewayServiceClient() = default;
 
 StreamRange<google::cloud::apigateway::v1::Gateway>
@@ -41,8 +41,7 @@ ApiGatewayServiceClient::ListGateways(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::apigateway::v1::Gateway>
-ApiGatewayServiceClient::ListGateways(
-    google::cloud::apigateway::v1::ListGatewaysRequest request, Options opts) {
+ApiGatewayServiceClient::ListGateways(google::cloud::apigateway::v1::ListGatewaysRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListGateways(std::move(request));
 }
@@ -56,18 +55,13 @@ ApiGatewayServiceClient::GetGateway(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::apigateway::v1::Gateway>
-ApiGatewayServiceClient::GetGateway(
-    google::cloud::apigateway::v1::GetGatewayRequest const& request,
-    Options opts) {
+ApiGatewayServiceClient::GetGateway(google::cloud::apigateway::v1::GetGatewayRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetGateway(request);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Gateway>>
-ApiGatewayServiceClient::CreateGateway(
-    std::string const& parent,
-    google::cloud::apigateway::v1::Gateway const& gateway,
-    std::string const& gateway_id, Options opts) {
+ApiGatewayServiceClient::CreateGateway(std::string const& parent, google::cloud::apigateway::v1::Gateway const& gateway, std::string const& gateway_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apigateway::v1::CreateGatewayRequest request;
   request.set_parent(parent);
@@ -77,17 +71,13 @@ ApiGatewayServiceClient::CreateGateway(
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Gateway>>
-ApiGatewayServiceClient::CreateGateway(
-    google::cloud::apigateway::v1::CreateGatewayRequest const& request,
-    Options opts) {
+ApiGatewayServiceClient::CreateGateway(google::cloud::apigateway::v1::CreateGatewayRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateGateway(request);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Gateway>>
-ApiGatewayServiceClient::UpdateGateway(
-    google::cloud::apigateway::v1::Gateway const& gateway,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+ApiGatewayServiceClient::UpdateGateway(google::cloud::apigateway::v1::Gateway const& gateway, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apigateway::v1::UpdateGatewayRequest request;
   *request.mutable_gateway() = gateway;
@@ -96,9 +86,7 @@ ApiGatewayServiceClient::UpdateGateway(
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Gateway>>
-ApiGatewayServiceClient::UpdateGateway(
-    google::cloud::apigateway::v1::UpdateGatewayRequest const& request,
-    Options opts) {
+ApiGatewayServiceClient::UpdateGateway(google::cloud::apigateway::v1::UpdateGatewayRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateGateway(request);
 }
@@ -112,9 +100,7 @@ ApiGatewayServiceClient::DeleteGateway(std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
-ApiGatewayServiceClient::DeleteGateway(
-    google::cloud::apigateway::v1::DeleteGatewayRequest const& request,
-    Options opts) {
+ApiGatewayServiceClient::DeleteGateway(google::cloud::apigateway::v1::DeleteGatewayRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteGateway(request);
 }
@@ -128,30 +114,27 @@ ApiGatewayServiceClient::ListApis(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::apigateway::v1::Api>
-ApiGatewayServiceClient::ListApis(
-    google::cloud::apigateway::v1::ListApisRequest request, Options opts) {
+ApiGatewayServiceClient::ListApis(google::cloud::apigateway::v1::ListApisRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListApis(std::move(request));
 }
 
-StatusOr<google::cloud::apigateway::v1::Api> ApiGatewayServiceClient::GetApi(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::apigateway::v1::Api>
+ApiGatewayServiceClient::GetApi(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apigateway::v1::GetApiRequest request;
   request.set_name(name);
   return connection_->GetApi(request);
 }
 
-StatusOr<google::cloud::apigateway::v1::Api> ApiGatewayServiceClient::GetApi(
-    google::cloud::apigateway::v1::GetApiRequest const& request, Options opts) {
+StatusOr<google::cloud::apigateway::v1::Api>
+ApiGatewayServiceClient::GetApi(google::cloud::apigateway::v1::GetApiRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetApi(request);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Api>>
-ApiGatewayServiceClient::CreateApi(
-    std::string const& parent, google::cloud::apigateway::v1::Api const& api,
-    std::string const& api_id, Options opts) {
+ApiGatewayServiceClient::CreateApi(std::string const& parent, google::cloud::apigateway::v1::Api const& api, std::string const& api_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apigateway::v1::CreateApiRequest request;
   request.set_parent(parent);
@@ -161,17 +144,13 @@ ApiGatewayServiceClient::CreateApi(
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Api>>
-ApiGatewayServiceClient::CreateApi(
-    google::cloud::apigateway::v1::CreateApiRequest const& request,
-    Options opts) {
+ApiGatewayServiceClient::CreateApi(google::cloud::apigateway::v1::CreateApiRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateApi(request);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Api>>
-ApiGatewayServiceClient::UpdateApi(
-    google::cloud::apigateway::v1::Api const& api,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+ApiGatewayServiceClient::UpdateApi(google::cloud::apigateway::v1::Api const& api, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apigateway::v1::UpdateApiRequest request;
   *request.mutable_api() = api;
@@ -180,9 +159,7 @@ ApiGatewayServiceClient::UpdateApi(
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Api>>
-ApiGatewayServiceClient::UpdateApi(
-    google::cloud::apigateway::v1::UpdateApiRequest const& request,
-    Options opts) {
+ApiGatewayServiceClient::UpdateApi(google::cloud::apigateway::v1::UpdateApiRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateApi(request);
 }
@@ -196,16 +173,13 @@ ApiGatewayServiceClient::DeleteApi(std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
-ApiGatewayServiceClient::DeleteApi(
-    google::cloud::apigateway::v1::DeleteApiRequest const& request,
-    Options opts) {
+ApiGatewayServiceClient::DeleteApi(google::cloud::apigateway::v1::DeleteApiRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteApi(request);
 }
 
 StreamRange<google::cloud::apigateway::v1::ApiConfig>
-ApiGatewayServiceClient::ListApiConfigs(std::string const& parent,
-                                        Options opts) {
+ApiGatewayServiceClient::ListApiConfigs(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apigateway::v1::ListApiConfigsRequest request;
   request.set_parent(parent);
@@ -213,9 +187,7 @@ ApiGatewayServiceClient::ListApiConfigs(std::string const& parent,
 }
 
 StreamRange<google::cloud::apigateway::v1::ApiConfig>
-ApiGatewayServiceClient::ListApiConfigs(
-    google::cloud::apigateway::v1::ListApiConfigsRequest request,
-    Options opts) {
+ApiGatewayServiceClient::ListApiConfigs(google::cloud::apigateway::v1::ListApiConfigsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListApiConfigs(std::move(request));
 }
@@ -229,18 +201,13 @@ ApiGatewayServiceClient::GetApiConfig(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::apigateway::v1::ApiConfig>
-ApiGatewayServiceClient::GetApiConfig(
-    google::cloud::apigateway::v1::GetApiConfigRequest const& request,
-    Options opts) {
+ApiGatewayServiceClient::GetApiConfig(google::cloud::apigateway::v1::GetApiConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetApiConfig(request);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
-ApiGatewayServiceClient::CreateApiConfig(
-    std::string const& parent,
-    google::cloud::apigateway::v1::ApiConfig const& api_config,
-    std::string const& api_config_id, Options opts) {
+ApiGatewayServiceClient::CreateApiConfig(std::string const& parent, google::cloud::apigateway::v1::ApiConfig const& api_config, std::string const& api_config_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apigateway::v1::CreateApiConfigRequest request;
   request.set_parent(parent);
@@ -250,17 +217,13 @@ ApiGatewayServiceClient::CreateApiConfig(
 }
 
 future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
-ApiGatewayServiceClient::CreateApiConfig(
-    google::cloud::apigateway::v1::CreateApiConfigRequest const& request,
-    Options opts) {
+ApiGatewayServiceClient::CreateApiConfig(google::cloud::apigateway::v1::CreateApiConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateApiConfig(request);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
-ApiGatewayServiceClient::UpdateApiConfig(
-    google::cloud::apigateway::v1::ApiConfig const& api_config,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+ApiGatewayServiceClient::UpdateApiConfig(google::cloud::apigateway::v1::ApiConfig const& api_config, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apigateway::v1::UpdateApiConfigRequest request;
   *request.mutable_api_config() = api_config;
@@ -269,16 +232,13 @@ ApiGatewayServiceClient::UpdateApiConfig(
 }
 
 future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
-ApiGatewayServiceClient::UpdateApiConfig(
-    google::cloud::apigateway::v1::UpdateApiConfigRequest const& request,
-    Options opts) {
+ApiGatewayServiceClient::UpdateApiConfig(google::cloud::apigateway::v1::UpdateApiConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateApiConfig(request);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
-ApiGatewayServiceClient::DeleteApiConfig(std::string const& name,
-                                         Options opts) {
+ApiGatewayServiceClient::DeleteApiConfig(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apigateway::v1::DeleteApiConfigRequest request;
   request.set_name(name);
@@ -286,9 +246,7 @@ ApiGatewayServiceClient::DeleteApiConfig(std::string const& name,
 }
 
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
-ApiGatewayServiceClient::DeleteApiConfig(
-    google::cloud::apigateway::v1::DeleteApiConfigRequest const& request,
-    Options opts) {
+ApiGatewayServiceClient::DeleteApiConfig(google::cloud::apigateway::v1::DeleteApiConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteApiConfig(request);
 }

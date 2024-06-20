@@ -44,21 +44,19 @@ AppHubMetadata::AppHubMetadata(
 
 StatusOr<google::cloud::apphub::v1::LookupServiceProjectAttachmentResponse>
 AppHubMetadata::LookupServiceProjectAttachment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::apphub::v1::LookupServiceProjectAttachmentRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::apphub::v1::LookupServiceProjectAttachmentRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->LookupServiceProjectAttachment(context, options, request);
 }
 
 StatusOr<google::cloud::apphub::v1::ListServiceProjectAttachmentsResponse>
 AppHubMetadata::ListServiceProjectAttachments(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListServiceProjectAttachments(context, options, request);
 }
 
@@ -67,31 +65,27 @@ AppHubMetadata::AsyncCreateServiceProjectAttachment(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateServiceProjectAttachment(
       cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 AppHubMetadata::CreateServiceProjectAttachment(
-    grpc::ClientContext& context, Options options,
-    google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateServiceProjectAttachment(context, options, request);
 }
 
 StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>
 AppHubMetadata::GetServiceProjectAttachment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetServiceProjectAttachment(context, options, request);
 }
 
@@ -100,67 +94,63 @@ AppHubMetadata::AsyncDeleteServiceProjectAttachment(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
-        request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteServiceProjectAttachment(
       cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 AppHubMetadata::DeleteServiceProjectAttachment(
-    grpc::ClientContext& context, Options options,
-    google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options options,
+    google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteServiceProjectAttachment(context, options, request);
 }
 
 StatusOr<google::cloud::apphub::v1::DetachServiceProjectAttachmentResponse>
 AppHubMetadata::DetachServiceProjectAttachment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::apphub::v1::DetachServiceProjectAttachmentRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::apphub::v1::DetachServiceProjectAttachmentRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DetachServiceProjectAttachment(context, options, request);
 }
 
 StatusOr<google::cloud::apphub::v1::ListDiscoveredServicesResponse>
 AppHubMetadata::ListDiscoveredServices(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::apphub::v1::ListDiscoveredServicesRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDiscoveredServices(context, options, request);
 }
 
 StatusOr<google::cloud::apphub::v1::DiscoveredService>
 AppHubMetadata::GetDiscoveredService(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::apphub::v1::GetDiscoveredServiceRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDiscoveredService(context, options, request);
 }
 
 StatusOr<google::cloud::apphub::v1::LookupDiscoveredServiceResponse>
 AppHubMetadata::LookupDiscoveredService(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::apphub::v1::LookupDiscoveredServiceRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->LookupDiscoveredService(context, options, request);
 }
 
 StatusOr<google::cloud::apphub::v1::ListServicesResponse>
 AppHubMetadata::ListServices(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::apphub::v1::ListServicesRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListServices(context, options, request);
 }
 
@@ -170,25 +160,26 @@ AppHubMetadata::AsyncCreateService(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::apphub::v1::CreateServiceRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateService(cq, std::move(context), std::move(options),
-                                    request);
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateService(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AppHubMetadata::CreateService(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+AppHubMetadata::CreateService(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::apphub::v1::CreateServiceRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateService(context, options, request);
 }
 
-StatusOr<google::cloud::apphub::v1::Service> AppHubMetadata::GetService(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::apphub::v1::Service>
+AppHubMetadata::GetService(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::apphub::v1::GetServiceRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetService(context, options, request);
 }
 
@@ -198,19 +189,17 @@ AppHubMetadata::AsyncUpdateService(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::apphub::v1::UpdateServiceRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("service.name=",
-                           internal::UrlEncode(request.service().name())));
-  return child_->AsyncUpdateService(cq, std::move(context), std::move(options),
-                                    request);
+  SetMetadata(*context, *options, absl::StrCat("service.name=", internal::UrlEncode(request.service().name())));
+  return child_->AsyncUpdateService(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AppHubMetadata::UpdateService(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+AppHubMetadata::UpdateService(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::apphub::v1::UpdateServiceRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("service.name=",
-                           internal::UrlEncode(request.service().name())));
+  SetMetadata(context, options, absl::StrCat("service.name=", internal::UrlEncode(request.service().name())));
   return child_->UpdateService(context, options, request);
 }
 
@@ -220,53 +209,53 @@ AppHubMetadata::AsyncDeleteService(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::apphub::v1::DeleteServiceRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteService(cq, std::move(context), std::move(options),
-                                    request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteService(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AppHubMetadata::DeleteService(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+AppHubMetadata::DeleteService(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::apphub::v1::DeleteServiceRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteService(context, options, request);
 }
 
 StatusOr<google::cloud::apphub::v1::ListDiscoveredWorkloadsResponse>
 AppHubMetadata::ListDiscoveredWorkloads(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::apphub::v1::ListDiscoveredWorkloadsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDiscoveredWorkloads(context, options, request);
 }
 
 StatusOr<google::cloud::apphub::v1::DiscoveredWorkload>
 AppHubMetadata::GetDiscoveredWorkload(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::apphub::v1::GetDiscoveredWorkloadRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDiscoveredWorkload(context, options, request);
 }
 
 StatusOr<google::cloud::apphub::v1::LookupDiscoveredWorkloadResponse>
 AppHubMetadata::LookupDiscoveredWorkload(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::apphub::v1::LookupDiscoveredWorkloadRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->LookupDiscoveredWorkload(context, options, request);
 }
 
 StatusOr<google::cloud::apphub::v1::ListWorkloadsResponse>
 AppHubMetadata::ListWorkloads(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::apphub::v1::ListWorkloadsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListWorkloads(context, options, request);
 }
 
@@ -276,25 +265,26 @@ AppHubMetadata::AsyncCreateWorkload(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::apphub::v1::CreateWorkloadRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateWorkload(cq, std::move(context), std::move(options),
-                                     request);
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateWorkload(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AppHubMetadata::CreateWorkload(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+AppHubMetadata::CreateWorkload(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::apphub::v1::CreateWorkloadRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateWorkload(context, options, request);
 }
 
-StatusOr<google::cloud::apphub::v1::Workload> AppHubMetadata::GetWorkload(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::apphub::v1::Workload>
+AppHubMetadata::GetWorkload(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::apphub::v1::GetWorkloadRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetWorkload(context, options, request);
 }
 
@@ -304,19 +294,17 @@ AppHubMetadata::AsyncUpdateWorkload(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::apphub::v1::UpdateWorkloadRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("workload.name=",
-                           internal::UrlEncode(request.workload().name())));
-  return child_->AsyncUpdateWorkload(cq, std::move(context), std::move(options),
-                                     request);
+  SetMetadata(*context, *options, absl::StrCat("workload.name=", internal::UrlEncode(request.workload().name())));
+  return child_->AsyncUpdateWorkload(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AppHubMetadata::UpdateWorkload(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+AppHubMetadata::UpdateWorkload(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::apphub::v1::UpdateWorkloadRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("workload.name=",
-                           internal::UrlEncode(request.workload().name())));
+  SetMetadata(context, options, absl::StrCat("workload.name=", internal::UrlEncode(request.workload().name())));
   return child_->UpdateWorkload(context, options, request);
 }
 
@@ -326,26 +314,26 @@ AppHubMetadata::AsyncDeleteWorkload(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteWorkload(cq, std::move(context), std::move(options),
-                                     request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteWorkload(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AppHubMetadata::DeleteWorkload(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+AppHubMetadata::DeleteWorkload(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteWorkload(context, options, request);
 }
 
 StatusOr<google::cloud::apphub::v1::ListApplicationsResponse>
 AppHubMetadata::ListApplications(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::apphub::v1::ListApplicationsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListApplications(context, options, request);
 }
 
@@ -355,25 +343,26 @@ AppHubMetadata::AsyncCreateApplication(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::apphub::v1::CreateApplicationRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateApplication(cq, std::move(context),
-                                        std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateApplication(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AppHubMetadata::CreateApplication(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+AppHubMetadata::CreateApplication(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::apphub::v1::CreateApplicationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateApplication(context, options, request);
 }
 
-StatusOr<google::cloud::apphub::v1::Application> AppHubMetadata::GetApplication(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::apphub::v1::Application>
+AppHubMetadata::GetApplication(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::apphub::v1::GetApplicationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetApplication(context, options, request);
 }
 
@@ -383,19 +372,17 @@ AppHubMetadata::AsyncUpdateApplication(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("application.name=",
-                           internal::UrlEncode(request.application().name())));
-  return child_->AsyncUpdateApplication(cq, std::move(context),
-                                        std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("application.name=", internal::UrlEncode(request.application().name())));
+  return child_->AsyncUpdateApplication(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AppHubMetadata::UpdateApplication(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+AppHubMetadata::UpdateApplication(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("application.name=",
-                           internal::UrlEncode(request.application().name())));
+  SetMetadata(context, options, absl::StrCat("application.name=", internal::UrlEncode(request.application().name())));
   return child_->UpdateApplication(context, options, request);
 }
 
@@ -405,17 +392,17 @@ AppHubMetadata::AsyncDeleteApplication(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteApplication(cq, std::move(context),
-                                        std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteApplication(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> AppHubMetadata::DeleteApplication(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+AppHubMetadata::DeleteApplication(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteApplication(context, options, request);
 }
 
@@ -427,8 +414,8 @@ AppHubMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> AppHubMetadata::AsyncCancelOperation(
@@ -438,21 +425,21 @@ future<Status> AppHubMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 void AppHubMetadata::SetMetadata(grpc::ClientContext& context,
-                                 Options const& options,
-                                 std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void AppHubMetadata::SetMetadata(grpc::ClientContext& context,
-                                 Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

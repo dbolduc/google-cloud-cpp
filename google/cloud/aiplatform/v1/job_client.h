@@ -63,8 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class JobServiceClient {
  public:
-  explicit JobServiceClient(std::shared_ptr<JobServiceConnection> connection,
-                            Options opts = {});
+  explicit JobServiceClient(std::shared_ptr<JobServiceConnection> connection, Options opts = {});
   ~JobServiceClient();
 
   ///@{
@@ -110,10 +109,8 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.CustomJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/custom_job.proto#L42}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::CustomJob> CreateCustomJob(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::CustomJob const& custom_job,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::CustomJob>
+  CreateCustomJob(std::string const& parent, google::cloud::aiplatform::v1::CustomJob const& custom_job, Options opts = {});
 
   // clang-format off
   ///
@@ -143,9 +140,8 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.CustomJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/custom_job.proto#L42}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::CustomJob> CreateCustomJob(
-      google::cloud::aiplatform::v1::CreateCustomJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::CustomJob>
+  CreateCustomJob(google::cloud::aiplatform::v1::CreateCustomJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -171,8 +167,8 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.GetCustomJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L483}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::CustomJob> GetCustomJob(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::CustomJob>
+  GetCustomJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -201,9 +197,8 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.GetCustomJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L483}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::CustomJob> GetCustomJob(
-      google::cloud::aiplatform::v1::GetCustomJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::CustomJob>
+  GetCustomJob(google::cloud::aiplatform::v1::GetCustomJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -237,8 +232,8 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.ListCustomJobsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L497}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::CustomJob> ListCustomJobs(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::CustomJob>
+  ListCustomJobs(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -276,9 +271,8 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.ListCustomJobsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L497}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::CustomJob> ListCustomJobs(
-      google::cloud::aiplatform::v1::ListCustomJobsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::CustomJob>
+  ListCustomJobs(google::cloud::aiplatform::v1::ListCustomJobsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -349,9 +343,7 @@ class JobServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteCustomJob(
-      google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request,
-      Options opts = {});
+  DeleteCustomJob(google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -390,7 +382,8 @@ class JobServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelCustomJob(std::string const& name, Options opts = {});
+  Status
+  CancelCustomJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -432,9 +425,8 @@ class JobServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelCustomJob(
-      google::cloud::aiplatform::v1::CancelCustomJobRequest const& request,
-      Options opts = {});
+  Status
+  CancelCustomJob(google::cloud::aiplatform::v1::CancelCustomJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -461,10 +453,7 @@ class JobServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
-  CreateDataLabelingJob(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::DataLabelingJob const& data_labeling_job,
-      Options opts = {});
+  CreateDataLabelingJob(std::string const& parent, google::cloud::aiplatform::v1::DataLabelingJob const& data_labeling_job, Options opts = {});
 
   // clang-format off
   ///
@@ -494,10 +483,7 @@ class JobServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
-  CreateDataLabelingJob(
-      google::cloud::aiplatform::v1::CreateDataLabelingJobRequest const&
-          request,
-      Options opts = {});
+  CreateDataLabelingJob(google::cloud::aiplatform::v1::CreateDataLabelingJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -523,8 +509,8 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.GetDataLabelingJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L604}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::DataLabelingJob> GetDataLabelingJob(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
+  GetDataLabelingJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -553,9 +539,8 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.GetDataLabelingJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L604}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::DataLabelingJob> GetDataLabelingJob(
-      google::cloud::aiplatform::v1::GetDataLabelingJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
+  GetDataLabelingJob(google::cloud::aiplatform::v1::GetDataLabelingJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -629,9 +614,7 @@ class JobServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::DataLabelingJob>
-  ListDataLabelingJobs(
-      google::cloud::aiplatform::v1::ListDataLabelingJobsRequest request,
-      Options opts = {});
+  ListDataLabelingJobs(google::cloud::aiplatform::v1::ListDataLabelingJobsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -702,10 +685,7 @@ class JobServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDataLabelingJob(
-      google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
-          request,
-      Options opts = {});
+  DeleteDataLabelingJob(google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -728,7 +708,8 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.CancelDataLabelingJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L695}
   ///
   // clang-format on
-  Status CancelDataLabelingJob(std::string const& name, Options opts = {});
+  Status
+  CancelDataLabelingJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -754,10 +735,8 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.CancelDataLabelingJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L695}
   ///
   // clang-format on
-  Status CancelDataLabelingJob(
-      google::cloud::aiplatform::v1::CancelDataLabelingJobRequest const&
-          request,
-      Options opts = {});
+  Status
+  CancelDataLabelingJob(google::cloud::aiplatform::v1::CancelDataLabelingJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -785,11 +764,7 @@ class JobServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
-  CreateHyperparameterTuningJob(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::HyperparameterTuningJob const&
-          hyperparameter_tuning_job,
-      Options opts = {});
+  CreateHyperparameterTuningJob(std::string const& parent, google::cloud::aiplatform::v1::HyperparameterTuningJob const& hyperparameter_tuning_job, Options opts = {});
 
   // clang-format off
   ///
@@ -819,10 +794,7 @@ class JobServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
-  CreateHyperparameterTuningJob(
-      google::cloud::aiplatform::v1::CreateHyperparameterTuningJobRequest const&
-          request,
-      Options opts = {});
+  CreateHyperparameterTuningJob(google::cloud::aiplatform::v1::CreateHyperparameterTuningJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -879,10 +851,7 @@ class JobServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
-  GetHyperparameterTuningJob(
-      google::cloud::aiplatform::v1::GetHyperparameterTuningJobRequest const&
-          request,
-      Options opts = {});
+  GetHyperparameterTuningJob(google::cloud::aiplatform::v1::GetHyperparameterTuningJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -957,10 +926,7 @@ class JobServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::HyperparameterTuningJob>
-  ListHyperparameterTuningJobs(
-      google::cloud::aiplatform::v1::ListHyperparameterTuningJobsRequest
-          request,
-      Options opts = {});
+  ListHyperparameterTuningJobs(google::cloud::aiplatform::v1::ListHyperparameterTuningJobsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1031,10 +997,7 @@ class JobServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteHyperparameterTuningJob(
-      google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
-          request,
-      Options opts = {});
+  DeleteHyperparameterTuningJob(google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1074,8 +1037,8 @@ class JobServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelHyperparameterTuningJob(std::string const& name,
-                                       Options opts = {});
+  Status
+  CancelHyperparameterTuningJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1118,10 +1081,8 @@ class JobServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelHyperparameterTuningJob(
-      google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const&
-          request,
-      Options opts = {});
+  Status
+  CancelHyperparameterTuningJob(google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1147,9 +1108,8 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.NasJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/nas_job.proto#L37}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::NasJob> CreateNasJob(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::NasJob const& nas_job, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::NasJob>
+  CreateNasJob(std::string const& parent, google::cloud::aiplatform::v1::NasJob const& nas_job, Options opts = {});
 
   // clang-format off
   ///
@@ -1178,9 +1138,8 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.NasJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/nas_job.proto#L37}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::NasJob> CreateNasJob(
-      google::cloud::aiplatform::v1::CreateNasJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::NasJob>
+  CreateNasJob(google::cloud::aiplatform::v1::CreateNasJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1206,8 +1165,8 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.NasJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/nas_job.proto#L37}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::NasJob> GetNasJob(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::NasJob>
+  GetNasJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1236,9 +1195,8 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.NasJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/nas_job.proto#L37}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::NasJob> GetNasJob(
-      google::cloud::aiplatform::v1::GetNasJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::NasJob>
+  GetNasJob(google::cloud::aiplatform::v1::GetNasJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1272,8 +1230,8 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.NasJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/nas_job.proto#L37}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::NasJob> ListNasJobs(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::NasJob>
+  ListNasJobs(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1311,9 +1269,8 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.NasJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/nas_job.proto#L37}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::NasJob> ListNasJobs(
-      google::cloud::aiplatform::v1::ListNasJobsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::NasJob>
+  ListNasJobs(google::cloud::aiplatform::v1::ListNasJobsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1384,9 +1341,7 @@ class JobServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteNasJob(
-      google::cloud::aiplatform::v1::DeleteNasJobRequest const& request,
-      Options opts = {});
+  DeleteNasJob(google::cloud::aiplatform::v1::DeleteNasJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1425,7 +1380,8 @@ class JobServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelNasJob(std::string const& name, Options opts = {});
+  Status
+  CancelNasJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1467,9 +1423,8 @@ class JobServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelNasJob(
-      google::cloud::aiplatform::v1::CancelNasJobRequest const& request,
-      Options opts = {});
+  Status
+  CancelNasJob(google::cloud::aiplatform::v1::CancelNasJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1495,8 +1450,8 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.NasTrialDetail]: @googleapis_reference_link{google/cloud/aiplatform/v1/nas_job.proto#L104}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::NasTrialDetail> GetNasTrialDetail(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::NasTrialDetail>
+  GetNasTrialDetail(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1525,9 +1480,8 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.NasTrialDetail]: @googleapis_reference_link{google/cloud/aiplatform/v1/nas_job.proto#L104}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::NasTrialDetail> GetNasTrialDetail(
-      google::cloud::aiplatform::v1::GetNasTrialDetailRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::NasTrialDetail>
+  GetNasTrialDetail(google::cloud::aiplatform::v1::GetNasTrialDetailRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1602,9 +1556,7 @@ class JobServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::NasTrialDetail>
-  ListNasTrialDetails(
-      google::cloud::aiplatform::v1::ListNasTrialDetailsRequest request,
-      Options opts = {});
+  ListNasTrialDetails(google::cloud::aiplatform::v1::ListNasTrialDetailsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1632,11 +1584,7 @@ class JobServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
-  CreateBatchPredictionJob(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::BatchPredictionJob const&
-          batch_prediction_job,
-      Options opts = {});
+  CreateBatchPredictionJob(std::string const& parent, google::cloud::aiplatform::v1::BatchPredictionJob const& batch_prediction_job, Options opts = {});
 
   // clang-format off
   ///
@@ -1667,10 +1615,7 @@ class JobServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
-  CreateBatchPredictionJob(
-      google::cloud::aiplatform::v1::CreateBatchPredictionJobRequest const&
-          request,
-      Options opts = {});
+  CreateBatchPredictionJob(google::cloud::aiplatform::v1::CreateBatchPredictionJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1727,10 +1672,7 @@ class JobServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
-  GetBatchPredictionJob(
-      google::cloud::aiplatform::v1::GetBatchPredictionJobRequest const&
-          request,
-      Options opts = {});
+  GetBatchPredictionJob(google::cloud::aiplatform::v1::GetBatchPredictionJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1804,9 +1746,7 @@ class JobServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::BatchPredictionJob>
-  ListBatchPredictionJobs(
-      google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest request,
-      Options opts = {});
+  ListBatchPredictionJobs(google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1879,10 +1819,7 @@ class JobServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteBatchPredictionJob(
-      google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
-          request,
-      Options opts = {});
+  DeleteBatchPredictionJob(google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1918,7 +1855,8 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.JobService.GetBatchPredictionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L311}
   ///
   // clang-format on
-  Status CancelBatchPredictionJob(std::string const& name, Options opts = {});
+  Status
+  CancelBatchPredictionJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1957,10 +1895,8 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.JobService.GetBatchPredictionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L311}
   ///
   // clang-format on
-  Status CancelBatchPredictionJob(
-      google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const&
-          request,
-      Options opts = {});
+  Status
+  CancelBatchPredictionJob(google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1988,11 +1924,7 @@ class JobServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
-  CreateModelDeploymentMonitoringJob(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob const&
-          model_deployment_monitoring_job,
-      Options opts = {});
+  CreateModelDeploymentMonitoringJob(std::string const& parent, google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob const& model_deployment_monitoring_job, Options opts = {});
 
   // clang-format off
   ///
@@ -2023,10 +1955,7 @@ class JobServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
-  CreateModelDeploymentMonitoringJob(
-      google::cloud::aiplatform::v1::
-          CreateModelDeploymentMonitoringJobRequest const& request,
-      Options opts = {});
+  CreateModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::CreateModelDeploymentMonitoringJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2064,9 +1993,7 @@ class JobServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::ModelMonitoringStatsAnomalies>
-  SearchModelDeploymentMonitoringStatsAnomalies(
-      std::string const& model_deployment_monitoring_job,
-      std::string const& deployed_model_id, Options opts = {});
+  SearchModelDeploymentMonitoringStatsAnomalies(std::string const& model_deployment_monitoring_job, std::string const& deployed_model_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2105,10 +2032,7 @@ class JobServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::ModelMonitoringStatsAnomalies>
-  SearchModelDeploymentMonitoringStatsAnomalies(
-      google::cloud::aiplatform::v1::
-          SearchModelDeploymentMonitoringStatsAnomaliesRequest request,
-      Options opts = {});
+  SearchModelDeploymentMonitoringStatsAnomalies(google::cloud::aiplatform::v1::SearchModelDeploymentMonitoringStatsAnomaliesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2165,10 +2089,7 @@ class JobServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
-  GetModelDeploymentMonitoringJob(
-      google::cloud::aiplatform::v1::
-          GetModelDeploymentMonitoringJobRequest const& request,
-      Options opts = {});
+  GetModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::GetModelDeploymentMonitoringJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2203,8 +2124,7 @@ class JobServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
-  ListModelDeploymentMonitoringJobs(std::string const& parent,
-                                    Options opts = {});
+  ListModelDeploymentMonitoringJobs(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2243,10 +2163,7 @@ class JobServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
-  ListModelDeploymentMonitoringJobs(
-      google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsRequest
-          request,
-      Options opts = {});
+  ListModelDeploymentMonitoringJobs(google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2291,10 +2208,7 @@ class JobServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>>
-  UpdateModelDeploymentMonitoringJob(
-      google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob const&
-          model_deployment_monitoring_job,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob const& model_deployment_monitoring_job, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2331,10 +2245,7 @@ class JobServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>>
-  UpdateModelDeploymentMonitoringJob(
-      google::cloud::aiplatform::v1::
-          UpdateModelDeploymentMonitoringJobRequest const& request,
-      Options opts = {});
+  UpdateModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::UpdateModelDeploymentMonitoringJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2368,8 +2279,7 @@ class JobServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteModelDeploymentMonitoringJob(std::string const& name,
-                                     Options opts = {});
+  DeleteModelDeploymentMonitoringJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2406,10 +2316,7 @@ class JobServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteModelDeploymentMonitoringJob(
-      google::cloud::aiplatform::v1::
-          DeleteModelDeploymentMonitoringJobRequest const& request,
-      Options opts = {});
+  DeleteModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::DeleteModelDeploymentMonitoringJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2436,8 +2343,8 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.PauseModelDeploymentMonitoringJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L1341}
   ///
   // clang-format on
-  Status PauseModelDeploymentMonitoringJob(std::string const& name,
-                                           Options opts = {});
+  Status
+  PauseModelDeploymentMonitoringJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2467,10 +2374,8 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.PauseModelDeploymentMonitoringJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L1341}
   ///
   // clang-format on
-  Status PauseModelDeploymentMonitoringJob(
-      google::cloud::aiplatform::v1::
-          PauseModelDeploymentMonitoringJobRequest const& request,
-      Options opts = {});
+  Status
+  PauseModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::PauseModelDeploymentMonitoringJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2495,8 +2400,8 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.ResumeModelDeploymentMonitoringJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L1355}
   ///
   // clang-format on
-  Status ResumeModelDeploymentMonitoringJob(std::string const& name,
-                                            Options opts = {});
+  Status
+  ResumeModelDeploymentMonitoringJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2524,10 +2429,8 @@ class JobServiceClient {
   /// [google.cloud.aiplatform.v1.ResumeModelDeploymentMonitoringJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L1355}
   ///
   // clang-format on
-  Status ResumeModelDeploymentMonitoringJob(
-      google::cloud::aiplatform::v1::
-          ResumeModelDeploymentMonitoringJobRequest const& request,
-      Options opts = {});
+  Status
+  ResumeModelDeploymentMonitoringJob(google::cloud::aiplatform::v1::ResumeModelDeploymentMonitoringJobRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<JobServiceConnection> connection_;

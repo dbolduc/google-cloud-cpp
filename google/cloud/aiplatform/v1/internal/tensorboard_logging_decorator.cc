@@ -31,25 +31,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TensorboardServiceLogging::TensorboardServiceLogging(
     std::shared_ptr<TensorboardServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> const& components)
+    TracingOptions tracing_options,
+    std::set<std::string> const& components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
       stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 future<StatusOr<google::longrunning::Operation>>
 TensorboardServiceLogging::AsyncCreateTensorboard(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::CreateTensorboardRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::CreateTensorboardRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::CreateTensorboardRequest const&
-                 request) {
-        return child_->AsyncCreateTensorboard(cq, std::move(context),
-                                              std::move(options), request);
+             google::cloud::aiplatform::v1::CreateTensorboardRequest const& request) {
+        return child_->AsyncCreateTensorboard(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -57,12 +57,13 @@ TensorboardServiceLogging::AsyncCreateTensorboard(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceLogging::CreateTensorboard(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::CreateTensorboardRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::CreateTensorboardRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::CreateTensorboardRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::CreateTensorboardRequest const& request) {
         return child_->CreateTensorboard(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -70,12 +71,13 @@ TensorboardServiceLogging::CreateTensorboard(
 
 StatusOr<google::cloud::aiplatform::v1::Tensorboard>
 TensorboardServiceLogging::GetTensorboard(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetTensorboardRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::GetTensorboardRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::GetTensorboardRequest const& request) {
         return child_->GetTensorboard(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -83,18 +85,17 @@ TensorboardServiceLogging::GetTensorboard(
 
 future<StatusOr<google::longrunning::Operation>>
 TensorboardServiceLogging::AsyncUpdateTensorboard(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::UpdateTensorboardRequest const&
-                 request) {
-        return child_->AsyncUpdateTensorboard(cq, std::move(context),
-                                              std::move(options), request);
+             google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request) {
+        return child_->AsyncUpdateTensorboard(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -102,12 +103,13 @@ TensorboardServiceLogging::AsyncUpdateTensorboard(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceLogging::UpdateTensorboard(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::UpdateTensorboardRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request) {
         return child_->UpdateTensorboard(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -115,12 +117,13 @@ TensorboardServiceLogging::UpdateTensorboard(
 
 StatusOr<google::cloud::aiplatform::v1::ListTensorboardsResponse>
 TensorboardServiceLogging::ListTensorboards(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListTensorboardsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::ListTensorboardsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::ListTensorboardsRequest const& request) {
         return child_->ListTensorboards(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -128,18 +131,17 @@ TensorboardServiceLogging::ListTensorboards(
 
 future<StatusOr<google::longrunning::Operation>>
 TensorboardServiceLogging::AsyncDeleteTensorboard(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::DeleteTensorboardRequest const&
-                 request) {
-        return child_->AsyncDeleteTensorboard(cq, std::move(context),
-                                              std::move(options), request);
+             google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request) {
+        return child_->AsyncDeleteTensorboard(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -147,12 +149,13 @@ TensorboardServiceLogging::AsyncDeleteTensorboard(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceLogging::DeleteTensorboard(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::DeleteTensorboardRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request) {
         return child_->DeleteTensorboard(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -160,12 +163,13 @@ TensorboardServiceLogging::DeleteTensorboard(
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
 TensorboardServiceLogging::ReadTensorboardUsage(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request) {
         return child_->ReadTensorboardUsage(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -173,12 +177,13 @@ TensorboardServiceLogging::ReadTensorboardUsage(
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardSizeResponse>
 TensorboardServiceLogging::ReadTensorboardSize(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const& request) {
         return child_->ReadTensorboardSize(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -186,13 +191,13 @@ TensorboardServiceLogging::ReadTensorboardSize(
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
 TensorboardServiceLogging::CreateTensorboardExperiment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::CreateTensorboardExperimentRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::CreateTensorboardExperimentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 CreateTensorboardExperimentRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::CreateTensorboardExperimentRequest const& request) {
         return child_->CreateTensorboardExperiment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -200,14 +205,13 @@ TensorboardServiceLogging::CreateTensorboardExperiment(
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
 TensorboardServiceLogging::GetTensorboardExperiment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::GetTensorboardExperimentRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::GetTensorboardExperimentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::GetTensorboardExperimentRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::GetTensorboardExperimentRequest const& request) {
         return child_->GetTensorboardExperiment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -215,13 +219,13 @@ TensorboardServiceLogging::GetTensorboardExperiment(
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
 TensorboardServiceLogging::UpdateTensorboardExperiment(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::UpdateTensorboardExperimentRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::UpdateTensorboardExperimentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 UpdateTensorboardExperimentRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::UpdateTensorboardExperimentRequest const& request) {
         return child_->UpdateTensorboardExperiment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -229,13 +233,13 @@ TensorboardServiceLogging::UpdateTensorboardExperiment(
 
 StatusOr<google::cloud::aiplatform::v1::ListTensorboardExperimentsResponse>
 TensorboardServiceLogging::ListTensorboardExperiments(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::ListTensorboardExperimentsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::ListTensorboardExperimentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 ListTensorboardExperimentsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::ListTensorboardExperimentsRequest const& request) {
         return child_->ListTensorboardExperiments(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -243,17 +247,15 @@ TensorboardServiceLogging::ListTensorboardExperiments(
 
 future<StatusOr<google::longrunning::Operation>>
 TensorboardServiceLogging::AsyncDeleteTensorboardExperiment(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::
-                 DeleteTensorboardExperimentRequest const& request) {
+             google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const& request) {
         return child_->AsyncDeleteTensorboardExperiment(
             cq, std::move(context), std::move(options), request);
       },
@@ -263,13 +265,13 @@ TensorboardServiceLogging::AsyncDeleteTensorboardExperiment(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceLogging::DeleteTensorboardExperiment(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 DeleteTensorboardExperimentRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const& request) {
         return child_->DeleteTensorboardExperiment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -277,12 +279,13 @@ TensorboardServiceLogging::DeleteTensorboardExperiment(
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
 TensorboardServiceLogging::CreateTensorboardRun(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::CreateTensorboardRunRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::CreateTensorboardRunRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::CreateTensorboardRunRequest const& request) {
         return child_->CreateTensorboardRun(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -290,13 +293,13 @@ TensorboardServiceLogging::CreateTensorboardRun(
 
 StatusOr<google::cloud::aiplatform::v1::BatchCreateTensorboardRunsResponse>
 TensorboardServiceLogging::BatchCreateTensorboardRuns(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::BatchCreateTensorboardRunsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::BatchCreateTensorboardRunsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 BatchCreateTensorboardRunsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::BatchCreateTensorboardRunsRequest const& request) {
         return child_->BatchCreateTensorboardRuns(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -304,12 +307,13 @@ TensorboardServiceLogging::BatchCreateTensorboardRuns(
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
 TensorboardServiceLogging::GetTensorboardRun(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetTensorboardRunRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::GetTensorboardRunRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::GetTensorboardRunRequest const& request) {
         return child_->GetTensorboardRun(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -317,12 +321,13 @@ TensorboardServiceLogging::GetTensorboardRun(
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
 TensorboardServiceLogging::UpdateTensorboardRun(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::UpdateTensorboardRunRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::UpdateTensorboardRunRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::UpdateTensorboardRunRequest const& request) {
         return child_->UpdateTensorboardRun(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -330,12 +335,13 @@ TensorboardServiceLogging::UpdateTensorboardRun(
 
 StatusOr<google::cloud::aiplatform::v1::ListTensorboardRunsResponse>
 TensorboardServiceLogging::ListTensorboardRuns(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListTensorboardRunsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::ListTensorboardRunsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::ListTensorboardRunsRequest const& request) {
         return child_->ListTensorboardRuns(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -343,18 +349,17 @@ TensorboardServiceLogging::ListTensorboardRuns(
 
 future<StatusOr<google::longrunning::Operation>>
 TensorboardServiceLogging::AsyncDeleteTensorboardRun(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const&
-                 request) {
-        return child_->AsyncDeleteTensorboardRun(cq, std::move(context),
-                                                 std::move(options), request);
+             google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request) {
+        return child_->AsyncDeleteTensorboardRun(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -362,42 +367,41 @@ TensorboardServiceLogging::AsyncDeleteTensorboardRun(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceLogging::DeleteTensorboardRun(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request) {
         return child_->DeleteTensorboardRun(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<
-    google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesResponse>
+StatusOr<google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesResponse>
 TensorboardServiceLogging::BatchCreateTensorboardTimeSeries(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::
-        BatchCreateTensorboardTimeSeriesRequest const& request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 BatchCreateTensorboardTimeSeriesRequest const& request) {
-        return child_->BatchCreateTensorboardTimeSeries(context, options,
-                                                        request);
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesRequest const& request) {
+        return child_->BatchCreateTensorboardTimeSeries(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
 TensorboardServiceLogging::CreateTensorboardTimeSeries(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::CreateTensorboardTimeSeriesRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::CreateTensorboardTimeSeriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 CreateTensorboardTimeSeriesRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::CreateTensorboardTimeSeriesRequest const& request) {
         return child_->CreateTensorboardTimeSeries(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -405,14 +409,13 @@ TensorboardServiceLogging::CreateTensorboardTimeSeries(
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
 TensorboardServiceLogging::GetTensorboardTimeSeries(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::GetTensorboardTimeSeriesRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::GetTensorboardTimeSeriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::GetTensorboardTimeSeriesRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::GetTensorboardTimeSeriesRequest const& request) {
         return child_->GetTensorboardTimeSeries(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -420,13 +423,13 @@ TensorboardServiceLogging::GetTensorboardTimeSeries(
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
 TensorboardServiceLogging::UpdateTensorboardTimeSeries(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::UpdateTensorboardTimeSeriesRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::UpdateTensorboardTimeSeriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 UpdateTensorboardTimeSeriesRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::UpdateTensorboardTimeSeriesRequest const& request) {
         return child_->UpdateTensorboardTimeSeries(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -434,14 +437,13 @@ TensorboardServiceLogging::UpdateTensorboardTimeSeries(
 
 StatusOr<google::cloud::aiplatform::v1::ListTensorboardTimeSeriesResponse>
 TensorboardServiceLogging::ListTensorboardTimeSeries(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::ListTensorboardTimeSeriesRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::ListTensorboardTimeSeriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::ListTensorboardTimeSeriesRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::ListTensorboardTimeSeriesRequest const& request) {
         return child_->ListTensorboardTimeSeries(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -449,17 +451,15 @@ TensorboardServiceLogging::ListTensorboardTimeSeries(
 
 future<StatusOr<google::longrunning::Operation>>
 TensorboardServiceLogging::AsyncDeleteTensorboardTimeSeries(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::
-                 DeleteTensorboardTimeSeriesRequest const& request) {
+             google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const& request) {
         return child_->AsyncDeleteTensorboardTimeSeries(
             cq, std::move(context), std::move(options), request);
       },
@@ -469,43 +469,41 @@ TensorboardServiceLogging::AsyncDeleteTensorboardTimeSeries(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceLogging::DeleteTensorboardTimeSeries(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 DeleteTensorboardTimeSeriesRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const& request) {
         return child_->DeleteTensorboardTimeSeries(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<
-    google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataResponse>
+StatusOr<google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataResponse>
 TensorboardServiceLogging::BatchReadTensorboardTimeSeriesData(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::
-        BatchReadTensorboardTimeSeriesDataRequest const& request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 BatchReadTensorboardTimeSeriesDataRequest const& request) {
-        return child_->BatchReadTensorboardTimeSeriesData(context, options,
-                                                          request);
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataRequest const& request) {
+        return child_->BatchReadTensorboardTimeSeriesData(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataResponse>
 TensorboardServiceLogging::ReadTensorboardTimeSeriesData(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 ReadTensorboardTimeSeriesDataRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataRequest const& request) {
         return child_->ReadTensorboardTimeSeriesData(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -514,23 +512,20 @@ TensorboardServiceLogging::ReadTensorboardTimeSeriesData(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>>
 TensorboardServiceLogging::ReadTensorboardBlobData(
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
-    google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest const&
-        request) {
+    std::shared_ptr<grpc::ClientContext> context,
+    Options const& options,
+    google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
-          google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest const&
-              request)
+      [this](std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
+             google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest const& request)
           -> std::unique_ptr<google::cloud::internal::StreamingReadRpc<
               google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>> {
-        auto stream = child_->ReadTensorboardBlobData(std::move(context),
-                                                      options, request);
+        auto stream = child_->ReadTensorboardBlobData(std::move(context), options, request);
         if (stream_logging_) {
           stream =
               std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
-                  google::cloud::aiplatform::v1::
-                      ReadTensorboardBlobDataResponse>>(
+                  google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>>(
                   std::move(stream), tracing_options_,
                   google::cloud::internal::RequestIdForLogging());
         }
@@ -541,29 +536,27 @@ TensorboardServiceLogging::ReadTensorboardBlobData(
 
 StatusOr<google::cloud::aiplatform::v1::WriteTensorboardExperimentDataResponse>
 TensorboardServiceLogging::WriteTensorboardExperimentData(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::WriteTensorboardExperimentDataRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::WriteTensorboardExperimentDataRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 WriteTensorboardExperimentDataRequest const& request) {
-        return child_->WriteTensorboardExperimentData(context, options,
-                                                      request);
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::WriteTensorboardExperimentDataRequest const& request) {
+        return child_->WriteTensorboardExperimentData(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::WriteTensorboardRunDataResponse>
 TensorboardServiceLogging::WriteTensorboardRunData(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::WriteTensorboardRunDataRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::WriteTensorboardRunDataRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::WriteTensorboardRunDataRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::WriteTensorboardRunDataRequest const& request) {
         return child_->WriteTensorboardRunData(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -571,15 +564,14 @@ TensorboardServiceLogging::WriteTensorboardRunData(
 
 StatusOr<google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataResponse>
 TensorboardServiceLogging::ExportTensorboardTimeSeriesData(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 ExportTensorboardTimeSeriesDataRequest const& request) {
-        return child_->ExportTensorboardTimeSeriesData(context, options,
-                                                       request);
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataRequest const& request) {
+        return child_->ExportTensorboardTimeSeriesData(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
@@ -595,8 +587,8 @@ TensorboardServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -612,8 +604,8 @@ future<Status> TensorboardServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

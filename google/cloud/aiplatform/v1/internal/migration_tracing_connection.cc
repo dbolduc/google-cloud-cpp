@@ -34,26 +34,20 @@ MigrationServiceTracingConnection::MigrationServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::aiplatform::v1::MigratableResource>
-MigrationServiceTracingConnection::SearchMigratableResources(
-    google::cloud::aiplatform::v1::SearchMigratableResourcesRequest request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::MigrationServiceConnection::SearchMigratableResources");
+MigrationServiceTracingConnection::SearchMigratableResources(google::cloud::aiplatform::v1::SearchMigratableResourcesRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::MigrationServiceConnection::SearchMigratableResources");
   internal::OTelScope scope(span);
   auto sr = child_->SearchMigratableResources(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::aiplatform::v1::MigratableResource>(std::move(span),
-                                                         std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::MigratableResource>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
-MigrationServiceTracingConnection::BatchMigrateResources(
-    google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
-        request) {
+MigrationServiceTracingConnection::BatchMigrateResources(google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::MigrationServiceConnection::BatchMigrateResources");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->BatchMigrateResources(request));
+  return internal::EndSpan(std::move(span), child_->BatchMigrateResources(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

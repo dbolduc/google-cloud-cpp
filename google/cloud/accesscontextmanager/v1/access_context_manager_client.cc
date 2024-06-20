@@ -28,22 +28,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AccessContextManagerClient::AccessContextManagerClient(
     std::shared_ptr<AccessContextManagerConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 AccessContextManagerClient::~AccessContextManagerClient() = default;
 
 StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>
-AccessContextManagerClient::ListAccessPolicies(
-    google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest
-        request,
-    Options opts) {
+AccessContextManagerClient::ListAccessPolicies(google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAccessPolicies(std::move(request));
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>
-AccessContextManagerClient::GetAccessPolicy(std::string const& name,
-                                            Options opts) {
+AccessContextManagerClient::GetAccessPolicy(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::identity::accesscontextmanager::v1::GetAccessPolicyRequest request;
   request.set_name(name);
@@ -51,26 +47,19 @@ AccessContextManagerClient::GetAccessPolicy(std::string const& name,
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>
-AccessContextManagerClient::GetAccessPolicy(
-    google::identity::accesscontextmanager::v1::GetAccessPolicyRequest const&
-        request,
-    Options opts) {
+AccessContextManagerClient::GetAccessPolicy(google::identity::accesscontextmanager::v1::GetAccessPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAccessPolicy(request);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
-AccessContextManagerClient::CreateAccessPolicy(
-    google::identity::accesscontextmanager::v1::AccessPolicy const& request,
-    Options opts) {
+AccessContextManagerClient::CreateAccessPolicy(google::identity::accesscontextmanager::v1::AccessPolicy const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAccessPolicy(request);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
-AccessContextManagerClient::UpdateAccessPolicy(
-    google::identity::accesscontextmanager::v1::AccessPolicy const& policy,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+AccessContextManagerClient::UpdateAccessPolicy(google::identity::accesscontextmanager::v1::AccessPolicy const& policy, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest request;
   *request.mutable_policy() = policy;
@@ -79,37 +68,27 @@ AccessContextManagerClient::UpdateAccessPolicy(
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
-AccessContextManagerClient::UpdateAccessPolicy(
-    google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest const&
-        request,
-    Options opts) {
+AccessContextManagerClient::UpdateAccessPolicy(google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAccessPolicy(request);
 }
 
-future<StatusOr<google::identity::accesscontextmanager::v1::
-                    AccessContextManagerOperationMetadata>>
-AccessContextManagerClient::DeleteAccessPolicy(std::string const& name,
-                                               Options opts) {
+future<StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>
+AccessContextManagerClient::DeleteAccessPolicy(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::identity::accesscontextmanager::v1::DeleteAccessPolicyRequest request;
   request.set_name(name);
   return connection_->DeleteAccessPolicy(request);
 }
 
-future<StatusOr<google::identity::accesscontextmanager::v1::
-                    AccessContextManagerOperationMetadata>>
-AccessContextManagerClient::DeleteAccessPolicy(
-    google::identity::accesscontextmanager::v1::DeleteAccessPolicyRequest const&
-        request,
-    Options opts) {
+future<StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>
+AccessContextManagerClient::DeleteAccessPolicy(google::identity::accesscontextmanager::v1::DeleteAccessPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAccessPolicy(request);
 }
 
 StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>
-AccessContextManagerClient::ListAccessLevels(std::string const& parent,
-                                             Options opts) {
+AccessContextManagerClient::ListAccessLevels(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::identity::accesscontextmanager::v1::ListAccessLevelsRequest request;
   request.set_parent(parent);
@@ -117,16 +96,13 @@ AccessContextManagerClient::ListAccessLevels(std::string const& parent,
 }
 
 StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>
-AccessContextManagerClient::ListAccessLevels(
-    google::identity::accesscontextmanager::v1::ListAccessLevelsRequest request,
-    Options opts) {
+AccessContextManagerClient::ListAccessLevels(google::identity::accesscontextmanager::v1::ListAccessLevelsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAccessLevels(std::move(request));
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>
-AccessContextManagerClient::GetAccessLevel(std::string const& name,
-                                           Options opts) {
+AccessContextManagerClient::GetAccessLevel(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::identity::accesscontextmanager::v1::GetAccessLevelRequest request;
   request.set_name(name);
@@ -134,19 +110,13 @@ AccessContextManagerClient::GetAccessLevel(std::string const& name,
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>
-AccessContextManagerClient::GetAccessLevel(
-    google::identity::accesscontextmanager::v1::GetAccessLevelRequest const&
-        request,
-    Options opts) {
+AccessContextManagerClient::GetAccessLevel(google::identity::accesscontextmanager::v1::GetAccessLevelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAccessLevel(request);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
-AccessContextManagerClient::CreateAccessLevel(
-    std::string const& parent,
-    google::identity::accesscontextmanager::v1::AccessLevel const& access_level,
-    Options opts) {
+AccessContextManagerClient::CreateAccessLevel(std::string const& parent, google::identity::accesscontextmanager::v1::AccessLevel const& access_level, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::identity::accesscontextmanager::v1::CreateAccessLevelRequest request;
   request.set_parent(parent);
@@ -155,18 +125,13 @@ AccessContextManagerClient::CreateAccessLevel(
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
-AccessContextManagerClient::CreateAccessLevel(
-    google::identity::accesscontextmanager::v1::CreateAccessLevelRequest const&
-        request,
-    Options opts) {
+AccessContextManagerClient::CreateAccessLevel(google::identity::accesscontextmanager::v1::CreateAccessLevelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAccessLevel(request);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
-AccessContextManagerClient::UpdateAccessLevel(
-    google::identity::accesscontextmanager::v1::AccessLevel const& access_level,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+AccessContextManagerClient::UpdateAccessLevel(google::identity::accesscontextmanager::v1::AccessLevel const& access_level, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::identity::accesscontextmanager::v1::UpdateAccessLevelRequest request;
   *request.mutable_access_level() = access_level;
@@ -175,291 +140,201 @@ AccessContextManagerClient::UpdateAccessLevel(
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
-AccessContextManagerClient::UpdateAccessLevel(
-    google::identity::accesscontextmanager::v1::UpdateAccessLevelRequest const&
-        request,
-    Options opts) {
+AccessContextManagerClient::UpdateAccessLevel(google::identity::accesscontextmanager::v1::UpdateAccessLevelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAccessLevel(request);
 }
 
-future<StatusOr<google::identity::accesscontextmanager::v1::
-                    AccessContextManagerOperationMetadata>>
-AccessContextManagerClient::DeleteAccessLevel(std::string const& name,
-                                              Options opts) {
+future<StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>
+AccessContextManagerClient::DeleteAccessLevel(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::identity::accesscontextmanager::v1::DeleteAccessLevelRequest request;
   request.set_name(name);
   return connection_->DeleteAccessLevel(request);
 }
 
-future<StatusOr<google::identity::accesscontextmanager::v1::
-                    AccessContextManagerOperationMetadata>>
-AccessContextManagerClient::DeleteAccessLevel(
-    google::identity::accesscontextmanager::v1::DeleteAccessLevelRequest const&
-        request,
-    Options opts) {
+future<StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>
+AccessContextManagerClient::DeleteAccessLevel(google::identity::accesscontextmanager::v1::DeleteAccessLevelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAccessLevel(request);
 }
 
-future<StatusOr<
-    google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>>
-AccessContextManagerClient::ReplaceAccessLevels(
-    google::identity::accesscontextmanager::v1::
-        ReplaceAccessLevelsRequest const& request,
-    Options opts) {
+future<StatusOr<google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>>
+AccessContextManagerClient::ReplaceAccessLevels(google::identity::accesscontextmanager::v1::ReplaceAccessLevelsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReplaceAccessLevels(request);
 }
 
 StreamRange<google::identity::accesscontextmanager::v1::ServicePerimeter>
-AccessContextManagerClient::ListServicePerimeters(std::string const& parent,
-                                                  Options opts) {
+AccessContextManagerClient::ListServicePerimeters(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::identity::accesscontextmanager::v1::ListServicePerimetersRequest
-      request;
+  google::identity::accesscontextmanager::v1::ListServicePerimetersRequest request;
   request.set_parent(parent);
   return connection_->ListServicePerimeters(request);
 }
 
 StreamRange<google::identity::accesscontextmanager::v1::ServicePerimeter>
-AccessContextManagerClient::ListServicePerimeters(
-    google::identity::accesscontextmanager::v1::ListServicePerimetersRequest
-        request,
-    Options opts) {
+AccessContextManagerClient::ListServicePerimeters(google::identity::accesscontextmanager::v1::ListServicePerimetersRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListServicePerimeters(std::move(request));
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>
-AccessContextManagerClient::GetServicePerimeter(std::string const& name,
-                                                Options opts) {
+AccessContextManagerClient::GetServicePerimeter(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::identity::accesscontextmanager::v1::GetServicePerimeterRequest
-      request;
+  google::identity::accesscontextmanager::v1::GetServicePerimeterRequest request;
   request.set_name(name);
   return connection_->GetServicePerimeter(request);
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>
-AccessContextManagerClient::GetServicePerimeter(
-    google::identity::accesscontextmanager::v1::
-        GetServicePerimeterRequest const& request,
-    Options opts) {
+AccessContextManagerClient::GetServicePerimeter(google::identity::accesscontextmanager::v1::GetServicePerimeterRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetServicePerimeter(request);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
-AccessContextManagerClient::CreateServicePerimeter(
-    std::string const& parent,
-    google::identity::accesscontextmanager::v1::ServicePerimeter const&
-        service_perimeter,
-    Options opts) {
+AccessContextManagerClient::CreateServicePerimeter(std::string const& parent, google::identity::accesscontextmanager::v1::ServicePerimeter const& service_perimeter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::identity::accesscontextmanager::v1::CreateServicePerimeterRequest
-      request;
+  google::identity::accesscontextmanager::v1::CreateServicePerimeterRequest request;
   request.set_parent(parent);
   *request.mutable_service_perimeter() = service_perimeter;
   return connection_->CreateServicePerimeter(request);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
-AccessContextManagerClient::CreateServicePerimeter(
-    google::identity::accesscontextmanager::v1::
-        CreateServicePerimeterRequest const& request,
-    Options opts) {
+AccessContextManagerClient::CreateServicePerimeter(google::identity::accesscontextmanager::v1::CreateServicePerimeterRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateServicePerimeter(request);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
-AccessContextManagerClient::UpdateServicePerimeter(
-    google::identity::accesscontextmanager::v1::ServicePerimeter const&
-        service_perimeter,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+AccessContextManagerClient::UpdateServicePerimeter(google::identity::accesscontextmanager::v1::ServicePerimeter const& service_perimeter, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::identity::accesscontextmanager::v1::UpdateServicePerimeterRequest
-      request;
+  google::identity::accesscontextmanager::v1::UpdateServicePerimeterRequest request;
   *request.mutable_service_perimeter() = service_perimeter;
   *request.mutable_update_mask() = update_mask;
   return connection_->UpdateServicePerimeter(request);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
-AccessContextManagerClient::UpdateServicePerimeter(
-    google::identity::accesscontextmanager::v1::
-        UpdateServicePerimeterRequest const& request,
-    Options opts) {
+AccessContextManagerClient::UpdateServicePerimeter(google::identity::accesscontextmanager::v1::UpdateServicePerimeterRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateServicePerimeter(request);
 }
 
-future<StatusOr<google::identity::accesscontextmanager::v1::
-                    AccessContextManagerOperationMetadata>>
-AccessContextManagerClient::DeleteServicePerimeter(std::string const& name,
-                                                   Options opts) {
+future<StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>
+AccessContextManagerClient::DeleteServicePerimeter(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::identity::accesscontextmanager::v1::DeleteServicePerimeterRequest
-      request;
+  google::identity::accesscontextmanager::v1::DeleteServicePerimeterRequest request;
   request.set_name(name);
   return connection_->DeleteServicePerimeter(request);
 }
 
-future<StatusOr<google::identity::accesscontextmanager::v1::
-                    AccessContextManagerOperationMetadata>>
-AccessContextManagerClient::DeleteServicePerimeter(
-    google::identity::accesscontextmanager::v1::
-        DeleteServicePerimeterRequest const& request,
-    Options opts) {
+future<StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>
+AccessContextManagerClient::DeleteServicePerimeter(google::identity::accesscontextmanager::v1::DeleteServicePerimeterRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteServicePerimeter(request);
 }
 
-future<StatusOr<google::identity::accesscontextmanager::v1::
-                    ReplaceServicePerimetersResponse>>
-AccessContextManagerClient::ReplaceServicePerimeters(
-    google::identity::accesscontextmanager::v1::
-        ReplaceServicePerimetersRequest const& request,
-    Options opts) {
+future<StatusOr<google::identity::accesscontextmanager::v1::ReplaceServicePerimetersResponse>>
+AccessContextManagerClient::ReplaceServicePerimeters(google::identity::accesscontextmanager::v1::ReplaceServicePerimetersRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReplaceServicePerimeters(request);
 }
 
-future<StatusOr<google::identity::accesscontextmanager::v1::
-                    CommitServicePerimetersResponse>>
-AccessContextManagerClient::CommitServicePerimeters(
-    google::identity::accesscontextmanager::v1::
-        CommitServicePerimetersRequest const& request,
-    Options opts) {
+future<StatusOr<google::identity::accesscontextmanager::v1::CommitServicePerimetersResponse>>
+AccessContextManagerClient::CommitServicePerimeters(google::identity::accesscontextmanager::v1::CommitServicePerimetersRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CommitServicePerimeters(request);
 }
 
 StreamRange<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
-AccessContextManagerClient::ListGcpUserAccessBindings(std::string const& parent,
-                                                      Options opts) {
+AccessContextManagerClient::ListGcpUserAccessBindings(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::identity::accesscontextmanager::v1::ListGcpUserAccessBindingsRequest
-      request;
+  google::identity::accesscontextmanager::v1::ListGcpUserAccessBindingsRequest request;
   request.set_parent(parent);
   return connection_->ListGcpUserAccessBindings(request);
 }
 
 StreamRange<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
-AccessContextManagerClient::ListGcpUserAccessBindings(
-    google::identity::accesscontextmanager::v1::ListGcpUserAccessBindingsRequest
-        request,
-    Options opts) {
+AccessContextManagerClient::ListGcpUserAccessBindings(google::identity::accesscontextmanager::v1::ListGcpUserAccessBindingsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListGcpUserAccessBindings(std::move(request));
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
-AccessContextManagerClient::GetGcpUserAccessBinding(std::string const& name,
-                                                    Options opts) {
+AccessContextManagerClient::GetGcpUserAccessBinding(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::identity::accesscontextmanager::v1::GetGcpUserAccessBindingRequest
-      request;
+  google::identity::accesscontextmanager::v1::GetGcpUserAccessBindingRequest request;
   request.set_name(name);
   return connection_->GetGcpUserAccessBinding(request);
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
-AccessContextManagerClient::GetGcpUserAccessBinding(
-    google::identity::accesscontextmanager::v1::
-        GetGcpUserAccessBindingRequest const& request,
-    Options opts) {
+AccessContextManagerClient::GetGcpUserAccessBinding(google::identity::accesscontextmanager::v1::GetGcpUserAccessBindingRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetGcpUserAccessBinding(request);
 }
 
-future<
-    StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
-AccessContextManagerClient::CreateGcpUserAccessBinding(
-    std::string const& parent,
-    google::identity::accesscontextmanager::v1::GcpUserAccessBinding const&
-        gcp_user_access_binding,
-    Options opts) {
+future<StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
+AccessContextManagerClient::CreateGcpUserAccessBinding(std::string const& parent, google::identity::accesscontextmanager::v1::GcpUserAccessBinding const& gcp_user_access_binding, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::identity::accesscontextmanager::v1::CreateGcpUserAccessBindingRequest
-      request;
+  google::identity::accesscontextmanager::v1::CreateGcpUserAccessBindingRequest request;
   request.set_parent(parent);
   *request.mutable_gcp_user_access_binding() = gcp_user_access_binding;
   return connection_->CreateGcpUserAccessBinding(request);
 }
 
-future<
-    StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
-AccessContextManagerClient::CreateGcpUserAccessBinding(
-    google::identity::accesscontextmanager::v1::
-        CreateGcpUserAccessBindingRequest const& request,
-    Options opts) {
+future<StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
+AccessContextManagerClient::CreateGcpUserAccessBinding(google::identity::accesscontextmanager::v1::CreateGcpUserAccessBindingRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateGcpUserAccessBinding(request);
 }
 
-future<
-    StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
-AccessContextManagerClient::UpdateGcpUserAccessBinding(
-    google::identity::accesscontextmanager::v1::GcpUserAccessBinding const&
-        gcp_user_access_binding,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+future<StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
+AccessContextManagerClient::UpdateGcpUserAccessBinding(google::identity::accesscontextmanager::v1::GcpUserAccessBinding const& gcp_user_access_binding, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::identity::accesscontextmanager::v1::UpdateGcpUserAccessBindingRequest
-      request;
+  google::identity::accesscontextmanager::v1::UpdateGcpUserAccessBindingRequest request;
   *request.mutable_gcp_user_access_binding() = gcp_user_access_binding;
   *request.mutable_update_mask() = update_mask;
   return connection_->UpdateGcpUserAccessBinding(request);
 }
 
-future<
-    StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
-AccessContextManagerClient::UpdateGcpUserAccessBinding(
-    google::identity::accesscontextmanager::v1::
-        UpdateGcpUserAccessBindingRequest const& request,
-    Options opts) {
+future<StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
+AccessContextManagerClient::UpdateGcpUserAccessBinding(google::identity::accesscontextmanager::v1::UpdateGcpUserAccessBindingRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateGcpUserAccessBinding(request);
 }
 
-future<StatusOr<google::identity::accesscontextmanager::v1::
-                    GcpUserAccessBindingOperationMetadata>>
-AccessContextManagerClient::DeleteGcpUserAccessBinding(std::string const& name,
-                                                       Options opts) {
+future<StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBindingOperationMetadata>>
+AccessContextManagerClient::DeleteGcpUserAccessBinding(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::identity::accesscontextmanager::v1::DeleteGcpUserAccessBindingRequest
-      request;
+  google::identity::accesscontextmanager::v1::DeleteGcpUserAccessBindingRequest request;
   request.set_name(name);
   return connection_->DeleteGcpUserAccessBinding(request);
 }
 
-future<StatusOr<google::identity::accesscontextmanager::v1::
-                    GcpUserAccessBindingOperationMetadata>>
-AccessContextManagerClient::DeleteGcpUserAccessBinding(
-    google::identity::accesscontextmanager::v1::
-        DeleteGcpUserAccessBindingRequest const& request,
-    Options opts) {
+future<StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBindingOperationMetadata>>
+AccessContextManagerClient::DeleteGcpUserAccessBinding(google::identity::accesscontextmanager::v1::DeleteGcpUserAccessBindingRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteGcpUserAccessBinding(request);
 }
 
-StatusOr<google::iam::v1::Policy> AccessContextManagerClient::SetIamPolicy(
-    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+AccessContextManagerClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy> AccessContextManagerClient::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy>
+AccessContextManagerClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-AccessContextManagerClient::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+AccessContextManagerClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }

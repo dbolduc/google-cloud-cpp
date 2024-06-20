@@ -33,88 +33,82 @@ namespace apikeys_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<apikeys_v2::ApiKeysRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<apikeys_v2::ApiKeysRetryPolicy>
+retry_policy(Options const& options) {
   return options.get<apikeys_v2::ApiKeysRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
   return options.get<apikeys_v2::ApiKeysBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<apikeys_v2::ApiKeysConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<apikeys_v2::ApiKeysConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<apikeys_v2::ApiKeysConnectionIdempotencyPolicyOption>()->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
   return options.get<apikeys_v2::ApiKeysPollingPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 ApiKeysConnectionImpl::ApiKeysConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<apikeys_v2_internal::ApiKeysStub> stub, Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      ApiKeysConnection::options())) {}
+    std::shared_ptr<apikeys_v2_internal::ApiKeysStub> stub,
+    Options options)
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        ApiKeysConnection::options())) {}
 
 future<StatusOr<google::api::apikeys::v2::Key>>
-ApiKeysConnectionImpl::CreateKey(
-    google::api::apikeys::v2::CreateKeyRequest const& request) {
+ApiKeysConnectionImpl::CreateKey(google::api::apikeys::v2::CreateKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
-  auto const idempotent = idempotency_policy(*current)->CreateKey(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::api::apikeys::v2::Key>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::api::apikeys::v2::CreateKeyRequest const& request) {
-        return stub->AsyncCreateKey(cq, std::move(context), std::move(options),
-                                    request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::api::apikeys::v2::Key>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  auto const idempotent =
+      idempotency_policy(*current)->CreateKey(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<google::api::apikeys::v2::Key>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::api::apikeys::v2::CreateKeyRequest const& request) {
+     return stub->AsyncCreateKey(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::api::apikeys::v2::Key>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
-StreamRange<google::api::apikeys::v2::Key> ApiKeysConnectionImpl::ListKeys(
-    google::api::apikeys::v2::ListKeysRequest request) {
+StreamRange<google::api::apikeys::v2::Key>
+ApiKeysConnectionImpl::ListKeys(google::api::apikeys::v2::ListKeysRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListKeys(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::api::apikeys::v2::Key>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::api::apikeys::v2::Key>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<apikeys_v2::ApiKeysRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<apikeys_v2::ApiKeysRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::api::apikeys::v2::ListKeysRequest const& r) {
+          Options const& options, google::api::apikeys::v2::ListKeysRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -131,8 +125,8 @@ StreamRange<google::api::apikeys::v2::Key> ApiKeysConnectionImpl::ListKeys(
       });
 }
 
-StatusOr<google::api::apikeys::v2::Key> ApiKeysConnectionImpl::GetKey(
-    google::api::apikeys::v2::GetKeyRequest const& request) {
+StatusOr<google::api::apikeys::v2::Key>
+ApiKeysConnectionImpl::GetKey(google::api::apikeys::v2::GetKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -145,8 +139,7 @@ StatusOr<google::api::apikeys::v2::Key> ApiKeysConnectionImpl::GetKey(
 }
 
 StatusOr<google::api::apikeys::v2::GetKeyStringResponse>
-ApiKeysConnectionImpl::GetKeyString(
-    google::api::apikeys::v2::GetKeyStringRequest const& request) {
+ApiKeysConnectionImpl::GetKeyString(google::api::apikeys::v2::GetKeyStringRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -159,123 +152,109 @@ ApiKeysConnectionImpl::GetKeyString(
 }
 
 future<StatusOr<google::api::apikeys::v2::Key>>
-ApiKeysConnectionImpl::UpdateKey(
-    google::api::apikeys::v2::UpdateKeyRequest const& request) {
+ApiKeysConnectionImpl::UpdateKey(google::api::apikeys::v2::UpdateKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
-  auto const idempotent = idempotency_policy(*current)->UpdateKey(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::api::apikeys::v2::Key>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::api::apikeys::v2::UpdateKeyRequest const& request) {
-        return stub->AsyncUpdateKey(cq, std::move(context), std::move(options),
-                                    request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::api::apikeys::v2::Key>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateKey(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<google::api::apikeys::v2::Key>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::api::apikeys::v2::UpdateKeyRequest const& request) {
+     return stub->AsyncUpdateKey(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::api::apikeys::v2::Key>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::api::apikeys::v2::Key>>
-ApiKeysConnectionImpl::DeleteKey(
-    google::api::apikeys::v2::DeleteKeyRequest const& request) {
+ApiKeysConnectionImpl::DeleteKey(google::api::apikeys::v2::DeleteKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
-  auto const idempotent = idempotency_policy(*current)->DeleteKey(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::api::apikeys::v2::Key>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::api::apikeys::v2::DeleteKeyRequest const& request) {
-        return stub->AsyncDeleteKey(cq, std::move(context), std::move(options),
-                                    request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::api::apikeys::v2::Key>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteKey(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<google::api::apikeys::v2::Key>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::api::apikeys::v2::DeleteKeyRequest const& request) {
+     return stub->AsyncDeleteKey(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::api::apikeys::v2::Key>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::api::apikeys::v2::Key>>
-ApiKeysConnectionImpl::UndeleteKey(
-    google::api::apikeys::v2::UndeleteKeyRequest const& request) {
+ApiKeysConnectionImpl::UndeleteKey(google::api::apikeys::v2::UndeleteKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UndeleteKey(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::api::apikeys::v2::Key>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::api::apikeys::v2::UndeleteKeyRequest const& request) {
-        return stub->AsyncUndeleteKey(cq, std::move(context),
-                                      std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::api::apikeys::v2::Key>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::api::apikeys::v2::Key>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::api::apikeys::v2::UndeleteKeyRequest const& request) {
+     return stub->AsyncUndeleteKey(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::api::apikeys::v2::Key>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StatusOr<google::api::apikeys::v2::LookupKeyResponse>
-ApiKeysConnectionImpl::LookupKey(
-    google::api::apikeys::v2::LookupKeyRequest const& request) {
+ApiKeysConnectionImpl::LookupKey(google::api::apikeys::v2::LookupKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

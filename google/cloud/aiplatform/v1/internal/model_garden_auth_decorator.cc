@@ -31,9 +31,9 @@ ModelGardenServiceAuth::ModelGardenServiceAuth(
     std::shared_ptr<ModelGardenServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::aiplatform::v1::PublisherModel>
-ModelGardenServiceAuth::GetPublisherModel(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::PublisherModel> ModelGardenServiceAuth::GetPublisherModel(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetPublisherModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

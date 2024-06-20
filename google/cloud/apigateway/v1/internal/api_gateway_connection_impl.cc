@@ -33,68 +33,58 @@ namespace apigateway_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<apigateway_v1::ApiGatewayServiceRetryPolicy> retry_policy(
-    Options const& options) {
-  return options.get<apigateway_v1::ApiGatewayServiceRetryPolicyOption>()
-      ->clone();
+std::unique_ptr<apigateway_v1::ApiGatewayServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options.get<apigateway_v1::ApiGatewayServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options.get<apigateway_v1::ApiGatewayServiceBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<apigateway_v1::ApiGatewayServiceBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<apigateway_v1::ApiGatewayServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<apigateway_v1::ApiGatewayServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<apigateway_v1::ApiGatewayServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-  return options.get<apigateway_v1::ApiGatewayServicePollingPolicyOption>()
-      ->clone();
+  return options.get<apigateway_v1::ApiGatewayServicePollingPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 ApiGatewayServiceConnectionImpl::ApiGatewayServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<apigateway_v1_internal::ApiGatewayServiceStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), ApiGatewayServiceConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        ApiGatewayServiceConnection::options())) {}
 
 StreamRange<google::cloud::apigateway::v1::Gateway>
-ApiGatewayServiceConnectionImpl::ListGateways(
-    google::cloud::apigateway::v1::ListGatewaysRequest request) {
+ApiGatewayServiceConnectionImpl::ListGateways(google::cloud::apigateway::v1::ListGatewaysRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListGateways(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::apigateway::v1::Gateway>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::apigateway::v1::Gateway>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<apigateway_v1::ApiGatewayServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<apigateway_v1::ApiGatewayServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::apigateway::v1::ListGatewaysRequest const& r) {
+          Options const& options, google::cloud::apigateway::v1::ListGatewaysRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::apigateway::v1::ListGatewaysRequest const&
-                       request) {
+                   google::cloud::apigateway::v1::ListGatewaysRequest const& request) {
               return stub->ListGateways(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::apigateway::v1::ListGatewaysResponse r) {
-        std::vector<google::cloud::apigateway::v1::Gateway> result(
-            r.gateways().size());
+        std::vector<google::cloud::apigateway::v1::Gateway> result(r.gateways().size());
         auto& messages = *r.mutable_gateways();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -102,8 +92,7 @@ ApiGatewayServiceConnectionImpl::ListGateways(
 }
 
 StatusOr<google::cloud::apigateway::v1::Gateway>
-ApiGatewayServiceConnectionImpl::GetGateway(
-    google::cloud::apigateway::v1::GetGatewayRequest const& request) {
+ApiGatewayServiceConnectionImpl::GetGateway(google::cloud::apigateway::v1::GetGatewayRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -116,143 +105,123 @@ ApiGatewayServiceConnectionImpl::GetGateway(
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Gateway>>
-ApiGatewayServiceConnectionImpl::CreateGateway(
-    google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
+ApiGatewayServiceConnectionImpl::CreateGateway(google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateGateway(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::apigateway::v1::Gateway>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
-        return stub->AsyncCreateGateway(cq, std::move(context),
-                                        std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::apigateway::v1::Gateway>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::apigateway::v1::Gateway>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
+     return stub->AsyncCreateGateway(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::apigateway::v1::Gateway>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Gateway>>
-ApiGatewayServiceConnectionImpl::UpdateGateway(
-    google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
+ApiGatewayServiceConnectionImpl::UpdateGateway(google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateGateway(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::apigateway::v1::Gateway>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
-        return stub->AsyncUpdateGateway(cq, std::move(context),
-                                        std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::apigateway::v1::Gateway>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::apigateway::v1::Gateway>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
+     return stub->AsyncUpdateGateway(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::apigateway::v1::Gateway>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
-ApiGatewayServiceConnectionImpl::DeleteGateway(
-    google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
+ApiGatewayServiceConnectionImpl::DeleteGateway(google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteGateway(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::apigateway::v1::OperationMetadata>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
-        return stub->AsyncDeleteGateway(cq, std::move(context),
-                                        std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::apigateway::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::apigateway::v1::OperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
+     return stub->AsyncDeleteGateway(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::apigateway::v1::OperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::apigateway::v1::Api>
-ApiGatewayServiceConnectionImpl::ListApis(
-    google::cloud::apigateway::v1::ListApisRequest request) {
+ApiGatewayServiceConnectionImpl::ListApis(google::cloud::apigateway::v1::ListApisRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListApis(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::apigateway::v1::Api>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::apigateway::v1::Api>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<apigateway_v1::ApiGatewayServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<apigateway_v1::ApiGatewayServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::apigateway::v1::ListApisRequest const& r) {
+          Options const& options, google::cloud::apigateway::v1::ListApisRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](
-                grpc::ClientContext& context, Options const& options,
-                google::cloud::apigateway::v1::ListApisRequest const& request) {
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::apigateway::v1::ListApisRequest const& request) {
               return stub->ListApis(context, options, request);
             },
             options, r, function_name);
@@ -266,8 +235,7 @@ ApiGatewayServiceConnectionImpl::ListApis(
 }
 
 StatusOr<google::cloud::apigateway::v1::Api>
-ApiGatewayServiceConnectionImpl::GetApi(
-    google::cloud::apigateway::v1::GetApiRequest const& request) {
+ApiGatewayServiceConnectionImpl::GetApi(google::cloud::apigateway::v1::GetApiRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -280,147 +248,129 @@ ApiGatewayServiceConnectionImpl::GetApi(
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Api>>
-ApiGatewayServiceConnectionImpl::CreateApi(
-    google::cloud::apigateway::v1::CreateApiRequest const& request) {
+ApiGatewayServiceConnectionImpl::CreateApi(google::cloud::apigateway::v1::CreateApiRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
-  auto const idempotent = idempotency_policy(*current)->CreateApi(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::apigateway::v1::Api>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::apigateway::v1::CreateApiRequest const& request) {
-        return stub->AsyncCreateApi(cq, std::move(context), std::move(options),
-                                    request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::apigateway::v1::Api>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  auto const idempotent =
+      idempotency_policy(*current)->CreateApi(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::apigateway::v1::Api>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::apigateway::v1::CreateApiRequest const& request) {
+     return stub->AsyncCreateApi(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::apigateway::v1::Api>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Api>>
-ApiGatewayServiceConnectionImpl::UpdateApi(
-    google::cloud::apigateway::v1::UpdateApiRequest const& request) {
+ApiGatewayServiceConnectionImpl::UpdateApi(google::cloud::apigateway::v1::UpdateApiRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
-  auto const idempotent = idempotency_policy(*current)->UpdateApi(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::apigateway::v1::Api>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::apigateway::v1::UpdateApiRequest const& request) {
-        return stub->AsyncUpdateApi(cq, std::move(context), std::move(options),
-                                    request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::apigateway::v1::Api>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateApi(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::apigateway::v1::Api>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::apigateway::v1::UpdateApiRequest const& request) {
+     return stub->AsyncUpdateApi(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::apigateway::v1::Api>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
-ApiGatewayServiceConnectionImpl::DeleteApi(
-    google::cloud::apigateway::v1::DeleteApiRequest const& request) {
+ApiGatewayServiceConnectionImpl::DeleteApi(google::cloud::apigateway::v1::DeleteApiRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
-  auto const idempotent = idempotency_policy(*current)->DeleteApi(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::apigateway::v1::OperationMetadata>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::apigateway::v1::DeleteApiRequest const& request) {
-        return stub->AsyncDeleteApi(cq, std::move(context), std::move(options),
-                                    request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::apigateway::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteApi(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::apigateway::v1::OperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::apigateway::v1::DeleteApiRequest const& request) {
+     return stub->AsyncDeleteApi(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::apigateway::v1::OperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::apigateway::v1::ApiConfig>
-ApiGatewayServiceConnectionImpl::ListApiConfigs(
-    google::cloud::apigateway::v1::ListApiConfigsRequest request) {
+ApiGatewayServiceConnectionImpl::ListApiConfigs(google::cloud::apigateway::v1::ListApiConfigsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListApiConfigs(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::apigateway::v1::ApiConfig>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::apigateway::v1::ApiConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<apigateway_v1::ApiGatewayServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<apigateway_v1::ApiGatewayServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::apigateway::v1::ListApiConfigsRequest const& r) {
+          Options const& options, google::cloud::apigateway::v1::ListApiConfigsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::apigateway::v1::ListApiConfigsRequest const&
-                       request) {
+                   google::cloud::apigateway::v1::ListApiConfigsRequest const& request) {
               return stub->ListApiConfigs(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::apigateway::v1::ListApiConfigsResponse r) {
-        std::vector<google::cloud::apigateway::v1::ApiConfig> result(
-            r.api_configs().size());
+        std::vector<google::cloud::apigateway::v1::ApiConfig> result(r.api_configs().size());
         auto& messages = *r.mutable_api_configs();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -428,138 +378,118 @@ ApiGatewayServiceConnectionImpl::ListApiConfigs(
 }
 
 StatusOr<google::cloud::apigateway::v1::ApiConfig>
-ApiGatewayServiceConnectionImpl::GetApiConfig(
-    google::cloud::apigateway::v1::GetApiConfigRequest const& request) {
+ApiGatewayServiceConnectionImpl::GetApiConfig(google::cloud::apigateway::v1::GetApiConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetApiConfig(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::apigateway::v1::GetApiConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apigateway::v1::GetApiConfigRequest const& request) {
         return stub_->GetApiConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
-ApiGatewayServiceConnectionImpl::CreateApiConfig(
-    google::cloud::apigateway::v1::CreateApiConfigRequest const& request) {
+ApiGatewayServiceConnectionImpl::CreateApiConfig(google::cloud::apigateway::v1::CreateApiConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateApiConfig(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::apigateway::v1::ApiConfig>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::apigateway::v1::CreateApiConfigRequest const&
-              request) {
-        return stub->AsyncCreateApiConfig(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::apigateway::v1::ApiConfig>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::apigateway::v1::ApiConfig>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::apigateway::v1::CreateApiConfigRequest const& request) {
+     return stub->AsyncCreateApiConfig(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::apigateway::v1::ApiConfig>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
-ApiGatewayServiceConnectionImpl::UpdateApiConfig(
-    google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
+ApiGatewayServiceConnectionImpl::UpdateApiConfig(google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateApiConfig(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::apigateway::v1::ApiConfig>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::apigateway::v1::UpdateApiConfigRequest const&
-              request) {
-        return stub->AsyncUpdateApiConfig(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::apigateway::v1::ApiConfig>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::apigateway::v1::ApiConfig>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
+     return stub->AsyncUpdateApiConfig(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::apigateway::v1::ApiConfig>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
-ApiGatewayServiceConnectionImpl::DeleteApiConfig(
-    google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
+ApiGatewayServiceConnectionImpl::DeleteApiConfig(google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteApiConfig(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::apigateway::v1::OperationMetadata>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::apigateway::v1::DeleteApiConfigRequest const&
-              request) {
-        return stub->AsyncDeleteApiConfig(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::apigateway::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::apigateway::v1::OperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
+     return stub->AsyncDeleteApiConfig(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::apigateway::v1::OperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

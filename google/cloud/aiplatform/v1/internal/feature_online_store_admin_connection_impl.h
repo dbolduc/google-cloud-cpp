@@ -46,78 +46,54 @@ class FeatureOnlineStoreAdminServiceConnectionImpl
   ~FeatureOnlineStoreAdminServiceConnectionImpl() override = default;
 
   FeatureOnlineStoreAdminServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<
-          aiplatform_v1_internal::FeatureOnlineStoreAdminServiceStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<aiplatform_v1_internal::FeatureOnlineStoreAdminServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
-  CreateFeatureOnlineStore(
-      google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
-          request) override;
+  CreateFeatureOnlineStore(google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>
-  GetFeatureOnlineStore(
-      google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const&
-          request) override;
+  GetFeatureOnlineStore(google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const& request) override;
 
   StreamRange<google::cloud::aiplatform::v1::FeatureOnlineStore>
-  ListFeatureOnlineStores(
-      google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest request)
-      override;
+  ListFeatureOnlineStores(google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
-  UpdateFeatureOnlineStore(
-      google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
-          request) override;
+  UpdateFeatureOnlineStore(google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeatureOnlineStore(
-      google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
-          request) override;
+  DeleteFeatureOnlineStore(google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
-  CreateFeatureView(
-      google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request)
-      override;
+  CreateFeatureView(google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::FeatureView> GetFeatureView(
-      google::cloud::aiplatform::v1::GetFeatureViewRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::FeatureView>
+  GetFeatureView(google::cloud::aiplatform::v1::GetFeatureViewRequest const& request) override;
 
-  StreamRange<google::cloud::aiplatform::v1::FeatureView> ListFeatureViews(
-      google::cloud::aiplatform::v1::ListFeatureViewsRequest request) override;
+  StreamRange<google::cloud::aiplatform::v1::FeatureView>
+  ListFeatureViews(google::cloud::aiplatform::v1::ListFeatureViewsRequest request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
-  UpdateFeatureView(
-      google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request)
-      override;
+  UpdateFeatureView(google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeatureView(
-      google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request)
-      override;
+  DeleteFeatureView(google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse>
-  SyncFeatureView(google::cloud::aiplatform::v1::SyncFeatureViewRequest const&
-                      request) override;
+  SyncFeatureView(google::cloud::aiplatform::v1::SyncFeatureViewRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::FeatureViewSync> GetFeatureViewSync(
-      google::cloud::aiplatform::v1::GetFeatureViewSyncRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::FeatureViewSync>
+  GetFeatureViewSync(google::cloud::aiplatform::v1::GetFeatureViewSyncRequest const& request) override;
 
   StreamRange<google::cloud::aiplatform::v1::FeatureViewSync>
-  ListFeatureViewSyncs(
-      google::cloud::aiplatform::v1::ListFeatureViewSyncsRequest request)
-      override;
+  ListFeatureViewSyncs(google::cloud::aiplatform::v1::ListFeatureViewSyncsRequest request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<aiplatform_v1_internal::FeatureOnlineStoreAdminServiceStub>
-      stub_;
+  std::shared_ptr<aiplatform_v1_internal::FeatureOnlineStoreAdminServiceStub> stub_;
   Options options_;
 };
 

@@ -37,40 +37,37 @@ class BackupDRTracingStub : public BackupDRStub {
 
   explicit BackupDRTracingStub(std::shared_ptr<BackupDRStub> child);
 
-  StatusOr<google::cloud::backupdr::v1::ListManagementServersResponse>
-  ListManagementServers(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::backupdr::v1::ListManagementServersRequest const& request)
-      override;
+  StatusOr<google::cloud::backupdr::v1::ListManagementServersResponse> ListManagementServers(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::backupdr::v1::ListManagementServersRequest const& request) override;
 
   StatusOr<google::cloud::backupdr::v1::ManagementServer> GetManagementServer(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::backupdr::v1::GetManagementServerRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::backupdr::v1::GetManagementServerRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateManagementServer(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::backupdr::v1::CreateManagementServerRequest const& request)
-      override;
+      google::cloud::backupdr::v1::CreateManagementServerRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateManagementServer(
-      grpc::ClientContext& context, Options options,
-      google::cloud::backupdr::v1::CreateManagementServerRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::backupdr::v1::CreateManagementServerRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteManagementServer(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::backupdr::v1::DeleteManagementServerRequest const& request)
-      override;
+      google::cloud::backupdr::v1::DeleteManagementServerRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteManagementServer(
-      grpc::ClientContext& context, Options options,
-      google::cloud::backupdr::v1::DeleteManagementServerRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::backupdr::v1::DeleteManagementServerRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -86,8 +83,7 @@ class BackupDRTracingStub : public BackupDRStub {
 
  private:
   std::shared_ptr<BackupDRStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

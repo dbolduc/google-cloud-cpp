@@ -34,29 +34,23 @@ class DeploymentResourcePoolServiceConnectionIdempotencyPolicy {
   virtual ~DeploymentResourcePoolServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<
-      DeploymentResourcePoolServiceConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<DeploymentResourcePoolServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateDeploymentResourcePool(
-      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateDeploymentResourcePool(google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const& request);
 
-  virtual google::cloud::Idempotency GetDeploymentResourcePool(
-      google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetDeploymentResourcePool(google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const& request);
 
-  virtual google::cloud::Idempotency ListDeploymentResourcePools(
-      google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListDeploymentResourcePools(google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest request);
 
-  virtual google::cloud::Idempotency DeleteDeploymentResourcePool(
-      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteDeploymentResourcePool(google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const& request);
 };
 
 std::unique_ptr<DeploymentResourcePoolServiceConnectionIdempotencyPolicy>
-MakeDefaultDeploymentResourcePoolServiceConnectionIdempotencyPolicy();
+    MakeDefaultDeploymentResourcePoolServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

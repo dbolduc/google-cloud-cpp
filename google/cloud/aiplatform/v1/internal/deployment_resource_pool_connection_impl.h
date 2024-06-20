@@ -46,37 +46,27 @@ class DeploymentResourcePoolServiceConnectionImpl
   ~DeploymentResourcePoolServiceConnectionImpl() override = default;
 
   DeploymentResourcePoolServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<aiplatform_v1_internal::DeploymentResourcePoolServiceStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<aiplatform_v1_internal::DeploymentResourcePoolServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
-  CreateDeploymentResourcePool(
-      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
-          request) override;
+  CreateDeploymentResourcePool(google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
-  GetDeploymentResourcePool(
-      google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
-          request) override;
+  GetDeploymentResourcePool(google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const& request) override;
 
   StreamRange<google::cloud::aiplatform::v1::DeploymentResourcePool>
-  ListDeploymentResourcePools(
-      google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest request)
-      override;
+  ListDeploymentResourcePools(google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDeploymentResourcePool(
-      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
-          request) override;
+  DeleteDeploymentResourcePool(google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<aiplatform_v1_internal::DeploymentResourcePoolServiceStub>
-      stub_;
+  std::shared_ptr<aiplatform_v1_internal::DeploymentResourcePoolServiceStub> stub_;
   Options options_;
 };
 

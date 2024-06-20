@@ -33,66 +33,51 @@ namespace {
 
 std::unique_ptr<aiplatform_v1::FeatureOnlineStoreServiceRetryPolicy>
 retry_policy(Options const& options) {
-  return options
-      .get<aiplatform_v1::FeatureOnlineStoreServiceRetryPolicyOption>()
-      ->clone();
+  return options.get<aiplatform_v1::FeatureOnlineStoreServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options
-      .get<aiplatform_v1::FeatureOnlineStoreServiceBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<aiplatform_v1::FeatureOnlineStoreServiceBackoffPolicyOption>()->clone();
 }
 
-std::unique_ptr<
-    aiplatform_v1::FeatureOnlineStoreServiceConnectionIdempotencyPolicy>
+std::unique_ptr<aiplatform_v1::FeatureOnlineStoreServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<aiplatform_v1::
-               FeatureOnlineStoreServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<aiplatform_v1::FeatureOnlineStoreServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
-FeatureOnlineStoreServiceConnectionImpl::
-    FeatureOnlineStoreServiceConnectionImpl(
-        std::unique_ptr<google::cloud::BackgroundThreads> background,
-        std::shared_ptr<aiplatform_v1_internal::FeatureOnlineStoreServiceStub>
-            stub,
-        Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), FeatureOnlineStoreServiceConnection::options())) {
-}
+FeatureOnlineStoreServiceConnectionImpl::FeatureOnlineStoreServiceConnectionImpl(
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<aiplatform_v1_internal::FeatureOnlineStoreServiceStub> stub,
+    Options options)
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        FeatureOnlineStoreServiceConnection::options())) {}
 
 StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>
-FeatureOnlineStoreServiceConnectionImpl::FetchFeatureValues(
-    google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request) {
+FeatureOnlineStoreServiceConnectionImpl::FetchFeatureValues(google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->FetchFeatureValues(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::FetchFeatureValuesRequest const&
-                 request) {
+             google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request) {
         return stub_->FetchFeatureValues(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
-FeatureOnlineStoreServiceConnectionImpl::SearchNearestEntities(
-    google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
-        request) {
+FeatureOnlineStoreServiceConnectionImpl::SearchNearestEntities(google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SearchNearestEntities(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
-                 request) {
+             google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const& request) {
         return stub_->SearchNearestEntities(context, options, request);
       },
       *current, request, __func__);

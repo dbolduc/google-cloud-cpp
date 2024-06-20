@@ -40,11 +40,13 @@ class BatchServiceAuth : public BatchServiceStub {
       std::shared_ptr<BatchServiceStub> child);
 
   StatusOr<google::cloud::batch::v1::Job> CreateJob(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::batch::v1::CreateJobRequest const& request) override;
 
   StatusOr<google::cloud::batch::v1::Job> GetJob(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::batch::v1::GetJobRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteJob(
@@ -54,19 +56,23 @@ class BatchServiceAuth : public BatchServiceStub {
       google::cloud::batch::v1::DeleteJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteJob(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::batch::v1::DeleteJobRequest const& request) override;
 
   StatusOr<google::cloud::batch::v1::ListJobsResponse> ListJobs(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::batch::v1::ListJobsRequest const& request) override;
 
   StatusOr<google::cloud::batch::v1::Task> GetTask(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::batch::v1::GetTaskRequest const& request) override;
 
   StatusOr<google::cloud::batch::v1::ListTasksResponse> ListTasks(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::batch::v1::ListTasksRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

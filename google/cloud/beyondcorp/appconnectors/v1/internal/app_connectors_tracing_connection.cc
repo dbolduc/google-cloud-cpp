@@ -30,79 +30,53 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 AppConnectorsServiceTracingConnection::AppConnectorsServiceTracingConnection(
-    std::shared_ptr<beyondcorp_appconnectors_v1::AppConnectorsServiceConnection>
-        child)
+    std::shared_ptr<beyondcorp_appconnectors_v1::AppConnectorsServiceConnection> child)
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
-AppConnectorsServiceTracingConnection::ListAppConnectors(
-    google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest
-        request) {
-  auto span = internal::MakeSpan(
-      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
-      "ListAppConnectors");
+AppConnectorsServiceTracingConnection::ListAppConnectors(google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest request) {
+  auto span = internal::MakeSpan("beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::ListAppConnectors");
   internal::OTelScope scope(span);
   auto sr = child_->ListAppConnectors(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::beyondcorp::appconnectors::v1::AppConnector>(
-      std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::beyondcorp::appconnectors::v1::AppConnector>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
-AppConnectorsServiceTracingConnection::GetAppConnector(
-    google::cloud::beyondcorp::appconnectors::v1::GetAppConnectorRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
-      "GetAppConnector");
+AppConnectorsServiceTracingConnection::GetAppConnector(google::cloud::beyondcorp::appconnectors::v1::GetAppConnectorRequest const& request) {
+  auto span = internal::MakeSpan("beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::GetAppConnector");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetAppConnector(request));
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-AppConnectorsServiceTracingConnection::CreateAppConnector(
-    google::cloud::beyondcorp::appconnectors::v1::
-        CreateAppConnectorRequest const& request) {
+AppConnectorsServiceTracingConnection::CreateAppConnector(google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest const& request) {
   auto span = internal::MakeSpan(
-      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
-      "CreateAppConnector");
+      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::CreateAppConnector");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateAppConnector(request));
+  return internal::EndSpan(std::move(span), child_->CreateAppConnector(request));
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-AppConnectorsServiceTracingConnection::UpdateAppConnector(
-    google::cloud::beyondcorp::appconnectors::v1::
-        UpdateAppConnectorRequest const& request) {
+AppConnectorsServiceTracingConnection::UpdateAppConnector(google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest const& request) {
   auto span = internal::MakeSpan(
-      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
-      "UpdateAppConnector");
+      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::UpdateAppConnector");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateAppConnector(request));
+  return internal::EndSpan(std::move(span), child_->UpdateAppConnector(request));
 }
 
-future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
-                    AppConnectorOperationMetadata>>
-AppConnectorsServiceTracingConnection::DeleteAppConnector(
-    google::cloud::beyondcorp::appconnectors::v1::
-        DeleteAppConnectorRequest const& request) {
+future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnectorOperationMetadata>>
+AppConnectorsServiceTracingConnection::DeleteAppConnector(google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest const& request) {
   auto span = internal::MakeSpan(
-      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
-      "DeleteAppConnector");
+      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::DeleteAppConnector");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteAppConnector(request));
+  return internal::EndSpan(std::move(span), child_->DeleteAppConnector(request));
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-AppConnectorsServiceTracingConnection::ReportStatus(
-    google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
-        request) {
+AppConnectorsServiceTracingConnection::ReportStatus(google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const& request) {
   auto span = internal::MakeSpan(
-      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::"
-      "ReportStatus");
+      "beyondcorp_appconnectors_v1::AppConnectorsServiceConnection::ReportStatus");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ReportStatus(request));
 }
@@ -111,12 +85,10 @@ AppConnectorsServiceTracingConnection::ReportStatus(
 
 std::shared_ptr<beyondcorp_appconnectors_v1::AppConnectorsServiceConnection>
 MakeAppConnectorsServiceTracingConnection(
-    std::shared_ptr<beyondcorp_appconnectors_v1::AppConnectorsServiceConnection>
-        conn) {
+    std::shared_ptr<beyondcorp_appconnectors_v1::AppConnectorsServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<AppConnectorsServiceTracingConnection>(
-        std::move(conn));
+    conn = std::make_shared<AppConnectorsServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

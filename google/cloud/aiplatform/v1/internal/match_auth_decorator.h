@@ -39,15 +39,14 @@ class MatchServiceAuth : public MatchServiceStub {
       std::shared_ptr<MatchServiceStub> child);
 
   StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse> FindNeighbors(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::FindNeighborsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::FindNeighborsRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>
-  ReadIndexDatapoints(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse> ReadIndexDatapoints(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

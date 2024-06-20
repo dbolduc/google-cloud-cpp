@@ -35,26 +35,23 @@ class MigrationServiceTracingStub : public MigrationServiceStub {
  public:
   ~MigrationServiceTracingStub() override = default;
 
-  explicit MigrationServiceTracingStub(
-      std::shared_ptr<MigrationServiceStub> child);
+  explicit MigrationServiceTracingStub(std::shared_ptr<MigrationServiceStub> child);
 
-  StatusOr<google::cloud::aiplatform::v1::SearchMigratableResourcesResponse>
-  SearchMigratableResources(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const&
-          request) override;
+  StatusOr<google::cloud::aiplatform::v1::SearchMigratableResourcesResponse> SearchMigratableResources(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchMigrateResources(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
-          request) override;
+      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> BatchMigrateResources(
-      grpc::ClientContext& context, Options options,
-      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -70,8 +67,7 @@ class MigrationServiceTracingStub : public MigrationServiceStub {
 
  private:
   std::shared_ptr<MigrationServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -31,20 +31,19 @@ FeatureOnlineStoreServiceAuth::FeatureOnlineStoreServiceAuth(
     std::shared_ptr<FeatureOnlineStoreServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>
-FeatureOnlineStoreServiceAuth::FetchFeatureValues(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse> FeatureOnlineStoreServiceAuth::FetchFeatureValues(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->FetchFeatureValues(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
-FeatureOnlineStoreServiceAuth::SearchNearestEntities(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
-        request) {
+StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse> FeatureOnlineStoreServiceAuth::SearchNearestEntities(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SearchNearestEntities(context, options, request);

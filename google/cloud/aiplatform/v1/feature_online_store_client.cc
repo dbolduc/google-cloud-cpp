@@ -26,18 +26,14 @@ namespace aiplatform_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 FeatureOnlineStoreServiceClient::FeatureOnlineStoreServiceClient(
-    std::shared_ptr<FeatureOnlineStoreServiceConnection> connection,
-    Options opts)
+    std::shared_ptr<FeatureOnlineStoreServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 FeatureOnlineStoreServiceClient::~FeatureOnlineStoreServiceClient() = default;
 
 StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>
-FeatureOnlineStoreServiceClient::FetchFeatureValues(
-    std::string const& feature_view,
-    google::cloud::aiplatform::v1::FeatureViewDataKey const& data_key,
-    Options opts) {
+FeatureOnlineStoreServiceClient::FetchFeatureValues(std::string const& feature_view, google::cloud::aiplatform::v1::FeatureViewDataKey const& data_key, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::FetchFeatureValuesRequest request;
   request.set_feature_view(feature_view);
@@ -46,17 +42,13 @@ FeatureOnlineStoreServiceClient::FetchFeatureValues(
 }
 
 StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>
-FeatureOnlineStoreServiceClient::FetchFeatureValues(
-    google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request,
-    Options opts) {
+FeatureOnlineStoreServiceClient::FetchFeatureValues(google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FetchFeatureValues(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
-FeatureOnlineStoreServiceClient::SearchNearestEntities(
-    google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const& request,
-    Options opts) {
+FeatureOnlineStoreServiceClient::SearchNearestEntities(google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchNearestEntities(request);
 }

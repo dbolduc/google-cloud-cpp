@@ -42,118 +42,81 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockModelServiceConnection
-    : public aiplatform_v1::ModelServiceConnection {
+class MockModelServiceConnection : public aiplatform_v1::ModelServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>,
-      UploadModel,
-      (google::cloud::aiplatform::v1::UploadModelRequest const& request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Model>, GetModel,
-              (google::cloud::aiplatform::v1::GetModelRequest const& request),
-              (override));
-
-  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Model>), ListModels,
-              (google::cloud::aiplatform::v1::ListModelsRequest request),
-              (override));
-
-  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Model>),
-              ListModelVersions,
-              (google::cloud::aiplatform::v1::ListModelVersionsRequest request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::Model>, UpdateModel,
-      (google::cloud::aiplatform::v1::UpdateModelRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>,
-      UpdateExplanationDataset,
-      (google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-      DeleteModel,
-      (google::cloud::aiplatform::v1::DeleteModelRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-      DeleteModelVersion,
-      (google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>,
+  UploadModel,
+  (google::cloud::aiplatform::v1::UploadModelRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Model>,
-              MergeVersionAliases,
-              (google::cloud::aiplatform::v1::MergeVersionAliasesRequest const&
-                   request),
-              (override));
+  GetModel,
+  (google::cloud::aiplatform::v1::GetModelRequest const& request), (override));
 
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>,
-      ExportModel,
-      (google::cloud::aiplatform::v1::ExportModelRequest const& request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Model>),
+  ListModels,
+  (google::cloud::aiplatform::v1::ListModelsRequest request), (override));
 
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>,
-      CopyModel,
-      (google::cloud::aiplatform::v1::CopyModelRequest const& request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Model>),
+  ListModelVersions,
+  (google::cloud::aiplatform::v1::ListModelVersionsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>,
-      ImportModelEvaluation,
-      (google::cloud::aiplatform::v1::ImportModelEvaluationRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Model>,
+  UpdateModel,
+  (google::cloud::aiplatform::v1::UpdateModelRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::
-                           BatchImportModelEvaluationSlicesResponse>,
-              BatchImportModelEvaluationSlices,
-              (google::cloud::aiplatform::v1::
-                   BatchImportModelEvaluationSlicesRequest const& request),
-              (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>,
+  UpdateExplanationDataset,
+  (google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::
-                           BatchImportEvaluatedAnnotationsResponse>,
-              BatchImportEvaluatedAnnotations,
-              (google::cloud::aiplatform::v1::
-                   BatchImportEvaluatedAnnotationsRequest const& request),
-              (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+  DeleteModel,
+  (google::cloud::aiplatform::v1::DeleteModelRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>,
-      GetModelEvaluation,
-      (google::cloud::aiplatform::v1::GetModelEvaluationRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+  DeleteModelVersion,
+  (google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::aiplatform::v1::ModelEvaluation>),
-      ListModelEvaluations,
-      (google::cloud::aiplatform::v1::ListModelEvaluationsRequest request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Model>,
+  MergeVersionAliases,
+  (google::cloud::aiplatform::v1::MergeVersionAliasesRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::ModelEvaluationSlice>,
-      GetModelEvaluationSlice,
-      (google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>,
+  ExportModel,
+  (google::cloud::aiplatform::v1::ExportModelRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::aiplatform::v1::ModelEvaluationSlice>),
-      ListModelEvaluationSlices,
-      (google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>,
+  CopyModel,
+  (google::cloud::aiplatform::v1::CopyModelRequest const& request), (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>,
+  ImportModelEvaluation,
+  (google::cloud::aiplatform::v1::ImportModelEvaluationRequest const& request), (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse>,
+  BatchImportModelEvaluationSlices,
+  (google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesRequest const& request), (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsResponse>,
+  BatchImportEvaluatedAnnotations,
+  (google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsRequest const& request), (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>,
+  GetModelEvaluation,
+  (google::cloud::aiplatform::v1::GetModelEvaluationRequest const& request), (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::ModelEvaluation>),
+  ListModelEvaluations,
+  (google::cloud::aiplatform::v1::ListModelEvaluationsRequest request), (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::ModelEvaluationSlice>,
+  GetModelEvaluationSlice,
+  (google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const& request), (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::ModelEvaluationSlice>),
+  ListModelEvaluationSlices,
+  (google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

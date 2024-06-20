@@ -62,31 +62,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DeploymentResourcePoolServiceClient {
  public:
-  explicit DeploymentResourcePoolServiceClient(
-      std::shared_ptr<DeploymentResourcePoolServiceConnection> connection,
-      Options opts = {});
+  explicit DeploymentResourcePoolServiceClient(std::shared_ptr<DeploymentResourcePoolServiceConnection> connection, Options opts = {});
   ~DeploymentResourcePoolServiceClient();
 
   ///@{
   /// @name Copy and move support
-  DeploymentResourcePoolServiceClient(
-      DeploymentResourcePoolServiceClient const&) = default;
-  DeploymentResourcePoolServiceClient& operator=(
-      DeploymentResourcePoolServiceClient const&) = default;
-  DeploymentResourcePoolServiceClient(DeploymentResourcePoolServiceClient&&) =
-      default;
-  DeploymentResourcePoolServiceClient& operator=(
-      DeploymentResourcePoolServiceClient&&) = default;
+  DeploymentResourcePoolServiceClient(DeploymentResourcePoolServiceClient const&) = default;
+  DeploymentResourcePoolServiceClient& operator=(DeploymentResourcePoolServiceClient const&) = default;
+  DeploymentResourcePoolServiceClient(DeploymentResourcePoolServiceClient&&) = default;
+  DeploymentResourcePoolServiceClient& operator=(DeploymentResourcePoolServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(DeploymentResourcePoolServiceClient const& a,
-                         DeploymentResourcePoolServiceClient const& b) {
+  friend bool operator==(DeploymentResourcePoolServiceClient const& a, DeploymentResourcePoolServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(DeploymentResourcePoolServiceClient const& a,
-                         DeploymentResourcePoolServiceClient const& b) {
+  friend bool operator!=(DeploymentResourcePoolServiceClient const& a, DeploymentResourcePoolServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -129,11 +121,7 @@ class DeploymentResourcePoolServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
-  CreateDeploymentResourcePool(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::DeploymentResourcePool const&
-          deployment_resource_pool,
-      std::string const& deployment_resource_pool_id, Options opts = {});
+  CreateDeploymentResourcePool(std::string const& parent, google::cloud::aiplatform::v1::DeploymentResourcePool const& deployment_resource_pool, std::string const& deployment_resource_pool_id, Options opts = {});
 
   // clang-format off
   ///
@@ -170,10 +158,7 @@ class DeploymentResourcePoolServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
-  CreateDeploymentResourcePool(
-      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
-          request,
-      Options opts = {});
+  CreateDeploymentResourcePool(google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -230,10 +215,7 @@ class DeploymentResourcePoolServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
-  GetDeploymentResourcePool(
-      google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
-          request,
-      Options opts = {});
+  GetDeploymentResourcePool(google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -307,9 +289,7 @@ class DeploymentResourcePoolServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::DeploymentResourcePool>
-  ListDeploymentResourcePools(
-      google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest request,
-      Options opts = {});
+  ListDeploymentResourcePools(google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -380,10 +360,7 @@ class DeploymentResourcePoolServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDeploymentResourcePool(
-      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
-          request,
-      Options opts = {});
+  DeleteDeploymentResourcePool(google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<DeploymentResourcePoolServiceConnection> connection_;

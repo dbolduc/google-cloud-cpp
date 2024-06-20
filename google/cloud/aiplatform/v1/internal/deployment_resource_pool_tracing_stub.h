@@ -31,51 +31,43 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class DeploymentResourcePoolServiceTracingStub
-    : public DeploymentResourcePoolServiceStub {
+class DeploymentResourcePoolServiceTracingStub : public DeploymentResourcePoolServiceStub {
  public:
   ~DeploymentResourcePoolServiceTracingStub() override = default;
 
-  explicit DeploymentResourcePoolServiceTracingStub(
-      std::shared_ptr<DeploymentResourcePoolServiceStub> child);
+  explicit DeploymentResourcePoolServiceTracingStub(std::shared_ptr<DeploymentResourcePoolServiceStub> child);
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncCreateDeploymentResourcePool(
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateDeploymentResourcePool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
-          request) override;
+      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateDeploymentResourcePool(
-      grpc::ClientContext& context, Options options,
-      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
-  GetDeploymentResourcePool(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
-          request) override;
+  StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool> GetDeploymentResourcePool(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::ListDeploymentResourcePoolsResponse>
-  ListDeploymentResourcePools(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest const&
-          request) override;
+  StatusOr<google::cloud::aiplatform::v1::ListDeploymentResourcePoolsResponse> ListDeploymentResourcePools(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncDeleteDeploymentResourcePool(
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteDeploymentResourcePool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
-          request) override;
+      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteDeploymentResourcePool(
-      grpc::ClientContext& context, Options options,
-      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -91,8 +83,7 @@ class DeploymentResourcePoolServiceTracingStub
 
  private:
   std::shared_ptr<DeploymentResourcePoolServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -103,8 +94,7 @@ class DeploymentResourcePoolServiceTracingStub
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
-std::shared_ptr<DeploymentResourcePoolServiceStub>
-MakeDeploymentResourcePoolServiceTracingStub(
+std::shared_ptr<DeploymentResourcePoolServiceStub> MakeDeploymentResourcePoolServiceTracingStub(
     std::shared_ptr<DeploymentResourcePoolServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

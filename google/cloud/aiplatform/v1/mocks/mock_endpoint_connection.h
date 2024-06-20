@@ -42,56 +42,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockEndpointServiceConnection
-    : public aiplatform_v1::EndpointServiceConnection {
+class MockEndpointServiceConnection : public aiplatform_v1::EndpointServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>, CreateEndpoint,
-      (google::cloud::aiplatform::v1::CreateEndpointRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>,
+  CreateEndpoint,
+  (google::cloud::aiplatform::v1::CreateEndpointRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::Endpoint>, GetEndpoint,
-      (google::cloud::aiplatform::v1::GetEndpointRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Endpoint>,
+  GetEndpoint,
+  (google::cloud::aiplatform::v1::GetEndpointRequest const& request), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Endpoint>),
-              ListEndpoints,
-              (google::cloud::aiplatform::v1::ListEndpointsRequest request),
-              (override));
+  ListEndpoints,
+  (google::cloud::aiplatform::v1::ListEndpointsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::Endpoint>, UpdateEndpoint,
-      (google::cloud::aiplatform::v1::UpdateEndpointRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Endpoint>,
+  UpdateEndpoint,
+  (google::cloud::aiplatform::v1::UpdateEndpointRequest const& request), (override));
 
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-      DeleteEndpoint,
-      (google::cloud::aiplatform::v1::DeleteEndpointRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+  DeleteEndpoint,
+  (google::cloud::aiplatform::v1::DeleteEndpointRequest const& request), (override));
 
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>,
-      DeployModel,
-      (google::cloud::aiplatform::v1::DeployModelRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>,
+  DeployModel,
+  (google::cloud::aiplatform::v1::DeployModelRequest const& request), (override));
 
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>,
-      UndeployModel,
-      (google::cloud::aiplatform::v1::UndeployModelRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>,
+  UndeployModel,
+  (google::cloud::aiplatform::v1::UndeployModelRequest const& request), (override));
 
-  MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>,
-      MutateDeployedModel,
-      (google::cloud::aiplatform::v1::MutateDeployedModelRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>,
+  MutateDeployedModel,
+  (google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

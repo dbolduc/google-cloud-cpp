@@ -72,28 +72,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class AccessContextManagerClient {
  public:
-  explicit AccessContextManagerClient(
-      std::shared_ptr<AccessContextManagerConnection> connection,
-      Options opts = {});
+  explicit AccessContextManagerClient(std::shared_ptr<AccessContextManagerConnection> connection, Options opts = {});
   ~AccessContextManagerClient();
 
   ///@{
   /// @name Copy and move support
   AccessContextManagerClient(AccessContextManagerClient const&) = default;
-  AccessContextManagerClient& operator=(AccessContextManagerClient const&) =
-      default;
+  AccessContextManagerClient& operator=(AccessContextManagerClient const&) = default;
   AccessContextManagerClient(AccessContextManagerClient&&) = default;
   AccessContextManagerClient& operator=(AccessContextManagerClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(AccessContextManagerClient const& a,
-                         AccessContextManagerClient const& b) {
+  friend bool operator==(AccessContextManagerClient const& a, AccessContextManagerClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(AccessContextManagerClient const& a,
-                         AccessContextManagerClient const& b) {
+  friend bool operator!=(AccessContextManagerClient const& a, AccessContextManagerClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -137,10 +132,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>
-  ListAccessPolicies(
-      google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest
-          request,
-      Options opts = {});
+  ListAccessPolicies(google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -199,10 +191,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>
-  GetAccessPolicy(
-      google::identity::accesscontextmanager::v1::GetAccessPolicyRequest const&
-          request,
-      Options opts = {});
+  GetAccessPolicy(google::identity::accesscontextmanager::v1::GetAccessPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -242,9 +231,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
-  CreateAccessPolicy(
-      google::identity::accesscontextmanager::v1::AccessPolicy const& request,
-      Options opts = {});
+  CreateAccessPolicy(google::identity::accesscontextmanager::v1::AccessPolicy const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -282,9 +269,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
-  UpdateAccessPolicy(
-      google::identity::accesscontextmanager::v1::AccessPolicy const& policy,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateAccessPolicy(google::identity::accesscontextmanager::v1::AccessPolicy const& policy, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -326,9 +311,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
-  UpdateAccessPolicy(google::identity::accesscontextmanager::v1::
-                         UpdateAccessPolicyRequest const& request,
-                     Options opts = {});
+  UpdateAccessPolicy(google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -365,8 +348,7 @@ class AccessContextManagerClient {
   /// [google.identity.accesscontextmanager.v1.DeleteAccessPolicyRequest]: @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L529}
   ///
   // clang-format on
-  future<StatusOr<google::identity::accesscontextmanager::v1::
-                      AccessContextManagerOperationMetadata>>
+  future<StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>
   DeleteAccessPolicy(std::string const& name, Options opts = {});
 
   // clang-format off
@@ -407,11 +389,8 @@ class AccessContextManagerClient {
   /// [google.identity.accesscontextmanager.v1.DeleteAccessPolicyRequest]: @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L529}
   ///
   // clang-format on
-  future<StatusOr<google::identity::accesscontextmanager::v1::
-                      AccessContextManagerOperationMetadata>>
-  DeleteAccessPolicy(google::identity::accesscontextmanager::v1::
-                         DeleteAccessPolicyRequest const& request,
-                     Options opts = {});
+  future<StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>
+  DeleteAccessPolicy(google::identity::accesscontextmanager::v1::DeleteAccessPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -492,10 +471,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>
-  ListAccessLevels(
-      google::identity::accesscontextmanager::v1::ListAccessLevelsRequest
-          request,
-      Options opts = {});
+  ListAccessLevels(google::identity::accesscontextmanager::v1::ListAccessLevelsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -558,10 +534,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>
-  GetAccessLevel(
-      google::identity::accesscontextmanager::v1::GetAccessLevelRequest const&
-          request,
-      Options opts = {});
+  GetAccessLevel(google::identity::accesscontextmanager::v1::GetAccessLevelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -607,11 +580,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
-  CreateAccessLevel(
-      std::string const& parent,
-      google::identity::accesscontextmanager::v1::AccessLevel const&
-          access_level,
-      Options opts = {});
+  CreateAccessLevel(std::string const& parent, google::identity::accesscontextmanager::v1::AccessLevel const& access_level, Options opts = {});
 
   // clang-format off
   ///
@@ -654,9 +623,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
-  CreateAccessLevel(google::identity::accesscontextmanager::v1::
-                        CreateAccessLevelRequest const& request,
-                    Options opts = {});
+  CreateAccessLevel(google::identity::accesscontextmanager::v1::CreateAccessLevelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -700,10 +667,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
-  UpdateAccessLevel(
-      google::identity::accesscontextmanager::v1::AccessLevel const&
-          access_level,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateAccessLevel(google::identity::accesscontextmanager::v1::AccessLevel const& access_level, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -747,9 +711,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
-  UpdateAccessLevel(google::identity::accesscontextmanager::v1::
-                        UpdateAccessLevelRequest const& request,
-                    Options opts = {});
+  UpdateAccessLevel(google::identity::accesscontextmanager::v1::UpdateAccessLevelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -789,8 +751,7 @@ class AccessContextManagerClient {
   /// [google.identity.accesscontextmanager.v1.DeleteAccessLevelRequest]: @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L642}
   ///
   // clang-format on
-  future<StatusOr<google::identity::accesscontextmanager::v1::
-                      AccessContextManagerOperationMetadata>>
+  future<StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>
   DeleteAccessLevel(std::string const& name, Options opts = {});
 
   // clang-format off
@@ -832,11 +793,8 @@ class AccessContextManagerClient {
   /// [google.identity.accesscontextmanager.v1.DeleteAccessLevelRequest]: @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L642}
   ///
   // clang-format on
-  future<StatusOr<google::identity::accesscontextmanager::v1::
-                      AccessContextManagerOperationMetadata>>
-  DeleteAccessLevel(google::identity::accesscontextmanager::v1::
-                        DeleteAccessLevelRequest const& request,
-                    Options opts = {});
+  future<StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>
+  DeleteAccessLevel(google::identity::accesscontextmanager::v1::DeleteAccessLevelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -888,11 +846,8 @@ class AccessContextManagerClient {
   /// [google.identity.accesscontextmanager.v1.ReplaceAccessLevelsResponse]: @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L691}
   ///
   // clang-format on
-  future<StatusOr<
-      google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>>
-  ReplaceAccessLevels(google::identity::accesscontextmanager::v1::
-                          ReplaceAccessLevelsRequest const& request,
-                      Options opts = {});
+  future<StatusOr<google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>>
+  ReplaceAccessLevels(google::identity::accesscontextmanager::v1::ReplaceAccessLevelsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -973,10 +928,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StreamRange<google::identity::accesscontextmanager::v1::ServicePerimeter>
-  ListServicePerimeters(
-      google::identity::accesscontextmanager::v1::ListServicePerimetersRequest
-          request,
-      Options opts = {});
+  ListServicePerimeters(google::identity::accesscontextmanager::v1::ListServicePerimetersRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1039,9 +991,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>
-  GetServicePerimeter(google::identity::accesscontextmanager::v1::
-                          GetServicePerimeterRequest const& request,
-                      Options opts = {});
+  GetServicePerimeter(google::identity::accesscontextmanager::v1::GetServicePerimeterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1088,11 +1038,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
-  CreateServicePerimeter(
-      std::string const& parent,
-      google::identity::accesscontextmanager::v1::ServicePerimeter const&
-          service_perimeter,
-      Options opts = {});
+  CreateServicePerimeter(std::string const& parent, google::identity::accesscontextmanager::v1::ServicePerimeter const& service_perimeter, Options opts = {});
 
   // clang-format off
   ///
@@ -1136,9 +1082,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
-  CreateServicePerimeter(google::identity::accesscontextmanager::v1::
-                             CreateServicePerimeterRequest const& request,
-                         Options opts = {});
+  CreateServicePerimeter(google::identity::accesscontextmanager::v1::CreateServicePerimeterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1179,10 +1123,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
-  UpdateServicePerimeter(
-      google::identity::accesscontextmanager::v1::ServicePerimeter const&
-          service_perimeter,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateServicePerimeter(google::identity::accesscontextmanager::v1::ServicePerimeter const& service_perimeter, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1226,9 +1167,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
-  UpdateServicePerimeter(google::identity::accesscontextmanager::v1::
-                             UpdateServicePerimeterRequest const& request,
-                         Options opts = {});
+  UpdateServicePerimeter(google::identity::accesscontextmanager::v1::UpdateServicePerimeterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1268,8 +1207,7 @@ class AccessContextManagerClient {
   /// [google.identity.accesscontextmanager.v1.DeleteServicePerimeterRequest]: @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L780}
   ///
   // clang-format on
-  future<StatusOr<google::identity::accesscontextmanager::v1::
-                      AccessContextManagerOperationMetadata>>
+  future<StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>
   DeleteServicePerimeter(std::string const& name, Options opts = {});
 
   // clang-format off
@@ -1311,11 +1249,8 @@ class AccessContextManagerClient {
   /// [google.identity.accesscontextmanager.v1.DeleteServicePerimeterRequest]: @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L780}
   ///
   // clang-format on
-  future<StatusOr<google::identity::accesscontextmanager::v1::
-                      AccessContextManagerOperationMetadata>>
-  DeleteServicePerimeter(google::identity::accesscontextmanager::v1::
-                             DeleteServicePerimeterRequest const& request,
-                         Options opts = {});
+  future<StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>
+  DeleteServicePerimeter(google::identity::accesscontextmanager::v1::DeleteServicePerimeterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1363,11 +1298,8 @@ class AccessContextManagerClient {
   /// [google.identity.accesscontextmanager.v1.ReplaceServicePerimetersResponse]: @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L829}
   ///
   // clang-format on
-  future<StatusOr<google::identity::accesscontextmanager::v1::
-                      ReplaceServicePerimetersResponse>>
-  ReplaceServicePerimeters(google::identity::accesscontextmanager::v1::
-                               ReplaceServicePerimetersRequest const& request,
-                           Options opts = {});
+  future<StatusOr<google::identity::accesscontextmanager::v1::ReplaceServicePerimetersResponse>>
+  ReplaceServicePerimeters(google::identity::accesscontextmanager::v1::ReplaceServicePerimetersRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1418,11 +1350,8 @@ class AccessContextManagerClient {
   /// [google.identity.accesscontextmanager.v1.CommitServicePerimetersResponse]: @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L865}
   ///
   // clang-format on
-  future<StatusOr<google::identity::accesscontextmanager::v1::
-                      CommitServicePerimetersResponse>>
-  CommitServicePerimeters(google::identity::accesscontextmanager::v1::
-                              CommitServicePerimetersRequest const& request,
-                          Options opts = {});
+  future<StatusOr<google::identity::accesscontextmanager::v1::CommitServicePerimetersResponse>>
+  CommitServicePerimeters(google::identity::accesscontextmanager::v1::CommitServicePerimetersRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1499,9 +1428,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StreamRange<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
-  ListGcpUserAccessBindings(google::identity::accesscontextmanager::v1::
-                                ListGcpUserAccessBindingsRequest request,
-                            Options opts = {});
+  ListGcpUserAccessBindings(google::identity::accesscontextmanager::v1::ListGcpUserAccessBindingsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1560,9 +1487,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
-  GetGcpUserAccessBinding(google::identity::accesscontextmanager::v1::
-                              GetGcpUserAccessBindingRequest const& request,
-                          Options opts = {});
+  GetGcpUserAccessBinding(google::identity::accesscontextmanager::v1::GetGcpUserAccessBindingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1604,13 +1529,8 @@ class AccessContextManagerClient {
   /// [google.identity.accesscontextmanager.v1.GcpUserAccessBinding]: @googleapis_reference_link{google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
   ///
   // clang-format on
-  future<StatusOr<
-      google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
-  CreateGcpUserAccessBinding(
-      std::string const& parent,
-      google::identity::accesscontextmanager::v1::GcpUserAccessBinding const&
-          gcp_user_access_binding,
-      Options opts = {});
+  future<StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
+  CreateGcpUserAccessBinding(std::string const& parent, google::identity::accesscontextmanager::v1::GcpUserAccessBinding const& gcp_user_access_binding, Options opts = {});
 
   // clang-format off
   ///
@@ -1655,12 +1575,8 @@ class AccessContextManagerClient {
   /// [google.identity.accesscontextmanager.v1.GcpUserAccessBinding]: @googleapis_reference_link{google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
   ///
   // clang-format on
-  future<StatusOr<
-      google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
-  CreateGcpUserAccessBinding(
-      google::identity::accesscontextmanager::v1::
-          CreateGcpUserAccessBindingRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
+  CreateGcpUserAccessBinding(google::identity::accesscontextmanager::v1::CreateGcpUserAccessBindingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1702,12 +1618,8 @@ class AccessContextManagerClient {
   /// [google.identity.accesscontextmanager.v1.UpdateGcpUserAccessBindingRequest]: @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L950}
   ///
   // clang-format on
-  future<StatusOr<
-      google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
-  UpdateGcpUserAccessBinding(
-      google::identity::accesscontextmanager::v1::GcpUserAccessBinding const&
-          gcp_user_access_binding,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
+  UpdateGcpUserAccessBinding(google::identity::accesscontextmanager::v1::GcpUserAccessBinding const& gcp_user_access_binding, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1747,12 +1659,8 @@ class AccessContextManagerClient {
   /// [google.identity.accesscontextmanager.v1.UpdateGcpUserAccessBindingRequest]: @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L950}
   ///
   // clang-format on
-  future<StatusOr<
-      google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
-  UpdateGcpUserAccessBinding(
-      google::identity::accesscontextmanager::v1::
-          UpdateGcpUserAccessBindingRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
+  UpdateGcpUserAccessBinding(google::identity::accesscontextmanager::v1::UpdateGcpUserAccessBindingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1787,8 +1695,7 @@ class AccessContextManagerClient {
   /// [google.identity.accesscontextmanager.v1.GcpUserAccessBindingOperationMetadata]: @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L979}
   ///
   // clang-format on
-  future<StatusOr<google::identity::accesscontextmanager::v1::
-                      GcpUserAccessBindingOperationMetadata>>
+  future<StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBindingOperationMetadata>>
   DeleteGcpUserAccessBinding(std::string const& name, Options opts = {});
 
   // clang-format off
@@ -1829,12 +1736,8 @@ class AccessContextManagerClient {
   /// [google.identity.accesscontextmanager.v1.GcpUserAccessBindingOperationMetadata]: @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L979}
   ///
   // clang-format on
-  future<StatusOr<google::identity::accesscontextmanager::v1::
-                      GcpUserAccessBindingOperationMetadata>>
-  DeleteGcpUserAccessBinding(
-      google::identity::accesscontextmanager::v1::
-          DeleteGcpUserAccessBindingRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBindingOperationMetadata>>
+  DeleteGcpUserAccessBinding(google::identity::accesscontextmanager::v1::DeleteGcpUserAccessBindingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1869,8 +1772,8 @@ class AccessContextManagerClient {
   /// [google.identity.accesscontextmanager.v1.AccessPolicy]: @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_policy.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1901,8 +1804,8 @@ class AccessContextManagerClient {
   /// [google.identity.accesscontextmanager.v1.AccessPolicy]: @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_policy.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1938,9 +1841,8 @@ class AccessContextManagerClient {
   /// [google.identity.accesscontextmanager.v1.AccessPolicy]: @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_policy.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<AccessContextManagerConnection> connection_;

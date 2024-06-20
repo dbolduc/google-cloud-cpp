@@ -36,41 +36,33 @@ class EndpointServiceTracingConnection
   ~EndpointServiceTracingConnection() override = default;
 
   explicit EndpointServiceTracingConnection(
-      std::shared_ptr<aiplatform_v1::EndpointServiceConnection> child);
+    std::shared_ptr<aiplatform_v1::EndpointServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::aiplatform::v1::Endpoint>> CreateEndpoint(
-      google::cloud::aiplatform::v1::CreateEndpointRequest const& request)
-      override;
+  future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
+  CreateEndpoint(google::cloud::aiplatform::v1::CreateEndpointRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::Endpoint> GetEndpoint(
-      google::cloud::aiplatform::v1::GetEndpointRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::Endpoint>
+  GetEndpoint(google::cloud::aiplatform::v1::GetEndpointRequest const& request) override;
 
-  StreamRange<google::cloud::aiplatform::v1::Endpoint> ListEndpoints(
-      google::cloud::aiplatform::v1::ListEndpointsRequest request) override;
+  StreamRange<google::cloud::aiplatform::v1::Endpoint>
+  ListEndpoints(google::cloud::aiplatform::v1::ListEndpointsRequest request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::Endpoint> UpdateEndpoint(
-      google::cloud::aiplatform::v1::UpdateEndpointRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::Endpoint>
+  UpdateEndpoint(google::cloud::aiplatform::v1::UpdateEndpointRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteEndpoint(google::cloud::aiplatform::v1::DeleteEndpointRequest const&
-                     request) override;
+  DeleteEndpoint(google::cloud::aiplatform::v1::DeleteEndpointRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>
-  DeployModel(google::cloud::aiplatform::v1::DeployModelRequest const& request)
-      override;
+  DeployModel(google::cloud::aiplatform::v1::DeployModelRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>
-  UndeployModel(google::cloud::aiplatform::v1::UndeployModelRequest const&
-                    request) override;
+  UndeployModel(google::cloud::aiplatform::v1::UndeployModelRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>
-  MutateDeployedModel(
-      google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request)
-      override;
+  MutateDeployedModel(google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request) override;
 
  private:
   std::shared_ptr<aiplatform_v1::EndpointServiceConnection> child_;

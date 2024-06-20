@@ -63,8 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DatasetServiceClient {
  public:
-  explicit DatasetServiceClient(
-      std::shared_ptr<DatasetServiceConnection> connection, Options opts = {});
+  explicit DatasetServiceClient(std::shared_ptr<DatasetServiceConnection> connection, Options opts = {});
   ~DatasetServiceClient();
 
   ///@{
@@ -77,12 +76,10 @@ class DatasetServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(DatasetServiceClient const& a,
-                         DatasetServiceClient const& b) {
+  friend bool operator==(DatasetServiceClient const& a, DatasetServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(DatasetServiceClient const& a,
-                         DatasetServiceClient const& b) {
+  friend bool operator!=(DatasetServiceClient const& a, DatasetServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -118,9 +115,8 @@ class DatasetServiceClient {
   /// [google.cloud.aiplatform.v1.Dataset]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset.proto#L36}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::Dataset>> CreateDataset(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::Dataset const& dataset, Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::Dataset>>
+  CreateDataset(std::string const& parent, google::cloud::aiplatform::v1::Dataset const& dataset, Options opts = {});
 
   // clang-format off
   ///
@@ -156,9 +152,8 @@ class DatasetServiceClient {
   /// [google.cloud.aiplatform.v1.Dataset]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset.proto#L36}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::Dataset>> CreateDataset(
-      google::cloud::aiplatform::v1::CreateDatasetRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::Dataset>>
+  CreateDataset(google::cloud::aiplatform::v1::CreateDatasetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -182,8 +177,8 @@ class DatasetServiceClient {
   /// [google.cloud.aiplatform.v1.GetDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L275}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Dataset> GetDataset(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Dataset>
+  GetDataset(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -212,9 +207,8 @@ class DatasetServiceClient {
   /// [google.cloud.aiplatform.v1.GetDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L275}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Dataset> GetDataset(
-      google::cloud::aiplatform::v1::GetDatasetRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Dataset>
+  GetDataset(google::cloud::aiplatform::v1::GetDatasetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -246,9 +240,8 @@ class DatasetServiceClient {
   /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Dataset> UpdateDataset(
-      google::cloud::aiplatform::v1::Dataset const& dataset,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Dataset>
+  UpdateDataset(google::cloud::aiplatform::v1::Dataset const& dataset, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -277,9 +270,8 @@ class DatasetServiceClient {
   /// [google.cloud.aiplatform.v1.UpdateDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L290}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Dataset> UpdateDataset(
-      google::cloud::aiplatform::v1::UpdateDatasetRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Dataset>
+  UpdateDataset(google::cloud::aiplatform::v1::UpdateDatasetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -313,8 +305,8 @@ class DatasetServiceClient {
   /// [google.cloud.aiplatform.v1.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L322}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Dataset> ListDatasets(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Dataset>
+  ListDatasets(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -352,9 +344,8 @@ class DatasetServiceClient {
   /// [google.cloud.aiplatform.v1.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L322}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Dataset> ListDatasets(
-      google::cloud::aiplatform::v1::ListDatasetsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Dataset>
+  ListDatasets(google::cloud::aiplatform::v1::ListDatasetsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -425,9 +416,7 @@ class DatasetServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDataset(
-      google::cloud::aiplatform::v1::DeleteDatasetRequest const& request,
-      Options opts = {});
+  DeleteDataset(google::cloud::aiplatform::v1::DeleteDatasetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -463,10 +452,7 @@ class DatasetServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
-  ImportData(std::string const& name,
-             std::vector<google::cloud::aiplatform::v1::ImportDataConfig> const&
-                 import_configs,
-             Options opts = {});
+  ImportData(std::string const& name, std::vector<google::cloud::aiplatform::v1::ImportDataConfig> const& import_configs, Options opts = {});
 
   // clang-format off
   ///
@@ -503,8 +489,7 @@ class DatasetServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
-  ImportData(google::cloud::aiplatform::v1::ImportDataRequest const& request,
-             Options opts = {});
+  ImportData(google::cloud::aiplatform::v1::ImportDataRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -539,10 +524,7 @@ class DatasetServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
-  ExportData(
-      std::string const& name,
-      google::cloud::aiplatform::v1::ExportDataConfig const& export_config,
-      Options opts = {});
+  ExportData(std::string const& name, google::cloud::aiplatform::v1::ExportDataConfig const& export_config, Options opts = {});
 
   // clang-format off
   ///
@@ -579,8 +561,7 @@ class DatasetServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
-  ExportData(google::cloud::aiplatform::v1::ExportDataRequest const& request,
-             Options opts = {});
+  ExportData(google::cloud::aiplatform::v1::ExportDataRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -617,10 +598,7 @@ class DatasetServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
-  CreateDatasetVersion(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::DatasetVersion const& dataset_version,
-      Options opts = {});
+  CreateDatasetVersion(std::string const& parent, google::cloud::aiplatform::v1::DatasetVersion const& dataset_version, Options opts = {});
 
   // clang-format off
   ///
@@ -657,9 +635,7 @@ class DatasetServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
-  CreateDatasetVersion(
-      google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request,
-      Options opts = {});
+  CreateDatasetVersion(google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -689,9 +665,8 @@ class DatasetServiceClient {
   /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::DatasetVersion> UpdateDatasetVersion(
-      google::cloud::aiplatform::v1::DatasetVersion const& dataset_version,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+  UpdateDatasetVersion(google::cloud::aiplatform::v1::DatasetVersion const& dataset_version, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -720,9 +695,8 @@ class DatasetServiceClient {
   /// [google.cloud.aiplatform.v1.UpdateDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L307}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::DatasetVersion> UpdateDatasetVersion(
-      google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+  UpdateDatasetVersion(google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -793,9 +767,7 @@ class DatasetServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDatasetVersion(
-      google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request,
-      Options opts = {});
+  DeleteDatasetVersion(google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -821,8 +793,8 @@ class DatasetServiceClient {
   /// [google.cloud.aiplatform.v1.GetDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L506}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::DatasetVersion> GetDatasetVersion(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+  GetDatasetVersion(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -851,9 +823,8 @@ class DatasetServiceClient {
   /// [google.cloud.aiplatform.v1.GetDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L506}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::DatasetVersion> GetDatasetVersion(
-      google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+  GetDatasetVersion(google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -928,9 +899,7 @@ class DatasetServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::DatasetVersion>
-  ListDatasetVersions(
-      google::cloud::aiplatform::v1::ListDatasetVersionsRequest request,
-      Options opts = {});
+  ListDatasetVersions(google::cloud::aiplatform::v1::ListDatasetVersionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1001,10 +970,7 @@ class DatasetServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
-  RestoreDatasetVersion(
-      google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
-          request,
-      Options opts = {});
+  RestoreDatasetVersion(google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1039,8 +1005,8 @@ class DatasetServiceClient {
   /// [google.cloud.aiplatform.v1.ListDataItemsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L585}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::DataItem> ListDataItems(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::DataItem>
+  ListDataItems(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1078,9 +1044,8 @@ class DatasetServiceClient {
   /// [google.cloud.aiplatform.v1.ListDataItemsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L585}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::DataItem> ListDataItems(
-      google::cloud::aiplatform::v1::ListDataItemsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::DataItem>
+  ListDataItems(google::cloud::aiplatform::v1::ListDataItemsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1118,9 +1083,8 @@ class DatasetServiceClient {
   /// [google.cloud.aiplatform.v1.SearchDataItemsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L625}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::DataItemView> SearchDataItems(
-      google::cloud::aiplatform::v1::SearchDataItemsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::DataItemView>
+  SearchDataItems(google::cloud::aiplatform::v1::SearchDataItemsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1155,8 +1119,8 @@ class DatasetServiceClient {
   /// [google.cloud.aiplatform.v1.SavedQuery]: @googleapis_reference_link{google/cloud/aiplatform/v1/saved_query.proto#L34}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::SavedQuery> ListSavedQueries(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::SavedQuery>
+  ListSavedQueries(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1194,9 +1158,8 @@ class DatasetServiceClient {
   /// [google.cloud.aiplatform.v1.SavedQuery]: @googleapis_reference_link{google/cloud/aiplatform/v1/saved_query.proto#L34}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::SavedQuery> ListSavedQueries(
-      google::cloud::aiplatform::v1::ListSavedQueriesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::SavedQuery>
+  ListSavedQueries(google::cloud::aiplatform::v1::ListSavedQueriesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1267,9 +1230,7 @@ class DatasetServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteSavedQuery(
-      google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request,
-      Options opts = {});
+  DeleteSavedQuery(google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1295,8 +1256,8 @@ class DatasetServiceClient {
   /// [google.cloud.aiplatform.v1.GetAnnotationSpecRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L815}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::AnnotationSpec> GetAnnotationSpec(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
+  GetAnnotationSpec(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1325,9 +1286,8 @@ class DatasetServiceClient {
   /// [google.cloud.aiplatform.v1.GetAnnotationSpecRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L815}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::AnnotationSpec> GetAnnotationSpec(
-      google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
+  GetAnnotationSpec(google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1362,8 +1322,8 @@ class DatasetServiceClient {
   /// [google.cloud.aiplatform.v1.ListAnnotationsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L832}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Annotation> ListAnnotations(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Annotation>
+  ListAnnotations(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1401,9 +1361,8 @@ class DatasetServiceClient {
   /// [google.cloud.aiplatform.v1.ListAnnotationsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L832}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Annotation> ListAnnotations(
-      google::cloud::aiplatform::v1::ListAnnotationsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Annotation>
+  ListAnnotations(google::cloud::aiplatform::v1::ListAnnotationsRequest request, Options opts = {});
 
  private:
   std::shared_ptr<DatasetServiceConnection> connection_;

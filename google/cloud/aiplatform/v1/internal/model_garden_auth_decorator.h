@@ -39,9 +39,9 @@ class ModelGardenServiceAuth : public ModelGardenServiceStub {
       std::shared_ptr<ModelGardenServiceStub> child);
 
   StatusOr<google::cloud::aiplatform::v1::PublisherModel> GetPublisherModel(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::GetPublisherModelRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::GetPublisherModelRequest const& request) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

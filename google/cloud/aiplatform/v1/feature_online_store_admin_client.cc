@@ -26,20 +26,14 @@ namespace aiplatform_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 FeatureOnlineStoreAdminServiceClient::FeatureOnlineStoreAdminServiceClient(
-    std::shared_ptr<FeatureOnlineStoreAdminServiceConnection> connection,
-    Options opts)
+    std::shared_ptr<FeatureOnlineStoreAdminServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
-FeatureOnlineStoreAdminServiceClient::~FeatureOnlineStoreAdminServiceClient() =
-    default;
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
+FeatureOnlineStoreAdminServiceClient::~FeatureOnlineStoreAdminServiceClient() = default;
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
-FeatureOnlineStoreAdminServiceClient::CreateFeatureOnlineStore(
-    std::string const& parent,
-    google::cloud::aiplatform::v1::FeatureOnlineStore const&
-        feature_online_store,
-    std::string const& feature_online_store_id, Options opts) {
+FeatureOnlineStoreAdminServiceClient::CreateFeatureOnlineStore(std::string const& parent, google::cloud::aiplatform::v1::FeatureOnlineStore const& feature_online_store, std::string const& feature_online_store_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest request;
   request.set_parent(parent);
@@ -49,17 +43,13 @@ FeatureOnlineStoreAdminServiceClient::CreateFeatureOnlineStore(
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
-FeatureOnlineStoreAdminServiceClient::CreateFeatureOnlineStore(
-    google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
-        request,
-    Options opts) {
+FeatureOnlineStoreAdminServiceClient::CreateFeatureOnlineStore(google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateFeatureOnlineStore(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>
-FeatureOnlineStoreAdminServiceClient::GetFeatureOnlineStore(
-    std::string const& name, Options opts) {
+FeatureOnlineStoreAdminServiceClient::GetFeatureOnlineStore(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest request;
   request.set_name(name);
@@ -67,16 +57,13 @@ FeatureOnlineStoreAdminServiceClient::GetFeatureOnlineStore(
 }
 
 StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>
-FeatureOnlineStoreAdminServiceClient::GetFeatureOnlineStore(
-    google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const& request,
-    Options opts) {
+FeatureOnlineStoreAdminServiceClient::GetFeatureOnlineStore(google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetFeatureOnlineStore(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::FeatureOnlineStore>
-FeatureOnlineStoreAdminServiceClient::ListFeatureOnlineStores(
-    std::string const& parent, Options opts) {
+FeatureOnlineStoreAdminServiceClient::ListFeatureOnlineStores(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest request;
   request.set_parent(parent);
@@ -84,18 +71,13 @@ FeatureOnlineStoreAdminServiceClient::ListFeatureOnlineStores(
 }
 
 StreamRange<google::cloud::aiplatform::v1::FeatureOnlineStore>
-FeatureOnlineStoreAdminServiceClient::ListFeatureOnlineStores(
-    google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest request,
-    Options opts) {
+FeatureOnlineStoreAdminServiceClient::ListFeatureOnlineStores(google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListFeatureOnlineStores(std::move(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
-FeatureOnlineStoreAdminServiceClient::UpdateFeatureOnlineStore(
-    google::cloud::aiplatform::v1::FeatureOnlineStore const&
-        feature_online_store,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+FeatureOnlineStoreAdminServiceClient::UpdateFeatureOnlineStore(google::cloud::aiplatform::v1::FeatureOnlineStore const& feature_online_store, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest request;
   *request.mutable_feature_online_store() = feature_online_store;
@@ -104,17 +86,13 @@ FeatureOnlineStoreAdminServiceClient::UpdateFeatureOnlineStore(
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
-FeatureOnlineStoreAdminServiceClient::UpdateFeatureOnlineStore(
-    google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
-        request,
-    Options opts) {
+FeatureOnlineStoreAdminServiceClient::UpdateFeatureOnlineStore(google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateFeatureOnlineStore(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-FeatureOnlineStoreAdminServiceClient::DeleteFeatureOnlineStore(
-    std::string const& name, bool force, Options opts) {
+FeatureOnlineStoreAdminServiceClient::DeleteFeatureOnlineStore(std::string const& name, bool force, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest request;
   request.set_name(name);
@@ -123,19 +101,13 @@ FeatureOnlineStoreAdminServiceClient::DeleteFeatureOnlineStore(
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-FeatureOnlineStoreAdminServiceClient::DeleteFeatureOnlineStore(
-    google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
-        request,
-    Options opts) {
+FeatureOnlineStoreAdminServiceClient::DeleteFeatureOnlineStore(google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFeatureOnlineStore(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
-FeatureOnlineStoreAdminServiceClient::CreateFeatureView(
-    std::string const& parent,
-    google::cloud::aiplatform::v1::FeatureView const& feature_view,
-    std::string const& feature_view_id, Options opts) {
+FeatureOnlineStoreAdminServiceClient::CreateFeatureView(std::string const& parent, google::cloud::aiplatform::v1::FeatureView const& feature_view, std::string const& feature_view_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateFeatureViewRequest request;
   request.set_parent(parent);
@@ -145,16 +117,13 @@ FeatureOnlineStoreAdminServiceClient::CreateFeatureView(
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
-FeatureOnlineStoreAdminServiceClient::CreateFeatureView(
-    google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request,
-    Options opts) {
+FeatureOnlineStoreAdminServiceClient::CreateFeatureView(google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateFeatureView(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::FeatureView>
-FeatureOnlineStoreAdminServiceClient::GetFeatureView(std::string const& name,
-                                                     Options opts) {
+FeatureOnlineStoreAdminServiceClient::GetFeatureView(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::GetFeatureViewRequest request;
   request.set_name(name);
@@ -162,16 +131,13 @@ FeatureOnlineStoreAdminServiceClient::GetFeatureView(std::string const& name,
 }
 
 StatusOr<google::cloud::aiplatform::v1::FeatureView>
-FeatureOnlineStoreAdminServiceClient::GetFeatureView(
-    google::cloud::aiplatform::v1::GetFeatureViewRequest const& request,
-    Options opts) {
+FeatureOnlineStoreAdminServiceClient::GetFeatureView(google::cloud::aiplatform::v1::GetFeatureViewRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetFeatureView(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::FeatureView>
-FeatureOnlineStoreAdminServiceClient::ListFeatureViews(
-    std::string const& parent, Options opts) {
+FeatureOnlineStoreAdminServiceClient::ListFeatureViews(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListFeatureViewsRequest request;
   request.set_parent(parent);
@@ -179,17 +145,13 @@ FeatureOnlineStoreAdminServiceClient::ListFeatureViews(
 }
 
 StreamRange<google::cloud::aiplatform::v1::FeatureView>
-FeatureOnlineStoreAdminServiceClient::ListFeatureViews(
-    google::cloud::aiplatform::v1::ListFeatureViewsRequest request,
-    Options opts) {
+FeatureOnlineStoreAdminServiceClient::ListFeatureViews(google::cloud::aiplatform::v1::ListFeatureViewsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListFeatureViews(std::move(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
-FeatureOnlineStoreAdminServiceClient::UpdateFeatureView(
-    google::cloud::aiplatform::v1::FeatureView const& feature_view,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+FeatureOnlineStoreAdminServiceClient::UpdateFeatureView(google::cloud::aiplatform::v1::FeatureView const& feature_view, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdateFeatureViewRequest request;
   *request.mutable_feature_view() = feature_view;
@@ -198,16 +160,13 @@ FeatureOnlineStoreAdminServiceClient::UpdateFeatureView(
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
-FeatureOnlineStoreAdminServiceClient::UpdateFeatureView(
-    google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request,
-    Options opts) {
+FeatureOnlineStoreAdminServiceClient::UpdateFeatureView(google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateFeatureView(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-FeatureOnlineStoreAdminServiceClient::DeleteFeatureView(std::string const& name,
-                                                        Options opts) {
+FeatureOnlineStoreAdminServiceClient::DeleteFeatureView(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteFeatureViewRequest request;
   request.set_name(name);
@@ -215,16 +174,13 @@ FeatureOnlineStoreAdminServiceClient::DeleteFeatureView(std::string const& name,
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-FeatureOnlineStoreAdminServiceClient::DeleteFeatureView(
-    google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request,
-    Options opts) {
+FeatureOnlineStoreAdminServiceClient::DeleteFeatureView(google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFeatureView(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse>
-FeatureOnlineStoreAdminServiceClient::SyncFeatureView(
-    std::string const& feature_view, Options opts) {
+FeatureOnlineStoreAdminServiceClient::SyncFeatureView(std::string const& feature_view, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::SyncFeatureViewRequest request;
   request.set_feature_view(feature_view);
@@ -232,16 +188,13 @@ FeatureOnlineStoreAdminServiceClient::SyncFeatureView(
 }
 
 StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse>
-FeatureOnlineStoreAdminServiceClient::SyncFeatureView(
-    google::cloud::aiplatform::v1::SyncFeatureViewRequest const& request,
-    Options opts) {
+FeatureOnlineStoreAdminServiceClient::SyncFeatureView(google::cloud::aiplatform::v1::SyncFeatureViewRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SyncFeatureView(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::FeatureViewSync>
-FeatureOnlineStoreAdminServiceClient::GetFeatureViewSync(
-    std::string const& name, Options opts) {
+FeatureOnlineStoreAdminServiceClient::GetFeatureViewSync(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::GetFeatureViewSyncRequest request;
   request.set_name(name);
@@ -249,16 +202,13 @@ FeatureOnlineStoreAdminServiceClient::GetFeatureViewSync(
 }
 
 StatusOr<google::cloud::aiplatform::v1::FeatureViewSync>
-FeatureOnlineStoreAdminServiceClient::GetFeatureViewSync(
-    google::cloud::aiplatform::v1::GetFeatureViewSyncRequest const& request,
-    Options opts) {
+FeatureOnlineStoreAdminServiceClient::GetFeatureViewSync(google::cloud::aiplatform::v1::GetFeatureViewSyncRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetFeatureViewSync(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::FeatureViewSync>
-FeatureOnlineStoreAdminServiceClient::ListFeatureViewSyncs(
-    std::string const& parent, Options opts) {
+FeatureOnlineStoreAdminServiceClient::ListFeatureViewSyncs(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListFeatureViewSyncsRequest request;
   request.set_parent(parent);
@@ -266,9 +216,7 @@ FeatureOnlineStoreAdminServiceClient::ListFeatureViewSyncs(
 }
 
 StreamRange<google::cloud::aiplatform::v1::FeatureViewSync>
-FeatureOnlineStoreAdminServiceClient::ListFeatureViewSyncs(
-    google::cloud::aiplatform::v1::ListFeatureViewSyncsRequest request,
-    Options opts) {
+FeatureOnlineStoreAdminServiceClient::ListFeatureViewSyncs(google::cloud::aiplatform::v1::ListFeatureViewSyncsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListFeatureViewSyncs(std::move(request));
 }

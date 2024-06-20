@@ -26,17 +26,14 @@ namespace aiplatform_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 FeaturestoreOnlineServingServiceClient::FeaturestoreOnlineServingServiceClient(
-    std::shared_ptr<FeaturestoreOnlineServingServiceConnection> connection,
-    Options opts)
+    std::shared_ptr<FeaturestoreOnlineServingServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
-FeaturestoreOnlineServingServiceClient::
-    ~FeaturestoreOnlineServingServiceClient() = default;
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
+FeaturestoreOnlineServingServiceClient::~FeaturestoreOnlineServingServiceClient() = default;
 
 StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
-FeaturestoreOnlineServingServiceClient::ReadFeatureValues(
-    std::string const& entity_type, Options opts) {
+FeaturestoreOnlineServingServiceClient::ReadFeatureValues(std::string const& entity_type, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ReadFeatureValuesRequest request;
   request.set_entity_type(entity_type);
@@ -44,16 +41,13 @@ FeaturestoreOnlineServingServiceClient::ReadFeatureValues(
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
-FeaturestoreOnlineServingServiceClient::ReadFeatureValues(
-    google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request,
-    Options opts) {
+FeaturestoreOnlineServingServiceClient::ReadFeatureValues(google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReadFeatureValues(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
-FeaturestoreOnlineServingServiceClient::StreamingReadFeatureValues(
-    std::string const& entity_type, Options opts) {
+FeaturestoreOnlineServingServiceClient::StreamingReadFeatureValues(std::string const& entity_type, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest request;
   request.set_entity_type(entity_type);
@@ -61,20 +55,13 @@ FeaturestoreOnlineServingServiceClient::StreamingReadFeatureValues(
 }
 
 StreamRange<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
-FeaturestoreOnlineServingServiceClient::StreamingReadFeatureValues(
-    google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
-        request,
-    Options opts) {
+FeaturestoreOnlineServingServiceClient::StreamingReadFeatureValues(google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StreamingReadFeatureValues(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
-FeaturestoreOnlineServingServiceClient::WriteFeatureValues(
-    std::string const& entity_type,
-    std::vector<google::cloud::aiplatform::v1::WriteFeatureValuesPayload> const&
-        payloads,
-    Options opts) {
+FeaturestoreOnlineServingServiceClient::WriteFeatureValues(std::string const& entity_type, std::vector<google::cloud::aiplatform::v1::WriteFeatureValuesPayload> const& payloads, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::WriteFeatureValuesRequest request;
   request.set_entity_type(entity_type);
@@ -83,9 +70,7 @@ FeaturestoreOnlineServingServiceClient::WriteFeatureValues(
 }
 
 StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
-FeaturestoreOnlineServingServiceClient::WriteFeatureValues(
-    google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request,
-    Options opts) {
+FeaturestoreOnlineServingServiceClient::WriteFeatureValues(google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->WriteFeatureValues(request);
 }

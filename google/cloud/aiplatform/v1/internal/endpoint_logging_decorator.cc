@@ -29,36 +29,39 @@ namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 EndpointServiceLogging::EndpointServiceLogging(
-    std::shared_ptr<EndpointServiceStub> child, TracingOptions tracing_options,
+    std::shared_ptr<EndpointServiceStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 future<StatusOr<google::longrunning::Operation>>
 EndpointServiceLogging::AsyncCreateEndpoint(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::CreateEndpointRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::CreateEndpointRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::aiplatform::v1::CreateEndpointRequest const& request) {
-        return child_->AsyncCreateEndpoint(cq, std::move(context),
-                                           std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::aiplatform::v1::CreateEndpointRequest const& request) {
+        return child_->AsyncCreateEndpoint(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> EndpointServiceLogging::CreateEndpoint(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::CreateEndpointRequest const& request) {
+StatusOr<google::longrunning::Operation>
+EndpointServiceLogging::CreateEndpoint(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::CreateEndpointRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::CreateEndpointRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::CreateEndpointRequest const& request) {
         return child_->CreateEndpoint(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -66,10 +69,12 @@ StatusOr<google::longrunning::Operation> EndpointServiceLogging::CreateEndpoint(
 
 StatusOr<google::cloud::aiplatform::v1::Endpoint>
 EndpointServiceLogging::GetEndpoint(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetEndpointRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::aiplatform::v1::GetEndpointRequest const& request) {
         return child_->GetEndpoint(context, options, request);
       },
@@ -78,12 +83,13 @@ EndpointServiceLogging::GetEndpoint(
 
 StatusOr<google::cloud::aiplatform::v1::ListEndpointsResponse>
 EndpointServiceLogging::ListEndpoints(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListEndpointsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::ListEndpointsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::ListEndpointsRequest const& request) {
         return child_->ListEndpoints(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -91,12 +97,13 @@ EndpointServiceLogging::ListEndpoints(
 
 StatusOr<google::cloud::aiplatform::v1::Endpoint>
 EndpointServiceLogging::UpdateEndpoint(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::UpdateEndpointRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::UpdateEndpointRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::UpdateEndpointRequest const& request) {
         return child_->UpdateEndpoint(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -104,30 +111,31 @@ EndpointServiceLogging::UpdateEndpoint(
 
 future<StatusOr<google::longrunning::Operation>>
 EndpointServiceLogging::AsyncDeleteEndpoint(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::DeleteEndpointRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteEndpointRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::aiplatform::v1::DeleteEndpointRequest const& request) {
-        return child_->AsyncDeleteEndpoint(cq, std::move(context),
-                                           std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::aiplatform::v1::DeleteEndpointRequest const& request) {
+        return child_->AsyncDeleteEndpoint(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> EndpointServiceLogging::DeleteEndpoint(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::DeleteEndpointRequest const& request) {
+StatusOr<google::longrunning::Operation>
+EndpointServiceLogging::DeleteEndpoint(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteEndpointRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::DeleteEndpointRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::DeleteEndpointRequest const& request) {
         return child_->DeleteEndpoint(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -135,27 +143,30 @@ StatusOr<google::longrunning::Operation> EndpointServiceLogging::DeleteEndpoint(
 
 future<StatusOr<google::longrunning::Operation>>
 EndpointServiceLogging::AsyncDeployModel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::DeployModelRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeployModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::aiplatform::v1::DeployModelRequest const& request) {
-        return child_->AsyncDeployModel(cq, std::move(context),
-                                        std::move(options), request);
+        return child_->AsyncDeployModel(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> EndpointServiceLogging::DeployModel(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::DeployModelRequest const& request) {
+StatusOr<google::longrunning::Operation>
+EndpointServiceLogging::DeployModel(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeployModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::aiplatform::v1::DeployModelRequest const& request) {
         return child_->DeployModel(context, options, request);
       },
@@ -164,30 +175,31 @@ StatusOr<google::longrunning::Operation> EndpointServiceLogging::DeployModel(
 
 future<StatusOr<google::longrunning::Operation>>
 EndpointServiceLogging::AsyncUndeployModel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::UndeployModelRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::UndeployModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::aiplatform::v1::UndeployModelRequest const& request) {
-        return child_->AsyncUndeployModel(cq, std::move(context),
-                                          std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::aiplatform::v1::UndeployModelRequest const& request) {
+        return child_->AsyncUndeployModel(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> EndpointServiceLogging::UndeployModel(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::UndeployModelRequest const& request) {
+StatusOr<google::longrunning::Operation>
+EndpointServiceLogging::UndeployModel(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::UndeployModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::UndeployModelRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::UndeployModelRequest const& request) {
         return child_->UndeployModel(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -195,18 +207,17 @@ StatusOr<google::longrunning::Operation> EndpointServiceLogging::UndeployModel(
 
 future<StatusOr<google::longrunning::Operation>>
 EndpointServiceLogging::AsyncMutateDeployedModel(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::MutateDeployedModelRequest const&
-                 request) {
-        return child_->AsyncMutateDeployedModel(cq, std::move(context),
-                                                std::move(options), request);
+             google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request) {
+        return child_->AsyncMutateDeployedModel(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -214,12 +225,13 @@ EndpointServiceLogging::AsyncMutateDeployedModel(
 
 StatusOr<google::longrunning::Operation>
 EndpointServiceLogging::MutateDeployedModel(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::MutateDeployedModelRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request) {
         return child_->MutateDeployedModel(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -236,8 +248,8 @@ EndpointServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -253,8 +265,8 @@ future<Status> EndpointServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

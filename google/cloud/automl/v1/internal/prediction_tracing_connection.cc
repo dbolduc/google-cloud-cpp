@@ -33,17 +33,14 @@ PredictionServiceTracingConnection::PredictionServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::automl::v1::PredictResponse>
-PredictionServiceTracingConnection::Predict(
-    google::cloud::automl::v1::PredictRequest const& request) {
-  auto span =
-      internal::MakeSpan("automl_v1::PredictionServiceConnection::Predict");
+PredictionServiceTracingConnection::Predict(google::cloud::automl::v1::PredictRequest const& request) {
+  auto span = internal::MakeSpan("automl_v1::PredictionServiceConnection::Predict");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Predict(request));
 }
 
 future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>
-PredictionServiceTracingConnection::BatchPredict(
-    google::cloud::automl::v1::BatchPredictRequest const& request) {
+PredictionServiceTracingConnection::BatchPredict(google::cloud::automl::v1::BatchPredictRequest const& request) {
   auto span = internal::MakeSpan(
       "automl_v1::PredictionServiceConnection::BatchPredict");
   internal::OTelScope scope(span);
@@ -57,8 +54,7 @@ MakePredictionServiceTracingConnection(
     std::shared_ptr<automl_v1::PredictionServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn =
-        std::make_shared<PredictionServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<PredictionServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

@@ -31,11 +31,10 @@ MigrationServiceAuth::MigrationServiceAuth(
     std::shared_ptr<MigrationServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::aiplatform::v1::SearchMigratableResourcesResponse>
-MigrationServiceAuth::SearchMigratableResources(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const&
-        request) {
+StatusOr<google::cloud::aiplatform::v1::SearchMigratableResourcesResponse> MigrationServiceAuth::SearchMigratableResources(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SearchMigratableResources(context, options, request);
@@ -43,30 +42,28 @@ MigrationServiceAuth::SearchMigratableResources(
 
 future<StatusOr<google::longrunning::Operation>>
 MigrationServiceAuth::AsyncBatchMigrateResources(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncBatchMigrateResources(cq, *std::move(context),
-                                                 std::move(options), request);
+        return child->AsyncBatchMigrateResources(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 MigrationServiceAuth::BatchMigrateResources(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->BatchMigrateResources(context, options, request);
@@ -79,16 +76,15 @@ MigrationServiceAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncGetOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -97,14 +93,13 @@ future<Status> MigrationServiceAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context),
-                                           std::move(options), request);
+        return child->AsyncCancelOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

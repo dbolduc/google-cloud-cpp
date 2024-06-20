@@ -38,20 +38,18 @@ class MatchServiceTracingStub : public MatchServiceStub {
   explicit MatchServiceTracingStub(std::shared_ptr<MatchServiceStub> child);
 
   StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse> FindNeighbors(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::FindNeighborsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::FindNeighborsRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>
-  ReadIndexDatapoints(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse> ReadIndexDatapoints(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request) override;
 
  private:
   std::shared_ptr<MatchServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

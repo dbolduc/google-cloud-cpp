@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `SpecialistPoolServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `SpecialistPoolServiceClient`. To do
- * so, construct an object of type `SpecialistPoolServiceClient` with an
- * instance of this class. Then use the Google Test framework functions to
- * program the behavior of this mock.
+ * including errors, from an object of type `SpecialistPoolServiceClient`. To do so,
+ * construct an object of type `SpecialistPoolServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,41 +42,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockSpecialistPoolServiceConnection
-    : public aiplatform_v1::SpecialistPoolServiceConnection {
+class MockSpecialistPoolServiceConnection : public aiplatform_v1::SpecialistPoolServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>,
-              CreateSpecialistPool,
-              (google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const&
-                   request),
-              (override));
+  CreateSpecialistPool,
+  (google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::SpecialistPool>,
-      GetSpecialistPool,
-      (google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::SpecialistPool>,
+  GetSpecialistPool,
+  (google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::aiplatform::v1::SpecialistPool>),
-      ListSpecialistPools,
-      (google::cloud::aiplatform::v1::ListSpecialistPoolsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::SpecialistPool>),
+  ListSpecialistPools,
+  (google::cloud::aiplatform::v1::ListSpecialistPoolsRequest request), (override));
 
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-      DeleteSpecialistPool,
-      (google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+  DeleteSpecialistPool,
+  (google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>,
-              UpdateSpecialistPool,
-              (google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const&
-                   request),
-              (override));
+  UpdateSpecialistPool,
+  (google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

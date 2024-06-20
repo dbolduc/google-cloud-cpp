@@ -50,15 +50,14 @@ GenAiTuningServiceConnection::GetTuningJob(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::TuningJob>
-GenAiTuningServiceConnection::ListTuningJobs(
-    google::cloud::aiplatform::v1::
-        ListTuningJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::TuningJob> GenAiTuningServiceConnection::ListTuningJobs(
+    google::cloud::aiplatform::v1::ListTuningJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::TuningJob>>();
 }
 
-Status GenAiTuningServiceConnection::CancelTuningJob(
+Status
+GenAiTuningServiceConnection::CancelTuningJob(
     google::cloud::aiplatform::v1::CancelTuningJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -66,19 +65,17 @@ Status GenAiTuningServiceConnection::CancelTuningJob(
 std::shared_ptr<GenAiTuningServiceConnection> MakeGenAiTuningServiceConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 GenAiTuningServicePolicyOptionList>(options,
-                                                                     __func__);
+      UnifiedCredentialsOptionList,
+      GenAiTuningServicePolicyOptionList>(options, __func__);
   options = aiplatform_v1_internal::GenAiTuningServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = aiplatform_v1_internal::CreateDefaultGenAiTuningServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return aiplatform_v1_internal::MakeGenAiTuningServiceTracingConnection(
-      std::make_shared<
-          aiplatform_v1_internal::GenAiTuningServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<aiplatform_v1_internal::GenAiTuningServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

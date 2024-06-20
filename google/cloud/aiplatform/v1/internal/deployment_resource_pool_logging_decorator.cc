@@ -30,22 +30,22 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DeploymentResourcePoolServiceLogging::DeploymentResourcePoolServiceLogging(
     std::shared_ptr<DeploymentResourcePoolServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 future<StatusOr<google::longrunning::Operation>>
 DeploymentResourcePoolServiceLogging::AsyncCreateDeploymentResourcePool(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::
-                 CreateDeploymentResourcePoolRequest const& request) {
+             google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const& request) {
         return child_->AsyncCreateDeploymentResourcePool(
             cq, std::move(context), std::move(options), request);
       },
@@ -55,13 +55,13 @@ DeploymentResourcePoolServiceLogging::AsyncCreateDeploymentResourcePool(
 
 StatusOr<google::longrunning::Operation>
 DeploymentResourcePoolServiceLogging::CreateDeploymentResourcePool(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 CreateDeploymentResourcePoolRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const& request) {
         return child_->CreateDeploymentResourcePool(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -69,14 +69,13 @@ DeploymentResourcePoolServiceLogging::CreateDeploymentResourcePool(
 
 StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
 DeploymentResourcePoolServiceLogging::GetDeploymentResourcePool(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const& request) {
         return child_->GetDeploymentResourcePool(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -84,13 +83,13 @@ DeploymentResourcePoolServiceLogging::GetDeploymentResourcePool(
 
 StatusOr<google::cloud::aiplatform::v1::ListDeploymentResourcePoolsResponse>
 DeploymentResourcePoolServiceLogging::ListDeploymentResourcePools(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest const&
-        request) {
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 ListDeploymentResourcePoolsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest const& request) {
         return child_->ListDeploymentResourcePools(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -98,17 +97,15 @@ DeploymentResourcePoolServiceLogging::ListDeploymentResourcePools(
 
 future<StatusOr<google::longrunning::Operation>>
 DeploymentResourcePoolServiceLogging::AsyncDeleteDeploymentResourcePool(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::
-                 DeleteDeploymentResourcePoolRequest const& request) {
+             google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const& request) {
         return child_->AsyncDeleteDeploymentResourcePool(
             cq, std::move(context), std::move(options), request);
       },
@@ -118,13 +115,13 @@ DeploymentResourcePoolServiceLogging::AsyncDeleteDeploymentResourcePool(
 
 StatusOr<google::longrunning::Operation>
 DeploymentResourcePoolServiceLogging::DeleteDeploymentResourcePool(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 DeleteDeploymentResourcePoolRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const& request) {
         return child_->DeleteDeploymentResourcePool(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -141,8 +138,8 @@ DeploymentResourcePoolServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -158,8 +155,8 @@ future<Status> DeploymentResourcePoolServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

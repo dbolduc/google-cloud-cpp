@@ -28,13 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AppGatewaysServiceClient::AppGatewaysServiceClient(
     std::shared_ptr<AppGatewaysServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 AppGatewaysServiceClient::~AppGatewaysServiceClient() = default;
 
 StreamRange<google::cloud::beyondcorp::appgateways::v1::AppGateway>
-AppGatewaysServiceClient::ListAppGateways(std::string const& parent,
-                                          Options opts) {
+AppGatewaysServiceClient::ListAppGateways(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest request;
   request.set_parent(parent);
@@ -42,9 +41,7 @@ AppGatewaysServiceClient::ListAppGateways(std::string const& parent,
 }
 
 StreamRange<google::cloud::beyondcorp::appgateways::v1::AppGateway>
-AppGatewaysServiceClient::ListAppGateways(
-    google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest request,
-    Options opts) {
+AppGatewaysServiceClient::ListAppGateways(google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAppGateways(std::move(request));
 }
@@ -58,19 +55,13 @@ AppGatewaysServiceClient::GetAppGateway(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>
-AppGatewaysServiceClient::GetAppGateway(
-    google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
-        request,
-    Options opts) {
+AppGatewaysServiceClient::GetAppGateway(google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAppGateway(request);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
-AppGatewaysServiceClient::CreateAppGateway(
-    std::string const& parent,
-    google::cloud::beyondcorp::appgateways::v1::AppGateway const& app_gateway,
-    std::string const& app_gateway_id, Options opts) {
+AppGatewaysServiceClient::CreateAppGateway(std::string const& parent, google::cloud::beyondcorp::appgateways::v1::AppGateway const& app_gateway, std::string const& app_gateway_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest request;
   request.set_parent(parent);
@@ -80,30 +71,21 @@ AppGatewaysServiceClient::CreateAppGateway(
 }
 
 future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
-AppGatewaysServiceClient::CreateAppGateway(
-    google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
-        request,
-    Options opts) {
+AppGatewaysServiceClient::CreateAppGateway(google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAppGateway(request);
 }
 
-future<StatusOr<
-    google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
-AppGatewaysServiceClient::DeleteAppGateway(std::string const& name,
-                                           Options opts) {
+future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
+AppGatewaysServiceClient::DeleteAppGateway(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest request;
   request.set_name(name);
   return connection_->DeleteAppGateway(request);
 }
 
-future<StatusOr<
-    google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
-AppGatewaysServiceClient::DeleteAppGateway(
-    google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
-        request,
-    Options opts) {
+future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
+AppGatewaysServiceClient::DeleteAppGateway(google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAppGateway(request);
 }

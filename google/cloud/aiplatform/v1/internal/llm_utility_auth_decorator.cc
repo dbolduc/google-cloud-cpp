@@ -31,18 +31,18 @@ LlmUtilityServiceAuth::LlmUtilityServiceAuth(
     std::shared_ptr<LlmUtilityServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::aiplatform::v1::CountTokensResponse>
-LlmUtilityServiceAuth::CountTokens(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::CountTokensResponse> LlmUtilityServiceAuth::CountTokens(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::CountTokensRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CountTokens(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse>
-LlmUtilityServiceAuth::ComputeTokens(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse> LlmUtilityServiceAuth::ComputeTokens(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ComputeTokensRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

@@ -61,9 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class LlmUtilityServiceClient {
  public:
-  explicit LlmUtilityServiceClient(
-      std::shared_ptr<LlmUtilityServiceConnection> connection,
-      Options opts = {});
+  explicit LlmUtilityServiceClient(std::shared_ptr<LlmUtilityServiceConnection> connection, Options opts = {});
   ~LlmUtilityServiceClient();
 
   ///@{
@@ -76,12 +74,10 @@ class LlmUtilityServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(LlmUtilityServiceClient const& a,
-                         LlmUtilityServiceClient const& b) {
+  friend bool operator==(LlmUtilityServiceClient const& a, LlmUtilityServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(LlmUtilityServiceClient const& a,
-                         LlmUtilityServiceClient const& b) {
+  friend bool operator!=(LlmUtilityServiceClient const& a, LlmUtilityServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -108,13 +104,12 @@ class LlmUtilityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CountTokensRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L629}
-  /// [google.cloud.aiplatform.v1.CountTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L655}
+  /// [google.cloud.aiplatform.v1.CountTokensRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L603}
+  /// [google.cloud.aiplatform.v1.CountTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L629}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::CountTokensResponse> CountTokens(
-      std::string const& endpoint,
-      std::vector<google::protobuf::Value> const& instances, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::CountTokensResponse>
+  CountTokens(std::string const& endpoint, std::vector<google::protobuf::Value> const& instances, Options opts = {});
 
   // clang-format off
   ///
@@ -139,13 +134,12 @@ class LlmUtilityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CountTokensRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L629}
-  /// [google.cloud.aiplatform.v1.CountTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L655}
+  /// [google.cloud.aiplatform.v1.CountTokensRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L603}
+  /// [google.cloud.aiplatform.v1.CountTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L629}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::CountTokensResponse> CountTokens(
-      google::cloud::aiplatform::v1::CountTokensRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::CountTokensResponse>
+  CountTokens(google::cloud::aiplatform::v1::CountTokensRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -173,9 +167,8 @@ class LlmUtilityServiceClient {
   /// [google.cloud.aiplatform.v1.ComputeTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/llm_utility_service.proto#L95}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse> ComputeTokens(
-      std::string const& endpoint,
-      std::vector<google::protobuf::Value> const& instances, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse>
+  ComputeTokens(std::string const& endpoint, std::vector<google::protobuf::Value> const& instances, Options opts = {});
 
   // clang-format off
   ///
@@ -204,9 +197,8 @@ class LlmUtilityServiceClient {
   /// [google.cloud.aiplatform.v1.ComputeTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/llm_utility_service.proto#L95}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse> ComputeTokens(
-      google::cloud::aiplatform::v1::ComputeTokensRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse>
+  ComputeTokens(google::cloud::aiplatform::v1::ComputeTokensRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<LlmUtilityServiceConnection> connection_;

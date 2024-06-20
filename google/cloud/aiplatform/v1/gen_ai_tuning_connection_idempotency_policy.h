@@ -34,24 +34,23 @@ class GenAiTuningServiceConnectionIdempotencyPolicy {
   virtual ~GenAiTuningServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<GenAiTuningServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<GenAiTuningServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateTuningJob(
-      google::cloud::aiplatform::v1::CreateTuningJobRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateTuningJob(google::cloud::aiplatform::v1::CreateTuningJobRequest const& request);
 
-  virtual google::cloud::Idempotency GetTuningJob(
-      google::cloud::aiplatform::v1::GetTuningJobRequest const& request);
+  virtual google::cloud::Idempotency
+  GetTuningJob(google::cloud::aiplatform::v1::GetTuningJobRequest const& request);
 
-  virtual google::cloud::Idempotency ListTuningJobs(
-      google::cloud::aiplatform::v1::ListTuningJobsRequest request);
+  virtual google::cloud::Idempotency
+  ListTuningJobs(google::cloud::aiplatform::v1::ListTuningJobsRequest request);
 
-  virtual google::cloud::Idempotency CancelTuningJob(
-      google::cloud::aiplatform::v1::CancelTuningJobRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelTuningJob(google::cloud::aiplatform::v1::CancelTuningJobRequest const& request);
 };
 
 std::unique_ptr<GenAiTuningServiceConnectionIdempotencyPolicy>
-MakeDefaultGenAiTuningServiceConnectionIdempotencyPolicy();
+    MakeDefaultGenAiTuningServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

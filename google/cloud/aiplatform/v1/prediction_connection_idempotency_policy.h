@@ -34,30 +34,29 @@ class PredictionServiceConnectionIdempotencyPolicy {
   virtual ~PredictionServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency Predict(
-      google::cloud::aiplatform::v1::PredictRequest const& request);
+  virtual google::cloud::Idempotency
+  Predict(google::cloud::aiplatform::v1::PredictRequest const& request);
 
-  virtual google::cloud::Idempotency RawPredict(
-      google::cloud::aiplatform::v1::RawPredictRequest const& request);
+  virtual google::cloud::Idempotency
+  RawPredict(google::cloud::aiplatform::v1::RawPredictRequest const& request);
 
-  virtual google::cloud::Idempotency DirectPredict(
-      google::cloud::aiplatform::v1::DirectPredictRequest const& request);
+  virtual google::cloud::Idempotency
+  DirectPredict(google::cloud::aiplatform::v1::DirectPredictRequest const& request);
 
-  virtual google::cloud::Idempotency DirectRawPredict(
-      google::cloud::aiplatform::v1::DirectRawPredictRequest const& request);
+  virtual google::cloud::Idempotency
+  DirectRawPredict(google::cloud::aiplatform::v1::DirectRawPredictRequest const& request);
 
-  virtual google::cloud::Idempotency Explain(
-      google::cloud::aiplatform::v1::ExplainRequest const& request);
+  virtual google::cloud::Idempotency
+  Explain(google::cloud::aiplatform::v1::ExplainRequest const& request);
 
-  virtual google::cloud::Idempotency GenerateContent(
-      google::cloud::aiplatform::v1::GenerateContentRequest const& request);
+  virtual google::cloud::Idempotency
+  GenerateContent(google::cloud::aiplatform::v1::GenerateContentRequest const& request);
 };
 
 std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy>
-MakeDefaultPredictionServiceConnectionIdempotencyPolicy();
+    MakeDefaultPredictionServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

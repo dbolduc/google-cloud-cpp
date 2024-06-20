@@ -26,21 +26,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ModelGardenServiceConnectionIdempotencyPolicy::
-    ~ModelGardenServiceConnectionIdempotencyPolicy() = default;
+ModelGardenServiceConnectionIdempotencyPolicy::~ModelGardenServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ModelGardenServiceConnectionIdempotencyPolicy>
 ModelGardenServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ModelGardenServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ModelGardenServiceConnectionIdempotencyPolicy::GetPublisherModel(
-    google::cloud::aiplatform::v1::GetPublisherModelRequest const&) {
+Idempotency ModelGardenServiceConnectionIdempotencyPolicy::GetPublisherModel(google::cloud::aiplatform::v1::GetPublisherModelRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<ModelGardenServiceConnectionIdempotencyPolicy>
-MakeDefaultModelGardenServiceConnectionIdempotencyPolicy() {
+    MakeDefaultModelGardenServiceConnectionIdempotencyPolicy() {
   return std::make_unique<ModelGardenServiceConnectionIdempotencyPolicy>();
 }
 

@@ -17,8 +17,8 @@
 // source: google/cloud/batch/v1/batch.proto
 
 #include "google/cloud/batch/v1/internal/batch_connection_impl.h"
-#include "google/cloud/batch/v1/internal/batch_option_defaults.h"
 #include "google/cloud/background_threads.h"
+#include "google/cloud/batch/v1/internal/batch_option_defaults.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
@@ -33,37 +33,38 @@ namespace batch_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<batch_v1::BatchServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<batch_v1::BatchServiceRetryPolicy>
+retry_policy(Options const& options) {
   return options.get<batch_v1::BatchServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
   return options.get<batch_v1::BatchServiceBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<batch_v1::BatchServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<batch_v1::BatchServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<batch_v1::BatchServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
   return options.get<batch_v1::BatchServicePollingPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 BatchServiceConnectionImpl::BatchServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<batch_v1_internal::BatchServiceStub> stub, Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      BatchServiceConnection::options())) {}
+    std::shared_ptr<batch_v1_internal::BatchServiceStub> stub,
+    Options options)
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        BatchServiceConnection::options())) {}
 
-StatusOr<google::cloud::batch::v1::Job> BatchServiceConnectionImpl::CreateJob(
-    google::cloud::batch::v1::CreateJobRequest const& request) {
+StatusOr<google::cloud::batch::v1::Job>
+BatchServiceConnectionImpl::CreateJob(google::cloud::batch::v1::CreateJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -75,8 +76,8 @@ StatusOr<google::cloud::batch::v1::Job> BatchServiceConnectionImpl::CreateJob(
       *current, request, __func__);
 }
 
-StatusOr<google::cloud::batch::v1::Job> BatchServiceConnectionImpl::GetJob(
-    google::cloud::batch::v1::GetJobRequest const& request) {
+StatusOr<google::cloud::batch::v1::Job>
+BatchServiceConnectionImpl::GetJob(google::cloud::batch::v1::GetJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -89,58 +90,51 @@ StatusOr<google::cloud::batch::v1::Job> BatchServiceConnectionImpl::GetJob(
 }
 
 future<StatusOr<google::cloud::batch::v1::OperationMetadata>>
-BatchServiceConnectionImpl::DeleteJob(
-    google::cloud::batch::v1::DeleteJobRequest const& request) {
+BatchServiceConnectionImpl::DeleteJob(google::cloud::batch::v1::DeleteJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
-  auto const idempotent = idempotency_policy(*current)->DeleteJob(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::batch::v1::OperationMetadata>(
-      background_->cq(), current, std::move(request_copy),
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::batch::v1::DeleteJobRequest const& request) {
-        return stub->AsyncDeleteJob(cq, std::move(context), std::move(options),
-                                    request);
-      },
-      [stub = stub_](google::cloud::CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context),
-                                       std::move(options), request);
-      },
-      [stub = stub_](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context),
-                                          std::move(options), request);
-      },
-      &google::cloud::internal::ExtractLongRunningResultMetadata<
-          google::cloud::batch::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      polling_policy(*current), __func__);
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteJob(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::batch::v1::OperationMetadata>(
+    background_->cq(), current, std::move(request_copy),
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::cloud::batch::v1::DeleteJobRequest const& request) {
+     return stub->AsyncDeleteJob(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::batch::v1::OperationMetadata>,
+    retry_policy(*current), backoff_policy(*current), idempotent,
+    polling_policy(*current), __func__);
 }
 
-StreamRange<google::cloud::batch::v1::Job> BatchServiceConnectionImpl::ListJobs(
-    google::cloud::batch::v1::ListJobsRequest request) {
+StreamRange<google::cloud::batch::v1::Job>
+BatchServiceConnectionImpl::ListJobs(google::cloud::batch::v1::ListJobsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListJobs(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::batch::v1::Job>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::batch::v1::Job>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<batch_v1::BatchServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<batch_v1::BatchServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::batch::v1::ListJobsRequest const& r) {
+          Options const& options, google::cloud::batch::v1::ListJobsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -157,8 +151,8 @@ StreamRange<google::cloud::batch::v1::Job> BatchServiceConnectionImpl::ListJobs(
       });
 }
 
-StatusOr<google::cloud::batch::v1::Task> BatchServiceConnectionImpl::GetTask(
-    google::cloud::batch::v1::GetTaskRequest const& request) {
+StatusOr<google::cloud::batch::v1::Task>
+BatchServiceConnectionImpl::GetTask(google::cloud::batch::v1::GetTaskRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -171,21 +165,17 @@ StatusOr<google::cloud::batch::v1::Task> BatchServiceConnectionImpl::GetTask(
 }
 
 StreamRange<google::cloud::batch::v1::Task>
-BatchServiceConnectionImpl::ListTasks(
-    google::cloud::batch::v1::ListTasksRequest request) {
+BatchServiceConnectionImpl::ListTasks(google::cloud::batch::v1::ListTasksRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListTasks(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::cloud::batch::v1::Task>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::batch::v1::Task>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<batch_v1::BatchServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<batch_v1::BatchServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options,
-          google::cloud::batch::v1::ListTasksRequest const& r) {
+          Options const& options, google::cloud::batch::v1::ListTasksRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,

@@ -25,11 +25,11 @@ namespace cloud {
 namespace backupdr_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-BackupDRClient::BackupDRClient(std::shared_ptr<BackupDRConnection> connection,
-                               Options opts)
+BackupDRClient::BackupDRClient(
+    std::shared_ptr<BackupDRConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 BackupDRClient::~BackupDRClient() = default;
 
 StreamRange<google::cloud::backupdr::v1::ManagementServer>
@@ -41,9 +41,7 @@ BackupDRClient::ListManagementServers(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::backupdr::v1::ManagementServer>
-BackupDRClient::ListManagementServers(
-    google::cloud::backupdr::v1::ListManagementServersRequest request,
-    Options opts) {
+BackupDRClient::ListManagementServers(google::cloud::backupdr::v1::ListManagementServersRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListManagementServers(std::move(request));
 }
@@ -57,18 +55,13 @@ BackupDRClient::GetManagementServer(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::backupdr::v1::ManagementServer>
-BackupDRClient::GetManagementServer(
-    google::cloud::backupdr::v1::GetManagementServerRequest const& request,
-    Options opts) {
+BackupDRClient::GetManagementServer(google::cloud::backupdr::v1::GetManagementServerRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetManagementServer(request);
 }
 
 future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>
-BackupDRClient::CreateManagementServer(
-    std::string const& parent,
-    google::cloud::backupdr::v1::ManagementServer const& management_server,
-    std::string const& management_server_id, Options opts) {
+BackupDRClient::CreateManagementServer(std::string const& parent, google::cloud::backupdr::v1::ManagementServer const& management_server, std::string const& management_server_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::backupdr::v1::CreateManagementServerRequest request;
   request.set_parent(parent);
@@ -78,9 +71,7 @@ BackupDRClient::CreateManagementServer(
 }
 
 future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>
-BackupDRClient::CreateManagementServer(
-    google::cloud::backupdr::v1::CreateManagementServerRequest const& request,
-    Options opts) {
+BackupDRClient::CreateManagementServer(google::cloud::backupdr::v1::CreateManagementServerRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateManagementServer(request);
 }
@@ -94,9 +85,7 @@ BackupDRClient::DeleteManagementServer(std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
-BackupDRClient::DeleteManagementServer(
-    google::cloud::backupdr::v1::DeleteManagementServerRequest const& request,
-    Options opts) {
+BackupDRClient::DeleteManagementServer(google::cloud::backupdr::v1::DeleteManagementServerRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteManagementServer(request);
 }

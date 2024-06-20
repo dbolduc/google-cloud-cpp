@@ -40,39 +40,41 @@ namespace cloud {
 namespace apikeys_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ApiKeysConnectionImpl : public apikeys_v2::ApiKeysConnection {
+class ApiKeysConnectionImpl
+    : public apikeys_v2::ApiKeysConnection {
  public:
   ~ApiKeysConnectionImpl() override = default;
 
   ApiKeysConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<apikeys_v2_internal::ApiKeysStub> stub, Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<apikeys_v2_internal::ApiKeysStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  future<StatusOr<google::api::apikeys::v2::Key>> CreateKey(
-      google::api::apikeys::v2::CreateKeyRequest const& request) override;
+  future<StatusOr<google::api::apikeys::v2::Key>>
+  CreateKey(google::api::apikeys::v2::CreateKeyRequest const& request) override;
 
-  StreamRange<google::api::apikeys::v2::Key> ListKeys(
-      google::api::apikeys::v2::ListKeysRequest request) override;
+  StreamRange<google::api::apikeys::v2::Key>
+  ListKeys(google::api::apikeys::v2::ListKeysRequest request) override;
 
-  StatusOr<google::api::apikeys::v2::Key> GetKey(
-      google::api::apikeys::v2::GetKeyRequest const& request) override;
+  StatusOr<google::api::apikeys::v2::Key>
+  GetKey(google::api::apikeys::v2::GetKeyRequest const& request) override;
 
-  StatusOr<google::api::apikeys::v2::GetKeyStringResponse> GetKeyString(
-      google::api::apikeys::v2::GetKeyStringRequest const& request) override;
+  StatusOr<google::api::apikeys::v2::GetKeyStringResponse>
+  GetKeyString(google::api::apikeys::v2::GetKeyStringRequest const& request) override;
 
-  future<StatusOr<google::api::apikeys::v2::Key>> UpdateKey(
-      google::api::apikeys::v2::UpdateKeyRequest const& request) override;
+  future<StatusOr<google::api::apikeys::v2::Key>>
+  UpdateKey(google::api::apikeys::v2::UpdateKeyRequest const& request) override;
 
-  future<StatusOr<google::api::apikeys::v2::Key>> DeleteKey(
-      google::api::apikeys::v2::DeleteKeyRequest const& request) override;
+  future<StatusOr<google::api::apikeys::v2::Key>>
+  DeleteKey(google::api::apikeys::v2::DeleteKeyRequest const& request) override;
 
-  future<StatusOr<google::api::apikeys::v2::Key>> UndeleteKey(
-      google::api::apikeys::v2::UndeleteKeyRequest const& request) override;
+  future<StatusOr<google::api::apikeys::v2::Key>>
+  UndeleteKey(google::api::apikeys::v2::UndeleteKeyRequest const& request) override;
 
-  StatusOr<google::api::apikeys::v2::LookupKeyResponse> LookupKey(
-      google::api::apikeys::v2::LookupKeyRequest const& request) override;
+  StatusOr<google::api::apikeys::v2::LookupKeyResponse>
+  LookupKey(google::api::apikeys::v2::LookupKeyRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

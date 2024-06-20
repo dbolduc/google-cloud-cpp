@@ -35,19 +35,18 @@ class MatchServiceLogging : public MatchServiceStub {
  public:
   ~MatchServiceLogging() override = default;
   MatchServiceLogging(std::shared_ptr<MatchServiceStub> child,
-                      TracingOptions tracing_options,
-                      std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse> FindNeighbors(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::FindNeighborsRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::FindNeighborsRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>
-  ReadIndexDatapoints(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse> ReadIndexDatapoints(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request) override;
 
  private:
   std::shared_ptr<MatchServiceStub> child_;

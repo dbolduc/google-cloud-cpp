@@ -29,18 +29,21 @@ namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ScheduleServiceLogging::ScheduleServiceLogging(
-    std::shared_ptr<ScheduleServiceStub> child, TracingOptions tracing_options,
+    std::shared_ptr<ScheduleServiceStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::aiplatform::v1::Schedule>
 ScheduleServiceLogging::CreateSchedule(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::CreateScheduleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::CreateScheduleRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::CreateScheduleRequest const& request) {
         return child_->CreateSchedule(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -48,30 +51,31 @@ ScheduleServiceLogging::CreateSchedule(
 
 future<StatusOr<google::longrunning::Operation>>
 ScheduleServiceLogging::AsyncDeleteSchedule(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) {
-        return child_->AsyncDeleteSchedule(cq, std::move(context),
-                                           std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) {
+        return child_->AsyncDeleteSchedule(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> ScheduleServiceLogging::DeleteSchedule(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) {
+StatusOr<google::longrunning::Operation>
+ScheduleServiceLogging::DeleteSchedule(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) {
         return child_->DeleteSchedule(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -79,10 +83,12 @@ StatusOr<google::longrunning::Operation> ScheduleServiceLogging::DeleteSchedule(
 
 StatusOr<google::cloud::aiplatform::v1::Schedule>
 ScheduleServiceLogging::GetSchedule(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetScheduleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::aiplatform::v1::GetScheduleRequest const& request) {
         return child_->GetSchedule(context, options, request);
       },
@@ -91,36 +97,41 @@ ScheduleServiceLogging::GetSchedule(
 
 StatusOr<google::cloud::aiplatform::v1::ListSchedulesResponse>
 ScheduleServiceLogging::ListSchedules(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListSchedulesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::ListSchedulesRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::ListSchedulesRequest const& request) {
         return child_->ListSchedules(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status ScheduleServiceLogging::PauseSchedule(
-    grpc::ClientContext& context, Options const& options,
+Status
+ScheduleServiceLogging::PauseSchedule(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::PauseScheduleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::PauseScheduleRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::PauseScheduleRequest const& request) {
         return child_->PauseSchedule(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status ScheduleServiceLogging::ResumeSchedule(
-    grpc::ClientContext& context, Options const& options,
+Status
+ScheduleServiceLogging::ResumeSchedule(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ResumeScheduleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::ResumeScheduleRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::ResumeScheduleRequest const& request) {
         return child_->ResumeSchedule(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -128,12 +139,13 @@ Status ScheduleServiceLogging::ResumeSchedule(
 
 StatusOr<google::cloud::aiplatform::v1::Schedule>
 ScheduleServiceLogging::UpdateSchedule(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::UpdateScheduleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::UpdateScheduleRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::UpdateScheduleRequest const& request) {
         return child_->UpdateSchedule(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -150,8 +162,8 @@ ScheduleServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -167,8 +179,8 @@ future<Status> ScheduleServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

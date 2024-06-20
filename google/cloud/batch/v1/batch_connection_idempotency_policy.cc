@@ -26,46 +26,39 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-BatchServiceConnectionIdempotencyPolicy::
-    ~BatchServiceConnectionIdempotencyPolicy() = default;
+BatchServiceConnectionIdempotencyPolicy::~BatchServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<BatchServiceConnectionIdempotencyPolicy>
 BatchServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<BatchServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency BatchServiceConnectionIdempotencyPolicy::CreateJob(
-    google::cloud::batch::v1::CreateJobRequest const&) {
+Idempotency BatchServiceConnectionIdempotencyPolicy::CreateJob(google::cloud::batch::v1::CreateJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BatchServiceConnectionIdempotencyPolicy::GetJob(
-    google::cloud::batch::v1::GetJobRequest const&) {
+Idempotency BatchServiceConnectionIdempotencyPolicy::GetJob(google::cloud::batch::v1::GetJobRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency BatchServiceConnectionIdempotencyPolicy::DeleteJob(
-    google::cloud::batch::v1::DeleteJobRequest const&) {
+Idempotency BatchServiceConnectionIdempotencyPolicy::DeleteJob(google::cloud::batch::v1::DeleteJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BatchServiceConnectionIdempotencyPolicy::ListJobs(
-    google::cloud::batch::v1::ListJobsRequest) {  // NOLINT
+Idempotency BatchServiceConnectionIdempotencyPolicy::ListJobs(google::cloud::batch::v1::ListJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency BatchServiceConnectionIdempotencyPolicy::GetTask(
-    google::cloud::batch::v1::GetTaskRequest const&) {
+Idempotency BatchServiceConnectionIdempotencyPolicy::GetTask(google::cloud::batch::v1::GetTaskRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency BatchServiceConnectionIdempotencyPolicy::ListTasks(
-    google::cloud::batch::v1::ListTasksRequest) {  // NOLINT
+Idempotency BatchServiceConnectionIdempotencyPolicy::ListTasks(google::cloud::batch::v1::ListTasksRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<BatchServiceConnectionIdempotencyPolicy>
-MakeDefaultBatchServiceConnectionIdempotencyPolicy() {
+    MakeDefaultBatchServiceConnectionIdempotencyPolicy() {
   return std::make_unique<BatchServiceConnectionIdempotencyPolicy>();
 }
 

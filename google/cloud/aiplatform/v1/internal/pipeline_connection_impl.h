@@ -46,66 +46,47 @@ class PipelineServiceConnectionImpl
   ~PipelineServiceConnectionImpl() override = default;
 
   PipelineServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<aiplatform_v1_internal::PipelineServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<aiplatform_v1_internal::PipelineServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
-  CreateTrainingPipeline(
-      google::cloud::aiplatform::v1::CreateTrainingPipelineRequest const&
-          request) override;
+  CreateTrainingPipeline(google::cloud::aiplatform::v1::CreateTrainingPipelineRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::TrainingPipeline> GetTrainingPipeline(
-      google::cloud::aiplatform::v1::GetTrainingPipelineRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
+  GetTrainingPipeline(google::cloud::aiplatform::v1::GetTrainingPipelineRequest const& request) override;
 
   StreamRange<google::cloud::aiplatform::v1::TrainingPipeline>
-  ListTrainingPipelines(
-      google::cloud::aiplatform::v1::ListTrainingPipelinesRequest request)
-      override;
+  ListTrainingPipelines(google::cloud::aiplatform::v1::ListTrainingPipelinesRequest request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTrainingPipeline(
-      google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
-          request) override;
+  DeleteTrainingPipeline(google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const& request) override;
 
-  Status CancelTrainingPipeline(
-      google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&
-          request) override;
+  Status
+  CancelTrainingPipeline(google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::PipelineJob> CreatePipelineJob(
-      google::cloud::aiplatform::v1::CreatePipelineJobRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::PipelineJob>
+  CreatePipelineJob(google::cloud::aiplatform::v1::CreatePipelineJobRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::PipelineJob> GetPipelineJob(
-      google::cloud::aiplatform::v1::GetPipelineJobRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::PipelineJob>
+  GetPipelineJob(google::cloud::aiplatform::v1::GetPipelineJobRequest const& request) override;
 
-  StreamRange<google::cloud::aiplatform::v1::PipelineJob> ListPipelineJobs(
-      google::cloud::aiplatform::v1::ListPipelineJobsRequest request) override;
+  StreamRange<google::cloud::aiplatform::v1::PipelineJob>
+  ListPipelineJobs(google::cloud::aiplatform::v1::ListPipelineJobsRequest request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeletePipelineJob(
-      google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request)
-      override;
+  DeletePipelineJob(google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request) override;
 
-  future<
-      StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
-  BatchDeletePipelineJobs(
-      google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
-          request) override;
+  future<StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
+  BatchDeletePipelineJobs(google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const& request) override;
 
-  Status CancelPipelineJob(
-      google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request)
-      override;
+  Status
+  CancelPipelineJob(google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request) override;
 
-  future<
-      StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
-  BatchCancelPipelineJobs(
-      google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
-          request) override;
+  future<StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
+  BatchCancelPipelineJobs(google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

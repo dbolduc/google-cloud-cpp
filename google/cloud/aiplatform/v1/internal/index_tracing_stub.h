@@ -41,56 +41,54 @@ class IndexServiceTracingStub : public IndexServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateIndexRequest const& request)
-      override;
+      google::cloud::aiplatform::v1::CreateIndexRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateIndex(
-      grpc::ClientContext& context, Options options,
-      google::cloud::aiplatform::v1::CreateIndexRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::CreateIndexRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::Index> GetIndex(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::aiplatform::v1::GetIndexRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListIndexesResponse> ListIndexes(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::ListIndexesRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::ListIndexesRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateIndex(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::UpdateIndexRequest const& request)
-      override;
+      google::cloud::aiplatform::v1::UpdateIndexRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateIndex(
-      grpc::ClientContext& context, Options options,
-      google::cloud::aiplatform::v1::UpdateIndexRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::UpdateIndexRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteIndex(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteIndexRequest const& request)
-      override;
+      google::cloud::aiplatform::v1::DeleteIndexRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteIndex(
-      grpc::ClientContext& context, Options options,
-      google::cloud::aiplatform::v1::DeleteIndexRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteIndexRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>
-  UpsertDatapoints(grpc::ClientContext& context, Options const& options,
-                   google::cloud::aiplatform::v1::UpsertDatapointsRequest const&
-                       request) override;
+  StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse> UpsertDatapoints(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::UpsertDatapointsRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::RemoveDatapointsResponse>
-  RemoveDatapoints(grpc::ClientContext& context, Options const& options,
-                   google::cloud::aiplatform::v1::RemoveDatapointsRequest const&
-                       request) override;
+  StatusOr<google::cloud::aiplatform::v1::RemoveDatapointsResponse> RemoveDatapoints(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::RemoveDatapointsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -106,8 +104,7 @@ class IndexServiceTracingStub : public IndexServiceStub {
 
  private:
   std::shared_ptr<IndexServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

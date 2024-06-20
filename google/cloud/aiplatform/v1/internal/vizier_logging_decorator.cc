@@ -29,27 +29,34 @@ namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 VizierServiceLogging::VizierServiceLogging(
-    std::shared_ptr<VizierServiceStub> child, TracingOptions tracing_options,
+    std::shared_ptr<VizierServiceStub> child,
+    TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::aiplatform::v1::Study>
 VizierServiceLogging::CreateStudy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::CreateStudyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::aiplatform::v1::CreateStudyRequest const& request) {
         return child_->CreateStudy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::aiplatform::v1::Study> VizierServiceLogging::GetStudy(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::Study>
+VizierServiceLogging::GetStudy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetStudyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::aiplatform::v1::GetStudyRequest const& request) {
         return child_->GetStudy(context, options, request);
       },
@@ -58,21 +65,26 @@ StatusOr<google::cloud::aiplatform::v1::Study> VizierServiceLogging::GetStudy(
 
 StatusOr<google::cloud::aiplatform::v1::ListStudiesResponse>
 VizierServiceLogging::ListStudies(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListStudiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::aiplatform::v1::ListStudiesRequest const& request) {
         return child_->ListStudies(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status VizierServiceLogging::DeleteStudy(
-    grpc::ClientContext& context, Options const& options,
+Status
+VizierServiceLogging::DeleteStudy(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::DeleteStudyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::aiplatform::v1::DeleteStudyRequest const& request) {
         return child_->DeleteStudy(context, options, request);
       },
@@ -81,10 +93,12 @@ Status VizierServiceLogging::DeleteStudy(
 
 StatusOr<google::cloud::aiplatform::v1::Study>
 VizierServiceLogging::LookupStudy(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::LookupStudyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::aiplatform::v1::LookupStudyRequest const& request) {
         return child_->LookupStudy(context, options, request);
       },
@@ -93,30 +107,31 @@ VizierServiceLogging::LookupStudy(
 
 future<StatusOr<google::longrunning::Operation>>
 VizierServiceLogging::AsyncSuggestTrials(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context,
-          google::cloud::internal::ImmutableOptions options,
-          google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
-        return child_->AsyncSuggestTrials(cq, std::move(context),
-                                          std::move(options), request);
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
+        return child_->AsyncSuggestTrials(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation> VizierServiceLogging::SuggestTrials(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
+StatusOr<google::longrunning::Operation>
+VizierServiceLogging::SuggestTrials(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
         return child_->SuggestTrials(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -124,21 +139,26 @@ StatusOr<google::longrunning::Operation> VizierServiceLogging::SuggestTrials(
 
 StatusOr<google::cloud::aiplatform::v1::Trial>
 VizierServiceLogging::CreateTrial(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::CreateTrialRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::aiplatform::v1::CreateTrialRequest const& request) {
         return child_->CreateTrial(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::aiplatform::v1::Trial> VizierServiceLogging::GetTrial(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::Trial>
+VizierServiceLogging::GetTrial(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetTrialRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::aiplatform::v1::GetTrialRequest const& request) {
         return child_->GetTrial(context, options, request);
       },
@@ -147,10 +167,12 @@ StatusOr<google::cloud::aiplatform::v1::Trial> VizierServiceLogging::GetTrial(
 
 StatusOr<google::cloud::aiplatform::v1::ListTrialsResponse>
 VizierServiceLogging::ListTrials(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListTrialsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::aiplatform::v1::ListTrialsRequest const& request) {
         return child_->ListTrials(context, options, request);
       },
@@ -159,12 +181,13 @@ VizierServiceLogging::ListTrials(
 
 StatusOr<google::cloud::aiplatform::v1::Trial>
 VizierServiceLogging::AddTrialMeasurement(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::AddTrialMeasurementRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::AddTrialMeasurementRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::AddTrialMeasurementRequest const& request) {
         return child_->AddTrialMeasurement(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -172,22 +195,26 @@ VizierServiceLogging::AddTrialMeasurement(
 
 StatusOr<google::cloud::aiplatform::v1::Trial>
 VizierServiceLogging::CompleteTrial(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::CompleteTrialRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::CompleteTrialRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::CompleteTrialRequest const& request) {
         return child_->CompleteTrial(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status VizierServiceLogging::DeleteTrial(
-    grpc::ClientContext& context, Options const& options,
+Status
+VizierServiceLogging::DeleteTrial(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::DeleteTrialRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::aiplatform::v1::DeleteTrialRequest const& request) {
         return child_->DeleteTrial(context, options, request);
       },
@@ -196,17 +223,15 @@ Status VizierServiceLogging::DeleteTrial(
 
 future<StatusOr<google::longrunning::Operation>>
 VizierServiceLogging::AsyncCheckTrialEarlyStoppingState(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::
-                 CheckTrialEarlyStoppingStateRequest const& request) {
+             google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const& request) {
         return child_->AsyncCheckTrialEarlyStoppingState(
             cq, std::move(context), std::move(options), request);
       },
@@ -216,23 +241,26 @@ VizierServiceLogging::AsyncCheckTrialEarlyStoppingState(
 
 StatusOr<google::longrunning::Operation>
 VizierServiceLogging::CheckTrialEarlyStoppingState(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::
-                 CheckTrialEarlyStoppingStateRequest const& request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const& request) {
         return child_->CheckTrialEarlyStoppingState(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::aiplatform::v1::Trial> VizierServiceLogging::StopTrial(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::Trial>
+VizierServiceLogging::StopTrial(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::StopTrialRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](grpc::ClientContext& context,
+             Options const& options,
              google::cloud::aiplatform::v1::StopTrialRequest const& request) {
         return child_->StopTrial(context, options, request);
       },
@@ -241,12 +269,13 @@ StatusOr<google::cloud::aiplatform::v1::Trial> VizierServiceLogging::StopTrial(
 
 StatusOr<google::cloud::aiplatform::v1::ListOptimalTrialsResponse>
 VizierServiceLogging::ListOptimalTrials(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListOptimalTrialsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::ListOptimalTrialsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::ListOptimalTrialsRequest const& request) {
         return child_->ListOptimalTrials(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -263,8 +292,8 @@ VizierServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -280,8 +309,8 @@ future<Status> VizierServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

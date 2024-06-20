@@ -26,36 +26,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-GenAiTuningServiceConnectionIdempotencyPolicy::
-    ~GenAiTuningServiceConnectionIdempotencyPolicy() = default;
+GenAiTuningServiceConnectionIdempotencyPolicy::~GenAiTuningServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<GenAiTuningServiceConnectionIdempotencyPolicy>
 GenAiTuningServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<GenAiTuningServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::CreateTuningJob(
-    google::cloud::aiplatform::v1::CreateTuningJobRequest const&) {
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::CreateTuningJob(google::cloud::aiplatform::v1::CreateTuningJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::GetTuningJob(
-    google::cloud::aiplatform::v1::GetTuningJobRequest const&) {
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::GetTuningJob(google::cloud::aiplatform::v1::GetTuningJobRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::ListTuningJobs(
-    google::cloud::aiplatform::v1::ListTuningJobsRequest) {  // NOLINT
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::ListTuningJobs(google::cloud::aiplatform::v1::ListTuningJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::CancelTuningJob(
-    google::cloud::aiplatform::v1::CancelTuningJobRequest const&) {
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::CancelTuningJob(google::cloud::aiplatform::v1::CancelTuningJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<GenAiTuningServiceConnectionIdempotencyPolicy>
-MakeDefaultGenAiTuningServiceConnectionIdempotencyPolicy() {
+    MakeDefaultGenAiTuningServiceConnectionIdempotencyPolicy() {
   return std::make_unique<GenAiTuningServiceConnectionIdempotencyPolicy>();
 }
 

@@ -34,33 +34,32 @@ class ScheduleServiceConnectionIdempotencyPolicy {
   virtual ~ScheduleServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ScheduleServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<ScheduleServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateSchedule(
-      google::cloud::aiplatform::v1::CreateScheduleRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateSchedule(google::cloud::aiplatform::v1::CreateScheduleRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteSchedule(
-      google::cloud::aiplatform::v1::DeleteScheduleRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteSchedule(google::cloud::aiplatform::v1::DeleteScheduleRequest const& request);
 
-  virtual google::cloud::Idempotency GetSchedule(
-      google::cloud::aiplatform::v1::GetScheduleRequest const& request);
+  virtual google::cloud::Idempotency
+  GetSchedule(google::cloud::aiplatform::v1::GetScheduleRequest const& request);
 
-  virtual google::cloud::Idempotency ListSchedules(
-      google::cloud::aiplatform::v1::ListSchedulesRequest request);
+  virtual google::cloud::Idempotency
+  ListSchedules(google::cloud::aiplatform::v1::ListSchedulesRequest request);
 
-  virtual google::cloud::Idempotency PauseSchedule(
-      google::cloud::aiplatform::v1::PauseScheduleRequest const& request);
+  virtual google::cloud::Idempotency
+  PauseSchedule(google::cloud::aiplatform::v1::PauseScheduleRequest const& request);
 
-  virtual google::cloud::Idempotency ResumeSchedule(
-      google::cloud::aiplatform::v1::ResumeScheduleRequest const& request);
+  virtual google::cloud::Idempotency
+  ResumeSchedule(google::cloud::aiplatform::v1::ResumeScheduleRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateSchedule(
-      google::cloud::aiplatform::v1::UpdateScheduleRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateSchedule(google::cloud::aiplatform::v1::UpdateScheduleRequest const& request);
 };
 
 std::unique_ptr<ScheduleServiceConnectionIdempotencyPolicy>
-MakeDefaultScheduleServiceConnectionIdempotencyPolicy();
+    MakeDefaultScheduleServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

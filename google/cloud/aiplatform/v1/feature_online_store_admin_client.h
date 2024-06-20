@@ -64,31 +64,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class FeatureOnlineStoreAdminServiceClient {
  public:
-  explicit FeatureOnlineStoreAdminServiceClient(
-      std::shared_ptr<FeatureOnlineStoreAdminServiceConnection> connection,
-      Options opts = {});
+  explicit FeatureOnlineStoreAdminServiceClient(std::shared_ptr<FeatureOnlineStoreAdminServiceConnection> connection, Options opts = {});
   ~FeatureOnlineStoreAdminServiceClient();
 
   ///@{
   /// @name Copy and move support
-  FeatureOnlineStoreAdminServiceClient(
-      FeatureOnlineStoreAdminServiceClient const&) = default;
-  FeatureOnlineStoreAdminServiceClient& operator=(
-      FeatureOnlineStoreAdminServiceClient const&) = default;
-  FeatureOnlineStoreAdminServiceClient(FeatureOnlineStoreAdminServiceClient&&) =
-      default;
-  FeatureOnlineStoreAdminServiceClient& operator=(
-      FeatureOnlineStoreAdminServiceClient&&) = default;
+  FeatureOnlineStoreAdminServiceClient(FeatureOnlineStoreAdminServiceClient const&) = default;
+  FeatureOnlineStoreAdminServiceClient& operator=(FeatureOnlineStoreAdminServiceClient const&) = default;
+  FeatureOnlineStoreAdminServiceClient(FeatureOnlineStoreAdminServiceClient&&) = default;
+  FeatureOnlineStoreAdminServiceClient& operator=(FeatureOnlineStoreAdminServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(FeatureOnlineStoreAdminServiceClient const& a,
-                         FeatureOnlineStoreAdminServiceClient const& b) {
+  friend bool operator==(FeatureOnlineStoreAdminServiceClient const& a, FeatureOnlineStoreAdminServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(FeatureOnlineStoreAdminServiceClient const& a,
-                         FeatureOnlineStoreAdminServiceClient const& b) {
+  friend bool operator!=(FeatureOnlineStoreAdminServiceClient const& a, FeatureOnlineStoreAdminServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -133,11 +125,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
-  CreateFeatureOnlineStore(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::FeatureOnlineStore const&
-          feature_online_store,
-      std::string const& feature_online_store_id, Options opts = {});
+  CreateFeatureOnlineStore(std::string const& parent, google::cloud::aiplatform::v1::FeatureOnlineStore const& feature_online_store, std::string const& feature_online_store_id, Options opts = {});
 
   // clang-format off
   ///
@@ -174,10 +162,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
-  CreateFeatureOnlineStore(
-      google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
-          request,
-      Options opts = {});
+  CreateFeatureOnlineStore(google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -232,10 +217,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>
-  GetFeatureOnlineStore(
-      google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const&
-          request,
-      Options opts = {});
+  GetFeatureOnlineStore(google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -310,9 +292,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::FeatureOnlineStore>
-  ListFeatureOnlineStores(
-      google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest request,
-      Options opts = {});
+  ListFeatureOnlineStores(google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -360,10 +340,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
-  UpdateFeatureOnlineStore(
-      google::cloud::aiplatform::v1::FeatureOnlineStore const&
-          feature_online_store,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateFeatureOnlineStore(google::cloud::aiplatform::v1::FeatureOnlineStore const& feature_online_store, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -400,10 +377,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
-  UpdateFeatureOnlineStore(
-      google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
-          request,
-      Options opts = {});
+  UpdateFeatureOnlineStore(google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -441,8 +415,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeatureOnlineStore(std::string const& name, bool force,
-                           Options opts = {});
+  DeleteFeatureOnlineStore(std::string const& name, bool force, Options opts = {});
 
   // clang-format off
   ///
@@ -480,10 +453,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeatureOnlineStore(
-      google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
-          request,
-      Options opts = {});
+  DeleteFeatureOnlineStore(google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -525,10 +495,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
-  CreateFeatureView(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::FeatureView const& feature_view,
-      std::string const& feature_view_id, Options opts = {});
+  CreateFeatureView(std::string const& parent, google::cloud::aiplatform::v1::FeatureView const& feature_view, std::string const& feature_view_id, Options opts = {});
 
   // clang-format off
   ///
@@ -565,9 +532,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
-  CreateFeatureView(
-      google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request,
-      Options opts = {});
+  CreateFeatureView(google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -593,8 +558,8 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [google.cloud.aiplatform.v1.GetFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L381}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::FeatureView> GetFeatureView(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::FeatureView>
+  GetFeatureView(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -623,9 +588,8 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [google.cloud.aiplatform.v1.GetFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L381}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::FeatureView> GetFeatureView(
-      google::cloud::aiplatform::v1::GetFeatureViewRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::FeatureView>
+  GetFeatureView(google::cloud::aiplatform::v1::GetFeatureViewRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -660,8 +624,8 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [google.cloud.aiplatform.v1.ListFeatureViewsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L395}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::FeatureView> ListFeatureViews(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::FeatureView>
+  ListFeatureViews(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -699,9 +663,8 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [google.cloud.aiplatform.v1.ListFeatureViewsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L395}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::FeatureView> ListFeatureViews(
-      google::cloud::aiplatform::v1::ListFeatureViewsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::FeatureView>
+  ListFeatureViews(google::cloud::aiplatform::v1::ListFeatureViewsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -747,9 +710,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
-  UpdateFeatureView(
-      google::cloud::aiplatform::v1::FeatureView const& feature_view,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateFeatureView(google::cloud::aiplatform::v1::FeatureView const& feature_view, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -786,9 +747,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
-  UpdateFeatureView(
-      google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request,
-      Options opts = {});
+  UpdateFeatureView(google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -859,9 +818,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeatureView(
-      google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request,
-      Options opts = {});
+  DeleteFeatureView(google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -917,9 +874,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse>
-  SyncFeatureView(
-      google::cloud::aiplatform::v1::SyncFeatureViewRequest const& request,
-      Options opts = {});
+  SyncFeatureView(google::cloud::aiplatform::v1::SyncFeatureViewRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -945,8 +900,8 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [google.cloud.aiplatform.v1.GetFeatureViewSyncRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L548}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::FeatureViewSync> GetFeatureViewSync(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::FeatureViewSync>
+  GetFeatureViewSync(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -975,9 +930,8 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [google.cloud.aiplatform.v1.GetFeatureViewSyncRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L548}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::FeatureViewSync> GetFeatureViewSync(
-      google::cloud::aiplatform::v1::GetFeatureViewSyncRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::FeatureViewSync>
+  GetFeatureViewSync(google::cloud::aiplatform::v1::GetFeatureViewSyncRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1052,9 +1006,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::FeatureViewSync>
-  ListFeatureViewSyncs(
-      google::cloud::aiplatform::v1::ListFeatureViewSyncsRequest request,
-      Options opts = {});
+  ListFeatureViewSyncs(google::cloud::aiplatform::v1::ListFeatureViewSyncsRequest request, Options opts = {});
 
  private:
   std::shared_ptr<FeatureOnlineStoreAdminServiceConnection> connection_;

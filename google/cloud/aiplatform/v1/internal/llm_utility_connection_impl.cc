@@ -31,38 +31,34 @@ namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<aiplatform_v1::LlmUtilityServiceRetryPolicy> retry_policy(
-    Options const& options) {
-  return options.get<aiplatform_v1::LlmUtilityServiceRetryPolicyOption>()
-      ->clone();
+std::unique_ptr<aiplatform_v1::LlmUtilityServiceRetryPolicy>
+retry_policy(Options const& options) {
+  return options.get<aiplatform_v1::LlmUtilityServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options.get<aiplatform_v1::LlmUtilityServiceBackoffPolicyOption>()
-      ->clone();
+std::unique_ptr<BackoffPolicy>
+backoff_policy(Options const& options) {
+  return options.get<aiplatform_v1::LlmUtilityServiceBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<aiplatform_v1::LlmUtilityServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options
-      .get<aiplatform_v1::LlmUtilityServiceConnectionIdempotencyPolicyOption>()
-      ->clone();
+  return options.get<aiplatform_v1::LlmUtilityServiceConnectionIdempotencyPolicyOption>()->clone();
 }
 
-}  // namespace
+} // namespace
 
 LlmUtilityServiceConnectionImpl::LlmUtilityServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<aiplatform_v1_internal::LlmUtilityServiceStub> stub,
     Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), LlmUtilityServiceConnection::options())) {}
+  : background_(std::move(background)), stub_(std::move(stub)),
+    options_(internal::MergeOptions(
+        std::move(options),
+        LlmUtilityServiceConnection::options())) {}
 
 StatusOr<google::cloud::aiplatform::v1::CountTokensResponse>
-LlmUtilityServiceConnectionImpl::CountTokens(
-    google::cloud::aiplatform::v1::CountTokensRequest const& request) {
+LlmUtilityServiceConnectionImpl::CountTokens(google::cloud::aiplatform::v1::CountTokensRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -75,15 +71,13 @@ LlmUtilityServiceConnectionImpl::CountTokens(
 }
 
 StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse>
-LlmUtilityServiceConnectionImpl::ComputeTokens(
-    google::cloud::aiplatform::v1::ComputeTokensRequest const& request) {
+LlmUtilityServiceConnectionImpl::ComputeTokens(google::cloud::aiplatform::v1::ComputeTokensRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ComputeTokens(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::ComputeTokensRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::ComputeTokensRequest const& request) {
         return stub_->ComputeTokens(context, options, request);
       },
       *current, request, __func__);

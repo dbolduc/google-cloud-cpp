@@ -34,49 +34,41 @@ BackupDRTracingConnection::BackupDRTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::backupdr::v1::ManagementServer>
-BackupDRTracingConnection::ListManagementServers(
-    google::cloud::backupdr::v1::ListManagementServersRequest request) {
-  auto span = internal::MakeSpan(
-      "backupdr_v1::BackupDRConnection::ListManagementServers");
+BackupDRTracingConnection::ListManagementServers(google::cloud::backupdr::v1::ListManagementServersRequest request) {
+  auto span = internal::MakeSpan("backupdr_v1::BackupDRConnection::ListManagementServers");
   internal::OTelScope scope(span);
   auto sr = child_->ListManagementServers(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::backupdr::v1::ManagementServer>(std::move(span),
-                                                     std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::backupdr::v1::ManagementServer>(
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::backupdr::v1::ManagementServer>
-BackupDRTracingConnection::GetManagementServer(
-    google::cloud::backupdr::v1::GetManagementServerRequest const& request) {
-  auto span = internal::MakeSpan(
-      "backupdr_v1::BackupDRConnection::GetManagementServer");
+BackupDRTracingConnection::GetManagementServer(google::cloud::backupdr::v1::GetManagementServerRequest const& request) {
+  auto span = internal::MakeSpan("backupdr_v1::BackupDRConnection::GetManagementServer");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetManagementServer(request));
 }
 
 future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>
-BackupDRTracingConnection::CreateManagementServer(
-    google::cloud::backupdr::v1::CreateManagementServerRequest const& request) {
+BackupDRTracingConnection::CreateManagementServer(google::cloud::backupdr::v1::CreateManagementServerRequest const& request) {
   auto span = internal::MakeSpan(
       "backupdr_v1::BackupDRConnection::CreateManagementServer");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateManagementServer(request));
+  return internal::EndSpan(std::move(span), child_->CreateManagementServer(request));
 }
 
 future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
-BackupDRTracingConnection::DeleteManagementServer(
-    google::cloud::backupdr::v1::DeleteManagementServerRequest const& request) {
+BackupDRTracingConnection::DeleteManagementServer(google::cloud::backupdr::v1::DeleteManagementServerRequest const& request) {
   auto span = internal::MakeSpan(
       "backupdr_v1::BackupDRConnection::DeleteManagementServer");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteManagementServer(request));
+  return internal::EndSpan(std::move(span), child_->DeleteManagementServer(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<backupdr_v1::BackupDRConnection> MakeBackupDRTracingConnection(
+std::shared_ptr<backupdr_v1::BackupDRConnection>
+MakeBackupDRTracingConnection(
     std::shared_ptr<backupdr_v1::BackupDRConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {

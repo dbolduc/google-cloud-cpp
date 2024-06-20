@@ -26,31 +26,24 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::
-    ~FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy() = default;
+FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::~FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy>
 FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<
-      FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::ReadFeatureValues(
-    google::cloud::aiplatform::v1::ReadFeatureValuesRequest const&) {
+Idempotency FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::ReadFeatureValues(google::cloud::aiplatform::v1::ReadFeatureValuesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::WriteFeatureValues(
-    google::cloud::aiplatform::v1::WriteFeatureValuesRequest const&) {
+Idempotency FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy::WriteFeatureValues(google::cloud::aiplatform::v1::WriteFeatureValuesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy>
-MakeDefaultFeaturestoreOnlineServingServiceConnectionIdempotencyPolicy() {
-  return std::make_unique<
-      FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy>();
+    MakeDefaultFeaturestoreOnlineServingServiceConnectionIdempotencyPolicy() {
+  return std::make_unique<FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

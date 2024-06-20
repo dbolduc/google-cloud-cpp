@@ -34,54 +34,44 @@ class NotebookServiceConnectionIdempotencyPolicy {
   virtual ~NotebookServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<NotebookServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<NotebookServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateNotebookRuntimeTemplate(
-      google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateNotebookRuntimeTemplate(google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const& request);
 
-  virtual google::cloud::Idempotency GetNotebookRuntimeTemplate(
-      google::cloud::aiplatform::v1::GetNotebookRuntimeTemplateRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetNotebookRuntimeTemplate(google::cloud::aiplatform::v1::GetNotebookRuntimeTemplateRequest const& request);
 
-  virtual google::cloud::Idempotency ListNotebookRuntimeTemplates(
-      google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesRequest
-          request);
+  virtual google::cloud::Idempotency
+  ListNotebookRuntimeTemplates(google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesRequest request);
 
-  virtual google::cloud::Idempotency DeleteNotebookRuntimeTemplate(
-      google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteNotebookRuntimeTemplate(google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateNotebookRuntimeTemplate(
-      google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateNotebookRuntimeTemplate(google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const& request);
 
-  virtual google::cloud::Idempotency AssignNotebookRuntime(
-      google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  AssignNotebookRuntime(google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const& request);
 
-  virtual google::cloud::Idempotency GetNotebookRuntime(
-      google::cloud::aiplatform::v1::GetNotebookRuntimeRequest const& request);
+  virtual google::cloud::Idempotency
+  GetNotebookRuntime(google::cloud::aiplatform::v1::GetNotebookRuntimeRequest const& request);
 
-  virtual google::cloud::Idempotency ListNotebookRuntimes(
-      google::cloud::aiplatform::v1::ListNotebookRuntimesRequest request);
+  virtual google::cloud::Idempotency
+  ListNotebookRuntimes(google::cloud::aiplatform::v1::ListNotebookRuntimesRequest request);
 
-  virtual google::cloud::Idempotency DeleteNotebookRuntime(
-      google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteNotebookRuntime(google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const& request);
 
-  virtual google::cloud::Idempotency UpgradeNotebookRuntime(
-      google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpgradeNotebookRuntime(google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const& request);
 
-  virtual google::cloud::Idempotency StartNotebookRuntime(
-      google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  StartNotebookRuntime(google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request);
 };
 
 std::unique_ptr<NotebookServiceConnectionIdempotencyPolicy>
-MakeDefaultNotebookServiceConnectionIdempotencyPolicy();
+    MakeDefaultNotebookServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

@@ -48,47 +48,44 @@ IndexEndpointServiceMetadata::AsyncCreateIndexEndpoint(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateIndexEndpoint(cq, std::move(context),
-                                          std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateIndexEndpoint(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 IndexEndpointServiceMetadata::CreateIndexEndpoint(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateIndexEndpoint(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
 IndexEndpointServiceMetadata::GetIndexEndpoint(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetIndexEndpointRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetIndexEndpoint(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListIndexEndpointsResponse>
 IndexEndpointServiceMetadata::ListIndexEndpoints(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListIndexEndpointsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListIndexEndpoints(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
 IndexEndpointServiceMetadata::UpdateIndexEndpoint(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::UpdateIndexEndpointRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("index_endpoint.name=",
-                   internal::UrlEncode(request.index_endpoint().name())));
+  SetMetadata(context, options, absl::StrCat("index_endpoint.name=", internal::UrlEncode(request.index_endpoint().name())));
   return child_->UpdateIndexEndpoint(context, options, request);
 }
 
@@ -98,18 +95,17 @@ IndexEndpointServiceMetadata::AsyncDeleteIndexEndpoint(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteIndexEndpoint(cq, std::move(context),
-                                          std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteIndexEndpoint(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 IndexEndpointServiceMetadata::DeleteIndexEndpoint(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteIndexEndpoint(context, options, request);
 }
 
@@ -119,20 +115,17 @@ IndexEndpointServiceMetadata::AsyncDeployIndex(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::DeployIndexRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("index_endpoint=",
-                           internal::UrlEncode(request.index_endpoint())));
-  return child_->AsyncDeployIndex(cq, std::move(context), std::move(options),
-                                  request);
+  SetMetadata(*context, *options, absl::StrCat("index_endpoint=", internal::UrlEncode(request.index_endpoint())));
+  return child_->AsyncDeployIndex(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 IndexEndpointServiceMetadata::DeployIndex(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::aiplatform::v1::DeployIndexRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("index_endpoint=",
-                           internal::UrlEncode(request.index_endpoint())));
+  SetMetadata(context, options, absl::StrCat("index_endpoint=", internal::UrlEncode(request.index_endpoint())));
   return child_->DeployIndex(context, options, request);
 }
 
@@ -142,20 +135,17 @@ IndexEndpointServiceMetadata::AsyncUndeployIndex(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::UndeployIndexRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("index_endpoint=",
-                           internal::UrlEncode(request.index_endpoint())));
-  return child_->AsyncUndeployIndex(cq, std::move(context), std::move(options),
-                                    request);
+  SetMetadata(*context, *options, absl::StrCat("index_endpoint=", internal::UrlEncode(request.index_endpoint())));
+  return child_->AsyncUndeployIndex(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 IndexEndpointServiceMetadata::UndeployIndex(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::aiplatform::v1::UndeployIndexRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("index_endpoint=",
-                           internal::UrlEncode(request.index_endpoint())));
+  SetMetadata(context, options, absl::StrCat("index_endpoint=", internal::UrlEncode(request.index_endpoint())));
   return child_->UndeployIndex(context, options, request);
 }
 
@@ -165,20 +155,17 @@ IndexEndpointServiceMetadata::AsyncMutateDeployedIndex(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("index_endpoint=",
-                           internal::UrlEncode(request.index_endpoint())));
-  return child_->AsyncMutateDeployedIndex(cq, std::move(context),
-                                          std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("index_endpoint=", internal::UrlEncode(request.index_endpoint())));
+  return child_->AsyncMutateDeployedIndex(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 IndexEndpointServiceMetadata::MutateDeployedIndex(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("index_endpoint=",
-                           internal::UrlEncode(request.index_endpoint())));
+  SetMetadata(context, options, absl::StrCat("index_endpoint=", internal::UrlEncode(request.index_endpoint())));
   return child_->MutateDeployedIndex(context, options, request);
 }
 
@@ -190,8 +177,8 @@ IndexEndpointServiceMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> IndexEndpointServiceMetadata::AsyncCancelOperation(
@@ -201,21 +188,21 @@ future<Status> IndexEndpointServiceMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
-void IndexEndpointServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, Options const& options,
-    std::string const& request_params) {
+void IndexEndpointServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void IndexEndpointServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                               Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

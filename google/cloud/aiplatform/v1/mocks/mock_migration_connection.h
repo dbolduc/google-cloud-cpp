@@ -42,24 +42,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockMigrationServiceConnection
-    : public aiplatform_v1::MigrationServiceConnection {
+class MockMigrationServiceConnection : public aiplatform_v1::MigrationServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::aiplatform::v1::MigratableResource>),
-      SearchMigratableResources,
-      (google::cloud::aiplatform::v1::SearchMigratableResourcesRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::MigratableResource>),
+  SearchMigratableResources,
+  (google::cloud::aiplatform::v1::SearchMigratableResourcesRequest request), (override));
 
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>,
-      BatchMigrateResources,
-      (google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>,
+  BatchMigrateResources,
+  (google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

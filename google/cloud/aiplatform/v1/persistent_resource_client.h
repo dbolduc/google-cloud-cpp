@@ -63,30 +63,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class PersistentResourceServiceClient {
  public:
-  explicit PersistentResourceServiceClient(
-      std::shared_ptr<PersistentResourceServiceConnection> connection,
-      Options opts = {});
+  explicit PersistentResourceServiceClient(std::shared_ptr<PersistentResourceServiceConnection> connection, Options opts = {});
   ~PersistentResourceServiceClient();
 
   ///@{
   /// @name Copy and move support
-  PersistentResourceServiceClient(PersistentResourceServiceClient const&) =
-      default;
-  PersistentResourceServiceClient& operator=(
-      PersistentResourceServiceClient const&) = default;
+  PersistentResourceServiceClient(PersistentResourceServiceClient const&) = default;
+  PersistentResourceServiceClient& operator=(PersistentResourceServiceClient const&) = default;
   PersistentResourceServiceClient(PersistentResourceServiceClient&&) = default;
-  PersistentResourceServiceClient& operator=(
-      PersistentResourceServiceClient&&) = default;
+  PersistentResourceServiceClient& operator=(PersistentResourceServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(PersistentResourceServiceClient const& a,
-                         PersistentResourceServiceClient const& b) {
+  friend bool operator==(PersistentResourceServiceClient const& a, PersistentResourceServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(PersistentResourceServiceClient const& a,
-                         PersistentResourceServiceClient const& b) {
+  friend bool operator!=(PersistentResourceServiceClient const& a, PersistentResourceServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -128,11 +121,7 @@ class PersistentResourceServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-  CreatePersistentResource(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::PersistentResource const&
-          persistent_resource,
-      std::string const& persistent_resource_id, Options opts = {});
+  CreatePersistentResource(std::string const& parent, google::cloud::aiplatform::v1::PersistentResource const& persistent_resource, std::string const& persistent_resource_id, Options opts = {});
 
   // clang-format off
   ///
@@ -169,10 +158,7 @@ class PersistentResourceServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-  CreatePersistentResource(
-      google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
-          request,
-      Options opts = {});
+  CreatePersistentResource(google::cloud::aiplatform::v1::CreatePersistentResourceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -229,10 +215,7 @@ class PersistentResourceServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::PersistentResource>
-  GetPersistentResource(
-      google::cloud::aiplatform::v1::GetPersistentResourceRequest const&
-          request,
-      Options opts = {});
+  GetPersistentResource(google::cloud::aiplatform::v1::GetPersistentResourceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -306,9 +289,7 @@ class PersistentResourceServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::PersistentResource>
-  ListPersistentResources(
-      google::cloud::aiplatform::v1::ListPersistentResourcesRequest request,
-      Options opts = {});
+  ListPersistentResources(google::cloud::aiplatform::v1::ListPersistentResourcesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -379,10 +360,7 @@ class PersistentResourceServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeletePersistentResource(
-      google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
-          request,
-      Options opts = {});
+  DeletePersistentResource(google::cloud::aiplatform::v1::DeletePersistentResourceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -420,10 +398,7 @@ class PersistentResourceServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-  UpdatePersistentResource(
-      google::cloud::aiplatform::v1::PersistentResource const&
-          persistent_resource,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdatePersistentResource(google::cloud::aiplatform::v1::PersistentResource const& persistent_resource, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -460,10 +435,7 @@ class PersistentResourceServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-  UpdatePersistentResource(
-      google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
-          request,
-      Options opts = {});
+  UpdatePersistentResource(google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -534,10 +506,7 @@ class PersistentResourceServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-  RebootPersistentResource(
-      google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
-          request,
-      Options opts = {});
+  RebootPersistentResource(google::cloud::aiplatform::v1::RebootPersistentResourceRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<PersistentResourceServiceConnection> connection_;

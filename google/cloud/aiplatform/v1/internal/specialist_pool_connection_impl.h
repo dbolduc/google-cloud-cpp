@@ -46,34 +46,26 @@ class SpecialistPoolServiceConnectionImpl
   ~SpecialistPoolServiceConnectionImpl() override = default;
 
   SpecialistPoolServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<aiplatform_v1_internal::SpecialistPoolServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<aiplatform_v1_internal::SpecialistPoolServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-  CreateSpecialistPool(
-      google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request)
-      override;
+  CreateSpecialistPool(google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::SpecialistPool> GetSpecialistPool(
-      google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
+  GetSpecialistPool(google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request) override;
 
   StreamRange<google::cloud::aiplatform::v1::SpecialistPool>
-  ListSpecialistPools(google::cloud::aiplatform::v1::ListSpecialistPoolsRequest
-                          request) override;
+  ListSpecialistPools(google::cloud::aiplatform::v1::ListSpecialistPoolsRequest request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteSpecialistPool(
-      google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request)
-      override;
+  DeleteSpecialistPool(google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-  UpdateSpecialistPool(
-      google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request)
-      override;
+  UpdateSpecialistPool(google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

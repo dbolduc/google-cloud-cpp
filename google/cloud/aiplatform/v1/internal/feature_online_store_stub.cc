@@ -32,27 +32,28 @@ FeatureOnlineStoreServiceStub::~FeatureOnlineStoreServiceStub() = default;
 
 StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>
 DefaultFeatureOnlineStoreServiceStub::FetchFeatureValues(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request) {
-  google::cloud::aiplatform::v1::FetchFeatureValuesResponse response;
-  auto status = grpc_stub_->FetchFeatureValues(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request) {
+    google::cloud::aiplatform::v1::FetchFeatureValuesResponse response;
+    auto status =
+        grpc_stub_->FetchFeatureValues(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
 DefaultFeatureOnlineStoreServiceStub::SearchNearestEntities(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
-        request) {
-  google::cloud::aiplatform::v1::SearchNearestEntitiesResponse response;
-  auto status = grpc_stub_->SearchNearestEntities(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const& request) {
+    google::cloud::aiplatform::v1::SearchNearestEntitiesResponse response;
+    auto status =
+        grpc_stub_->SearchNearestEntities(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

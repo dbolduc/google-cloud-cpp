@@ -33,17 +33,15 @@ SpecialistPoolServiceStub::~SpecialistPoolServiceStub() = default;
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultSpecialistPoolServiceStub::AsyncCreateSpecialistPool(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::aiplatform::v1::CreateSpecialistPoolRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::CreateSpecialistPoolRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const&
-                 request,
+             google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateSpecialistPool(context, request, cq);
       },
@@ -52,53 +50,55 @@ DefaultSpecialistPoolServiceStub::AsyncCreateSpecialistPool(
 
 StatusOr<google::longrunning::Operation>
 DefaultSpecialistPoolServiceStub::CreateSpecialistPool(
-    grpc::ClientContext& context, Options,
-    google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->CreateSpecialistPool(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateSpecialistPool(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
 DefaultSpecialistPoolServiceStub::GetSpecialistPool(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request) {
-  google::cloud::aiplatform::v1::SpecialistPool response;
-  auto status = grpc_stub_->GetSpecialistPool(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request) {
+    google::cloud::aiplatform::v1::SpecialistPool response;
+    auto status =
+        grpc_stub_->GetSpecialistPool(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListSpecialistPoolsResponse>
 DefaultSpecialistPoolServiceStub::ListSpecialistPools(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::ListSpecialistPoolsRequest const& request) {
-  google::cloud::aiplatform::v1::ListSpecialistPoolsResponse response;
-  auto status = grpc_stub_->ListSpecialistPools(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::ListSpecialistPoolsRequest const& request) {
+    google::cloud::aiplatform::v1::ListSpecialistPoolsResponse response;
+    auto status =
+        grpc_stub_->ListSpecialistPools(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultSpecialistPoolServiceStub::AsyncDeleteSpecialistPool(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const&
-                 request,
+             google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteSpecialistPool(context, request, cq);
       },
@@ -107,29 +107,29 @@ DefaultSpecialistPoolServiceStub::AsyncDeleteSpecialistPool(
 
 StatusOr<google::longrunning::Operation>
 DefaultSpecialistPoolServiceStub::DeleteSpecialistPool(
-    grpc::ClientContext& context, Options,
-    google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->DeleteSpecialistPool(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->DeleteSpecialistPool(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultSpecialistPoolServiceStub::AsyncUpdateSpecialistPool(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const&
-                 request,
+             google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateSpecialistPool(context, request, cq);
       },
@@ -138,14 +138,16 @@ DefaultSpecialistPoolServiceStub::AsyncUpdateSpecialistPool(
 
 StatusOr<google::longrunning::Operation>
 DefaultSpecialistPoolServiceStub::UpdateSpecialistPool(
-    grpc::ClientContext& context, Options,
-    google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->UpdateSpecialistPool(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateSpecialistPool(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -174,13 +176,13 @@ future<Status> DefaultSpecialistPoolServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_->AsyncCancelOperation(context, request, cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

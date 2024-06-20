@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `PersistentResourceServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `PersistentResourceServiceClient`.
- * To do so, construct an object of type `PersistentResourceServiceClient` with
- * an instance of this class. Then use the Google Test framework functions to
- * program the behavior of this mock.
+ * including errors, from an object of type `PersistentResourceServiceClient`. To do so,
+ * construct an object of type `PersistentResourceServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,51 +42,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockPersistentResourceServiceConnection
-    : public aiplatform_v1::PersistentResourceServiceConnection {
+class MockPersistentResourceServiceConnection : public aiplatform_v1::PersistentResourceServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>,
-      CreatePersistentResource,
-      (google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>,
+  CreatePersistentResource,
+  (google::cloud::aiplatform::v1::CreatePersistentResourceRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::aiplatform::v1::PersistentResource>,
-      GetPersistentResource,
-      (google::cloud::aiplatform::v1::GetPersistentResourceRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::PersistentResource>,
+  GetPersistentResource,
+  (google::cloud::aiplatform::v1::GetPersistentResourceRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::aiplatform::v1::PersistentResource>),
-      ListPersistentResources,
-      (google::cloud::aiplatform::v1::ListPersistentResourcesRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::PersistentResource>),
+  ListPersistentResources,
+  (google::cloud::aiplatform::v1::ListPersistentResourcesRequest request), (override));
 
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-      DeletePersistentResource,
-      (google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+  DeletePersistentResource,
+  (google::cloud::aiplatform::v1::DeletePersistentResourceRequest const& request), (override));
 
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>,
-      UpdatePersistentResource,
-      (google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>,
+  UpdatePersistentResource,
+  (google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const& request), (override));
 
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>,
-      RebootPersistentResource,
-      (google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>,
+  RebootPersistentResource,
+  (google::cloud::aiplatform::v1::RebootPersistentResourceRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

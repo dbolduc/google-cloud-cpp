@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `AssuredWorkloadsServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `AssuredWorkloadsServiceClient`. To
- * do so, construct an object of type `AssuredWorkloadsServiceClient` with an
- * instance of this class. Then use the Google Test framework functions to
- * program the behavior of this mock.
+ * including errors, from an object of type `AssuredWorkloadsServiceClient`. To do so,
+ * construct an object of type `AssuredWorkloadsServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,64 +42,45 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockAssuredWorkloadsServiceConnection
-    : public assuredworkloads_v1::AssuredWorkloadsServiceConnection {
+class MockAssuredWorkloadsServiceConnection : public assuredworkloads_v1::AssuredWorkloadsServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>,
-              CreateWorkload,
-              (google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&
-                   request),
-              (override));
+  CreateWorkload,
+  (google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::assuredworkloads::v1::Workload>,
-              UpdateWorkload,
-              (google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const&
-                   request),
-              (override));
+  UpdateWorkload,
+  (google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::assuredworkloads::v1::
-                           RestrictAllowedResourcesResponse>,
-              RestrictAllowedResources,
-              (google::cloud::assuredworkloads::v1::
-                   RestrictAllowedResourcesRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>,
+  RestrictAllowedResources,
+  (google::cloud::assuredworkloads::v1::RestrictAllowedResourcesRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteWorkload,
-              (google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteWorkload,
+  (google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::assuredworkloads::v1::Workload>, GetWorkload,
-      (google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::assuredworkloads::v1::Workload>,
+  GetWorkload,
+  (google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::assuredworkloads::v1::Workload>),
-      ListWorkloads,
-      (google::cloud::assuredworkloads::v1::ListWorkloadsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::assuredworkloads::v1::Workload>),
+  ListWorkloads,
+  (google::cloud::assuredworkloads::v1::ListWorkloadsRequest request), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::assuredworkloads::v1::Violation>),
-      ListViolations,
-      (google::cloud::assuredworkloads::v1::ListViolationsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::assuredworkloads::v1::Violation>),
+  ListViolations,
+  (google::cloud::assuredworkloads::v1::ListViolationsRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::assuredworkloads::v1::Violation>, GetViolation,
-      (google::cloud::assuredworkloads::v1::GetViolationRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::assuredworkloads::v1::Violation>,
+  GetViolation,
+  (google::cloud::assuredworkloads::v1::GetViolationRequest const& request), (override));
 
-  MOCK_METHOD(
-      StatusOr<
-          google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>,
-      AcknowledgeViolation,
-      (google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>,
+  AcknowledgeViolation,
+  (google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

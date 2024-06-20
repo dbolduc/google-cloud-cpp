@@ -46,46 +46,35 @@ class IndexEndpointServiceConnectionImpl
   ~IndexEndpointServiceConnectionImpl() override = default;
 
   IndexEndpointServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<aiplatform_v1_internal::IndexEndpointServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<aiplatform_v1_internal::IndexEndpointServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>>
-  CreateIndexEndpoint(
-      google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request)
-      override;
+  CreateIndexEndpoint(google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::IndexEndpoint> GetIndexEndpoint(
-      google::cloud::aiplatform::v1::GetIndexEndpointRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
+  GetIndexEndpoint(google::cloud::aiplatform::v1::GetIndexEndpointRequest const& request) override;
 
-  StreamRange<google::cloud::aiplatform::v1::IndexEndpoint> ListIndexEndpoints(
-      google::cloud::aiplatform::v1::ListIndexEndpointsRequest request)
-      override;
+  StreamRange<google::cloud::aiplatform::v1::IndexEndpoint>
+  ListIndexEndpoints(google::cloud::aiplatform::v1::ListIndexEndpointsRequest request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::IndexEndpoint> UpdateIndexEndpoint(
-      google::cloud::aiplatform::v1::UpdateIndexEndpointRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
+  UpdateIndexEndpoint(google::cloud::aiplatform::v1::UpdateIndexEndpointRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteIndexEndpoint(
-      google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request)
-      override;
+  DeleteIndexEndpoint(google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>
-  DeployIndex(google::cloud::aiplatform::v1::DeployIndexRequest const& request)
-      override;
+  DeployIndex(google::cloud::aiplatform::v1::DeployIndexRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>
-  UndeployIndex(google::cloud::aiplatform::v1::UndeployIndexRequest const&
-                    request) override;
+  UndeployIndex(google::cloud::aiplatform::v1::UndeployIndexRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>
-  MutateDeployedIndex(
-      google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request)
-      override;
+  MutateDeployedIndex(google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

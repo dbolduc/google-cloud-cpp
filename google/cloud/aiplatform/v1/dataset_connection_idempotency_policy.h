@@ -34,73 +34,68 @@ class DatasetServiceConnectionIdempotencyPolicy {
   virtual ~DatasetServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<DatasetServiceConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<DatasetServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateDataset(
-      google::cloud::aiplatform::v1::CreateDatasetRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateDataset(google::cloud::aiplatform::v1::CreateDatasetRequest const& request);
 
-  virtual google::cloud::Idempotency GetDataset(
-      google::cloud::aiplatform::v1::GetDatasetRequest const& request);
+  virtual google::cloud::Idempotency
+  GetDataset(google::cloud::aiplatform::v1::GetDatasetRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateDataset(
-      google::cloud::aiplatform::v1::UpdateDatasetRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateDataset(google::cloud::aiplatform::v1::UpdateDatasetRequest const& request);
 
-  virtual google::cloud::Idempotency ListDatasets(
-      google::cloud::aiplatform::v1::ListDatasetsRequest request);
+  virtual google::cloud::Idempotency
+  ListDatasets(google::cloud::aiplatform::v1::ListDatasetsRequest request);
 
-  virtual google::cloud::Idempotency DeleteDataset(
-      google::cloud::aiplatform::v1::DeleteDatasetRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteDataset(google::cloud::aiplatform::v1::DeleteDatasetRequest const& request);
 
-  virtual google::cloud::Idempotency ImportData(
-      google::cloud::aiplatform::v1::ImportDataRequest const& request);
+  virtual google::cloud::Idempotency
+  ImportData(google::cloud::aiplatform::v1::ImportDataRequest const& request);
 
-  virtual google::cloud::Idempotency ExportData(
-      google::cloud::aiplatform::v1::ExportDataRequest const& request);
+  virtual google::cloud::Idempotency
+  ExportData(google::cloud::aiplatform::v1::ExportDataRequest const& request);
 
-  virtual google::cloud::Idempotency CreateDatasetVersion(
-      google::cloud::aiplatform::v1::CreateDatasetVersionRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateDatasetVersion(google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateDatasetVersion(
-      google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateDatasetVersion(google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteDatasetVersion(
-      google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteDatasetVersion(google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request);
 
-  virtual google::cloud::Idempotency GetDatasetVersion(
-      google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request);
+  virtual google::cloud::Idempotency
+  GetDatasetVersion(google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request);
 
-  virtual google::cloud::Idempotency ListDatasetVersions(
-      google::cloud::aiplatform::v1::ListDatasetVersionsRequest request);
+  virtual google::cloud::Idempotency
+  ListDatasetVersions(google::cloud::aiplatform::v1::ListDatasetVersionsRequest request);
 
-  virtual google::cloud::Idempotency RestoreDatasetVersion(
-      google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  RestoreDatasetVersion(google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const& request);
 
-  virtual google::cloud::Idempotency ListDataItems(
-      google::cloud::aiplatform::v1::ListDataItemsRequest request);
+  virtual google::cloud::Idempotency
+  ListDataItems(google::cloud::aiplatform::v1::ListDataItemsRequest request);
 
-  virtual google::cloud::Idempotency SearchDataItems(
-      google::cloud::aiplatform::v1::SearchDataItemsRequest request);
+  virtual google::cloud::Idempotency
+  SearchDataItems(google::cloud::aiplatform::v1::SearchDataItemsRequest request);
 
-  virtual google::cloud::Idempotency ListSavedQueries(
-      google::cloud::aiplatform::v1::ListSavedQueriesRequest request);
+  virtual google::cloud::Idempotency
+  ListSavedQueries(google::cloud::aiplatform::v1::ListSavedQueriesRequest request);
 
-  virtual google::cloud::Idempotency DeleteSavedQuery(
-      google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteSavedQuery(google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request);
 
-  virtual google::cloud::Idempotency GetAnnotationSpec(
-      google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request);
+  virtual google::cloud::Idempotency
+  GetAnnotationSpec(google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request);
 
-  virtual google::cloud::Idempotency ListAnnotations(
-      google::cloud::aiplatform::v1::ListAnnotationsRequest request);
+  virtual google::cloud::Idempotency
+  ListAnnotations(google::cloud::aiplatform::v1::ListAnnotationsRequest request);
 };
 
 std::unique_ptr<DatasetServiceConnectionIdempotencyPolicy>
-MakeDefaultDatasetServiceConnectionIdempotencyPolicy();
+    MakeDefaultDatasetServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

@@ -36,23 +36,21 @@ class BackupDRConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<BackupDRConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListManagementServers(
-      google::cloud::backupdr::v1::ListManagementServersRequest request);
+  virtual google::cloud::Idempotency
+  ListManagementServers(google::cloud::backupdr::v1::ListManagementServersRequest request);
 
-  virtual google::cloud::Idempotency GetManagementServer(
-      google::cloud::backupdr::v1::GetManagementServerRequest const& request);
+  virtual google::cloud::Idempotency
+  GetManagementServer(google::cloud::backupdr::v1::GetManagementServerRequest const& request);
 
-  virtual google::cloud::Idempotency CreateManagementServer(
-      google::cloud::backupdr::v1::CreateManagementServerRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreateManagementServer(google::cloud::backupdr::v1::CreateManagementServerRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteManagementServer(
-      google::cloud::backupdr::v1::DeleteManagementServerRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteManagementServer(google::cloud::backupdr::v1::DeleteManagementServerRequest const& request);
 };
 
 std::unique_ptr<BackupDRConnectionIdempotencyPolicy>
-MakeDefaultBackupDRConnectionIdempotencyPolicy();
+    MakeDefaultBackupDRConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace backupdr_v1

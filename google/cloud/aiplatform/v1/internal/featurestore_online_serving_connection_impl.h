@@ -47,33 +47,24 @@ class FeaturestoreOnlineServingServiceConnectionImpl
   ~FeaturestoreOnlineServingServiceConnectionImpl() override = default;
 
   FeaturestoreOnlineServingServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<
-          aiplatform_v1_internal::FeaturestoreOnlineServingServiceStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<aiplatform_v1_internal::FeaturestoreOnlineServingServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
-  ReadFeatureValues(
-      google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request)
-      override;
+  ReadFeatureValues(google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) override;
 
   StreamRange<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
-  StreamingReadFeatureValues(
-      google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
-          request) override;
+  StreamingReadFeatureValues(google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
-  WriteFeatureValues(
-      google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request)
-      override;
+  WriteFeatureValues(google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<aiplatform_v1_internal::FeaturestoreOnlineServingServiceStub>
-      stub_;
+  std::shared_ptr<aiplatform_v1_internal::FeaturestoreOnlineServingServiceStub> stub_;
   Options options_;
 };
 

@@ -35,8 +35,7 @@ namespace cloud {
 namespace aiplatform_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-FeaturestoreOnlineServingServiceConnection::
-    ~FeaturestoreOnlineServingServiceConnection() = default;
+FeaturestoreOnlineServingServiceConnection::~FeaturestoreOnlineServingServiceConnection() = default;
 
 StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
 FeaturestoreOnlineServingServiceConnection::ReadFeatureValues(
@@ -44,16 +43,14 @@ FeaturestoreOnlineServingServiceConnection::ReadFeatureValues(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
-FeaturestoreOnlineServingServiceConnection::StreamingReadFeatureValues(
+StreamRange<google::cloud::aiplatform::v1::ReadFeatureValuesResponse> FeaturestoreOnlineServingServiceConnection::StreamingReadFeatureValues(
     google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&) {
   return google::cloud::internal::MakeStreamRange<
       google::cloud::aiplatform::v1::ReadFeatureValuesResponse>(
-      []() -> absl::variant<
-               Status,
-               google::cloud::aiplatform::v1::ReadFeatureValuesResponse> {
-        return Status(StatusCode::kUnimplemented, "not implemented");
-      });
+      []() -> absl::variant<Status,
+      google::cloud::aiplatform::v1::ReadFeatureValuesResponse>{
+        return Status(StatusCode::kUnimplemented, "not implemented");}
+      );
 }
 
 StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
@@ -62,25 +59,20 @@ FeaturestoreOnlineServingServiceConnection::WriteFeatureValues(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<FeaturestoreOnlineServingServiceConnection>
-MakeFeaturestoreOnlineServingServiceConnection(std::string const& location,
-                                               Options options) {
-  internal::CheckExpectedOptions<
-      CommonOptionList, GrpcOptionList, UnifiedCredentialsOptionList,
+std::shared_ptr<FeaturestoreOnlineServingServiceConnection> MakeFeaturestoreOnlineServingServiceConnection(
+    std::string const& location, Options options) {
+  internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+      UnifiedCredentialsOptionList,
       FeaturestoreOnlineServingServicePolicyOptionList>(options, __func__);
-  options =
-      aiplatform_v1_internal::FeaturestoreOnlineServingServiceDefaultOptions(
-          location, std::move(options));
+  options = aiplatform_v1_internal::FeaturestoreOnlineServingServiceDefaultOptions(
+      location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub =
-      aiplatform_v1_internal::CreateDefaultFeaturestoreOnlineServingServiceStub(
-          std::move(auth), options);
-  return aiplatform_v1_internal::
-      MakeFeaturestoreOnlineServingServiceTracingConnection(
-          std::make_shared<aiplatform_v1_internal::
-                               FeaturestoreOnlineServingServiceConnectionImpl>(
-              std::move(background), std::move(stub), std::move(options)));
+  auto stub = aiplatform_v1_internal::CreateDefaultFeaturestoreOnlineServingServiceStub(
+    std::move(auth), options);
+  return aiplatform_v1_internal::MakeFeaturestoreOnlineServingServiceTracingConnection(
+      std::make_shared<aiplatform_v1_internal::FeaturestoreOnlineServingServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

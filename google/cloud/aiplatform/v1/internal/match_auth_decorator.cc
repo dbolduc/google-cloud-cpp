@@ -31,18 +31,18 @@ MatchServiceAuth::MatchServiceAuth(
     std::shared_ptr<MatchServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse>
-MatchServiceAuth::FindNeighbors(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse> MatchServiceAuth::FindNeighbors(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::FindNeighborsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->FindNeighbors(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>
-MatchServiceAuth::ReadIndexDatapoints(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse> MatchServiceAuth::ReadIndexDatapoints(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

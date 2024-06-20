@@ -33,32 +33,28 @@ MigrationServiceStub::~MigrationServiceStub() = default;
 
 StatusOr<google::cloud::aiplatform::v1::SearchMigratableResourcesResponse>
 DefaultMigrationServiceStub::SearchMigratableResources(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const&
-        request) {
-  google::cloud::aiplatform::v1::SearchMigratableResourcesResponse response;
-  auto status =
-      grpc_stub_->SearchMigratableResources(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const& request) {
+    google::cloud::aiplatform::v1::SearchMigratableResourcesResponse response;
+    auto status =
+        grpc_stub_->SearchMigratableResources(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationServiceStub::AsyncBatchMigrateResources(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions,
-    google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
-        request) {
-  return internal::MakeUnaryRpcImpl<
-      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest,
-      google::longrunning::Operation>(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions,
+      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::BatchMigrateResourcesRequest,
+                                    google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
-                 request,
+             google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncBatchMigrateResources(context, request, cq);
       },
@@ -67,15 +63,16 @@ DefaultMigrationServiceStub::AsyncBatchMigrateResources(
 
 StatusOr<google::longrunning::Operation>
 DefaultMigrationServiceStub::BatchMigrateResources(
-    grpc::ClientContext& context, Options,
-    google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
-        request) {
-  google::longrunning::Operation response;
-  auto status = grpc_stub_->BatchMigrateResources(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+      grpc::ClientContext& context,
+      Options,
+      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->BatchMigrateResources(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -104,13 +101,13 @@ future<Status> DefaultMigrationServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-             cq,
-             [this](grpc::ClientContext* context,
-                    google::longrunning::CancelOperationRequest const& request,
-                    grpc::CompletionQueue* cq) {
-               return operations_->AsyncCancelOperation(context, request, cq);
-             },
-             request, std::move(context))
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::CancelOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_->AsyncCancelOperation(context, request, cq);
+      },
+      request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

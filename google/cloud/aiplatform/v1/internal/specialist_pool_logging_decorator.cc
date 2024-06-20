@@ -30,23 +30,24 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SpecialistPoolServiceLogging::SpecialistPoolServiceLogging(
     std::shared_ptr<SpecialistPoolServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> const&)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)) {}
 
 future<StatusOr<google::longrunning::Operation>>
 SpecialistPoolServiceLogging::AsyncCreateSpecialistPool(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const&
-                 request) {
-        return child_->AsyncCreateSpecialistPool(cq, std::move(context),
-                                                 std::move(options), request);
+             google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
+        return child_->AsyncCreateSpecialistPool(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -54,12 +55,13 @@ SpecialistPoolServiceLogging::AsyncCreateSpecialistPool(
 
 StatusOr<google::longrunning::Operation>
 SpecialistPoolServiceLogging::CreateSpecialistPool(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
         return child_->CreateSpecialistPool(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,12 +69,13 @@ SpecialistPoolServiceLogging::CreateSpecialistPool(
 
 StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
 SpecialistPoolServiceLogging::GetSpecialistPool(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::GetSpecialistPoolRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request) {
         return child_->GetSpecialistPool(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -80,12 +83,13 @@ SpecialistPoolServiceLogging::GetSpecialistPool(
 
 StatusOr<google::cloud::aiplatform::v1::ListSpecialistPoolsResponse>
 SpecialistPoolServiceLogging::ListSpecialistPools(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListSpecialistPoolsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::ListSpecialistPoolsRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::ListSpecialistPoolsRequest const& request) {
         return child_->ListSpecialistPools(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -93,18 +97,17 @@ SpecialistPoolServiceLogging::ListSpecialistPools(
 
 future<StatusOr<google::longrunning::Operation>>
 SpecialistPoolServiceLogging::AsyncDeleteSpecialistPool(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const&
-                 request) {
-        return child_->AsyncDeleteSpecialistPool(cq, std::move(context),
-                                                 std::move(options), request);
+             google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
+        return child_->AsyncDeleteSpecialistPool(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -112,12 +115,13 @@ SpecialistPoolServiceLogging::AsyncDeleteSpecialistPool(
 
 StatusOr<google::longrunning::Operation>
 SpecialistPoolServiceLogging::DeleteSpecialistPool(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
         return child_->DeleteSpecialistPool(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -125,18 +129,17 @@ SpecialistPoolServiceLogging::DeleteSpecialistPool(
 
 future<StatusOr<google::longrunning::Operation>>
 SpecialistPoolServiceLogging::AsyncUpdateSpecialistPool(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const&
-                 request) {
-        return child_->AsyncUpdateSpecialistPool(cq, std::move(context),
-                                                 std::move(options), request);
+             google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
+        return child_->AsyncUpdateSpecialistPool(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -144,12 +147,13 @@ SpecialistPoolServiceLogging::AsyncUpdateSpecialistPool(
 
 StatusOr<google::longrunning::Operation>
 SpecialistPoolServiceLogging::UpdateSpecialistPool(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const&
-                 request) {
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
         return child_->UpdateSpecialistPool(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -166,8 +170,8 @@ SpecialistPoolServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context),
-                                         std::move(options), request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -183,8 +187,8 @@ future<Status> SpecialistPoolServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context),
-                                            std::move(options), request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

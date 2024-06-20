@@ -39,7 +39,8 @@ class ScheduleServiceStub {
   virtual ~ScheduleServiceStub() = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::Schedule> CreateSchedule(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::aiplatform::v1::CreateScheduleRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteSchedule(
@@ -49,34 +50,39 @@ class ScheduleServiceStub {
       google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteSchedule(
-      grpc::ClientContext& context, Options options,
+      grpc::ClientContext& context,
+      Options options,
       google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::Schedule> GetSchedule(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::aiplatform::v1::GetScheduleRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::ListSchedulesResponse>
-  ListSchedules(
-      grpc::ClientContext& context, Options const& options,
+  virtual StatusOr<google::cloud::aiplatform::v1::ListSchedulesResponse> ListSchedules(
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::aiplatform::v1::ListSchedulesRequest const& request) = 0;
 
   virtual Status PauseSchedule(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::aiplatform::v1::PauseScheduleRequest const& request) = 0;
 
   virtual Status ResumeSchedule(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::aiplatform::v1::ResumeScheduleRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::Schedule> UpdateSchedule(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::cloud::aiplatform::v1::UpdateScheduleRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
+    google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -89,54 +95,51 @@ class ScheduleServiceStub {
 class DefaultScheduleServiceStub : public ScheduleServiceStub {
  public:
   DefaultScheduleServiceStub(
-      std::unique_ptr<
-          google::cloud::aiplatform::v1::ScheduleService::StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations)
-      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
+      std::unique_ptr<google::cloud::aiplatform::v1::ScheduleService::StubInterface> grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations)
+      : grpc_stub_(std::move(grpc_stub)),
+        operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::aiplatform::v1::Schedule> CreateSchedule(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::CreateScheduleRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::CreateScheduleRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteSchedule(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteScheduleRequest const& request)
-      override;
+      google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteSchedule(
-      grpc::ClientContext& context, Options options,
-      google::cloud::aiplatform::v1::DeleteScheduleRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::Schedule> GetSchedule(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::GetScheduleRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::GetScheduleRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListSchedulesResponse> ListSchedules(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::ListSchedulesRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::ListSchedulesRequest const& request) override;
 
   Status PauseSchedule(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::PauseScheduleRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::PauseScheduleRequest const& request) override;
 
   Status ResumeSchedule(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::ResumeScheduleRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::ResumeScheduleRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::Schedule> UpdateSchedule(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::UpdateScheduleRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::UpdateScheduleRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -151,8 +154,7 @@ class DefaultScheduleServiceStub : public ScheduleServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::aiplatform::v1::ScheduleService::StubInterface>
-      grpc_stub_;
+  std::unique_ptr<google::cloud::aiplatform::v1::ScheduleService::StubInterface> grpc_stub_;
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 

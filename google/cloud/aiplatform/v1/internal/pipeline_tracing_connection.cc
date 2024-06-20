@@ -34,89 +34,68 @@ PipelineServiceTracingConnection::PipelineServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
-PipelineServiceTracingConnection::CreateTrainingPipeline(
-    google::cloud::aiplatform::v1::CreateTrainingPipelineRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::PipelineServiceConnection::CreateTrainingPipeline");
+PipelineServiceTracingConnection::CreateTrainingPipeline(google::cloud::aiplatform::v1::CreateTrainingPipelineRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::PipelineServiceConnection::CreateTrainingPipeline");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateTrainingPipeline(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
-PipelineServiceTracingConnection::GetTrainingPipeline(
-    google::cloud::aiplatform::v1::GetTrainingPipelineRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::PipelineServiceConnection::GetTrainingPipeline");
+PipelineServiceTracingConnection::GetTrainingPipeline(google::cloud::aiplatform::v1::GetTrainingPipelineRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::PipelineServiceConnection::GetTrainingPipeline");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetTrainingPipeline(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::TrainingPipeline>
-PipelineServiceTracingConnection::ListTrainingPipelines(
-    google::cloud::aiplatform::v1::ListTrainingPipelinesRequest request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::PipelineServiceConnection::ListTrainingPipelines");
+PipelineServiceTracingConnection::ListTrainingPipelines(google::cloud::aiplatform::v1::ListTrainingPipelinesRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::PipelineServiceConnection::ListTrainingPipelines");
   internal::OTelScope scope(span);
   auto sr = child_->ListTrainingPipelines(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::aiplatform::v1::TrainingPipeline>(std::move(span),
-                                                       std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::TrainingPipeline>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-PipelineServiceTracingConnection::DeleteTrainingPipeline(
-    google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
-        request) {
+PipelineServiceTracingConnection::DeleteTrainingPipeline(google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::PipelineServiceConnection::DeleteTrainingPipeline");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteTrainingPipeline(request));
+  return internal::EndSpan(std::move(span), child_->DeleteTrainingPipeline(request));
 }
 
-Status PipelineServiceTracingConnection::CancelTrainingPipeline(
-    google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&
-        request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::PipelineServiceConnection::CancelTrainingPipeline");
+Status
+PipelineServiceTracingConnection::CancelTrainingPipeline(google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::PipelineServiceConnection::CancelTrainingPipeline");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelTrainingPipeline(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::PipelineJob>
-PipelineServiceTracingConnection::CreatePipelineJob(
-    google::cloud::aiplatform::v1::CreatePipelineJobRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::PipelineServiceConnection::CreatePipelineJob");
+PipelineServiceTracingConnection::CreatePipelineJob(google::cloud::aiplatform::v1::CreatePipelineJobRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::PipelineServiceConnection::CreatePipelineJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreatePipelineJob(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::PipelineJob>
-PipelineServiceTracingConnection::GetPipelineJob(
-    google::cloud::aiplatform::v1::GetPipelineJobRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::PipelineServiceConnection::GetPipelineJob");
+PipelineServiceTracingConnection::GetPipelineJob(google::cloud::aiplatform::v1::GetPipelineJobRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::PipelineServiceConnection::GetPipelineJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetPipelineJob(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::PipelineJob>
-PipelineServiceTracingConnection::ListPipelineJobs(
-    google::cloud::aiplatform::v1::ListPipelineJobsRequest request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::PipelineServiceConnection::ListPipelineJobs");
+PipelineServiceTracingConnection::ListPipelineJobs(google::cloud::aiplatform::v1::ListPipelineJobsRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::PipelineServiceConnection::ListPipelineJobs");
   internal::OTelScope scope(span);
   auto sr = child_->ListPipelineJobs(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::aiplatform::v1::PipelineJob>(std::move(span),
-                                                  std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::PipelineJob>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-PipelineServiceTracingConnection::DeletePipelineJob(
-    google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request) {
+PipelineServiceTracingConnection::DeletePipelineJob(google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::PipelineServiceConnection::DeletePipelineJob");
   internal::OTelScope scope(span);
@@ -124,33 +103,26 @@ PipelineServiceTracingConnection::DeletePipelineJob(
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
-PipelineServiceTracingConnection::BatchDeletePipelineJobs(
-    google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
-        request) {
+PipelineServiceTracingConnection::BatchDeletePipelineJobs(google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::PipelineServiceConnection::BatchDeletePipelineJobs");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->BatchDeletePipelineJobs(request));
+  return internal::EndSpan(std::move(span), child_->BatchDeletePipelineJobs(request));
 }
 
-Status PipelineServiceTracingConnection::CancelPipelineJob(
-    google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::PipelineServiceConnection::CancelPipelineJob");
+Status
+PipelineServiceTracingConnection::CancelPipelineJob(google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::PipelineServiceConnection::CancelPipelineJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelPipelineJob(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
-PipelineServiceTracingConnection::BatchCancelPipelineJobs(
-    google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
-        request) {
+PipelineServiceTracingConnection::BatchCancelPipelineJobs(google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::PipelineServiceConnection::BatchCancelPipelineJobs");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->BatchCancelPipelineJobs(request));
+  return internal::EndSpan(std::move(span), child_->BatchCancelPipelineJobs(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

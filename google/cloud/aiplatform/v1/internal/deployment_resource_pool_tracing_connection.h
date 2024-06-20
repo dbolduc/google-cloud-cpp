@@ -36,34 +36,24 @@ class DeploymentResourcePoolServiceTracingConnection
   ~DeploymentResourcePoolServiceTracingConnection() override = default;
 
   explicit DeploymentResourcePoolServiceTracingConnection(
-      std::shared_ptr<aiplatform_v1::DeploymentResourcePoolServiceConnection>
-          child);
+    std::shared_ptr<aiplatform_v1::DeploymentResourcePoolServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
-  CreateDeploymentResourcePool(
-      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
-          request) override;
+  CreateDeploymentResourcePool(google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
-  GetDeploymentResourcePool(
-      google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
-          request) override;
+  GetDeploymentResourcePool(google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const& request) override;
 
   StreamRange<google::cloud::aiplatform::v1::DeploymentResourcePool>
-  ListDeploymentResourcePools(
-      google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest request)
-      override;
+  ListDeploymentResourcePools(google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDeploymentResourcePool(
-      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
-          request) override;
+  DeleteDeploymentResourcePool(google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const& request) override;
 
  private:
-  std::shared_ptr<aiplatform_v1::DeploymentResourcePoolServiceConnection>
-      child_;
+  std::shared_ptr<aiplatform_v1::DeploymentResourcePoolServiceConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -76,8 +66,7 @@ class DeploymentResourcePoolServiceTracingConnection
  */
 std::shared_ptr<aiplatform_v1::DeploymentResourcePoolServiceConnection>
 MakeDeploymentResourcePoolServiceTracingConnection(
-    std::shared_ptr<aiplatform_v1::DeploymentResourcePoolServiceConnection>
-        conn);
+    std::shared_ptr<aiplatform_v1::DeploymentResourcePoolServiceConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1_internal

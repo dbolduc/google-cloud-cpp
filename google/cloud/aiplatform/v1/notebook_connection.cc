@@ -40,11 +40,10 @@ NotebookServiceConnection::~NotebookServiceConnection() = default;
 
 future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>>
 NotebookServiceConnection::CreateNotebookRuntimeTemplate(
-    google::cloud::aiplatform::v1::
-        CreateNotebookRuntimeTemplateRequest const&) {
+    google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
@@ -53,27 +52,23 @@ NotebookServiceConnection::GetNotebookRuntimeTemplate(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
-NotebookServiceConnection::ListNotebookRuntimeTemplates(
-    google::cloud::aiplatform::v1::
-        ListNotebookRuntimeTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::NotebookRuntimeTemplate> NotebookServiceConnection::ListNotebookRuntimeTemplates(
+    google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>>();
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 NotebookServiceConnection::DeleteNotebookRuntimeTemplate(
-    google::cloud::aiplatform::v1::
-        DeleteNotebookRuntimeTemplateRequest const&) {
+    google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
 NotebookServiceConnection::UpdateNotebookRuntimeTemplate(
-    google::cloud::aiplatform::v1::
-        UpdateNotebookRuntimeTemplateRequest const&) {
+    google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -81,8 +76,8 @@ future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>
 NotebookServiceConnection::AssignNotebookRuntime(
     google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>
@@ -91,10 +86,8 @@ NotebookServiceConnection::GetNotebookRuntime(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::NotebookRuntime>
-NotebookServiceConnection::ListNotebookRuntimes(
-    google::cloud::aiplatform::v1::
-        ListNotebookRuntimesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::NotebookRuntime> NotebookServiceConnection::ListNotebookRuntimes(
+    google::cloud::aiplatform::v1::ListNotebookRuntimesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::NotebookRuntime>>();
 }
@@ -103,41 +96,40 @@ future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 NotebookServiceConnection::DeleteNotebookRuntime(
     google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>
 NotebookServiceConnection::UpgradeNotebookRuntime(
     google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>
 NotebookServiceConnection::StartNotebookRuntime(
     google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 std::shared_ptr<NotebookServiceConnection> MakeNotebookServiceConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 NotebookServicePolicyOptionList>(options,
-                                                                  __func__);
+      UnifiedCredentialsOptionList,
+      NotebookServicePolicyOptionList>(options, __func__);
   options = aiplatform_v1_internal::NotebookServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = aiplatform_v1_internal::CreateDefaultNotebookServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return aiplatform_v1_internal::MakeNotebookServiceTracingConnection(
       std::make_shared<aiplatform_v1_internal::NotebookServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

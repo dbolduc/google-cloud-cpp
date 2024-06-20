@@ -35,30 +35,25 @@ class ModelGardenServiceStub {
  public:
   virtual ~ModelGardenServiceStub() = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::PublisherModel>
-  GetPublisherModel(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::GetPublisherModelRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::aiplatform::v1::PublisherModel> GetPublisherModel(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::GetPublisherModelRequest const& request) = 0;
 };
 
 class DefaultModelGardenServiceStub : public ModelGardenServiceStub {
  public:
   explicit DefaultModelGardenServiceStub(
-      std::unique_ptr<
-          google::cloud::aiplatform::v1::ModelGardenService::StubInterface>
-          grpc_stub)
+      std::unique_ptr<google::cloud::aiplatform::v1::ModelGardenService::StubInterface> grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::aiplatform::v1::PublisherModel> GetPublisherModel(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::GetPublisherModelRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::GetPublisherModelRequest const& request) override;
 
  private:
-  std::unique_ptr<
-      google::cloud::aiplatform::v1::ModelGardenService::StubInterface>
-      grpc_stub_;
+  std::unique_ptr<google::cloud::aiplatform::v1::ModelGardenService::StubInterface> grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

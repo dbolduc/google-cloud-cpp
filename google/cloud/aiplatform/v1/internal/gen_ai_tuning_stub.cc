@@ -32,49 +32,54 @@ GenAiTuningServiceStub::~GenAiTuningServiceStub() = default;
 
 StatusOr<google::cloud::aiplatform::v1::TuningJob>
 DefaultGenAiTuningServiceStub::CreateTuningJob(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::CreateTuningJobRequest const& request) {
-  google::cloud::aiplatform::v1::TuningJob response;
-  auto status = grpc_stub_->CreateTuningJob(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::CreateTuningJobRequest const& request) {
+    google::cloud::aiplatform::v1::TuningJob response;
+    auto status =
+        grpc_stub_->CreateTuningJob(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::TuningJob>
 DefaultGenAiTuningServiceStub::GetTuningJob(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::GetTuningJobRequest const& request) {
-  google::cloud::aiplatform::v1::TuningJob response;
-  auto status = grpc_stub_->GetTuningJob(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::GetTuningJobRequest const& request) {
+    google::cloud::aiplatform::v1::TuningJob response;
+    auto status =
+        grpc_stub_->GetTuningJob(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListTuningJobsResponse>
 DefaultGenAiTuningServiceStub::ListTuningJobs(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::ListTuningJobsRequest const& request) {
-  google::cloud::aiplatform::v1::ListTuningJobsResponse response;
-  auto status = grpc_stub_->ListTuningJobs(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::ListTuningJobsRequest const& request) {
+    google::cloud::aiplatform::v1::ListTuningJobsResponse response;
+    auto status =
+        grpc_stub_->ListTuningJobs(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
-Status DefaultGenAiTuningServiceStub::CancelTuningJob(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::aiplatform::v1::CancelTuningJobRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->CancelTuningJob(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+Status
+DefaultGenAiTuningServiceStub::CancelTuningJob(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::aiplatform::v1::CancelTuningJobRequest const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->CancelTuningJob(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

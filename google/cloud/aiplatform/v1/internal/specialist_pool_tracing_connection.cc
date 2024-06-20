@@ -34,54 +34,43 @@ SpecialistPoolServiceTracingConnection::SpecialistPoolServiceTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-SpecialistPoolServiceTracingConnection::CreateSpecialistPool(
-    google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
+SpecialistPoolServiceTracingConnection::CreateSpecialistPool(google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::SpecialistPoolServiceConnection::CreateSpecialistPool");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateSpecialistPool(request));
+  return internal::EndSpan(std::move(span), child_->CreateSpecialistPool(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
-SpecialistPoolServiceTracingConnection::GetSpecialistPool(
-    google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::SpecialistPoolServiceConnection::GetSpecialistPool");
+SpecialistPoolServiceTracingConnection::GetSpecialistPool(google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::SpecialistPoolServiceConnection::GetSpecialistPool");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetSpecialistPool(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::SpecialistPool>
-SpecialistPoolServiceTracingConnection::ListSpecialistPools(
-    google::cloud::aiplatform::v1::ListSpecialistPoolsRequest request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::SpecialistPoolServiceConnection::ListSpecialistPools");
+SpecialistPoolServiceTracingConnection::ListSpecialistPools(google::cloud::aiplatform::v1::ListSpecialistPoolsRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::SpecialistPoolServiceConnection::ListSpecialistPools");
   internal::OTelScope scope(span);
   auto sr = child_->ListSpecialistPools(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::aiplatform::v1::SpecialistPool>(std::move(span),
-                                                     std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::SpecialistPool>(
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-SpecialistPoolServiceTracingConnection::DeleteSpecialistPool(
-    google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
+SpecialistPoolServiceTracingConnection::DeleteSpecialistPool(google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::SpecialistPoolServiceConnection::DeleteSpecialistPool");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteSpecialistPool(request));
+  return internal::EndSpan(std::move(span), child_->DeleteSpecialistPool(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-SpecialistPoolServiceTracingConnection::UpdateSpecialistPool(
-    google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
+SpecialistPoolServiceTracingConnection::UpdateSpecialistPool(google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::SpecialistPoolServiceConnection::UpdateSpecialistPool");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateSpecialistPool(request));
+  return internal::EndSpan(std::move(span), child_->UpdateSpecialistPool(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -91,8 +80,7 @@ MakeSpecialistPoolServiceTracingConnection(
     std::shared_ptr<aiplatform_v1::SpecialistPoolServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<SpecialistPoolServiceTracingConnection>(
-        std::move(conn));
+    conn = std::make_shared<SpecialistPoolServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

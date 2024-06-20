@@ -28,13 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 BatchServiceClient::BatchServiceClient(
     std::shared_ptr<BatchServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 BatchServiceClient::~BatchServiceClient() = default;
 
-StatusOr<google::cloud::batch::v1::Job> BatchServiceClient::CreateJob(
-    std::string const& parent, google::cloud::batch::v1::Job const& job,
-    std::string const& job_id, Options opts) {
+StatusOr<google::cloud::batch::v1::Job>
+BatchServiceClient::CreateJob(std::string const& parent, google::cloud::batch::v1::Job const& job, std::string const& job_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::batch::v1::CreateJobRequest request;
   request.set_parent(parent);
@@ -43,22 +42,22 @@ StatusOr<google::cloud::batch::v1::Job> BatchServiceClient::CreateJob(
   return connection_->CreateJob(request);
 }
 
-StatusOr<google::cloud::batch::v1::Job> BatchServiceClient::CreateJob(
-    google::cloud::batch::v1::CreateJobRequest const& request, Options opts) {
+StatusOr<google::cloud::batch::v1::Job>
+BatchServiceClient::CreateJob(google::cloud::batch::v1::CreateJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateJob(request);
 }
 
-StatusOr<google::cloud::batch::v1::Job> BatchServiceClient::GetJob(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::batch::v1::Job>
+BatchServiceClient::GetJob(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::batch::v1::GetJobRequest request;
   request.set_name(name);
   return connection_->GetJob(request);
 }
 
-StatusOr<google::cloud::batch::v1::Job> BatchServiceClient::GetJob(
-    google::cloud::batch::v1::GetJobRequest const& request, Options opts) {
+StatusOr<google::cloud::batch::v1::Job>
+BatchServiceClient::GetJob(google::cloud::batch::v1::GetJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetJob(request);
 }
@@ -72,50 +71,49 @@ BatchServiceClient::DeleteJob(std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::batch::v1::OperationMetadata>>
-BatchServiceClient::DeleteJob(
-    google::cloud::batch::v1::DeleteJobRequest const& request, Options opts) {
+BatchServiceClient::DeleteJob(google::cloud::batch::v1::DeleteJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteJob(request);
 }
 
-StreamRange<google::cloud::batch::v1::Job> BatchServiceClient::ListJobs(
-    std::string const& parent, Options opts) {
+StreamRange<google::cloud::batch::v1::Job>
+BatchServiceClient::ListJobs(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::batch::v1::ListJobsRequest request;
   request.set_parent(parent);
   return connection_->ListJobs(request);
 }
 
-StreamRange<google::cloud::batch::v1::Job> BatchServiceClient::ListJobs(
-    google::cloud::batch::v1::ListJobsRequest request, Options opts) {
+StreamRange<google::cloud::batch::v1::Job>
+BatchServiceClient::ListJobs(google::cloud::batch::v1::ListJobsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListJobs(std::move(request));
 }
 
-StatusOr<google::cloud::batch::v1::Task> BatchServiceClient::GetTask(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::batch::v1::Task>
+BatchServiceClient::GetTask(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::batch::v1::GetTaskRequest request;
   request.set_name(name);
   return connection_->GetTask(request);
 }
 
-StatusOr<google::cloud::batch::v1::Task> BatchServiceClient::GetTask(
-    google::cloud::batch::v1::GetTaskRequest const& request, Options opts) {
+StatusOr<google::cloud::batch::v1::Task>
+BatchServiceClient::GetTask(google::cloud::batch::v1::GetTaskRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTask(request);
 }
 
-StreamRange<google::cloud::batch::v1::Task> BatchServiceClient::ListTasks(
-    std::string const& parent, Options opts) {
+StreamRange<google::cloud::batch::v1::Task>
+BatchServiceClient::ListTasks(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::batch::v1::ListTasksRequest request;
   request.set_parent(parent);
   return connection_->ListTasks(request);
 }
 
-StreamRange<google::cloud::batch::v1::Task> BatchServiceClient::ListTasks(
-    google::cloud::batch::v1::ListTasksRequest request, Options opts) {
+StreamRange<google::cloud::batch::v1::Task>
+BatchServiceClient::ListTasks(google::cloud::batch::v1::ListTasksRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTasks(std::move(request));
 }

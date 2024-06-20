@@ -50,15 +50,14 @@ VizierServiceConnection::GetStudy(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::Study>
-VizierServiceConnection::ListStudies(
-    google::cloud::aiplatform::v1::
-        ListStudiesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::Study> VizierServiceConnection::ListStudies(
+    google::cloud::aiplatform::v1::ListStudiesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Study>>();
 }
 
-Status VizierServiceConnection::DeleteStudy(
+Status
+VizierServiceConnection::DeleteStudy(
     google::cloud::aiplatform::v1::DeleteStudyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -73,8 +72,8 @@ future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>
 VizierServiceConnection::SuggestTrials(
     google::cloud::aiplatform::v1::SuggestTrialsRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial>
@@ -89,10 +88,8 @@ VizierServiceConnection::GetTrial(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::Trial>
-VizierServiceConnection::ListTrials(
-    google::cloud::aiplatform::v1::
-        ListTrialsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::Trial> VizierServiceConnection::ListTrials(
+    google::cloud::aiplatform::v1::ListTrialsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Trial>>();
 }
@@ -109,18 +106,18 @@ VizierServiceConnection::CompleteTrial(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status VizierServiceConnection::DeleteTrial(
+Status
+VizierServiceConnection::DeleteTrial(
     google::cloud::aiplatform::v1::DeleteTrialRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-future<StatusOr<
-    google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
+future<StatusOr<google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
 VizierServiceConnection::CheckTrialEarlyStoppingState(
     google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&) {
-  return google::cloud::make_ready_future<StatusOr<
-      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<
+    StatusOr<google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial>
@@ -138,18 +135,17 @@ VizierServiceConnection::ListOptimalTrials(
 std::shared_ptr<VizierServiceConnection> MakeVizierServiceConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 VizierServicePolicyOptionList>(options,
-                                                                __func__);
+      UnifiedCredentialsOptionList,
+      VizierServicePolicyOptionList>(options, __func__);
   options = aiplatform_v1_internal::VizierServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = aiplatform_v1_internal::CreateDefaultVizierServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return aiplatform_v1_internal::MakeVizierServiceTracingConnection(
       std::make_shared<aiplatform_v1_internal::VizierServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

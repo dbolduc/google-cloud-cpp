@@ -28,14 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 IndexServiceClient::IndexServiceClient(
     std::shared_ptr<IndexServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 IndexServiceClient::~IndexServiceClient() = default;
 
 future<StatusOr<google::cloud::aiplatform::v1::Index>>
-IndexServiceClient::CreateIndex(
-    std::string const& parent,
-    google::cloud::aiplatform::v1::Index const& index, Options opts) {
+IndexServiceClient::CreateIndex(std::string const& parent, google::cloud::aiplatform::v1::Index const& index, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateIndexRequest request;
   request.set_parent(parent);
@@ -44,24 +42,21 @@ IndexServiceClient::CreateIndex(
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Index>>
-IndexServiceClient::CreateIndex(
-    google::cloud::aiplatform::v1::CreateIndexRequest const& request,
-    Options opts) {
+IndexServiceClient::CreateIndex(google::cloud::aiplatform::v1::CreateIndexRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateIndex(request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::Index> IndexServiceClient::GetIndex(
-    std::string const& name, Options opts) {
+StatusOr<google::cloud::aiplatform::v1::Index>
+IndexServiceClient::GetIndex(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::GetIndexRequest request;
   request.set_name(name);
   return connection_->GetIndex(request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::Index> IndexServiceClient::GetIndex(
-    google::cloud::aiplatform::v1::GetIndexRequest const& request,
-    Options opts) {
+StatusOr<google::cloud::aiplatform::v1::Index>
+IndexServiceClient::GetIndex(google::cloud::aiplatform::v1::GetIndexRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIndex(request);
 }
@@ -75,16 +70,13 @@ IndexServiceClient::ListIndexes(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::aiplatform::v1::Index>
-IndexServiceClient::ListIndexes(
-    google::cloud::aiplatform::v1::ListIndexesRequest request, Options opts) {
+IndexServiceClient::ListIndexes(google::cloud::aiplatform::v1::ListIndexesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListIndexes(std::move(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Index>>
-IndexServiceClient::UpdateIndex(
-    google::cloud::aiplatform::v1::Index const& index,
-    google::protobuf::FieldMask const& update_mask, Options opts) {
+IndexServiceClient::UpdateIndex(google::cloud::aiplatform::v1::Index const& index, google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdateIndexRequest request;
   *request.mutable_index() = index;
@@ -93,9 +85,7 @@ IndexServiceClient::UpdateIndex(
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Index>>
-IndexServiceClient::UpdateIndex(
-    google::cloud::aiplatform::v1::UpdateIndexRequest const& request,
-    Options opts) {
+IndexServiceClient::UpdateIndex(google::cloud::aiplatform::v1::UpdateIndexRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateIndex(request);
 }
@@ -109,25 +99,19 @@ IndexServiceClient::DeleteIndex(std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-IndexServiceClient::DeleteIndex(
-    google::cloud::aiplatform::v1::DeleteIndexRequest const& request,
-    Options opts) {
+IndexServiceClient::DeleteIndex(google::cloud::aiplatform::v1::DeleteIndexRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteIndex(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>
-IndexServiceClient::UpsertDatapoints(
-    google::cloud::aiplatform::v1::UpsertDatapointsRequest const& request,
-    Options opts) {
+IndexServiceClient::UpsertDatapoints(google::cloud::aiplatform::v1::UpsertDatapointsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpsertDatapoints(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::RemoveDatapointsResponse>
-IndexServiceClient::RemoveDatapoints(
-    google::cloud::aiplatform::v1::RemoveDatapointsRequest const& request,
-    Options opts) {
+IndexServiceClient::RemoveDatapoints(google::cloud::aiplatform::v1::RemoveDatapointsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveDatapoints(request);
 }

@@ -65,8 +65,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class BatchServiceClient {
  public:
-  explicit BatchServiceClient(
-      std::shared_ptr<BatchServiceConnection> connection, Options opts = {});
+  explicit BatchServiceClient(std::shared_ptr<BatchServiceConnection> connection, Options opts = {});
   ~BatchServiceClient();
 
   ///@{
@@ -79,12 +78,10 @@ class BatchServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(BatchServiceClient const& a,
-                         BatchServiceClient const& b) {
+  friend bool operator==(BatchServiceClient const& a, BatchServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(BatchServiceClient const& a,
-                         BatchServiceClient const& b) {
+  friend bool operator!=(BatchServiceClient const& a, BatchServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -122,9 +119,8 @@ class BatchServiceClient {
   /// [google.cloud.batch.v1.Job]: @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::batch::v1::Job> CreateJob(
-      std::string const& parent, google::cloud::batch::v1::Job const& job,
-      std::string const& job_id, Options opts = {});
+  StatusOr<google::cloud::batch::v1::Job>
+  CreateJob(std::string const& parent, google::cloud::batch::v1::Job const& job, std::string const& job_id, Options opts = {});
 
   // clang-format off
   ///
@@ -153,9 +149,8 @@ class BatchServiceClient {
   /// [google.cloud.batch.v1.Job]: @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::batch::v1::Job> CreateJob(
-      google::cloud::batch::v1::CreateJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::batch::v1::Job>
+  CreateJob(google::cloud::batch::v1::CreateJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -179,8 +174,8 @@ class BatchServiceClient {
   /// [google.cloud.batch.v1.Job]: @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::batch::v1::Job> GetJob(std::string const& name,
-                                                 Options opts = {});
+  StatusOr<google::cloud::batch::v1::Job>
+  GetJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -209,9 +204,8 @@ class BatchServiceClient {
   /// [google.cloud.batch.v1.Job]: @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::batch::v1::Job> GetJob(
-      google::cloud::batch::v1::GetJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::batch::v1::Job>
+  GetJob(google::cloud::batch::v1::GetJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -242,8 +236,8 @@ class BatchServiceClient {
   /// [google.cloud.batch.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L248}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::batch::v1::OperationMetadata>> DeleteJob(
-      std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::batch::v1::OperationMetadata>>
+  DeleteJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -279,9 +273,8 @@ class BatchServiceClient {
   /// [google.cloud.batch.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L248}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::batch::v1::OperationMetadata>> DeleteJob(
-      google::cloud::batch::v1::DeleteJobRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::batch::v1::OperationMetadata>>
+  DeleteJob(google::cloud::batch::v1::DeleteJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -314,8 +307,8 @@ class BatchServiceClient {
   /// [google.cloud.batch.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L174}
   ///
   // clang-format on
-  StreamRange<google::cloud::batch::v1::Job> ListJobs(std::string const& parent,
-                                                      Options opts = {});
+  StreamRange<google::cloud::batch::v1::Job>
+  ListJobs(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -353,8 +346,8 @@ class BatchServiceClient {
   /// [google.cloud.batch.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L174}
   ///
   // clang-format on
-  StreamRange<google::cloud::batch::v1::Job> ListJobs(
-      google::cloud::batch::v1::ListJobsRequest request, Options opts = {});
+  StreamRange<google::cloud::batch::v1::Job>
+  ListJobs(google::cloud::batch::v1::ListJobsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -378,8 +371,8 @@ class BatchServiceClient {
   /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L415}
   ///
   // clang-format on
-  StatusOr<google::cloud::batch::v1::Task> GetTask(std::string const& name,
-                                                   Options opts = {});
+  StatusOr<google::cloud::batch::v1::Task>
+  GetTask(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -408,9 +401,8 @@ class BatchServiceClient {
   /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L415}
   ///
   // clang-format on
-  StatusOr<google::cloud::batch::v1::Task> GetTask(
-      google::cloud::batch::v1::GetTaskRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::batch::v1::Task>
+  GetTask(google::cloud::batch::v1::GetTaskRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -445,8 +437,8 @@ class BatchServiceClient {
   /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L415}
   ///
   // clang-format on
-  StreamRange<google::cloud::batch::v1::Task> ListTasks(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::batch::v1::Task>
+  ListTasks(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -484,8 +476,8 @@ class BatchServiceClient {
   /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L415}
   ///
   // clang-format on
-  StreamRange<google::cloud::batch::v1::Task> ListTasks(
-      google::cloud::batch::v1::ListTasksRequest request, Options opts = {});
+  StreamRange<google::cloud::batch::v1::Task>
+  ListTasks(google::cloud::batch::v1::ListTasksRequest request, Options opts = {});
 
  private:
   std::shared_ptr<BatchServiceConnection> connection_;

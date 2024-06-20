@@ -48,34 +48,35 @@ IndexServiceMetadata::AsyncCreateIndex(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::CreateIndexRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateIndex(cq, std::move(context), std::move(options),
-                                  request);
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateIndex(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> IndexServiceMetadata::CreateIndex(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+IndexServiceMetadata::CreateIndex(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::aiplatform::v1::CreateIndexRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateIndex(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::Index> IndexServiceMetadata::GetIndex(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::Index>
+IndexServiceMetadata::GetIndex(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetIndexRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetIndex(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListIndexesResponse>
 IndexServiceMetadata::ListIndexes(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListIndexesRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListIndexes(context, options, request);
 }
 
@@ -85,19 +86,17 @@ IndexServiceMetadata::AsyncUpdateIndex(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::UpdateIndexRequest const& request) {
-  SetMetadata(
-      *context, *options,
-      absl::StrCat("index.name=", internal::UrlEncode(request.index().name())));
-  return child_->AsyncUpdateIndex(cq, std::move(context), std::move(options),
-                                  request);
+  SetMetadata(*context, *options, absl::StrCat("index.name=", internal::UrlEncode(request.index().name())));
+  return child_->AsyncUpdateIndex(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> IndexServiceMetadata::UpdateIndex(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+IndexServiceMetadata::UpdateIndex(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::aiplatform::v1::UpdateIndexRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("index.name=", internal::UrlEncode(request.index().name())));
+  SetMetadata(context, options, absl::StrCat("index.name=", internal::UrlEncode(request.index().name())));
   return child_->UpdateIndex(context, options, request);
 }
 
@@ -107,35 +106,35 @@ IndexServiceMetadata::AsyncDeleteIndex(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::DeleteIndexRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteIndex(cq, std::move(context), std::move(options),
-                                  request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteIndex(
+      cq, std::move(context), std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation> IndexServiceMetadata::DeleteIndex(
-    grpc::ClientContext& context, Options options,
+StatusOr<google::longrunning::Operation>
+IndexServiceMetadata::DeleteIndex(
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::aiplatform::v1::DeleteIndexRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteIndex(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>
 IndexServiceMetadata::UpsertDatapoints(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::UpsertDatapointsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("index=", internal::UrlEncode(request.index())));
+  SetMetadata(context, options, absl::StrCat("index=", internal::UrlEncode(request.index())));
   return child_->UpsertDatapoints(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::RemoveDatapointsResponse>
 IndexServiceMetadata::RemoveDatapoints(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::RemoveDatapointsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("index=", internal::UrlEncode(request.index())));
+  SetMetadata(context, options, absl::StrCat("index=", internal::UrlEncode(request.index())));
   return child_->RemoveDatapoints(context, options, request);
 }
 
@@ -147,8 +146,8 @@ IndexServiceMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> IndexServiceMetadata::AsyncCancelOperation(
@@ -158,21 +157,21 @@ future<Status> IndexServiceMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 void IndexServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                       Options const& options,
-                                       std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void IndexServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                       Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

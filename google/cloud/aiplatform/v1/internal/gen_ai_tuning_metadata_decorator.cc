@@ -44,50 +44,51 @@ GenAiTuningServiceMetadata::GenAiTuningServiceMetadata(
 
 StatusOr<google::cloud::aiplatform::v1::TuningJob>
 GenAiTuningServiceMetadata::CreateTuningJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::CreateTuningJobRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateTuningJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TuningJob>
 GenAiTuningServiceMetadata::GetTuningJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetTuningJobRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetTuningJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListTuningJobsResponse>
 GenAiTuningServiceMetadata::ListTuningJobs(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListTuningJobsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListTuningJobs(context, options, request);
 }
 
-Status GenAiTuningServiceMetadata::CancelTuningJob(
-    grpc::ClientContext& context, Options const& options,
+Status
+GenAiTuningServiceMetadata::CancelTuningJob(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::CancelTuningJobRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelTuningJob(context, options, request);
 }
 
-void GenAiTuningServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, Options const& options,
-    std::string const& request_params) {
+void GenAiTuningServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void GenAiTuningServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                             Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

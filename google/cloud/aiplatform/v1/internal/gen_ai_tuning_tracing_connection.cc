@@ -34,38 +34,31 @@ GenAiTuningServiceTracingConnection::GenAiTuningServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::aiplatform::v1::TuningJob>
-GenAiTuningServiceTracingConnection::CreateTuningJob(
-    google::cloud::aiplatform::v1::CreateTuningJobRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::GenAiTuningServiceConnection::CreateTuningJob");
+GenAiTuningServiceTracingConnection::CreateTuningJob(google::cloud::aiplatform::v1::CreateTuningJobRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::GenAiTuningServiceConnection::CreateTuningJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateTuningJob(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::TuningJob>
-GenAiTuningServiceTracingConnection::GetTuningJob(
-    google::cloud::aiplatform::v1::GetTuningJobRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::GenAiTuningServiceConnection::GetTuningJob");
+GenAiTuningServiceTracingConnection::GetTuningJob(google::cloud::aiplatform::v1::GetTuningJobRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::GenAiTuningServiceConnection::GetTuningJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetTuningJob(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::TuningJob>
-GenAiTuningServiceTracingConnection::ListTuningJobs(
-    google::cloud::aiplatform::v1::ListTuningJobsRequest request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::GenAiTuningServiceConnection::ListTuningJobs");
+GenAiTuningServiceTracingConnection::ListTuningJobs(google::cloud::aiplatform::v1::ListTuningJobsRequest request) {
+  auto span = internal::MakeSpan("aiplatform_v1::GenAiTuningServiceConnection::ListTuningJobs");
   internal::OTelScope scope(span);
   auto sr = child_->ListTuningJobs(std::move(request));
-  return internal::MakeTracedStreamRange<
-      google::cloud::aiplatform::v1::TuningJob>(std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::TuningJob>(
+        std::move(span), std::move(sr));
 }
 
-Status GenAiTuningServiceTracingConnection::CancelTuningJob(
-    google::cloud::aiplatform::v1::CancelTuningJobRequest const& request) {
-  auto span = internal::MakeSpan(
-      "aiplatform_v1::GenAiTuningServiceConnection::CancelTuningJob");
+Status
+GenAiTuningServiceTracingConnection::CancelTuningJob(google::cloud::aiplatform::v1::CancelTuningJobRequest const& request) {
+  auto span = internal::MakeSpan("aiplatform_v1::GenAiTuningServiceConnection::CancelTuningJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelTuningJob(request));
 }
@@ -77,8 +70,7 @@ MakeGenAiTuningServiceTracingConnection(
     std::shared_ptr<aiplatform_v1::GenAiTuningServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn =
-        std::make_shared<GenAiTuningServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<GenAiTuningServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

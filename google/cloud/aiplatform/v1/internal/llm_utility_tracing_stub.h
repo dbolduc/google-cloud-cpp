@@ -35,23 +35,21 @@ class LlmUtilityServiceTracingStub : public LlmUtilityServiceStub {
  public:
   ~LlmUtilityServiceTracingStub() override = default;
 
-  explicit LlmUtilityServiceTracingStub(
-      std::shared_ptr<LlmUtilityServiceStub> child);
+  explicit LlmUtilityServiceTracingStub(std::shared_ptr<LlmUtilityServiceStub> child);
 
   StatusOr<google::cloud::aiplatform::v1::CountTokensResponse> CountTokens(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::CountTokensRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::CountTokensRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse> ComputeTokens(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::ComputeTokensRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::ComputeTokensRequest const& request) override;
 
  private:
   std::shared_ptr<LlmUtilityServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -39,14 +39,14 @@ class LlmUtilityServiceAuth : public LlmUtilityServiceStub {
       std::shared_ptr<LlmUtilityServiceStub> child);
 
   StatusOr<google::cloud::aiplatform::v1::CountTokensResponse> CountTokens(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::CountTokensRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::CountTokensRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse> ComputeTokens(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::ComputeTokensRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::ComputeTokensRequest const& request) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

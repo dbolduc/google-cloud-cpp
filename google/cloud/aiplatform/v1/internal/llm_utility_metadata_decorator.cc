@@ -44,35 +44,33 @@ LlmUtilityServiceMetadata::LlmUtilityServiceMetadata(
 
 StatusOr<google::cloud::aiplatform::v1::CountTokensResponse>
 LlmUtilityServiceMetadata::CountTokens(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::CountTokensRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("endpoint=", internal::UrlEncode(request.endpoint())));
+  SetMetadata(context, options, absl::StrCat("endpoint=", internal::UrlEncode(request.endpoint())));
   return child_->CountTokens(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse>
 LlmUtilityServiceMetadata::ComputeTokens(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ComputeTokensRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("endpoint=", internal::UrlEncode(request.endpoint())));
+  SetMetadata(context, options, absl::StrCat("endpoint=", internal::UrlEncode(request.endpoint())));
   return child_->ComputeTokens(context, options, request);
 }
 
 void LlmUtilityServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                            Options const& options,
-                                            std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void LlmUtilityServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                            Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

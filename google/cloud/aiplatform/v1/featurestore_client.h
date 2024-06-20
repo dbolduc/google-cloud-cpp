@@ -63,28 +63,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class FeaturestoreServiceClient {
  public:
-  explicit FeaturestoreServiceClient(
-      std::shared_ptr<FeaturestoreServiceConnection> connection,
-      Options opts = {});
+  explicit FeaturestoreServiceClient(std::shared_ptr<FeaturestoreServiceConnection> connection, Options opts = {});
   ~FeaturestoreServiceClient();
 
   ///@{
   /// @name Copy and move support
   FeaturestoreServiceClient(FeaturestoreServiceClient const&) = default;
-  FeaturestoreServiceClient& operator=(FeaturestoreServiceClient const&) =
-      default;
+  FeaturestoreServiceClient& operator=(FeaturestoreServiceClient const&) = default;
   FeaturestoreServiceClient(FeaturestoreServiceClient&&) = default;
   FeaturestoreServiceClient& operator=(FeaturestoreServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(FeaturestoreServiceClient const& a,
-                         FeaturestoreServiceClient const& b) {
+  friend bool operator==(FeaturestoreServiceClient const& a, FeaturestoreServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(FeaturestoreServiceClient const& a,
-                         FeaturestoreServiceClient const& b) {
+  friend bool operator!=(FeaturestoreServiceClient const& a, FeaturestoreServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -122,10 +117,7 @@ class FeaturestoreServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
-  CreateFeaturestore(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::Featurestore const& featurestore,
-      Options opts = {});
+  CreateFeaturestore(std::string const& parent, google::cloud::aiplatform::v1::Featurestore const& featurestore, Options opts = {});
 
   // clang-format off
   ///
@@ -167,10 +159,7 @@ class FeaturestoreServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
-  CreateFeaturestore(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::Featurestore const& featurestore,
-      std::string const& featurestore_id, Options opts = {});
+  CreateFeaturestore(std::string const& parent, google::cloud::aiplatform::v1::Featurestore const& featurestore, std::string const& featurestore_id, Options opts = {});
 
   // clang-format off
   ///
@@ -207,9 +196,7 @@ class FeaturestoreServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
-  CreateFeaturestore(
-      google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request,
-      Options opts = {});
+  CreateFeaturestore(google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -233,8 +220,8 @@ class FeaturestoreServiceClient {
   /// [google.cloud.aiplatform.v1.GetFeaturestoreRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L361}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Featurestore> GetFeaturestore(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Featurestore>
+  GetFeaturestore(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -263,9 +250,8 @@ class FeaturestoreServiceClient {
   /// [google.cloud.aiplatform.v1.GetFeaturestoreRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L361}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Featurestore> GetFeaturestore(
-      google::cloud::aiplatform::v1::GetFeaturestoreRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Featurestore>
+  GetFeaturestore(google::cloud::aiplatform::v1::GetFeaturestoreRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -300,8 +286,8 @@ class FeaturestoreServiceClient {
   /// [google.cloud.aiplatform.v1.ListFeaturestoresRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L373}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Featurestore> ListFeaturestores(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Featurestore>
+  ListFeaturestores(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -339,9 +325,8 @@ class FeaturestoreServiceClient {
   /// [google.cloud.aiplatform.v1.ListFeaturestoresRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L373}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Featurestore> ListFeaturestores(
-      google::cloud::aiplatform::v1::ListFeaturestoresRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Featurestore>
+  ListFeaturestores(google::cloud::aiplatform::v1::ListFeaturestoresRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -389,9 +374,7 @@ class FeaturestoreServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
-  UpdateFeaturestore(
-      google::cloud::aiplatform::v1::Featurestore const& featurestore,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateFeaturestore(google::cloud::aiplatform::v1::Featurestore const& featurestore, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -428,9 +411,7 @@ class FeaturestoreServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
-  UpdateFeaturestore(
-      google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request,
-      Options opts = {});
+  UpdateFeaturestore(google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -541,9 +522,7 @@ class FeaturestoreServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeaturestore(
-      google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request,
-      Options opts = {});
+  DeleteFeaturestore(google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -577,10 +556,8 @@ class FeaturestoreServiceClient {
   /// [google.cloud.aiplatform.v1.EntityType]: @googleapis_reference_link{google/cloud/aiplatform/v1/entity_type.proto#L35}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::EntityType>> CreateEntityType(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::EntityType const& entity_type,
-      Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::EntityType>>
+  CreateEntityType(std::string const& parent, google::cloud::aiplatform::v1::EntityType const& entity_type, Options opts = {});
 
   // clang-format off
   ///
@@ -621,10 +598,8 @@ class FeaturestoreServiceClient {
   /// [google.cloud.aiplatform.v1.EntityType]: @googleapis_reference_link{google/cloud/aiplatform/v1/entity_type.proto#L35}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::EntityType>> CreateEntityType(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::EntityType const& entity_type,
-      std::string const& entity_type_id, Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::EntityType>>
+  CreateEntityType(std::string const& parent, google::cloud::aiplatform::v1::EntityType const& entity_type, std::string const& entity_type_id, Options opts = {});
 
   // clang-format off
   ///
@@ -660,9 +635,8 @@ class FeaturestoreServiceClient {
   /// [google.cloud.aiplatform.v1.EntityType]: @googleapis_reference_link{google/cloud/aiplatform/v1/entity_type.proto#L35}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::EntityType>> CreateEntityType(
-      google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::EntityType>>
+  CreateEntityType(google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -688,8 +662,8 @@ class FeaturestoreServiceClient {
   /// [google.cloud.aiplatform.v1.GetEntityTypeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L816}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::EntityType> GetEntityType(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::EntityType>
+  GetEntityType(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -718,9 +692,8 @@ class FeaturestoreServiceClient {
   /// [google.cloud.aiplatform.v1.GetEntityTypeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L816}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::EntityType> GetEntityType(
-      google::cloud::aiplatform::v1::GetEntityTypeRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::EntityType>
+  GetEntityType(google::cloud::aiplatform::v1::GetEntityTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -755,8 +728,8 @@ class FeaturestoreServiceClient {
   /// [google.cloud.aiplatform.v1.ListEntityTypesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L830}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::EntityType> ListEntityTypes(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::EntityType>
+  ListEntityTypes(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -794,9 +767,8 @@ class FeaturestoreServiceClient {
   /// [google.cloud.aiplatform.v1.ListEntityTypesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L830}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::EntityType> ListEntityTypes(
-      google::cloud::aiplatform::v1::ListEntityTypesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::EntityType>
+  ListEntityTypes(google::cloud::aiplatform::v1::ListEntityTypesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -842,9 +814,8 @@ class FeaturestoreServiceClient {
   /// [google.cloud.aiplatform.v1.UpdateEntityTypeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L905}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::EntityType> UpdateEntityType(
-      google::cloud::aiplatform::v1::EntityType const& entity_type,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::EntityType>
+  UpdateEntityType(google::cloud::aiplatform::v1::EntityType const& entity_type, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -873,9 +844,8 @@ class FeaturestoreServiceClient {
   /// [google.cloud.aiplatform.v1.UpdateEntityTypeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L905}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::EntityType> UpdateEntityType(
-      google::cloud::aiplatform::v1::UpdateEntityTypeRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::EntityType>
+  UpdateEntityType(google::cloud::aiplatform::v1::UpdateEntityTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -985,9 +955,7 @@ class FeaturestoreServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteEntityType(
-      google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request,
-      Options opts = {});
+  DeleteEntityType(google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1023,9 +991,8 @@ class FeaturestoreServiceClient {
   /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::Feature>> CreateFeature(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::Feature const& feature, Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::Feature>>
+  CreateFeature(std::string const& parent, google::cloud::aiplatform::v1::Feature const& feature, Options opts = {});
 
   // clang-format off
   ///
@@ -1068,10 +1035,8 @@ class FeaturestoreServiceClient {
   /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::Feature>> CreateFeature(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::Feature const& feature,
-      std::string const& feature_id, Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::Feature>>
+  CreateFeature(std::string const& parent, google::cloud::aiplatform::v1::Feature const& feature, std::string const& feature_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1107,9 +1072,8 @@ class FeaturestoreServiceClient {
   /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::Feature>> CreateFeature(
-      google::cloud::aiplatform::v1::CreateFeatureRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::Feature>>
+  CreateFeature(google::cloud::aiplatform::v1::CreateFeatureRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1148,11 +1112,7 @@ class FeaturestoreServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
-  BatchCreateFeatures(
-      std::string const& parent,
-      std::vector<google::cloud::aiplatform::v1::CreateFeatureRequest> const&
-          requests,
-      Options opts = {});
+  BatchCreateFeatures(std::string const& parent, std::vector<google::cloud::aiplatform::v1::CreateFeatureRequest> const& requests, Options opts = {});
 
   // clang-format off
   ///
@@ -1189,9 +1149,7 @@ class FeaturestoreServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
-  BatchCreateFeatures(
-      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request,
-      Options opts = {});
+  BatchCreateFeatures(google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1219,8 +1177,8 @@ class FeaturestoreServiceClient {
   /// [google.cloud.aiplatform.v1.GetFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1014}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Feature>
+  GetFeature(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1249,9 +1207,8 @@ class FeaturestoreServiceClient {
   /// [google.cloud.aiplatform.v1.GetFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1014}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(
-      google::cloud::aiplatform::v1::GetFeatureRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Feature>
+  GetFeature(google::cloud::aiplatform::v1::GetFeatureRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1288,8 +1245,8 @@ class FeaturestoreServiceClient {
   /// [google.cloud.aiplatform.v1.ListFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1032}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Feature> ListFeatures(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Feature>
+  ListFeatures(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1327,9 +1284,8 @@ class FeaturestoreServiceClient {
   /// [google.cloud.aiplatform.v1.ListFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1032}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Feature> ListFeatures(
-      google::cloud::aiplatform::v1::ListFeaturesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Feature>
+  ListFeatures(google::cloud::aiplatform::v1::ListFeaturesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1370,9 +1326,8 @@ class FeaturestoreServiceClient {
   /// [google.cloud.aiplatform.v1.UpdateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1240}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Feature> UpdateFeature(
-      google::cloud::aiplatform::v1::Feature const& feature,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Feature>
+  UpdateFeature(google::cloud::aiplatform::v1::Feature const& feature, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1401,9 +1356,8 @@ class FeaturestoreServiceClient {
   /// [google.cloud.aiplatform.v1.UpdateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1240}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Feature> UpdateFeature(
-      google::cloud::aiplatform::v1::UpdateFeatureRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Feature>
+  UpdateFeature(google::cloud::aiplatform::v1::UpdateFeatureRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1475,9 +1429,7 @@ class FeaturestoreServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeature(
-      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request,
-      Options opts = {});
+  DeleteFeature(google::cloud::aiplatform::v1::DeleteFeatureRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1586,9 +1538,7 @@ class FeaturestoreServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ImportFeatureValuesResponse>>
-  ImportFeatureValues(
-      google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request,
-      Options opts = {});
+  ImportFeatureValues(google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1626,8 +1576,7 @@ class FeaturestoreServiceClient {
   /// [google.cloud.aiplatform.v1.BatchReadFeatureValuesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L786}
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>
+  future<StatusOr<google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>
   BatchReadFeatureValues(std::string const& featurestore, Options opts = {});
 
   // clang-format off
@@ -1669,12 +1618,8 @@ class FeaturestoreServiceClient {
   /// [google.cloud.aiplatform.v1.BatchReadFeatureValuesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L786}
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>
-  BatchReadFeatureValues(
-      google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>
+  BatchReadFeatureValues(google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1745,9 +1690,7 @@ class FeaturestoreServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ExportFeatureValuesResponse>>
-  ExportFeatureValues(
-      google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request,
-      Options opts = {});
+  ExportFeatureValues(google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1836,9 +1779,7 @@ class FeaturestoreServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>
-  DeleteFeatureValues(
-      google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request,
-      Options opts = {});
+  DeleteFeatureValues(google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1873,8 +1814,8 @@ class FeaturestoreServiceClient {
   /// [google.cloud.aiplatform.v1.SearchFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1126}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Feature> SearchFeatures(
-      std::string const& location, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Feature>
+  SearchFeatures(std::string const& location, Options opts = {});
 
   // clang-format off
   ///
@@ -1914,8 +1855,8 @@ class FeaturestoreServiceClient {
   /// [google.cloud.aiplatform.v1.SearchFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1126}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Feature> SearchFeatures(
-      std::string const& location, std::string const& query, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Feature>
+  SearchFeatures(std::string const& location, std::string const& query, Options opts = {});
 
   // clang-format off
   ///
@@ -1953,9 +1894,8 @@ class FeaturestoreServiceClient {
   /// [google.cloud.aiplatform.v1.SearchFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1126}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Feature> SearchFeatures(
-      google::cloud::aiplatform::v1::SearchFeaturesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Feature>
+  SearchFeatures(google::cloud::aiplatform::v1::SearchFeaturesRequest request, Options opts = {});
 
  private:
   std::shared_ptr<FeaturestoreServiceConnection> connection_;

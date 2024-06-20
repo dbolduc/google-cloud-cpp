@@ -26,46 +26,39 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-PredictionServiceConnectionIdempotencyPolicy::
-    ~PredictionServiceConnectionIdempotencyPolicy() = default;
+PredictionServiceConnectionIdempotencyPolicy::~PredictionServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy>
 PredictionServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<PredictionServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency PredictionServiceConnectionIdempotencyPolicy::Predict(
-    google::cloud::aiplatform::v1::PredictRequest const&) {
+Idempotency PredictionServiceConnectionIdempotencyPolicy::Predict(google::cloud::aiplatform::v1::PredictRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PredictionServiceConnectionIdempotencyPolicy::RawPredict(
-    google::cloud::aiplatform::v1::RawPredictRequest const&) {
+Idempotency PredictionServiceConnectionIdempotencyPolicy::RawPredict(google::cloud::aiplatform::v1::RawPredictRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PredictionServiceConnectionIdempotencyPolicy::DirectPredict(
-    google::cloud::aiplatform::v1::DirectPredictRequest const&) {
+Idempotency PredictionServiceConnectionIdempotencyPolicy::DirectPredict(google::cloud::aiplatform::v1::DirectPredictRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PredictionServiceConnectionIdempotencyPolicy::DirectRawPredict(
-    google::cloud::aiplatform::v1::DirectRawPredictRequest const&) {
+Idempotency PredictionServiceConnectionIdempotencyPolicy::DirectRawPredict(google::cloud::aiplatform::v1::DirectRawPredictRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PredictionServiceConnectionIdempotencyPolicy::Explain(
-    google::cloud::aiplatform::v1::ExplainRequest const&) {
+Idempotency PredictionServiceConnectionIdempotencyPolicy::Explain(google::cloud::aiplatform::v1::ExplainRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PredictionServiceConnectionIdempotencyPolicy::GenerateContent(
-    google::cloud::aiplatform::v1::GenerateContentRequest const&) {
+Idempotency PredictionServiceConnectionIdempotencyPolicy::GenerateContent(google::cloud::aiplatform::v1::GenerateContentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy>
-MakeDefaultPredictionServiceConnectionIdempotencyPolicy() {
+    MakeDefaultPredictionServiceConnectionIdempotencyPolicy() {
   return std::make_unique<PredictionServiceConnectionIdempotencyPolicy>();
 }
 

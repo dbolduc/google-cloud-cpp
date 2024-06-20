@@ -52,8 +52,7 @@ class MatchServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class MatchServiceLimitedErrorCountRetryPolicy
-    : public MatchServiceRetryPolicy {
+class MatchServiceLimitedErrorCountRetryPolicy : public MatchServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +62,14 @@ class MatchServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit MatchServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   MatchServiceLimitedErrorCountRetryPolicy(
       MatchServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : MatchServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : MatchServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   MatchServiceLimitedErrorCountRetryPolicy(
       MatchServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : MatchServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : MatchServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,9 +89,7 @@ class MatchServiceLimitedErrorCountRetryPolicy
   using BaseType = MatchServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      aiplatform_v1_internal::MatchServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<aiplatform_v1_internal::MatchServiceRetryTraits> impl_;
 };
 
 /**
@@ -130,14 +127,12 @@ class MatchServiceLimitedTimeRetryPolicy : public MatchServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit MatchServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  MatchServiceLimitedTimeRetryPolicy(
-      MatchServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : MatchServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  MatchServiceLimitedTimeRetryPolicy(
-      MatchServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : MatchServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  MatchServiceLimitedTimeRetryPolicy(MatchServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : MatchServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  MatchServiceLimitedTimeRetryPolicy(MatchServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : MatchServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,9 +154,7 @@ class MatchServiceLimitedTimeRetryPolicy : public MatchServiceRetryPolicy {
   using BaseType = MatchServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      aiplatform_v1_internal::MatchServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<aiplatform_v1_internal::MatchServiceRetryTraits> impl_;
 };
 
 /**
@@ -183,12 +176,10 @@ class MatchServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse>
-  FindNeighbors(
-      google::cloud::aiplatform::v1::FindNeighborsRequest const& request);
+  FindNeighbors(google::cloud::aiplatform::v1::FindNeighborsRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>
-  ReadIndexDatapoints(
-      google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request);
+  ReadIndexDatapoints(google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request);
 };
 
 /**

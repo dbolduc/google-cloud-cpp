@@ -36,58 +36,47 @@ class FeaturestoreOnlineServingServiceStub {
  public:
   virtual ~FeaturestoreOnlineServingServiceStub() = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
-  ReadFeatureValues(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::ReadFeatureValuesRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse> ReadFeatureValues(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) = 0;
 
-  virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<
-      google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>
+  virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>
   StreamingReadFeatureValues(
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
-      google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
-          request) = 0;
+    std::shared_ptr<grpc::ClientContext> context,
+    Options const& options,
+    google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
-  WriteFeatureValues(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::WriteFeatureValuesRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse> WriteFeatureValues(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) = 0;
 };
 
-class DefaultFeaturestoreOnlineServingServiceStub
-    : public FeaturestoreOnlineServingServiceStub {
+class DefaultFeaturestoreOnlineServingServiceStub : public FeaturestoreOnlineServingServiceStub {
  public:
   explicit DefaultFeaturestoreOnlineServingServiceStub(
-      std::unique_ptr<google::cloud::aiplatform::v1::
-                          FeaturestoreOnlineServingService::StubInterface>
-          grpc_stub)
+      std::unique_ptr<google::cloud::aiplatform::v1::FeaturestoreOnlineServingService::StubInterface> grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
-  StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
-  ReadFeatureValues(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse> ReadFeatureValues(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) override;
 
-  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
-      google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>
   StreamingReadFeatureValues(
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
-      google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
-          request) override;
+      std::shared_ptr<grpc::ClientContext> context,
+      Options const& options,
+      google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
-  WriteFeatureValues(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse> WriteFeatureValues(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::aiplatform::v1::
-                      FeaturestoreOnlineServingService::StubInterface>
-      grpc_stub_;
+  std::unique_ptr<google::cloud::aiplatform::v1::FeaturestoreOnlineServingService::StubInterface> grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

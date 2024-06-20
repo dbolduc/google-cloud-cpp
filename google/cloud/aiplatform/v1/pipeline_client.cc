@@ -28,15 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 PipelineServiceClient::PipelineServiceClient(
     std::shared_ptr<PipelineServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 PipelineServiceClient::~PipelineServiceClient() = default;
 
 StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
-PipelineServiceClient::CreateTrainingPipeline(
-    std::string const& parent,
-    google::cloud::aiplatform::v1::TrainingPipeline const& training_pipeline,
-    Options opts) {
+PipelineServiceClient::CreateTrainingPipeline(std::string const& parent, google::cloud::aiplatform::v1::TrainingPipeline const& training_pipeline, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateTrainingPipelineRequest request;
   request.set_parent(parent);
@@ -45,16 +42,13 @@ PipelineServiceClient::CreateTrainingPipeline(
 }
 
 StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
-PipelineServiceClient::CreateTrainingPipeline(
-    google::cloud::aiplatform::v1::CreateTrainingPipelineRequest const& request,
-    Options opts) {
+PipelineServiceClient::CreateTrainingPipeline(google::cloud::aiplatform::v1::CreateTrainingPipelineRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTrainingPipeline(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
-PipelineServiceClient::GetTrainingPipeline(std::string const& name,
-                                           Options opts) {
+PipelineServiceClient::GetTrainingPipeline(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::GetTrainingPipelineRequest request;
   request.set_name(name);
@@ -62,16 +56,13 @@ PipelineServiceClient::GetTrainingPipeline(std::string const& name,
 }
 
 StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
-PipelineServiceClient::GetTrainingPipeline(
-    google::cloud::aiplatform::v1::GetTrainingPipelineRequest const& request,
-    Options opts) {
+PipelineServiceClient::GetTrainingPipeline(google::cloud::aiplatform::v1::GetTrainingPipelineRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTrainingPipeline(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::TrainingPipeline>
-PipelineServiceClient::ListTrainingPipelines(std::string const& parent,
-                                             Options opts) {
+PipelineServiceClient::ListTrainingPipelines(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListTrainingPipelinesRequest request;
   request.set_parent(parent);
@@ -79,16 +70,13 @@ PipelineServiceClient::ListTrainingPipelines(std::string const& parent,
 }
 
 StreamRange<google::cloud::aiplatform::v1::TrainingPipeline>
-PipelineServiceClient::ListTrainingPipelines(
-    google::cloud::aiplatform::v1::ListTrainingPipelinesRequest request,
-    Options opts) {
+PipelineServiceClient::ListTrainingPipelines(google::cloud::aiplatform::v1::ListTrainingPipelinesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTrainingPipelines(std::move(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-PipelineServiceClient::DeleteTrainingPipeline(std::string const& name,
-                                              Options opts) {
+PipelineServiceClient::DeleteTrainingPipeline(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest request;
   request.set_name(name);
@@ -96,33 +84,27 @@ PipelineServiceClient::DeleteTrainingPipeline(std::string const& name,
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-PipelineServiceClient::DeleteTrainingPipeline(
-    google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const& request,
-    Options opts) {
+PipelineServiceClient::DeleteTrainingPipeline(google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTrainingPipeline(request);
 }
 
-Status PipelineServiceClient::CancelTrainingPipeline(std::string const& name,
-                                                     Options opts) {
+Status
+PipelineServiceClient::CancelTrainingPipeline(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CancelTrainingPipelineRequest request;
   request.set_name(name);
   return connection_->CancelTrainingPipeline(request);
 }
 
-Status PipelineServiceClient::CancelTrainingPipeline(
-    google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const& request,
-    Options opts) {
+Status
+PipelineServiceClient::CancelTrainingPipeline(google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelTrainingPipeline(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::PipelineJob>
-PipelineServiceClient::CreatePipelineJob(
-    std::string const& parent,
-    google::cloud::aiplatform::v1::PipelineJob const& pipeline_job,
-    std::string const& pipeline_job_id, Options opts) {
+PipelineServiceClient::CreatePipelineJob(std::string const& parent, google::cloud::aiplatform::v1::PipelineJob const& pipeline_job, std::string const& pipeline_job_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreatePipelineJobRequest request;
   request.set_parent(parent);
@@ -132,9 +114,7 @@ PipelineServiceClient::CreatePipelineJob(
 }
 
 StatusOr<google::cloud::aiplatform::v1::PipelineJob>
-PipelineServiceClient::CreatePipelineJob(
-    google::cloud::aiplatform::v1::CreatePipelineJobRequest const& request,
-    Options opts) {
+PipelineServiceClient::CreatePipelineJob(google::cloud::aiplatform::v1::CreatePipelineJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePipelineJob(request);
 }
@@ -148,16 +128,13 @@ PipelineServiceClient::GetPipelineJob(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::aiplatform::v1::PipelineJob>
-PipelineServiceClient::GetPipelineJob(
-    google::cloud::aiplatform::v1::GetPipelineJobRequest const& request,
-    Options opts) {
+PipelineServiceClient::GetPipelineJob(google::cloud::aiplatform::v1::GetPipelineJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetPipelineJob(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::PipelineJob>
-PipelineServiceClient::ListPipelineJobs(std::string const& parent,
-                                        Options opts) {
+PipelineServiceClient::ListPipelineJobs(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListPipelineJobsRequest request;
   request.set_parent(parent);
@@ -165,16 +142,13 @@ PipelineServiceClient::ListPipelineJobs(std::string const& parent,
 }
 
 StreamRange<google::cloud::aiplatform::v1::PipelineJob>
-PipelineServiceClient::ListPipelineJobs(
-    google::cloud::aiplatform::v1::ListPipelineJobsRequest request,
-    Options opts) {
+PipelineServiceClient::ListPipelineJobs(google::cloud::aiplatform::v1::ListPipelineJobsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPipelineJobs(std::move(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-PipelineServiceClient::DeletePipelineJob(std::string const& name,
-                                         Options opts) {
+PipelineServiceClient::DeletePipelineJob(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeletePipelineJobRequest request;
   request.set_name(name);
@@ -182,17 +156,13 @@ PipelineServiceClient::DeletePipelineJob(std::string const& name,
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-PipelineServiceClient::DeletePipelineJob(
-    google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request,
-    Options opts) {
+PipelineServiceClient::DeletePipelineJob(google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePipelineJob(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
-PipelineServiceClient::BatchDeletePipelineJobs(
-    std::string const& parent, std::vector<std::string> const& names,
-    Options opts) {
+PipelineServiceClient::BatchDeletePipelineJobs(std::string const& parent, std::vector<std::string> const& names, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest request;
   request.set_parent(parent);
@@ -201,33 +171,27 @@ PipelineServiceClient::BatchDeletePipelineJobs(
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
-PipelineServiceClient::BatchDeletePipelineJobs(
-    google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
-        request,
-    Options opts) {
+PipelineServiceClient::BatchDeletePipelineJobs(google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchDeletePipelineJobs(request);
 }
 
-Status PipelineServiceClient::CancelPipelineJob(std::string const& name,
-                                                Options opts) {
+Status
+PipelineServiceClient::CancelPipelineJob(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CancelPipelineJobRequest request;
   request.set_name(name);
   return connection_->CancelPipelineJob(request);
 }
 
-Status PipelineServiceClient::CancelPipelineJob(
-    google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request,
-    Options opts) {
+Status
+PipelineServiceClient::CancelPipelineJob(google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelPipelineJob(request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
-PipelineServiceClient::BatchCancelPipelineJobs(
-    std::string const& parent, std::vector<std::string> const& names,
-    Options opts) {
+PipelineServiceClient::BatchCancelPipelineJobs(std::string const& parent, std::vector<std::string> const& names, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest request;
   request.set_parent(parent);
@@ -236,10 +200,7 @@ PipelineServiceClient::BatchCancelPipelineJobs(
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
-PipelineServiceClient::BatchCancelPipelineJobs(
-    google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
-        request,
-    Options opts) {
+PipelineServiceClient::BatchCancelPipelineJobs(google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchCancelPipelineJobs(request);
 }

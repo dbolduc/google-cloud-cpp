@@ -48,8 +48,8 @@ future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 ScheduleServiceConnection::DeleteSchedule(
     google::cloud::aiplatform::v1::DeleteScheduleRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Schedule>
@@ -58,20 +58,20 @@ ScheduleServiceConnection::GetSchedule(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::Schedule>
-ScheduleServiceConnection::ListSchedules(
-    google::cloud::aiplatform::v1::
-        ListSchedulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::Schedule> ScheduleServiceConnection::ListSchedules(
+    google::cloud::aiplatform::v1::ListSchedulesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Schedule>>();
 }
 
-Status ScheduleServiceConnection::PauseSchedule(
+Status
+ScheduleServiceConnection::PauseSchedule(
     google::cloud::aiplatform::v1::PauseScheduleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status ScheduleServiceConnection::ResumeSchedule(
+Status
+ScheduleServiceConnection::ResumeSchedule(
     google::cloud::aiplatform::v1::ResumeScheduleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -85,18 +85,17 @@ ScheduleServiceConnection::UpdateSchedule(
 std::shared_ptr<ScheduleServiceConnection> MakeScheduleServiceConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 ScheduleServicePolicyOptionList>(options,
-                                                                  __func__);
+      UnifiedCredentialsOptionList,
+      ScheduleServicePolicyOptionList>(options, __func__);
   options = aiplatform_v1_internal::ScheduleServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = aiplatform_v1_internal::CreateDefaultScheduleServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return aiplatform_v1_internal::MakeScheduleServiceTracingConnection(
       std::make_shared<aiplatform_v1_internal::ScheduleServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

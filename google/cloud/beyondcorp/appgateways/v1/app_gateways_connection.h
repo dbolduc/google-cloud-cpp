@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_APPGATEWAYS_V1_APP_GATEWAYS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_APPGATEWAYS_V1_APP_GATEWAYS_CONNECTION_H
 
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/beyondcorp/appgateways/v1/app_gateways_connection_idempotency_policy.h"
 #include "google/cloud/beyondcorp/appgateways/v1/internal/app_gateways_retry_traits.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -55,8 +55,7 @@ class AppGatewaysServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AppGatewaysServiceLimitedErrorCountRetryPolicy
-    : public AppGatewaysServiceRetryPolicy {
+class AppGatewaysServiceLimitedErrorCountRetryPolicy : public AppGatewaysServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,16 +65,14 @@ class AppGatewaysServiceLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit AppGatewaysServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   AppGatewaysServiceLimitedErrorCountRetryPolicy(
       AppGatewaysServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : AppGatewaysServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
-  }
+    : AppGatewaysServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   AppGatewaysServiceLimitedErrorCountRetryPolicy(
       AppGatewaysServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : AppGatewaysServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
-  }
+    : AppGatewaysServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -95,9 +92,7 @@ class AppGatewaysServiceLimitedErrorCountRetryPolicy
   using BaseType = AppGatewaysServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      beyondcorp_appgateways_v1_internal::AppGatewaysServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<beyondcorp_appgateways_v1_internal::AppGatewaysServiceRetryTraits> impl_;
 };
 
 /**
@@ -110,8 +105,7 @@ class AppGatewaysServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AppGatewaysServiceLimitedTimeRetryPolicy
-    : public AppGatewaysServiceRetryPolicy {
+class AppGatewaysServiceLimitedTimeRetryPolicy : public AppGatewaysServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -136,14 +130,12 @@ class AppGatewaysServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit AppGatewaysServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  AppGatewaysServiceLimitedTimeRetryPolicy(
-      AppGatewaysServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : AppGatewaysServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  AppGatewaysServiceLimitedTimeRetryPolicy(
-      AppGatewaysServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : AppGatewaysServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AppGatewaysServiceLimitedTimeRetryPolicy(AppGatewaysServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : AppGatewaysServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AppGatewaysServiceLimitedTimeRetryPolicy(AppGatewaysServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : AppGatewaysServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -165,23 +157,20 @@ class AppGatewaysServiceLimitedTimeRetryPolicy
   using BaseType = AppGatewaysServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      beyondcorp_appgateways_v1_internal::AppGatewaysServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<beyondcorp_appgateways_v1_internal::AppGatewaysServiceRetryTraits> impl_;
 };
 
 /**
  * The `AppGatewaysServiceConnection` object for `AppGatewaysServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `AppGatewaysServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `AppGatewaysServiceClient`.
+ * sets in `AppGatewaysServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `AppGatewaysServiceClient`.
  *
  * To create a concrete instance, see `MakeAppGatewaysServiceConnection()`.
  *
- * For mocking, see
- * `beyondcorp_appgateways_v1_mocks::MockAppGatewaysServiceConnection`.
+ * For mocking, see `beyondcorp_appgateways_v1_mocks::MockAppGatewaysServiceConnection`.
  */
 class AppGatewaysServiceConnection {
  public:
@@ -190,51 +179,38 @@ class AppGatewaysServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::beyondcorp::appgateways::v1::AppGateway>
-  ListAppGateways(
-      google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest
-          request);
+  ListAppGateways(google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest request);
 
   virtual StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>
-  GetAppGateway(
-      google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
-          request);
+  GetAppGateway(google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const& request);
 
-  virtual future<
-      StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
-  CreateAppGateway(
-      google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
+  CreateAppGateway(google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const& request);
 
-  virtual future<StatusOr<
-      google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
-  DeleteAppGateway(
-      google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
+  DeleteAppGateway(google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `AppGatewaysServiceConnection`.
+ * A factory function to construct an object of type `AppGatewaysServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * AppGatewaysServiceClient.
+ * should be passed as an argument to the constructor of AppGatewaysServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `AppGatewaysServiceConnection`. Expected options are any of the
- * types in the following option lists:
+ * returned `AppGatewaysServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * -
- * `google::cloud::beyondcorp_appgateways_v1::AppGatewaysServicePolicyOptionList`
+ * - `google::cloud::beyondcorp_appgateways_v1::AppGatewaysServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `AppGatewaysServiceConnection`
- * created by this function.
+ * @param options (optional) Configure the `AppGatewaysServiceConnection` created by
+ * this function.
  */
 std::shared_ptr<AppGatewaysServiceConnection> MakeAppGatewaysServiceConnection(
     Options options = {});

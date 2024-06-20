@@ -48,36 +48,35 @@ SpecialistPoolServiceMetadata::AsyncCreateSpecialistPool(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateSpecialistPool(cq, std::move(context),
-                                           std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateSpecialistPool(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 SpecialistPoolServiceMetadata::CreateSpecialistPool(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateSpecialistPool(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
 SpecialistPoolServiceMetadata::GetSpecialistPool(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSpecialistPool(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListSpecialistPoolsResponse>
 SpecialistPoolServiceMetadata::ListSpecialistPools(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListSpecialistPoolsRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSpecialistPools(context, options, request);
 }
 
@@ -87,18 +86,17 @@ SpecialistPoolServiceMetadata::AsyncDeleteSpecialistPool(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
-  SetMetadata(*context, *options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteSpecialistPool(cq, std::move(context),
-                                           std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteSpecialistPool(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 SpecialistPoolServiceMetadata::DeleteSpecialistPool(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteSpecialistPool(context, options, request);
 }
 
@@ -108,22 +106,17 @@ SpecialistPoolServiceMetadata::AsyncUpdateSpecialistPool(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
-  SetMetadata(
-      *context, *options,
-      absl::StrCat("specialist_pool.name=",
-                   internal::UrlEncode(request.specialist_pool().name())));
-  return child_->AsyncUpdateSpecialistPool(cq, std::move(context),
-                                           std::move(options), request);
+  SetMetadata(*context, *options, absl::StrCat("specialist_pool.name=", internal::UrlEncode(request.specialist_pool().name())));
+  return child_->AsyncUpdateSpecialistPool(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 SpecialistPoolServiceMetadata::UpdateSpecialistPool(
-    grpc::ClientContext& context, Options options,
+    grpc::ClientContext& context,
+    Options options,
     google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
-  SetMetadata(
-      context, options,
-      absl::StrCat("specialist_pool.name=",
-                   internal::UrlEncode(request.specialist_pool().name())));
+  SetMetadata(context, options, absl::StrCat("specialist_pool.name=", internal::UrlEncode(request.specialist_pool().name())));
   return child_->UpdateSpecialistPool(context, options, request);
 }
 
@@ -135,8 +128,8 @@ SpecialistPoolServiceMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
-                                   request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> SpecialistPoolServiceMetadata::AsyncCancelOperation(
@@ -146,21 +139,21 @@ future<Status> SpecialistPoolServiceMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context),
-                                      std::move(options), request);
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
-void SpecialistPoolServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, Options const& options,
-    std::string const& request_params) {
+void SpecialistPoolServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void SpecialistPoolServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                                Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

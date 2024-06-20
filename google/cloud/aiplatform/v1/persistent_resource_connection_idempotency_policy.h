@@ -34,35 +34,29 @@ class PersistentResourceServiceConnectionIdempotencyPolicy {
   virtual ~PersistentResourceServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<PersistentResourceServiceConnectionIdempotencyPolicy>
-  clone() const;
+  virtual std::unique_ptr<PersistentResourceServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreatePersistentResource(
-      google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  CreatePersistentResource(google::cloud::aiplatform::v1::CreatePersistentResourceRequest const& request);
 
-  virtual google::cloud::Idempotency GetPersistentResource(
-      google::cloud::aiplatform::v1::GetPersistentResourceRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetPersistentResource(google::cloud::aiplatform::v1::GetPersistentResourceRequest const& request);
 
-  virtual google::cloud::Idempotency ListPersistentResources(
-      google::cloud::aiplatform::v1::ListPersistentResourcesRequest request);
+  virtual google::cloud::Idempotency
+  ListPersistentResources(google::cloud::aiplatform::v1::ListPersistentResourcesRequest request);
 
-  virtual google::cloud::Idempotency DeletePersistentResource(
-      google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeletePersistentResource(google::cloud::aiplatform::v1::DeletePersistentResourceRequest const& request);
 
-  virtual google::cloud::Idempotency UpdatePersistentResource(
-      google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdatePersistentResource(google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const& request);
 
-  virtual google::cloud::Idempotency RebootPersistentResource(
-      google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  RebootPersistentResource(google::cloud::aiplatform::v1::RebootPersistentResourceRequest const& request);
 };
 
 std::unique_ptr<PersistentResourceServiceConnectionIdempotencyPolicy>
-MakeDefaultPersistentResourceServiceConnectionIdempotencyPolicy();
+    MakeDefaultPersistentResourceServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

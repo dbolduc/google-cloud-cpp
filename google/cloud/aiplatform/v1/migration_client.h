@@ -63,9 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class MigrationServiceClient {
  public:
-  explicit MigrationServiceClient(
-      std::shared_ptr<MigrationServiceConnection> connection,
-      Options opts = {});
+  explicit MigrationServiceClient(std::shared_ptr<MigrationServiceConnection> connection, Options opts = {});
   ~MigrationServiceClient();
 
   ///@{
@@ -78,12 +76,10 @@ class MigrationServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(MigrationServiceClient const& a,
-                         MigrationServiceClient const& b) {
+  friend bool operator==(MigrationServiceClient const& a, MigrationServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(MigrationServiceClient const& a,
-                         MigrationServiceClient const& b) {
+  friend bool operator!=(MigrationServiceClient const& a, MigrationServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -166,9 +162,7 @@ class MigrationServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::MigratableResource>
-  SearchMigratableResources(
-      google::cloud::aiplatform::v1::SearchMigratableResourcesRequest request,
-      Options opts = {});
+  SearchMigratableResources(google::cloud::aiplatform::v1::SearchMigratableResourcesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -205,11 +199,7 @@ class MigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
-  BatchMigrateResources(
-      std::string const& parent,
-      std::vector<google::cloud::aiplatform::v1::MigrateResourceRequest> const&
-          migrate_resource_requests,
-      Options opts = {});
+  BatchMigrateResources(std::string const& parent, std::vector<google::cloud::aiplatform::v1::MigrateResourceRequest> const& migrate_resource_requests, Options opts = {});
 
   // clang-format off
   ///
@@ -247,10 +237,7 @@ class MigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
-  BatchMigrateResources(
-      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
-          request,
-      Options opts = {});
+  BatchMigrateResources(google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<MigrationServiceConnection> connection_;

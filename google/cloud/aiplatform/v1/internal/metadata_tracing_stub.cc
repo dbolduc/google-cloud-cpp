@@ -33,124 +33,114 @@ MetadataServiceTracingStub::MetadataServiceTracingStub(
 
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceTracingStub::AsyncCreateMetadataStore(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "CreateMetadataStore");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "CreateMetadataStore");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateMetadataStore(cq, context, std::move(options),
-                                            request);
+  auto f = child_->AsyncCreateMetadataStore(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 MetadataServiceTracingStub::CreateMetadataStore(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "CreateMetadataStore");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "CreateMetadataStore");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->CreateMetadataStore(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateMetadataStore(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::MetadataStore>
-MetadataServiceTracingStub::GetMetadataStore(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::MetadataStore> MetadataServiceTracingStub::GetMetadataStore(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetMetadataStoreRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "GetMetadataStore");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "GetMetadataStore");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetMetadataStore(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::ListMetadataStoresResponse>
-MetadataServiceTracingStub::ListMetadataStores(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::ListMetadataStoresResponse> MetadataServiceTracingStub::ListMetadataStores(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListMetadataStoresRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "ListMetadataStores");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "ListMetadataStores");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ListMetadataStores(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListMetadataStores(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceTracingStub::AsyncDeleteMetadataStore(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "DeleteMetadataStore");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "DeleteMetadataStore");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteMetadataStore(cq, context, std::move(options),
-                                            request);
+  auto f = child_->AsyncDeleteMetadataStore(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 MetadataServiceTracingStub::DeleteMetadataStore(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "DeleteMetadataStore");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "DeleteMetadataStore");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->DeleteMetadataStore(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteMetadataStore(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::Artifact>
-MetadataServiceTracingStub::CreateArtifact(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::Artifact> MetadataServiceTracingStub::CreateArtifact(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::CreateArtifactRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "CreateArtifact");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "CreateArtifact");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateArtifact(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::Artifact>
-MetadataServiceTracingStub::GetArtifact(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::Artifact> MetadataServiceTracingStub::GetArtifact(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetArtifactRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "GetArtifact");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "GetArtifact");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetArtifact(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::ListArtifactsResponse>
-MetadataServiceTracingStub::ListArtifacts(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::ListArtifactsResponse> MetadataServiceTracingStub::ListArtifacts(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListArtifactsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "ListArtifacts");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "ListArtifacts");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListArtifacts(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::Artifact>
-MetadataServiceTracingStub::UpdateArtifact(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::Artifact> MetadataServiceTracingStub::UpdateArtifact(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::UpdateArtifactRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "UpdateArtifact");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "UpdateArtifact");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -159,25 +149,23 @@ MetadataServiceTracingStub::UpdateArtifact(
 
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceTracingStub::AsyncDeleteArtifact(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::DeleteArtifactRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "DeleteArtifact");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteArtifactRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "DeleteArtifact");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncDeleteArtifact(cq, context, std::move(options), request);
+  auto f = child_->AsyncDeleteArtifact(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 MetadataServiceTracingStub::DeleteArtifact(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::DeleteArtifactRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "DeleteArtifact");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteArtifactRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "DeleteArtifact");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -186,73 +174,67 @@ MetadataServiceTracingStub::DeleteArtifact(
 
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceTracingStub::AsyncPurgeArtifacts(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "PurgeArtifacts");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "PurgeArtifacts");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncPurgeArtifacts(cq, context, std::move(options), request);
+  auto f = child_->AsyncPurgeArtifacts(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 MetadataServiceTracingStub::PurgeArtifacts(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "PurgeArtifacts");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "PurgeArtifacts");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->PurgeArtifacts(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::Context>
-MetadataServiceTracingStub::CreateContext(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::Context> MetadataServiceTracingStub::CreateContext(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::CreateContextRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "CreateContext");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "CreateContext");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateContext(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::Context>
-MetadataServiceTracingStub::GetContext(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::Context> MetadataServiceTracingStub::GetContext(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetContextRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "GetContext");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "GetContext");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetContext(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::ListContextsResponse>
-MetadataServiceTracingStub::ListContexts(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::ListContextsResponse> MetadataServiceTracingStub::ListContexts(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListContextsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "ListContexts");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "ListContexts");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListContexts(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::Context>
-MetadataServiceTracingStub::UpdateContext(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::Context> MetadataServiceTracingStub::UpdateContext(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::UpdateContextRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "UpdateContext");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "UpdateContext");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -261,12 +243,11 @@ MetadataServiceTracingStub::UpdateContext(
 
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceTracingStub::AsyncDeleteContext(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::DeleteContextRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "DeleteContext");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteContextRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "DeleteContext");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteContext(cq, context, std::move(options), request);
@@ -275,10 +256,10 @@ MetadataServiceTracingStub::AsyncDeleteContext(
 
 StatusOr<google::longrunning::Operation>
 MetadataServiceTracingStub::DeleteContext(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::DeleteContextRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "DeleteContext");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteContextRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "DeleteContext");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -287,12 +268,11 @@ MetadataServiceTracingStub::DeleteContext(
 
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceTracingStub::AsyncPurgeContexts(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::PurgeContextsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "PurgeContexts");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::PurgeContextsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "PurgeContexts");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncPurgeContexts(cq, context, std::move(options), request);
@@ -301,114 +281,98 @@ MetadataServiceTracingStub::AsyncPurgeContexts(
 
 StatusOr<google::longrunning::Operation>
 MetadataServiceTracingStub::PurgeContexts(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::PurgeContextsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "PurgeContexts");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::PurgeContextsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "PurgeContexts");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->PurgeContexts(context, options, request));
 }
 
-StatusOr<
-    google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsResponse>
-MetadataServiceTracingStub::AddContextArtifactsAndExecutions(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::
-        AddContextArtifactsAndExecutionsRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService",
-                             "AddContextArtifactsAndExecutions");
+StatusOr<google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsResponse> MetadataServiceTracingStub::AddContextArtifactsAndExecutions(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "AddContextArtifactsAndExecutions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->AddContextArtifactsAndExecutions(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->AddContextArtifactsAndExecutions(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::AddContextChildrenResponse>
-MetadataServiceTracingStub::AddContextChildren(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::AddContextChildrenResponse> MetadataServiceTracingStub::AddContextChildren(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::AddContextChildrenRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "AddContextChildren");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "AddContextChildren");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->AddContextChildren(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->AddContextChildren(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::RemoveContextChildrenResponse>
-MetadataServiceTracingStub::RemoveContextChildren(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::RemoveContextChildrenRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "RemoveContextChildren");
+StatusOr<google::cloud::aiplatform::v1::RemoveContextChildrenResponse> MetadataServiceTracingStub::RemoveContextChildren(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::RemoveContextChildrenRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "RemoveContextChildren");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->RemoveContextChildren(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->RemoveContextChildren(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>
-MetadataServiceTracingStub::QueryContextLineageSubgraph(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::QueryContextLineageSubgraphRequest const&
-        request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService",
-                             "QueryContextLineageSubgraph");
+StatusOr<google::cloud::aiplatform::v1::LineageSubgraph> MetadataServiceTracingStub::QueryContextLineageSubgraph(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::QueryContextLineageSubgraphRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "QueryContextLineageSubgraph");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->QueryContextLineageSubgraph(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->QueryContextLineageSubgraph(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::Execution>
-MetadataServiceTracingStub::CreateExecution(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::Execution> MetadataServiceTracingStub::CreateExecution(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::CreateExecutionRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "CreateExecution");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "CreateExecution");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateExecution(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::Execution>
-MetadataServiceTracingStub::GetExecution(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::Execution> MetadataServiceTracingStub::GetExecution(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetExecutionRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "GetExecution");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "GetExecution");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetExecution(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::ListExecutionsResponse>
-MetadataServiceTracingStub::ListExecutions(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::ListExecutionsResponse> MetadataServiceTracingStub::ListExecutions(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListExecutionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "ListExecutions");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "ListExecutions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListExecutions(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::Execution>
-MetadataServiceTracingStub::UpdateExecution(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::Execution> MetadataServiceTracingStub::UpdateExecution(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::UpdateExecutionRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "UpdateExecution");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "UpdateExecution");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -417,25 +381,23 @@ MetadataServiceTracingStub::UpdateExecution(
 
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceTracingStub::AsyncDeleteExecution(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::DeleteExecutionRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "DeleteExecution");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteExecutionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "DeleteExecution");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncDeleteExecution(cq, context, std::move(options), request);
+  auto f = child_->AsyncDeleteExecution(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 MetadataServiceTracingStub::DeleteExecution(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::DeleteExecutionRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "DeleteExecution");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::DeleteExecutionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "DeleteExecution");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -444,107 +406,93 @@ MetadataServiceTracingStub::DeleteExecution(
 
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceTracingStub::AsyncPurgeExecutions(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "PurgeExecutions");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "PurgeExecutions");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncPurgeExecutions(cq, context, std::move(options), request);
+  auto f = child_->AsyncPurgeExecutions(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 MetadataServiceTracingStub::PurgeExecutions(
-    grpc::ClientContext& context, Options options,
-    google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "PurgeExecutions");
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "PurgeExecutions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->PurgeExecutions(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::AddExecutionEventsResponse>
-MetadataServiceTracingStub::AddExecutionEvents(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::AddExecutionEventsResponse> MetadataServiceTracingStub::AddExecutionEvents(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::AddExecutionEventsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "AddExecutionEvents");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "AddExecutionEvents");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->AddExecutionEvents(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->AddExecutionEvents(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>
-MetadataServiceTracingStub::QueryExecutionInputsAndOutputs(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::QueryExecutionInputsAndOutputsRequest const&
-        request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService",
-                             "QueryExecutionInputsAndOutputs");
+StatusOr<google::cloud::aiplatform::v1::LineageSubgraph> MetadataServiceTracingStub::QueryExecutionInputsAndOutputs(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::QueryExecutionInputsAndOutputsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "QueryExecutionInputsAndOutputs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->QueryExecutionInputsAndOutputs(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->QueryExecutionInputsAndOutputs(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::MetadataSchema>
-MetadataServiceTracingStub::CreateMetadataSchema(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::MetadataSchema> MetadataServiceTracingStub::CreateMetadataSchema(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::CreateMetadataSchemaRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "CreateMetadataSchema");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "CreateMetadataSchema");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->CreateMetadataSchema(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateMetadataSchema(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::MetadataSchema>
-MetadataServiceTracingStub::GetMetadataSchema(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::MetadataSchema> MetadataServiceTracingStub::GetMetadataSchema(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::GetMetadataSchemaRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "GetMetadataSchema");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "GetMetadataSchema");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GetMetadataSchema(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetMetadataSchema(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::ListMetadataSchemasResponse>
-MetadataServiceTracingStub::ListMetadataSchemas(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::aiplatform::v1::ListMetadataSchemasResponse> MetadataServiceTracingStub::ListMetadataSchemas(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::aiplatform::v1::ListMetadataSchemasRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.aiplatform.v1.MetadataService", "ListMetadataSchemas");
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "ListMetadataSchemas");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ListMetadataSchemas(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListMetadataSchemas(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>
-MetadataServiceTracingStub::QueryArtifactLineageSubgraph(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::aiplatform::v1::QueryArtifactLineageSubgraphRequest const&
-        request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService",
-                             "QueryArtifactLineageSubgraph");
+StatusOr<google::cloud::aiplatform::v1::LineageSubgraph> MetadataServiceTracingStub::QueryArtifactLineageSubgraph(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::aiplatform::v1::QueryArtifactLineageSubgraphRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MetadataService", "QueryArtifactLineageSubgraph");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->QueryArtifactLineageSubgraph(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->QueryArtifactLineageSubgraph(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -557,7 +505,8 @@ MetadataServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -570,8 +519,8 @@ future<Status> MetadataServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncCancelOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

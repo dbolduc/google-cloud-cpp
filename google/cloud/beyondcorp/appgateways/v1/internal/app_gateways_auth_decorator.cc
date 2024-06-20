@@ -31,21 +31,19 @@ AppGatewaysServiceAuth::AppGatewaysServiceAuth(
     std::shared_ptr<AppGatewaysServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysResponse>
-AppGatewaysServiceAuth::ListAppGateways(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest const&
-        request) {
+StatusOr<google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysResponse> AppGatewaysServiceAuth::ListAppGateways(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListAppGateways(context, options, request);
 }
 
-StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>
-AppGatewaysServiceAuth::GetAppGateway(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
-        request) {
+StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway> AppGatewaysServiceAuth::GetAppGateway(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetAppGateway(context, options, request);
@@ -53,30 +51,28 @@ AppGatewaysServiceAuth::GetAppGateway(
 
 future<StatusOr<google::longrunning::Operation>>
 AppGatewaysServiceAuth::AsyncCreateAppGateway(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateAppGateway(cq, *std::move(context),
-                                            std::move(options), request);
+        return child->AsyncCreateAppGateway(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 AppGatewaysServiceAuth::CreateAppGateway(
-    grpc::ClientContext& context, Options options,
-    google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateAppGateway(context, options, request);
@@ -84,30 +80,28 @@ AppGatewaysServiceAuth::CreateAppGateway(
 
 future<StatusOr<google::longrunning::Operation>>
 AppGatewaysServiceAuth::AsyncDeleteAppGateway(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
-        request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteAppGateway(cq, *std::move(context),
-                                            std::move(options), request);
+        return child->AsyncDeleteAppGateway(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 AppGatewaysServiceAuth::DeleteAppGateway(
-    grpc::ClientContext& context, Options options,
-    google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
-        request) {
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteAppGateway(context, options, request);
@@ -120,16 +114,15 @@ AppGatewaysServiceAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context),
-                                        std::move(options), request);
+        return child->AsyncGetOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -138,14 +131,13 @@ future<Status> AppGatewaysServiceAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options = std::move(options),
-             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
-                          f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context)).then(
+      [cq, child = child_, options = std::move(options), request](
+          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context),
-                                           std::move(options), request);
+        return child->AsyncCancelOperation(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

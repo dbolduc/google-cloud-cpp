@@ -46,99 +46,74 @@ class FeaturestoreServiceConnectionImpl
   ~FeaturestoreServiceConnectionImpl() override = default;
 
   FeaturestoreServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<aiplatform_v1_internal::FeaturestoreServiceStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<aiplatform_v1_internal::FeaturestoreServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
-  CreateFeaturestore(
-      google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request)
-      override;
+  CreateFeaturestore(google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::Featurestore> GetFeaturestore(
-      google::cloud::aiplatform::v1::GetFeaturestoreRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::Featurestore>
+  GetFeaturestore(google::cloud::aiplatform::v1::GetFeaturestoreRequest const& request) override;
 
-  StreamRange<google::cloud::aiplatform::v1::Featurestore> ListFeaturestores(
-      google::cloud::aiplatform::v1::ListFeaturestoresRequest request) override;
+  StreamRange<google::cloud::aiplatform::v1::Featurestore>
+  ListFeaturestores(google::cloud::aiplatform::v1::ListFeaturestoresRequest request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
-  UpdateFeaturestore(
-      google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request)
-      override;
+  UpdateFeaturestore(google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeaturestore(
-      google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request)
-      override;
+  DeleteFeaturestore(google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request) override;
 
-  future<StatusOr<google::cloud::aiplatform::v1::EntityType>> CreateEntityType(
-      google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request)
-      override;
+  future<StatusOr<google::cloud::aiplatform::v1::EntityType>>
+  CreateEntityType(google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::EntityType> GetEntityType(
-      google::cloud::aiplatform::v1::GetEntityTypeRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::EntityType>
+  GetEntityType(google::cloud::aiplatform::v1::GetEntityTypeRequest const& request) override;
 
-  StreamRange<google::cloud::aiplatform::v1::EntityType> ListEntityTypes(
-      google::cloud::aiplatform::v1::ListEntityTypesRequest request) override;
+  StreamRange<google::cloud::aiplatform::v1::EntityType>
+  ListEntityTypes(google::cloud::aiplatform::v1::ListEntityTypesRequest request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::EntityType> UpdateEntityType(
-      google::cloud::aiplatform::v1::UpdateEntityTypeRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::EntityType>
+  UpdateEntityType(google::cloud::aiplatform::v1::UpdateEntityTypeRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteEntityType(google::cloud::aiplatform::v1::DeleteEntityTypeRequest const&
-                       request) override;
+  DeleteEntityType(google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request) override;
 
-  future<StatusOr<google::cloud::aiplatform::v1::Feature>> CreateFeature(
-      google::cloud::aiplatform::v1::CreateFeatureRequest const& request)
-      override;
+  future<StatusOr<google::cloud::aiplatform::v1::Feature>>
+  CreateFeature(google::cloud::aiplatform::v1::CreateFeatureRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
-  BatchCreateFeatures(
-      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request)
-      override;
+  BatchCreateFeatures(google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(
-      google::cloud::aiplatform::v1::GetFeatureRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::Feature>
+  GetFeature(google::cloud::aiplatform::v1::GetFeatureRequest const& request) override;
 
-  StreamRange<google::cloud::aiplatform::v1::Feature> ListFeatures(
-      google::cloud::aiplatform::v1::ListFeaturesRequest request) override;
+  StreamRange<google::cloud::aiplatform::v1::Feature>
+  ListFeatures(google::cloud::aiplatform::v1::ListFeaturesRequest request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::Feature> UpdateFeature(
-      google::cloud::aiplatform::v1::UpdateFeatureRequest const& request)
-      override;
+  StatusOr<google::cloud::aiplatform::v1::Feature>
+  UpdateFeature(google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeature(google::cloud::aiplatform::v1::DeleteFeatureRequest const&
-                    request) override;
+  DeleteFeature(google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::ImportFeatureValuesResponse>>
-  ImportFeatureValues(
-      google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request)
-      override;
+  ImportFeatureValues(google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request) override;
 
-  future<
-      StatusOr<google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>
-  BatchReadFeatureValues(
-      google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
-          request) override;
+  future<StatusOr<google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>
+  BatchReadFeatureValues(google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::ExportFeatureValuesResponse>>
-  ExportFeatureValues(
-      google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request)
-      override;
+  ExportFeatureValues(google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>
-  DeleteFeatureValues(
-      google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request)
-      override;
+  DeleteFeatureValues(google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request) override;
 
-  StreamRange<google::cloud::aiplatform::v1::Feature> SearchFeatures(
-      google::cloud::aiplatform::v1::SearchFeaturesRequest request) override;
+  StreamRange<google::cloud::aiplatform::v1::Feature>
+  SearchFeatures(google::cloud::aiplatform::v1::SearchFeaturesRequest request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -35,18 +35,16 @@ class ModelGardenServiceTracingStub : public ModelGardenServiceStub {
  public:
   ~ModelGardenServiceTracingStub() override = default;
 
-  explicit ModelGardenServiceTracingStub(
-      std::shared_ptr<ModelGardenServiceStub> child);
+  explicit ModelGardenServiceTracingStub(std::shared_ptr<ModelGardenServiceStub> child);
 
   StatusOr<google::cloud::aiplatform::v1::PublisherModel> GetPublisherModel(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::aiplatform::v1::GetPublisherModelRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::aiplatform::v1::GetPublisherModelRequest const& request) override;
 
  private:
   std::shared_ptr<ModelGardenServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

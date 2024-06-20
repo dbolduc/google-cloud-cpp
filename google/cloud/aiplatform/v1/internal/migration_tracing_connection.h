@@ -36,19 +36,15 @@ class MigrationServiceTracingConnection
   ~MigrationServiceTracingConnection() override = default;
 
   explicit MigrationServiceTracingConnection(
-      std::shared_ptr<aiplatform_v1::MigrationServiceConnection> child);
+    std::shared_ptr<aiplatform_v1::MigrationServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
   StreamRange<google::cloud::aiplatform::v1::MigratableResource>
-  SearchMigratableResources(
-      google::cloud::aiplatform::v1::SearchMigratableResourcesRequest request)
-      override;
+  SearchMigratableResources(google::cloud::aiplatform::v1::SearchMigratableResourcesRequest request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
-  BatchMigrateResources(
-      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
-          request) override;
+  BatchMigrateResources(google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request) override;
 
  private:
   std::shared_ptr<aiplatform_v1::MigrationServiceConnection> child_;

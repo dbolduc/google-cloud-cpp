@@ -55,8 +55,7 @@ class AlloyDBAdminRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AlloyDBAdminLimitedErrorCountRetryPolicy
-    : public AlloyDBAdminRetryPolicy {
+class AlloyDBAdminLimitedErrorCountRetryPolicy : public AlloyDBAdminRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +65,14 @@ class AlloyDBAdminLimitedErrorCountRetryPolicy
    *     @p maximum_failures == 0.
    */
   explicit AlloyDBAdminLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+    : impl_(maximum_failures) {}
 
   AlloyDBAdminLimitedErrorCountRetryPolicy(
       AlloyDBAdminLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : AlloyDBAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : AlloyDBAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   AlloyDBAdminLimitedErrorCountRetryPolicy(
       AlloyDBAdminLimitedErrorCountRetryPolicy const& rhs) noexcept
-      : AlloyDBAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+    : AlloyDBAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,9 +92,7 @@ class AlloyDBAdminLimitedErrorCountRetryPolicy
   using BaseType = AlloyDBAdminRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      alloydb_v1_internal::AlloyDBAdminRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<alloydb_v1_internal::AlloyDBAdminRetryTraits> impl_;
 };
 
 /**
@@ -133,14 +130,12 @@ class AlloyDBAdminLimitedTimeRetryPolicy : public AlloyDBAdminRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit AlloyDBAdminLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  AlloyDBAdminLimitedTimeRetryPolicy(
-      AlloyDBAdminLimitedTimeRetryPolicy&& rhs) noexcept
-      : AlloyDBAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  AlloyDBAdminLimitedTimeRetryPolicy(
-      AlloyDBAdminLimitedTimeRetryPolicy const& rhs) noexcept
-      : AlloyDBAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AlloyDBAdminLimitedTimeRetryPolicy(AlloyDBAdminLimitedTimeRetryPolicy&& rhs) noexcept
+    : AlloyDBAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AlloyDBAdminLimitedTimeRetryPolicy(AlloyDBAdminLimitedTimeRetryPolicy const& rhs) noexcept
+    : AlloyDBAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -162,9 +157,7 @@ class AlloyDBAdminLimitedTimeRetryPolicy : public AlloyDBAdminRetryPolicy {
   using BaseType = AlloyDBAdminRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      alloydb_v1_internal::AlloyDBAdminRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<alloydb_v1_internal::AlloyDBAdminRetryTraits> impl_;
 };
 
 /**
@@ -185,112 +178,98 @@ class AlloyDBAdminConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::alloydb::v1::Cluster> ListClusters(
-      google::cloud::alloydb::v1::ListClustersRequest request);
+  virtual StreamRange<google::cloud::alloydb::v1::Cluster>
+  ListClusters(google::cloud::alloydb::v1::ListClustersRequest request);
 
-  virtual StatusOr<google::cloud::alloydb::v1::Cluster> GetCluster(
-      google::cloud::alloydb::v1::GetClusterRequest const& request);
-
-  virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>> CreateCluster(
-      google::cloud::alloydb::v1::CreateClusterRequest const& request);
-
-  virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>> UpdateCluster(
-      google::cloud::alloydb::v1::UpdateClusterRequest const& request);
-
-  virtual future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
-  DeleteCluster(
-      google::cloud::alloydb::v1::DeleteClusterRequest const& request);
-
-  virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>> PromoteCluster(
-      google::cloud::alloydb::v1::PromoteClusterRequest const& request);
-
-  virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>> RestoreCluster(
-      google::cloud::alloydb::v1::RestoreClusterRequest const& request);
+  virtual StatusOr<google::cloud::alloydb::v1::Cluster>
+  GetCluster(google::cloud::alloydb::v1::GetClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>>
-  CreateSecondaryCluster(
-      google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request);
+  CreateCluster(google::cloud::alloydb::v1::CreateClusterRequest const& request);
 
-  virtual StreamRange<google::cloud::alloydb::v1::Instance> ListInstances(
-      google::cloud::alloydb::v1::ListInstancesRequest request);
-
-  virtual StatusOr<google::cloud::alloydb::v1::Instance> GetInstance(
-      google::cloud::alloydb::v1::GetInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::alloydb::v1::Instance>> CreateInstance(
-      google::cloud::alloydb::v1::CreateInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::alloydb::v1::Instance>>
-  CreateSecondaryInstance(
-      google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const&
-          request);
-
-  virtual future<
-      StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>
-  BatchCreateInstances(
-      google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request);
-
-  virtual future<StatusOr<google::cloud::alloydb::v1::Instance>> UpdateInstance(
-      google::cloud::alloydb::v1::UpdateInstanceRequest const& request);
+  virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>>
+  UpdateCluster(google::cloud::alloydb::v1::UpdateClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
-  DeleteInstance(
-      google::cloud::alloydb::v1::DeleteInstanceRequest const& request);
+  DeleteCluster(google::cloud::alloydb::v1::DeleteClusterRequest const& request);
+
+  virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>>
+  PromoteCluster(google::cloud::alloydb::v1::PromoteClusterRequest const& request);
+
+  virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>>
+  RestoreCluster(google::cloud::alloydb::v1::RestoreClusterRequest const& request);
+
+  virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>>
+  CreateSecondaryCluster(google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request);
+
+  virtual StreamRange<google::cloud::alloydb::v1::Instance>
+  ListInstances(google::cloud::alloydb::v1::ListInstancesRequest request);
+
+  virtual StatusOr<google::cloud::alloydb::v1::Instance>
+  GetInstance(google::cloud::alloydb::v1::GetInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Instance>>
-  FailoverInstance(
-      google::cloud::alloydb::v1::FailoverInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::alloydb::v1::Instance>> InjectFault(
-      google::cloud::alloydb::v1::InjectFaultRequest const& request);
+  CreateInstance(google::cloud::alloydb::v1::CreateInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Instance>>
-  RestartInstance(
-      google::cloud::alloydb::v1::RestartInstanceRequest const& request);
+  CreateSecondaryInstance(google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request);
 
-  virtual StreamRange<google::cloud::alloydb::v1::Backup> ListBackups(
-      google::cloud::alloydb::v1::ListBackupsRequest request);
+  virtual future<StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>
+  BatchCreateInstances(google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request);
 
-  virtual StatusOr<google::cloud::alloydb::v1::Backup> GetBackup(
-      google::cloud::alloydb::v1::GetBackupRequest const& request);
+  virtual future<StatusOr<google::cloud::alloydb::v1::Instance>>
+  UpdateInstance(google::cloud::alloydb::v1::UpdateInstanceRequest const& request);
 
-  virtual future<StatusOr<google::cloud::alloydb::v1::Backup>> CreateBackup(
-      google::cloud::alloydb::v1::CreateBackupRequest const& request);
+  virtual future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
+  DeleteInstance(google::cloud::alloydb::v1::DeleteInstanceRequest const& request);
 
-  virtual future<StatusOr<google::cloud::alloydb::v1::Backup>> UpdateBackup(
-      google::cloud::alloydb::v1::UpdateBackupRequest const& request);
+  virtual future<StatusOr<google::cloud::alloydb::v1::Instance>>
+  FailoverInstance(google::cloud::alloydb::v1::FailoverInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::alloydb::v1::Instance>>
+  InjectFault(google::cloud::alloydb::v1::InjectFaultRequest const& request);
+
+  virtual future<StatusOr<google::cloud::alloydb::v1::Instance>>
+  RestartInstance(google::cloud::alloydb::v1::RestartInstanceRequest const& request);
+
+  virtual StreamRange<google::cloud::alloydb::v1::Backup>
+  ListBackups(google::cloud::alloydb::v1::ListBackupsRequest request);
+
+  virtual StatusOr<google::cloud::alloydb::v1::Backup>
+  GetBackup(google::cloud::alloydb::v1::GetBackupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::alloydb::v1::Backup>>
+  CreateBackup(google::cloud::alloydb::v1::CreateBackupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::alloydb::v1::Backup>>
+  UpdateBackup(google::cloud::alloydb::v1::UpdateBackupRequest const& request);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
   DeleteBackup(google::cloud::alloydb::v1::DeleteBackupRequest const& request);
 
   virtual StreamRange<google::cloud::alloydb::v1::SupportedDatabaseFlag>
-  ListSupportedDatabaseFlags(
-      google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest request);
+  ListSupportedDatabaseFlags(google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest request);
 
-  virtual StatusOr<
-      google::cloud::alloydb::v1::GenerateClientCertificateResponse>
-  GenerateClientCertificate(
-      google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
-          request);
+  virtual StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>
+  GenerateClientCertificate(google::cloud::alloydb::v1::GenerateClientCertificateRequest const& request);
 
   virtual StatusOr<google::cloud::alloydb::v1::ConnectionInfo>
-  GetConnectionInfo(
-      google::cloud::alloydb::v1::GetConnectionInfoRequest const& request);
+  GetConnectionInfo(google::cloud::alloydb::v1::GetConnectionInfoRequest const& request);
 
-  virtual StreamRange<google::cloud::alloydb::v1::User> ListUsers(
-      google::cloud::alloydb::v1::ListUsersRequest request);
+  virtual StreamRange<google::cloud::alloydb::v1::User>
+  ListUsers(google::cloud::alloydb::v1::ListUsersRequest request);
 
-  virtual StatusOr<google::cloud::alloydb::v1::User> GetUser(
-      google::cloud::alloydb::v1::GetUserRequest const& request);
+  virtual StatusOr<google::cloud::alloydb::v1::User>
+  GetUser(google::cloud::alloydb::v1::GetUserRequest const& request);
 
-  virtual StatusOr<google::cloud::alloydb::v1::User> CreateUser(
-      google::cloud::alloydb::v1::CreateUserRequest const& request);
+  virtual StatusOr<google::cloud::alloydb::v1::User>
+  CreateUser(google::cloud::alloydb::v1::CreateUserRequest const& request);
 
-  virtual StatusOr<google::cloud::alloydb::v1::User> UpdateUser(
-      google::cloud::alloydb::v1::UpdateUserRequest const& request);
+  virtual StatusOr<google::cloud::alloydb::v1::User>
+  UpdateUser(google::cloud::alloydb::v1::UpdateUserRequest const& request);
 
-  virtual Status DeleteUser(
-      google::cloud::alloydb::v1::DeleteUserRequest const& request);
+  virtual Status
+  DeleteUser(google::cloud::alloydb::v1::DeleteUserRequest const& request);
 };
 
 /**

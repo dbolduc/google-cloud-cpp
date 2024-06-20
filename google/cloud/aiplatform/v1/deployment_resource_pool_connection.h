@@ -40,17 +40,14 @@ namespace aiplatform_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `DeploymentResourcePoolServiceConnection`.
-class DeploymentResourcePoolServiceRetryPolicy
-    : public ::google::cloud::RetryPolicy {
+class DeploymentResourcePoolServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  public:
   /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<DeploymentResourcePoolServiceRetryPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<DeploymentResourcePoolServiceRetryPolicy> clone() const = 0;
 };
 
 /**
- * A retry policy for `DeploymentResourcePoolServiceConnection` based on
- * counting errors.
+ * A retry policy for `DeploymentResourcePoolServiceConnection` based on counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -59,8 +56,7 @@ class DeploymentResourcePoolServiceRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DeploymentResourcePoolServiceLimitedErrorCountRetryPolicy
-    : public DeploymentResourcePoolServiceRetryPolicy {
+class DeploymentResourcePoolServiceLimitedErrorCountRetryPolicy : public DeploymentResourcePoolServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -69,19 +65,15 @@ class DeploymentResourcePoolServiceLimitedErrorCountRetryPolicy
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit DeploymentResourcePoolServiceLimitedErrorCountRetryPolicy(
-      int maximum_failures)
-      : impl_(maximum_failures) {}
+  explicit DeploymentResourcePoolServiceLimitedErrorCountRetryPolicy(int maximum_failures)
+    : impl_(maximum_failures) {}
 
   DeploymentResourcePoolServiceLimitedErrorCountRetryPolicy(
       DeploymentResourcePoolServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-      : DeploymentResourcePoolServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+    : DeploymentResourcePoolServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   DeploymentResourcePoolServiceLimitedErrorCountRetryPolicy(
-      DeploymentResourcePoolServiceLimitedErrorCountRetryPolicy const&
-          rhs) noexcept
-      : DeploymentResourcePoolServiceLimitedErrorCountRetryPolicy(
-            rhs.maximum_failures()) {}
+      DeploymentResourcePoolServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
+    : DeploymentResourcePoolServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,10 +84,8 @@ class DeploymentResourcePoolServiceLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<DeploymentResourcePoolServiceRetryPolicy> clone()
-      const override {
-    return std::make_unique<
-        DeploymentResourcePoolServiceLimitedErrorCountRetryPolicy>(
+  std::unique_ptr<DeploymentResourcePoolServiceRetryPolicy> clone() const override {
+    return std::make_unique<DeploymentResourcePoolServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -103,14 +93,11 @@ class DeploymentResourcePoolServiceLimitedErrorCountRetryPolicy
   using BaseType = DeploymentResourcePoolServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<
-      aiplatform_v1_internal::DeploymentResourcePoolServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<aiplatform_v1_internal::DeploymentResourcePoolServiceRetryTraits> impl_;
 };
 
 /**
- * A retry policy for `DeploymentResourcePoolServiceConnection` based on elapsed
- * time.
+ * A retry policy for `DeploymentResourcePoolServiceConnection` based on elapsed time.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -119,8 +106,7 @@ class DeploymentResourcePoolServiceLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DeploymentResourcePoolServiceLimitedTimeRetryPolicy
-    : public DeploymentResourcePoolServiceRetryPolicy {
+class DeploymentResourcePoolServiceLimitedTimeRetryPolicy : public DeploymentResourcePoolServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -145,16 +131,12 @@ class DeploymentResourcePoolServiceLimitedTimeRetryPolicy
   template <typename DurationRep, typename DurationPeriod>
   explicit DeploymentResourcePoolServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-      : impl_(maximum_duration) {}
+    : impl_(maximum_duration) {}
 
-  DeploymentResourcePoolServiceLimitedTimeRetryPolicy(
-      DeploymentResourcePoolServiceLimitedTimeRetryPolicy&& rhs) noexcept
-      : DeploymentResourcePoolServiceLimitedTimeRetryPolicy(
-            rhs.maximum_duration()) {}
-  DeploymentResourcePoolServiceLimitedTimeRetryPolicy(
-      DeploymentResourcePoolServiceLimitedTimeRetryPolicy const& rhs) noexcept
-      : DeploymentResourcePoolServiceLimitedTimeRetryPolicy(
-            rhs.maximum_duration()) {}
+  DeploymentResourcePoolServiceLimitedTimeRetryPolicy(DeploymentResourcePoolServiceLimitedTimeRetryPolicy&& rhs) noexcept
+    : DeploymentResourcePoolServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DeploymentResourcePoolServiceLimitedTimeRetryPolicy(DeploymentResourcePoolServiceLimitedTimeRetryPolicy const& rhs) noexcept
+    : DeploymentResourcePoolServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -167,10 +149,8 @@ class DeploymentResourcePoolServiceLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<DeploymentResourcePoolServiceRetryPolicy> clone()
-      const override {
-    return std::make_unique<
-        DeploymentResourcePoolServiceLimitedTimeRetryPolicy>(
+  std::unique_ptr<DeploymentResourcePoolServiceRetryPolicy> clone() const override {
+    return std::make_unique<DeploymentResourcePoolServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }
 
@@ -178,25 +158,20 @@ class DeploymentResourcePoolServiceLimitedTimeRetryPolicy
   using BaseType = DeploymentResourcePoolServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<
-      aiplatform_v1_internal::DeploymentResourcePoolServiceRetryTraits>
-      impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<aiplatform_v1_internal::DeploymentResourcePoolServiceRetryTraits> impl_;
 };
 
 /**
- * The `DeploymentResourcePoolServiceConnection` object for
- * `DeploymentResourcePoolServiceClient`.
+ * The `DeploymentResourcePoolServiceConnection` object for `DeploymentResourcePoolServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `DeploymentResourcePoolServiceClient`. This allows users to inject
- * custom behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `DeploymentResourcePoolServiceClient`.
+ * sets in `DeploymentResourcePoolServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `DeploymentResourcePoolServiceClient`.
  *
- * To create a concrete instance, see
- * `MakeDeploymentResourcePoolServiceConnection()`.
+ * To create a concrete instance, see `MakeDeploymentResourcePoolServiceConnection()`.
  *
- * For mocking, see
- * `aiplatform_v1_mocks::MockDeploymentResourcePoolServiceConnection`.
+ * For mocking, see `aiplatform_v1_mocks::MockDeploymentResourcePoolServiceConnection`.
  */
 class DeploymentResourcePoolServiceConnection {
  public:
@@ -204,57 +179,43 @@ class DeploymentResourcePoolServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
-  CreateDeploymentResourcePool(
-      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
+  CreateDeploymentResourcePool(google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
-  GetDeploymentResourcePool(
-      google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
-          request);
+  GetDeploymentResourcePool(google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const& request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::DeploymentResourcePool>
-  ListDeploymentResourcePools(
-      google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest
-          request);
+  ListDeploymentResourcePools(google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest request);
 
-  virtual future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDeploymentResourcePool(
-      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
-          request);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteDeploymentResourcePool(google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type
- * `DeploymentResourcePoolServiceConnection`.
+ * A factory function to construct an object of type `DeploymentResourcePoolServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * DeploymentResourcePoolServiceClient.
+ * should be passed as an argument to the constructor of DeploymentResourcePoolServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `DeploymentResourcePoolServiceConnection`. Expected options are any
- * of the types in the following option lists:
+ * returned `DeploymentResourcePoolServiceConnection`. Expected options are any of the types in
+ * the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * -
- * `google::cloud::aiplatform_v1::DeploymentResourcePoolServicePolicyOptionList`
+ * - `google::cloud::aiplatform_v1::DeploymentResourcePoolServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the
- * `DeploymentResourcePoolServiceConnection` created by this function.
+ * @param options (optional) Configure the `DeploymentResourcePoolServiceConnection` created by
+ * this function.
  */
-std::shared_ptr<DeploymentResourcePoolServiceConnection>
-MakeDeploymentResourcePoolServiceConnection(std::string const& location,
-                                            Options options = {});
+std::shared_ptr<DeploymentResourcePoolServiceConnection> MakeDeploymentResourcePoolServiceConnection(
+    std::string const& location, Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

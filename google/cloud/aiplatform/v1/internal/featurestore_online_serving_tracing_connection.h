@@ -36,29 +36,21 @@ class FeaturestoreOnlineServingServiceTracingConnection
   ~FeaturestoreOnlineServingServiceTracingConnection() override = default;
 
   explicit FeaturestoreOnlineServingServiceTracingConnection(
-      std::shared_ptr<aiplatform_v1::FeaturestoreOnlineServingServiceConnection>
-          child);
+    std::shared_ptr<aiplatform_v1::FeaturestoreOnlineServingServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
-  ReadFeatureValues(
-      google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request)
-      override;
+  ReadFeatureValues(google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) override;
 
   StreamRange<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
-  StreamingReadFeatureValues(
-      google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
-          request) override;
+  StreamingReadFeatureValues(google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
-  WriteFeatureValues(
-      google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request)
-      override;
+  WriteFeatureValues(google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) override;
 
  private:
-  std::shared_ptr<aiplatform_v1::FeaturestoreOnlineServingServiceConnection>
-      child_;
+  std::shared_ptr<aiplatform_v1::FeaturestoreOnlineServingServiceConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -71,8 +63,7 @@ class FeaturestoreOnlineServingServiceTracingConnection
  */
 std::shared_ptr<aiplatform_v1::FeaturestoreOnlineServingServiceConnection>
 MakeFeaturestoreOnlineServingServiceTracingConnection(
-    std::shared_ptr<aiplatform_v1::FeaturestoreOnlineServingServiceConnection>
-        conn);
+    std::shared_ptr<aiplatform_v1::FeaturestoreOnlineServingServiceConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1_internal

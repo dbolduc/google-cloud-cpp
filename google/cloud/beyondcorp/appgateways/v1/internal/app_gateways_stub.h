@@ -38,49 +38,42 @@ class AppGatewaysServiceStub {
  public:
   virtual ~AppGatewaysServiceStub() = 0;
 
-  virtual StatusOr<
-      google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysResponse>
-  ListAppGateways(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysResponse> ListAppGateways(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>
-  GetAppGateway(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway> GetAppGateway(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncCreateAppGateway(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateAppGateway(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
-          request) = 0;
+      google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateAppGateway(
-      grpc::ClientContext& context, Options options,
-      google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncDeleteAppGateway(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteAppGateway(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
-          request) = 0;
+      google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteAppGateway(
-      grpc::ClientContext& context, Options options,
-      google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
+    google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -93,48 +86,42 @@ class AppGatewaysServiceStub {
 class DefaultAppGatewaysServiceStub : public AppGatewaysServiceStub {
  public:
   DefaultAppGatewaysServiceStub(
-      std::unique_ptr<google::cloud::beyondcorp::appgateways::v1::
-                          AppGatewaysService::StubInterface>
-          grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations)
-      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
+      std::unique_ptr<google::cloud::beyondcorp::appgateways::v1::AppGatewaysService::StubInterface> grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations)
+      : grpc_stub_(std::move(grpc_stub)),
+        operations_(std::move(operations)) {}
 
-  StatusOr<google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysResponse>
-  ListAppGateways(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest const&
-          request) override;
+  StatusOr<google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysResponse> ListAppGateways(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest const& request) override;
 
-  StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>
-  GetAppGateway(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
-          request) override;
+  StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway> GetAppGateway(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAppGateway(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
-          request) override;
+      google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateAppGateway(
-      grpc::ClientContext& context, Options options,
-      google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteAppGateway(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
-          request) override;
+      google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteAppGateway(
-      grpc::ClientContext& context, Options options,
-      google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
-          request) override;
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -149,9 +136,7 @@ class DefaultAppGatewaysServiceStub : public AppGatewaysServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::beyondcorp::appgateways::v1::
-                      AppGatewaysService::StubInterface>
-      grpc_stub_;
+  std::unique_ptr<google::cloud::beyondcorp::appgateways::v1::AppGatewaysService::StubInterface> grpc_stub_;
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 

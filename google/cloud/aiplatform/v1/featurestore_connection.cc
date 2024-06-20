@@ -42,8 +42,8 @@ future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
 FeaturestoreServiceConnection::CreateFeaturestore(
     google::cloud::aiplatform::v1::CreateFeaturestoreRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::Featurestore>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::Featurestore>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Featurestore>
@@ -52,10 +52,8 @@ FeaturestoreServiceConnection::GetFeaturestore(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::Featurestore>
-FeaturestoreServiceConnection::ListFeaturestores(
-    google::cloud::aiplatform::v1::
-        ListFeaturestoresRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::Featurestore> FeaturestoreServiceConnection::ListFeaturestores(
+    google::cloud::aiplatform::v1::ListFeaturestoresRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Featurestore>>();
 }
@@ -64,24 +62,24 @@ future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
 FeaturestoreServiceConnection::UpdateFeaturestore(
     google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::Featurestore>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::Featurestore>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeaturestoreServiceConnection::DeleteFeaturestore(
     google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::EntityType>>
 FeaturestoreServiceConnection::CreateEntityType(
     google::cloud::aiplatform::v1::CreateEntityTypeRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::EntityType>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::EntityType>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::EntityType>
@@ -90,10 +88,8 @@ FeaturestoreServiceConnection::GetEntityType(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::EntityType>
-FeaturestoreServiceConnection::ListEntityTypes(
-    google::cloud::aiplatform::v1::
-        ListEntityTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::EntityType> FeaturestoreServiceConnection::ListEntityTypes(
+    google::cloud::aiplatform::v1::ListEntityTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::EntityType>>();
 }
@@ -108,24 +104,24 @@ future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeaturestoreServiceConnection::DeleteEntityType(
     google::cloud::aiplatform::v1::DeleteEntityTypeRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Feature>>
 FeaturestoreServiceConnection::CreateFeature(
     google::cloud::aiplatform::v1::CreateFeatureRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::Feature>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::Feature>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
 FeaturestoreServiceConnection::BatchCreateFeatures(
     google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Feature>
@@ -134,10 +130,8 @@ FeaturestoreServiceConnection::GetFeature(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::Feature>
-FeaturestoreServiceConnection::ListFeatures(
-    google::cloud::aiplatform::v1::
-        ListFeaturesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::Feature> FeaturestoreServiceConnection::ListFeatures(
+    google::cloud::aiplatform::v1::ListFeaturesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Feature>>();
 }
@@ -152,67 +146,62 @@ future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeaturestoreServiceConnection::DeleteFeature(
     google::cloud::aiplatform::v1::DeleteFeatureRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ImportFeatureValuesResponse>>
 FeaturestoreServiceConnection::ImportFeatureValues(
     google::cloud::aiplatform::v1::ImportFeatureValuesRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::ImportFeatureValuesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::ImportFeatureValuesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>
 FeaturestoreServiceConnection::BatchReadFeatureValues(
     google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ExportFeatureValuesResponse>>
 FeaturestoreServiceConnection::ExportFeatureValues(
     google::cloud::aiplatform::v1::ExportFeatureValuesRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::ExportFeatureValuesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::ExportFeatureValuesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>
 FeaturestoreServiceConnection::DeleteFeatureValues(
     google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const&) {
   return google::cloud::make_ready_future<
-      StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
+    StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::aiplatform::v1::Feature>
-FeaturestoreServiceConnection::SearchFeatures(
-    google::cloud::aiplatform::v1::
-        SearchFeaturesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::Feature> FeaturestoreServiceConnection::SearchFeatures(
+    google::cloud::aiplatform::v1::SearchFeaturesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Feature>>();
 }
 
-std::shared_ptr<FeaturestoreServiceConnection>
-MakeFeaturestoreServiceConnection(std::string const& location,
-                                  Options options) {
+std::shared_ptr<FeaturestoreServiceConnection> MakeFeaturestoreServiceConnection(
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 FeaturestoreServicePolicyOptionList>(options,
-                                                                      __func__);
+      UnifiedCredentialsOptionList,
+      FeaturestoreServicePolicyOptionList>(options, __func__);
   options = aiplatform_v1_internal::FeaturestoreServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = aiplatform_v1_internal::CreateDefaultFeaturestoreServiceStub(
-      std::move(auth), options);
+    std::move(auth), options);
   return aiplatform_v1_internal::MakeFeaturestoreServiceTracingConnection(
-      std::make_shared<
-          aiplatform_v1_internal::FeaturestoreServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<aiplatform_v1_internal::FeaturestoreServiceConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
