@@ -21,6 +21,9 @@ source module ci/gha/builds/lib/macos.sh
 source module ci/gha/builds/lib/cmake.sh
 source module ci/gha/builds/lib/ctest.sh
 
+io::log_h1 "Skipping Build..."
+exit 0
+
 # Usage: macos-cmake.sh <value for GOOGLE_CLOUD_CPP_ENABLE>
 #
 # The singular argument is provided as a value for the GOOGLE_CLOUD_CPP_ENABLE

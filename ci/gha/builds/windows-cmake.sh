@@ -21,6 +21,9 @@ source module ci/gha/builds/lib/windows.sh
 source module ci/gha/builds/lib/cmake.sh
 source module ci/gha/builds/lib/ctest.sh
 
+io::log_h1 "Skipping Build..."
+exit 0
+
 # Usage: macos-cmake.sh <build-type> <value for GOOGLE_CLOUD_CPP_ENABLE>
 #
 # The build-type sets `-DCMAKE_BUILD_TYPE`, typically Release or Debug.

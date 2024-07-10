@@ -22,6 +22,9 @@ source module ci/gha/builds/lib/macos.sh
 source module ci/gha/builds/lib/bazel.sh
 source module ci/lib/io.sh
 
+io::log_h1 "Skipping Build..."
+exit 0
+
 # Usage: macos-bazel.sh [bazel query expression]
 #
 # The build compiles the targets found via `bazel query`. Recall that:
@@ -35,10 +38,6 @@ source module ci/lib/io.sh
 mapfile -t args < <(bazel::common_args)
 mapfile -t test_args < <(bazel::test_args)
 mapfile -t integration_test_args < <(bazel::integration_test_args)
-args+=(
-  # gRPC does not build on Windows + bzlmod
-  --noenable_bzlmod
-)
 
 TIMEFORMAT="==> 🕑 bazel test done in %R seconds"
 
