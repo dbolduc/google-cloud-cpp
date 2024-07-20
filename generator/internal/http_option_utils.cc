@@ -29,6 +29,7 @@
 #include <google/api/annotations.pb.h>
 #include <google/protobuf/compiler/cpp/names.h>
 #include <google/protobuf/descriptor.h>
+#include <deque>
 #include <regex>
 #include <vector>
 
@@ -97,6 +98,131 @@ void RestPathVisitorHelper(
     std::string const& api_version, PathTemplate::Segment const& s,
     std::vector<HttpExtensionInfo::RestPathPiece>& path) {
   absl::visit(RestPathVisitor{api_version, path}, s.value);
+}
+
+/*
+ * Inputs:  method / request, skipped fields
+ * Outputs: list of pairs of query parameter name (e.g. "namespace.value") plus
+ *          accessor (e.g. "namespace_.value()")
+ * Post:    wrap the output in `TrimEmptyQueryParameters()`
+ *
+ * # Recursive solution:
+ * Darren(method) {
+ *   ret = []
+ *   for field in method.request.fields:
+ *     if protobuf type is primitive: 
+ *       ret.append([name(field), accessor(field)])
+ *       # might need to remember this primitive type
+ *       # because some need to get converted to string
+ *       # e.g. bools go `v ? "1" : "0"`
+ *     else if repeated (list or map):
+ *       # TODO : ask cloud sdk what we are supposed to do
+ *     else if message:
+ *       qps = Darren(field.message?)
+ *       for qp in qps:
+ *         ret.append([name(field) + qp[0], accessor(field) + qp[1]])
+ *   return ret
+ * }
+ *
+ * # DFS solution:
+ * Darren(method) {
+ *   ret = []
+ *   todo = [method.request, "", "request."] # Format: [method, name, accessor]
+ *   while todo:
+ *     request, name, accessor = todo.pop_front()
+ *     for field in request.fields:
+ *       name += field.name
+ *       accessor += field.accessor
+ *       if protobuf type is primitive:
+ *         ret.push_back([name, accessor, cpp_type])
+ *         continue
+ *       else if protobuf type is repeated:
+ *         # TODO : ask cloud sdk how to encode.
+ *         # I don't think our current set up really works for repeated.
+ *         # I think we need a MakeQueryParams(request) function, because it
+ *         # depends on the number of repeated fields.
+ *         continue
+ *       else if protobuf type is message:
+ *         todo.push_back([field.message, name, accessor])
+ *         continue
+ *
+ *  return ret
+ * }
+ */
+
+// s/Darren/QueryParameterInfo/
+struct Darren {
+  // TODO : might want to incorporate this into the accessor, but I think I'd
+  // rather not.
+  // Type of the query parameter
+  protobuf::FieldDescriptor::CppType cpp_type;
+
+  // The name of the query parameter to add to a request
+  std::string name;
+
+  // The value accessor for this query parameter. This is C++ code as a string,
+  // that the generator might emit.
+  std::string accessor;
+};
+
+std::vector<Darren>
+DFS(google::protobuf::MethodDescriptor const& method) {
+  std::vector<Darren> query_parameters;
+
+  struct State {
+    // The current method
+    google::protobuf::Descriptor const& message;
+
+    // The name of the query parameter to add to a request
+    std::string name;
+
+    // The value accessor for this query parameter. This is C++ code as a
+    // string, that the generator might emit.
+    std::string accessor;
+  };
+  std::deque<State> todo = {State{*method.input_type(), "", "request."}};
+  while (!todo.empty()) {
+    auto current = std::move(todo.front());
+    todo.pop_front();
+    for (auto i = 0; i != current.message.field_count(); ++i) {
+      auto const* field = current.message.field(i);
+      std::cout << "DEBUG : name=" << field->name()
+                << ", full_name=" << field->full_name()
+                << ", FieldName(field)=" << FieldName(field) << std::endl;
+      // TODO : I am guessing on these. Need to run tests.
+      current.name += "." + field->name();
+      current.accessor += "." + FieldName(field) + "()";
+      if (field->cpp_type() != protobuf::FieldDescriptor::CPPTYPE_MESSAGE) {
+        std::cout << "Found Message: " << field.messag
+        todo.push_back()
+          }
+    }
+
+  }
+
+  /*
+ *   ret = []
+ *   todo = [method.request, "", "request."] # Format: [method, name, accessor]
+ *   while todo:
+ *     request, name, accessor = todo.pop_front()
+ *     for field in request.fields:
+ *       name += field.name
+ *       accessor += field.accessor
+ *       if protobuf type is primitive:
+ *         ret.push_back([name, accessor, cpp_type])
+ *         continue
+ *       else if protobuf type is repeated:
+ *         # TODO : ask cloud sdk how to encode.
+ *         # I don't think our current set up really works for repeated.
+ *         # I think we need a MakeQueryParams(request) function, because it
+ *         # depends on the number of repeated fields.
+ *         continue
+ *       else if protobuf type is message:
+ *         todo.push_back([field.message, name, accessor])
+ *         continue
+ *
+ *  return ret
+ */
 }
 
 std::string FormatQueryParameterCode(
