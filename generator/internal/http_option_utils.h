@@ -115,6 +115,25 @@ std::string FormatRequestResource(google::protobuf::Descriptor const& request,
 std::string FormatApiVersionFromPackageName(
     google::protobuf::MethodDescriptor const& method);
 
+// =============
+// TODO(dbolduc) - developing
+// s/Darren/QueryParameterInfo/
+struct Darren {
+  // The name of the query parameter to add to a request
+  std::string name;
+
+  // The value accessor for this query parameter. This is C++ code as a string,
+  // that the generator might emit.
+  std::string accessor;
+
+  // TODO : might want to incorporate this into the accessor, but I think I'd
+  // rather not.
+  // Type of the query parameter
+  protobuf::FieldDescriptor::CppType cpp_type;
+};
+
+std::vector<Darren> DFS(google::protobuf::MethodDescriptor const& method);
+
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google

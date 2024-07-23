@@ -110,7 +110,7 @@ void RestPathVisitorHelper(
  * Darren(method) {
  *   ret = []
  *   for field in method.request.fields:
- *     if protobuf type is primitive: 
+ *     if protobuf type is primitive:
  *       ret.append([name(field), accessor(field)])
  *       # might need to remember this primitive type
  *       # because some need to get converted to string
@@ -148,82 +148,142 @@ void RestPathVisitorHelper(
  *
  *  return ret
  * }
+ *
+ * ## How would I deal with repeated fields / messages?
+ * I think repeated fields show up like: ?foo=a&foo=b
+ *
+ * Let's say we have:
+ *
+ * message C {
+ *   repeated int bars;
+ * }
+ * message B {
+ *   C c;
+ * }
+ * message A {
+ *   B b;
+ * }
+ * message Request {
+ *   bool flag;
+ *   string namespace;
+ *   A a;
+ *   repeated B bs;
+ * }
  */
 
-// s/Darren/QueryParameterInfo/
-struct Darren {
-  // TODO : might want to incorporate this into the accessor, but I think I'd
-  // rather not.
-  // Type of the query parameter
-  protobuf::FieldDescriptor::CppType cpp_type;
+/*
+ * Proto Tree:
+ *
+ * request (Message)
+ * request -> flag (bool)
+ * request -> namespace (string)
+ * request -> A (Message)
+ * request -> B (Message, repeated)
+ * A -> B (Message)
+ * B -> C (Message)
+ * C -> bars (int, repeated)
+ *
+ *
+ */
+/*
+struct Request {};
+// C++
+std::string MakeQueryParams(Request request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"flag", request.flag() ? "1" : "0"});
+  params.push_back({"namespace", request.namespace_()});
 
-  // The name of the query parameter to add to a request
-  std::string name;
-
-  // The value accessor for this query parameter. This is C++ code as a string,
-  // that the generator might emit.
-  std::string accessor;
-};
-
-std::vector<Darren>
-DFS(google::protobuf::MethodDescriptor const& method) {
-  std::vector<Darren> query_parameters;
-
-  struct State {
-    // The current method
-    google::protobuf::Descriptor const& message;
-
-    // The name of the query parameter to add to a request
-    std::string name;
-
-    // The value accessor for this query parameter. This is C++ code as a
-    // string, that the generator might emit.
-    std::string accessor;
-  };
-  std::deque<State> todo = {State{*method.input_type(), "", "request."}};
-  while (!todo.empty()) {
-    auto current = std::move(todo.front());
-    todo.pop_front();
-    for (auto i = 0; i != current.message.field_count(); ++i) {
-      auto const* field = current.message.field(i);
-      std::cout << "DEBUG : name=" << field->name()
-                << ", full_name=" << field->full_name()
-                << ", FieldName(field)=" << FieldName(field) << std::endl;
-      // TODO : I am guessing on these. Need to run tests.
-      current.name += "." + field->name();
-      current.accessor += "." + FieldName(field) + "()";
-      if (field->cpp_type() != protobuf::FieldDescriptor::CPPTYPE_MESSAGE) {
-        std::cout << "Found Message: " << field.messag
-        todo.push_back()
-          }
+  if (request.has_a()) {
+    if (request.a().has_b()) {
+      if (request.a().b().has_c()) {
+        for (auto bar : request.a().b().c().bars()) {
+          params.push_back({"a.b.c.bars", std::to_string(bar)})
+        }
+      }
     }
-
+  }
+  for (auto b: request.bs()) {
+    if (b.has_c()) {
+      // Lol, I notice that we cannot reuse loop variable names.
+      for (auto bar : b.c().bars()) {
+          params.push_back({"a.b.c.bars", std::to_string(bar)})
+      }
+    }
   }
 
-  /*
- *   ret = []
- *   todo = [method.request, "", "request."] # Format: [method, name, accessor]
- *   while todo:
- *     request, name, accessor = todo.pop_front()
- *     for field in request.fields:
- *       name += field.name
- *       accessor += field.accessor
- *       if protobuf type is primitive:
- *         ret.push_back([name, accessor, cpp_type])
- *         continue
- *       else if protobuf type is repeated:
- *         # TODO : ask cloud sdk how to encode.
- *         # I don't think our current set up really works for repeated.
- *         # I think we need a MakeQueryParams(request) function, because it
- *         # depends on the number of repeated fields.
- *         continue
- *       else if protobuf type is message:
- *         todo.push_back([field.message, name, accessor])
- *         continue
- *
- *  return ret
- */
+  // Try 2
+  if (request.has_a()) {
+    auto const& v0 = a;
+    if (v0.has_b()) {
+      auto const& v1 = v0.b();
+      if (v1.has_c()) {
+        auto const& v2 = v1.c();
+        for (auto const& v3 : v2.bars()) {
+          params.push_back({"a.b.c.bars", std::to_string(v3)});
+        }
+      }
+    }
+  }
+  for (auto const& v0: request.bs()) {
+    if (v0.has_c()) {
+      auto const& v1 = v0.c();
+      for (auto const& v2 : v1.bars()) {
+        params.push_back({"a.b.c.bars", std::to_string(v2)});
+      }
+    }
+  }
+
+  // Try 3
+  // message Foo {
+  //   Bar b;
+  // }
+  //
+  // message Bar {
+  //   oneof {
+  //     Foo f;
+  //     int i;
+  //   }
+  // }
+  //
+  // message Request {
+  //   Foo f;
+  // }
+
+  if (request.has_f()) {
+    auto const& v0 = request.f();
+    if (v0.has_b()) {
+      auto const& v1 = v0.b();
+      if (v1.has_f()) {
+        auto const& v2 = v0.f();
+        // etc ...
+        params.push_back({"f.b.f.b.f.b.i", v2});
+      }
+    }
+  }
+
+  if (request.has_a()) {
+    auto const& v0 = a;
+    if (v0.has_b()) {
+      auto const& v1 = v0.b();
+      if (v1.has_c()) {
+        auto const& v2 = v1.c();
+        for (auto const& v3 : v2.bars()) {
+          params.push_back({"a.b.c.bars", std::to_string(v3)});
+        }
+      }
+    }
+  }
+  for (auto const& v0: request.bs()) {
+    if (v0.has_c()) {
+      auto const& v1 = v0.c();
+      for (auto const& v2 : v1.bars()) {
+        params.push_back({"a.b.c.bars", std::to_string(v2)});
+      }
+    }
+  }
+  // return params joined by & with pairs separated by =
 }
+*/
 
 std::string FormatQueryParameterCode(
     google::protobuf::MethodDescriptor const& method,
@@ -516,6 +576,55 @@ std::string FormatApiVersionFromPackageName(
   GCP_LOG(FATAL) << "Unrecognized API version in package name: "
                  << method.file()->package()
                  << ", method: " << method.full_name();
+}
+
+std::vector<Darren> DFS(google::protobuf::MethodDescriptor const& method) {
+  std::vector<Darren> query_parameters;
+
+  struct State {
+    // The current method
+    google::protobuf::Descriptor const& message;
+
+    // The name of the query parameter to add to a request
+    std::string name;
+
+    // The value accessor for this query parameter. This is C++ code as a
+    // string, that the generator might emit.
+    std::string accessor;
+  };
+  std::deque<State> todo = {State{*method.input_type(), "", "request"}};
+  while (!todo.empty()) {
+    auto const current = std::move(todo.front());
+    todo.pop_front();
+    for (auto i = 0; i != current.message.field_count(); ++i) {
+      auto const* field = current.message.field(i);
+      std::cout << "\nDEBUG : name=" << field->name()
+                << ", full_name=" << field->full_name()
+                << ", FieldName(field)=" << FieldName(field) << std::endl;
+      std::string const sep = current.name.empty() ? "" : ".";
+      auto const name = current.name + sep + field->name();
+      auto const accessor = current.accessor + "." + FieldName(field) + "()";
+      if (field->is_repeated()) {
+        std::cout << "Skipping Repeated Field..." << std::endl;
+        continue;
+      }
+      if (field->options().deprecated()) {
+        std::cout << "Skipping Deprecated Field... (seems wrong)" << std::endl;
+        continue;
+      }
+      if (field->cpp_type() == protobuf::FieldDescriptor::CPPTYPE_MESSAGE) {
+        std::cout << "Found Message: " << field->message_type()->name()
+                  << std::endl;
+        // Also need to check if the message exists, hm.
+        // That implies we need layers.
+        continue;
+      }
+      std::cout << "Adding: (" << name << ", " << accessor << ", "
+                << field->cpp_type_name() << ")" << std::endl;
+      query_parameters.push_back(Darren{name, accessor, field->cpp_type()});
+    }
+  }
+  return query_parameters;
 }
 
 }  // namespace generator_internal

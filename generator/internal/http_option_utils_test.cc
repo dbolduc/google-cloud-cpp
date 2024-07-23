@@ -364,6 +364,9 @@ message GetQueryResultsRequest {
 
   // Non supported message type that is not a query param.
   google.protobuf.Empty non_supported_type = 12;
+
+  // Test C++ keyword clashes
+  string namespace = 13;
 }
 
 // Response object of GetQueryResults.
@@ -434,9 +437,7 @@ TEST_F(HttpOptionUtilsTest, ParseHttpExtensionWithPrefixAndSuffix) {
       pool_.FindFileByName("google/foo/v1/service.proto");
   MethodDescriptor const* method =
       service_file_descriptor->service(0)->method(2);
-  auto info = ParseHttpExtension(*method);
-  ASSERT_TRUE(absl::holds_alternative<HttpExtensionInfo>(info));
-  auto extension_info = absl::get<HttpExtensionInfo>(info);
+  auto extension_info = ParseHttpExtension(*method);
   EXPECT_THAT(extension_info.url_path,
               Eq("/v1/{parent=projects/*/instances/*}/databases"));
   ASSERT_THAT(extension_info.field_substitutions, SizeIs(1));
@@ -453,9 +454,7 @@ TEST_F(HttpOptionUtilsTest,
       pool_.FindFileByName("google/foo/v1/service.proto");
   MethodDescriptor const* method =
       service_file_descriptor->service(0)->method(6);
-  auto info = ParseHttpExtension(*method);
-  ASSERT_TRUE(absl::holds_alternative<HttpExtensionInfo>(info));
-  auto extension_info = absl::get<HttpExtensionInfo>(info);
+  auto extension_info = ParseHttpExtension(*method);
   EXPECT_THAT(extension_info.url_path, Eq("/v1/projects/{project}/databases"));
   ASSERT_THAT(extension_info.field_substitutions, SizeIs(1));
   EXPECT_THAT(extension_info.field_substitutions[0].first, Eq("project"));
@@ -470,9 +469,7 @@ TEST_F(HttpOptionUtilsTest,
       pool_.FindFileByName("google/foo/v1/service.proto");
   MethodDescriptor const* method =
       service_file_descriptor->service(0)->method(7);
-  auto info = ParseHttpExtension(*method);
-  ASSERT_TRUE(absl::holds_alternative<HttpExtensionInfo>(info));
-  auto extension_info = absl::get<HttpExtensionInfo>(info);
+  auto extension_info = ParseHttpExtension(*method);
   EXPECT_THAT(extension_info.url_path,
               Eq("/v1/projects/{project}/instances/{instance}/databases"));
   ASSERT_THAT(extension_info.field_substitutions, SizeIs(2));
@@ -489,9 +486,7 @@ TEST_F(HttpOptionUtilsTest, ParseHttpExtensionWithOnlyPrefix) {
       pool_.FindFileByName("google/foo/v1/service.proto");
   MethodDescriptor const* method =
       service_file_descriptor->service(0)->method(1);
-  auto info = ParseHttpExtension(*method);
-  ASSERT_TRUE(absl::holds_alternative<HttpExtensionInfo>(info));
-  auto extension_info = absl::get<HttpExtensionInfo>(info);
+  auto extension_info = ParseHttpExtension(*method);
   EXPECT_THAT(extension_info.url_path,
               Eq("/v1/{name=projects/*/instances/*/backups/*}"));
   ASSERT_THAT(extension_info.field_substitutions, SizeIs(1));
@@ -507,9 +502,7 @@ TEST_F(HttpOptionUtilsTest, ParseHttpExtensionSimpleInfo) {
       pool_.FindFileByName("google/foo/v1/service.proto");
   MethodDescriptor const* method =
       service_file_descriptor->service(0)->method(3);
-  auto info = ParseHttpExtension(*method);
-  ASSERT_TRUE(absl::holds_alternative<HttpSimpleInfo>(info));
-  auto extension_info = absl::get<HttpSimpleInfo>(info);
+  auto extension_info = ParseHttpExtension(*method);
   EXPECT_THAT(extension_info.url_path, Eq("/v1/foo"));
   EXPECT_THAT(extension_info.body, Eq("*"));
   EXPECT_THAT(extension_info.http_verb, Eq("Get"));
@@ -521,9 +514,7 @@ TEST_F(HttpOptionUtilsTest,
       pool_.FindFileByName("google/foo/v1/service.proto");
   MethodDescriptor const* method =
       service_file_descriptor->service(0)->method(5);
-  auto info = ParseHttpExtension(*method);
-  ASSERT_TRUE(absl::holds_alternative<HttpExtensionInfo>(info));
-  auto extension_info = absl::get<HttpExtensionInfo>(info);
+  auto extension_info = ParseHttpExtension(*method);
   EXPECT_THAT(extension_info.url_path,
               Eq("/v1/projects/{project=project}/instances/{instance=instance}/"
                  "databases"));
@@ -735,17 +726,6 @@ TEST_F(HttpOptionUtilsTest, HasNoHttpAnnotation) {
       HasHttpAnnotation(*service_file_descriptor->service(0)->method(0)));
 }
 
-TEST_F(HttpOptionUtilsTest, FormatRequestResourceFailedParse) {
-  FileDescriptor const* service_file_descriptor =
-      pool_.FindFileByName("google/foo/v1/service.proto");
-  MethodDescriptor const* method =
-      service_file_descriptor->service(0)->method(2);
-  auto result = FormatRequestResource(
-      *method->input_type(),
-      absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo>());
-  EXPECT_THAT(result, Eq("request"));
-}
-
 TEST_F(HttpOptionUtilsTest, FormatRequestResourceWholeMessage) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/foo/v1/service.proto");
@@ -774,26 +754,6 @@ TEST_F(HttpOptionUtilsTest, FormatRequestResourceAnnotatedRequestField) {
   auto info = ParseHttpExtension(*method);
   auto result = FormatRequestResource(*method->input_type(), info);
   EXPECT_THAT(result, Eq("request.namespace_()"));
-}
-
-TEST_F(HttpOptionUtilsTest, FormatApiVersionFromPackageName) {
-  FileDescriptor const* service_file_descriptor =
-      pool_.FindFileByName("google/foo/v1/service.proto");
-  MethodDescriptor const* method =
-      service_file_descriptor->service(0)->method(8);
-  EXPECT_THAT(FormatApiVersionFromPackageName(*method), IsOkAndHolds(Eq("v1")));
-}
-
-TEST_F(HttpOptionUtilsTest, FormatApiVersionFromPackageNameError) {
-  FileDescriptor const* service_file_descriptor =
-      pool_.FindFileByName("google/foo/v1/service_without_version.proto");
-  MethodDescriptor const* method =
-      service_file_descriptor->service(0)->method(0);
-  EXPECT_THAT(
-      FormatApiVersionFromPackageName(*method),
-      StatusIs(
-          StatusCode::kInvalidArgument,
-          HasSubstr("Unrecognized API version in package name: my.service")));
 }
 
 }  // namespace

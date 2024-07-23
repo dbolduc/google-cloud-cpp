@@ -19,11 +19,80 @@
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
 #include "absl/strings/str_split.h"
+#include <google/protobuf/compiler/cpp/names.h>
 #include <google/protobuf/descriptor.h>
+
+using ::google::protobuf::compiler::cpp::FieldName;
 
 namespace google {
 namespace cloud {
 namespace generator_internal {
+namespace {
+
+std::string QueryParameterCode(
+    google::protobuf::MethodDescriptor const& method) {
+  std::string code;
+
+  struct State {
+    // The current method
+    google::protobuf::Descriptor const& message;
+
+    // The name of the query parameter to add to a request
+    std::string name;
+
+    // The value accessor for this query parameter. This is C++ code as a
+    // string, that the generator might emit.
+    std::string accessor;
+  };
+  std::deque<State> todo = {State{*method.input_type(), "", "request"}};
+  while (!todo.empty()) {
+    auto const current = std::move(todo.front());
+    todo.pop_front();
+    for (auto i = 0; i != current.message.field_count(); ++i) {
+      auto const* field = current.message.field(i);
+      //      std::cout << "\nDEBUG : name=" << field->name()
+      //                << ", full_name=" << field->full_name()
+      //                << ", FieldName(field)=" << FieldName(field) <<
+      //                std::endl;
+      std::string const sep = current.name.empty() ? "" : ".";
+      auto const name = current.name + sep + field->name();
+      auto const accessor = current.accessor + "." + FieldName(field) + "()";
+      // TODO : what do we do about oneof's ?
+      // I think we need to see if a message has been seen in this path, and not
+      // repeat it? Or we generate code with a recursive function :shrug:
+      //
+      // Alternatively, we cut off the nesting at a certain depth, like 10.
+      if (field->is_repeated()) {
+        code += "  // Skipping repeated field: " + name + "\n";
+        // std::cout << "Skipping Repeated Field..." << std::endl;
+        continue;
+      }
+      if (field->options().deprecated()) {
+        code += "  // Skipping deprecated field: " + name + "\n";
+        std::cout << "Skipping Deprecated Field... (seems wrong)" << std::endl;
+        continue;
+      }
+      if (field->cpp_type() == protobuf::FieldDescriptor::CPPTYPE_MESSAGE) {
+        code += "  // Skipping message field: " + name + "\n";
+        // std::cout << "Found Message: " << field->message_type()->name()
+        //           << std::endl;
+        //  Also need to check if the message exists, hm.
+        //  That implies we need layers.
+        //  NOTE TO SELF: Remember to push_front
+        continue;
+      }
+      // std::cout << "Adding: (" << name << ", " << accessor << ", "
+      //           << field->cpp_type_name() << ")" << std::endl;
+      // code += "  // " + name + ", " + accessor + ", " +
+      // field->cpp_type_name() +
+      //         "\n";
+      // params.push_back(Darren{name, accessor, field->cpp_type()});
+    }
+  }
+  return code;
+}
+
+}  // namespace
 
 StubRestGenerator::StubRestGenerator(
     google::protobuf::ServiceDescriptor const* service_descriptor,
@@ -389,6 +458,7 @@ Status Default$stub_rest_class_name$::$method_name$(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       $request_type$ const& request) {
+)""" + QueryParameterCode(method) + R"""(
   return rest_internal::$method_http_verb$<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
       $method_rest_path$$method_http_query_parameters$);
@@ -401,6 +471,7 @@ Default$stub_rest_class_name$::$method_name$(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       $request_type$ const& request) {
+)""" + QueryParameterCode(method) + R"""(
   return rest_internal::$method_http_verb$<$response_type$>(
       *service_, rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
       $method_rest_path$$method_http_query_parameters$);
