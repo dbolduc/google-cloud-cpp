@@ -103,13 +103,16 @@ DefaultExternalVpnGatewaysRestStub::GetExternalVpnGateway(
     Options const& options,
     google::cloud::cpp::compute::external_vpn_gateways::v1::
         GetExternalVpnGatewayRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ExternalVpnGateway>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
-                   "externalVpnGateways", "/", request.external_vpn_gateway()));
+                   "externalVpnGateways", "/", request.external_vpn_gateway()),
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -168,6 +171,14 @@ DefaultExternalVpnGatewaysRestStub::ListExternalVpnGateways(
     Options const& options,
     google::cloud::cpp::compute::external_vpn_gateways::v1::
         ListExternalVpnGatewaysRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ExternalVpnGatewayList>(
       *service_, rest_context, request, false,
@@ -175,13 +186,7 @@ DefaultExternalVpnGatewaysRestStub::ListExternalVpnGateways(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "externalVpnGateways"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -239,6 +244,8 @@ DefaultExternalVpnGatewaysRestStub::TestIamPermissions(
     Options const& options,
     google::cloud::cpp::compute::external_vpn_gateways::v1::
         TestIamPermissionsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
@@ -247,7 +254,8 @@ DefaultExternalVpnGatewaysRestStub::TestIamPermissions(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "externalVpnGateways", "/", request.resource(), "/",
-                   "testIamPermissions"));
+                   "testIamPermissions"),
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

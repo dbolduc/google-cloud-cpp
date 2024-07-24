@@ -264,12 +264,15 @@ DefaultFirewallPoliciesRestStub::GetFirewallPolicy(
     Options const& options,
     google::cloud::cpp::compute::firewall_policies::v1::
         GetFirewallPolicyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::FirewallPolicy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "locations", "/", "global", "/", "firewallPolicies", "/",
-                   request.firewall_policy()));
+                   request.firewall_policy()),
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>
@@ -278,6 +281,9 @@ DefaultFirewallPoliciesRestStub::GetAssociation(
     Options const& options,
     google::cloud::cpp::compute::firewall_policies::v1::
         GetAssociationRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"name", request.name()});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::FirewallPolicyAssociation>(
       *service_, rest_context, request, false,
@@ -285,8 +291,7 @@ DefaultFirewallPoliciesRestStub::GetAssociation(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "locations", "/", "global", "/", "firewallPolicies", "/",
                    request.firewall_policy(), "/", "getAssociation"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("name", request.name())}));
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -295,15 +300,18 @@ DefaultFirewallPoliciesRestStub::GetIamPolicy(
     Options const& options,
     google::cloud::cpp::compute::firewall_policies::v1::
         GetIamPolicyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back(
+      {"options_requested_policy_version",
+       std::to_string(request.options_requested_policy_version())});
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "locations", "/", "global", "/", "firewallPolicies", "/",
                    request.resource(), "/", "getIamPolicy"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair(
-          "options_requested_policy_version",
-          std::to_string(request.options_requested_policy_version()))}));
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule>
@@ -312,6 +320,9 @@ DefaultFirewallPoliciesRestStub::GetRule(
     Options const& options,
     google::cloud::cpp::compute::firewall_policies::v1::GetRuleRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"priority", std::to_string(request.priority())});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::FirewallPolicyRule>(
       *service_, rest_context, request, false,
@@ -319,8 +330,7 @@ DefaultFirewallPoliciesRestStub::GetRule(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "locations", "/", "global", "/", "firewallPolicies", "/",
                    request.firewall_policy(), "/", "getRule"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("priority", std::to_string(request.priority()))}));
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -380,20 +390,22 @@ DefaultFirewallPoliciesRestStub::ListFirewallPolicies(
     Options const& options,
     google::cloud::cpp::compute::firewall_policies::v1::
         ListFirewallPoliciesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"parent_id", request.parent_id()});
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::FirewallPolicyList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "locations", "/", "global", "/", "firewallPolicies"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("parent_id", request.parent_id()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(params));
 }
 
 StatusOr<
@@ -403,6 +415,9 @@ DefaultFirewallPoliciesRestStub::ListAssociations(
     Options const& options,
     google::cloud::cpp::compute::firewall_policies::v1::
         ListAssociationsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"target_resource", request.target_resource()});
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::
                                 FirewallPoliciesListAssociationsResponse>(
       *service_, rest_context, request, false,
@@ -410,8 +425,7 @@ DefaultFirewallPoliciesRestStub::ListAssociations(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "locations", "/", "global", "/", "firewallPolicies", "/",
                    "listAssociations"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("target_resource", request.target_resource())}));
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -682,13 +696,16 @@ DefaultFirewallPoliciesRestStub::SetIamPolicy(
     Options const& options,
     google::cloud::cpp::compute::firewall_policies::v1::
         SetIamPolicyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context,
       request.global_organization_set_policy_request_resource(), false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "locations", "/", "global", "/", "firewallPolicies", "/",
-                   request.resource(), "/", "setIamPolicy"));
+                   request.resource(), "/", "setIamPolicy"),
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -697,6 +714,8 @@ DefaultFirewallPoliciesRestStub::TestIamPermissions(
     Options const& options,
     google::cloud::cpp::compute::firewall_policies::v1::
         TestIamPermissionsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
@@ -704,7 +723,8 @@ DefaultFirewallPoliciesRestStub::TestIamPermissions(
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "locations", "/", "global", "/", "firewallPolicies", "/",
-                   request.resource(), "/", "testIamPermissions"));
+                   request.resource(), "/", "testIamPermissions"),
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

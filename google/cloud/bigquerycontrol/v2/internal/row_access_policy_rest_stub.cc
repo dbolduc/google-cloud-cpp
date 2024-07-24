@@ -45,6 +45,10 @@ DefaultRowAccessPolicyServiceRestStub::ListRowAccessPolicies(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::ListRowAccessPoliciesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"page_size", std::to_string(request.page_size())});
+
   return rest_internal::Get<
       google::cloud::bigquery::v2::ListRowAccessPoliciesResponse>(
       *service_, rest_context, request, false,
@@ -53,9 +57,7 @@ DefaultRowAccessPolicyServiceRestStub::ListRowAccessPolicies(
                    "projects", "/", request.project_id(), "/", "datasets", "/",
                    request.dataset_id(), "/", "tables", "/", request.table_id(),
                    "/", "rowAccessPolicies"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("page_token", request.page_token()),
-           std::make_pair("page_size", std::to_string(request.page_size()))}));
+      std::move(params));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

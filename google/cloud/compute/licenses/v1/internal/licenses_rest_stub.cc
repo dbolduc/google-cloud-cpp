@@ -100,12 +100,15 @@ DefaultLicensesRestStub::GetLicense(
     Options const& options,
     google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::License>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
-                   "licenses", "/", request.license()));
+                   "licenses", "/", request.license()),
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -114,15 +117,18 @@ DefaultLicensesRestStub::GetIamPolicy(
     Options const& options,
     google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back(
+      {"options_requested_policy_version",
+       std::to_string(request.options_requested_policy_version())});
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "licenses", "/", request.resource(), "/", "getIamPolicy"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair(
-          "options_requested_policy_version",
-          std::to_string(request.options_requested_policy_version()))}));
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -180,6 +186,14 @@ DefaultLicensesRestStub::ListLicenses(
     Options const& options,
     google::cloud::cpp::compute::licenses::v1::ListLicensesRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::LicensesListResponse>(
       *service_, rest_context, request, false,
@@ -187,13 +201,7 @@ DefaultLicensesRestStub::ListLicenses(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "licenses"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -202,13 +210,16 @@ DefaultLicensesRestStub::SetIamPolicy(
     Options const& options,
     google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.global_set_policy_request_resource(),
       false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
-                   "licenses", "/", request.resource(), "/", "setIamPolicy"));
+                   "licenses", "/", request.resource(), "/", "setIamPolicy"),
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -217,6 +228,8 @@ DefaultLicensesRestStub::TestIamPermissions(
     Options const& options,
     google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
@@ -225,7 +238,8 @@ DefaultLicensesRestStub::TestIamPermissions(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "licenses", "/", request.resource(), "/",
-                   "testIamPermissions"));
+                   "testIamPermissions"),
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

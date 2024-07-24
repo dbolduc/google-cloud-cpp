@@ -110,6 +110,18 @@ DefaultInstanceGroupManagersRestStub::AggregatedListInstanceGroupManagers(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         AggregatedListInstanceGroupManagersRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back(
+      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+  params.push_back(
+      {"service_project_number", request.service_project_number()});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceGroupManagerAggregatedList>(
       *service_, rest_context, request, false,
@@ -117,17 +129,7 @@ DefaultInstanceGroupManagersRestStub::AggregatedListInstanceGroupManagers(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "aggregated", "/",
                    "instanceGroupManagers"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("include_all_scopes",
-                          (request.include_all_scopes() ? "1" : "0")),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")),
-           std::make_pair("service_project_number",
-                          request.service_project_number())}));
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -409,6 +411,8 @@ DefaultInstanceGroupManagersRestStub::GetInstanceGroupManager(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         GetInstanceGroupManagerRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceGroupManager>(
       *service_, rest_context, request, false,
@@ -416,7 +420,8 @@ DefaultInstanceGroupManagersRestStub::GetInstanceGroupManager(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instanceGroupManagers", "/",
-                   request.instance_group_manager()));
+                   request.instance_group_manager()),
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -476,6 +481,14 @@ DefaultInstanceGroupManagersRestStub::ListInstanceGroupManagers(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         ListInstanceGroupManagersRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceGroupManagerList>(
       *service_, rest_context, request, false,
@@ -483,13 +496,7 @@ DefaultInstanceGroupManagersRestStub::ListInstanceGroupManagers(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instanceGroupManagers"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(params));
 }
 
 StatusOr<
@@ -499,6 +506,14 @@ DefaultInstanceGroupManagersRestStub::ListErrors(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         ListErrorsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceGroupManagersListErrorsResponse>(
       *service_, rest_context, request, false,
@@ -507,13 +522,7 @@ DefaultInstanceGroupManagersRestStub::ListErrors(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instanceGroupManagers", "/",
                    request.instance_group_manager(), "/", "listErrors"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::
@@ -523,6 +532,8 @@ DefaultInstanceGroupManagersRestStub::ListManagedInstances(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         ListManagedInstancesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::
           InstanceGroupManagersListManagedInstancesResponse>(
@@ -533,13 +544,7 @@ DefaultInstanceGroupManagersRestStub::ListManagedInstances(
                    request.zone(), "/", "instanceGroupManagers", "/",
                    request.instance_group_manager(), "/",
                    "listManagedInstances"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::
@@ -549,6 +554,8 @@ DefaultInstanceGroupManagersRestStub::ListPerInstanceConfigs(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         ListPerInstanceConfigsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::
           InstanceGroupManagersListPerInstanceConfigsResp>(
@@ -559,13 +566,7 @@ DefaultInstanceGroupManagersRestStub::ListPerInstanceConfigs(
                    request.zone(), "/", "instanceGroupManagers", "/",
                    request.instance_group_manager(), "/",
                    "listPerInstanceConfigs"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

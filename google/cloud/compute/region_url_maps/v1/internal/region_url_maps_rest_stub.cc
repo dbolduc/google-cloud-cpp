@@ -101,12 +101,15 @@ DefaultRegionUrlMapsRestStub::GetUrlMap(
     Options const& options,
     google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::UrlMap>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "urlMaps", "/", request.url_map()));
+                   request.region(), "/", "urlMaps", "/", request.url_map()),
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -164,19 +167,21 @@ DefaultRegionUrlMapsRestStub::ListRegionUrlMaps(
     Options const& options,
     google::cloud::cpp::compute::region_url_maps::v1::
         ListRegionUrlMapsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::UrlMapList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "urlMaps"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -285,6 +290,8 @@ DefaultRegionUrlMapsRestStub::Validate(
     Options const& options,
     google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::UrlMapsValidateResponse>(
       *service_, rest_context,
@@ -293,7 +300,8 @@ DefaultRegionUrlMapsRestStub::Validate(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "urlMaps", "/", request.url_map(),
-                   "/", "validate"));
+                   "/", "validate"),
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

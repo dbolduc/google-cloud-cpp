@@ -52,12 +52,15 @@ DefaultInstanceSettingsRestStub::GetInstanceSettings(
     Options const& options,
     google::cloud::cpp::compute::instance_settings::v1::
         GetInstanceSettingsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceSettings>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
-                   request.zone(), "/", "instanceSettings"));
+                   request.zone(), "/", "instanceSettings"),
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

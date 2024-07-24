@@ -161,6 +161,18 @@ DefaultInstancesRestStub::AggregatedListInstances(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::
         AggregatedListInstancesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back(
+      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+  params.push_back(
+      {"service_project_number", request.service_project_number()});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceAggregatedList>(
       *service_, rest_context, request, false,
@@ -168,17 +180,7 @@ DefaultInstancesRestStub::AggregatedListInstances(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "aggregated", "/",
                    "instances"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("include_all_scopes",
-                          (request.include_all_scopes() ? "1" : "0")),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")),
-           std::make_pair("service_project_number",
-                          request.service_project_number())}));
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -453,12 +455,15 @@ DefaultInstancesRestStub::GetInstance(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::GetInstanceRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::Instance>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
-                   request.zone(), "/", "instances", "/", request.instance()));
+                   request.zone(), "/", "instances", "/", request.instance()),
+      std::move(params));
 }
 
 StatusOr<
@@ -468,6 +473,9 @@ DefaultInstancesRestStub::GetEffectiveFirewalls(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::
         GetEffectiveFirewallsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"network_interface", request.network_interface()});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse>(
       *service_, rest_context, request, false,
@@ -476,8 +484,7 @@ DefaultInstancesRestStub::GetEffectiveFirewalls(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "getEffectiveFirewalls"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("network_interface", request.network_interface())}));
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::GuestAttributes>
@@ -486,6 +493,10 @@ DefaultInstancesRestStub::GetGuestAttributes(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::GetGuestAttributesRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"query_path", request.query_path()});
+  params.push_back({"variable_key", request.variable_key()});
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::GuestAttributes>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -493,9 +504,7 @@ DefaultInstancesRestStub::GetGuestAttributes(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "getGuestAttributes"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("query_path", request.query_path()),
-           std::make_pair("variable_key", request.variable_key())}));
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -504,6 +513,11 @@ DefaultInstancesRestStub::GetIamPolicy(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::GetIamPolicyRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back(
+      {"options_requested_policy_version",
+       std::to_string(request.options_requested_policy_version())});
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -511,9 +525,7 @@ DefaultInstancesRestStub::GetIamPolicy(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.resource(),
                    "/", "getIamPolicy"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair(
-          "options_requested_policy_version",
-          std::to_string(request.options_requested_policy_version()))}));
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Screenshot>
@@ -522,13 +534,16 @@ DefaultInstancesRestStub::GetScreenshot(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::GetScreenshotRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::Screenshot>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
-                   "/", "screenshot"));
+                   "/", "screenshot"),
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SerialPortOutput>
@@ -537,6 +552,10 @@ DefaultInstancesRestStub::GetSerialPortOutput(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::
         GetSerialPortOutputRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"port", std::to_string(request.port())});
+  params.push_back({"start", request.start()});
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::SerialPortOutput>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -544,9 +563,7 @@ DefaultInstancesRestStub::GetSerialPortOutput(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "serialPort"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("port", std::to_string(request.port())),
-           std::make_pair("start", request.start())}));
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ShieldedInstanceIdentity>
@@ -555,6 +572,8 @@ DefaultInstancesRestStub::GetShieldedInstanceIdentity(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::
         GetShieldedInstanceIdentityRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ShieldedInstanceIdentity>(
       *service_, rest_context, request, false,
@@ -562,7 +581,8 @@ DefaultInstancesRestStub::GetShieldedInstanceIdentity(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
-                   "/", "getShieldedInstanceIdentity"));
+                   "/", "getShieldedInstanceIdentity"),
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -628,19 +648,21 @@ DefaultInstancesRestStub::ListInstances(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::ListInstancesRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceListReferrers>
@@ -649,6 +671,14 @@ DefaultInstancesRestStub::ListReferrers(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::ListReferrersRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceListReferrers>(
       *service_, rest_context, request, false,
@@ -657,13 +687,7 @@ DefaultInstancesRestStub::ListReferrers(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "referrers"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -876,13 +900,16 @@ Status DefaultInstancesRestStub::SendDiagnosticInterrupt(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::
         SendDiagnosticInterruptRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
-                   "/", "sendDiagnosticInterrupt"));
+                   "/", "sendDiagnosticInterrupt"),
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1004,6 +1031,8 @@ DefaultInstancesRestStub::SetIamPolicy(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::SetIamPolicyRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.zone_set_policy_request_resource(),
       false,
@@ -1011,7 +1040,8 @@ DefaultInstancesRestStub::SetIamPolicy(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.resource(),
-                   "/", "setIamPolicy"));
+                   "/", "setIamPolicy"),
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1866,6 +1896,8 @@ DefaultInstancesRestStub::TestIamPermissions(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::TestIamPermissionsRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
@@ -1874,7 +1906,8 @@ DefaultInstancesRestStub::TestIamPermissions(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.resource(),
-                   "/", "testIamPermissions"));
+                   "/", "testIamPermissions"),
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

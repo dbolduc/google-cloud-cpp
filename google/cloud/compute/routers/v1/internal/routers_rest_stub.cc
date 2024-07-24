@@ -51,6 +51,18 @@ DefaultRoutersRestStub::AggregatedListRouters(
     Options const& options,
     google::cloud::cpp::compute::routers::v1::
         AggregatedListRoutersRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back(
+      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+  params.push_back(
+      {"service_project_number", request.service_project_number()});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::RouterAggregatedList>(
       *service_, rest_context, request, false,
@@ -58,17 +70,7 @@ DefaultRoutersRestStub::AggregatedListRouters(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "aggregated", "/",
                    "routers"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("include_all_scopes",
-                          (request.include_all_scopes() ? "1" : "0")),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")),
-           std::make_pair("service_project_number",
-                          request.service_project_number())}));
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -126,12 +128,15 @@ DefaultRoutersRestStub::GetRouter(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::cpp::compute::routers::v1::GetRouterRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::Router>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "routers", "/", request.router()));
+                   request.region(), "/", "routers", "/", request.router()),
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NatIpInfoResponse>
@@ -140,6 +145,9 @@ DefaultRoutersRestStub::GetNatIpInfo(
     Options const& options,
     google::cloud::cpp::compute::routers::v1::GetNatIpInfoRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"nat_name", request.nat_name()});
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::NatIpInfoResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -147,8 +155,7 @@ DefaultRoutersRestStub::GetNatIpInfo(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "routers", "/", request.router(), "/",
                    "getNatIpInfo"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("nat_name", request.nat_name())}));
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
@@ -157,6 +164,15 @@ DefaultRoutersRestStub::GetNatMappingInfo(
     Options const& options,
     google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"nat_name", request.nat_name()});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>(
       *service_, rest_context, request, false,
@@ -165,14 +181,7 @@ DefaultRoutersRestStub::GetNatMappingInfo(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "routers", "/", request.router(), "/",
                    "getNatMappingInfo"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("nat_name", request.nat_name()),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
@@ -181,6 +190,8 @@ DefaultRoutersRestStub::GetRouterStatus(
     Options const& options,
     google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::RouterStatusResponse>(
       *service_, rest_context, request, false,
@@ -188,7 +199,8 @@ DefaultRoutersRestStub::GetRouterStatus(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "routers", "/", request.router(), "/",
-                   "getRouterStatus"));
+                   "getRouterStatus"),
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -246,19 +258,21 @@ DefaultRoutersRestStub::ListRouters(
     Options const& options,
     google::cloud::cpp::compute::routers::v1::ListRoutersRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::RouterList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "routers"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -316,6 +330,8 @@ DefaultRoutersRestStub::Preview(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::cpp::compute::routers::v1::PreviewRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::RoutersPreviewResponse>(
       *service_, rest_context, request.router_resource(), false,
@@ -323,7 +339,8 @@ DefaultRoutersRestStub::Preview(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "routers", "/", request.router(), "/",
-                   "preview"));
+                   "preview"),
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

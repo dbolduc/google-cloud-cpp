@@ -44,53 +44,62 @@ DefaultJobServiceRestStub::CancelJob(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::CancelJobRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"location", request.location()});
+
   return rest_internal::Post<google::cloud::bigquery::v2::JobCancelResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "bigquery", "/",
                    rest_internal::DetermineApiVersion("v2", options), "/",
                    "projects", "/", request.project_id(), "/", "jobs", "/",
                    request.job_id(), "/", "cancel"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("location", request.location())}));
+      std::move(params));
 }
 
 StatusOr<google::cloud::bigquery::v2::Job> DefaultJobServiceRestStub::GetJob(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::GetJobRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"location", request.location()});
+
   return rest_internal::Get<google::cloud::bigquery::v2::Job>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "bigquery", "/",
                    rest_internal::DetermineApiVersion("v2", options), "/",
                    "projects", "/", request.project_id(), "/", "jobs", "/",
                    request.job_id()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("location", request.location())}));
+      std::move(params));
 }
 
 StatusOr<google::cloud::bigquery::v2::Job> DefaultJobServiceRestStub::InsertJob(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::InsertJobRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<google::cloud::bigquery::v2::Job>(
       *service_, rest_context, request.job(), false,
       absl::StrCat("/", "bigquery", "/",
                    rest_internal::DetermineApiVersion("v2", options), "/",
-                   "projects", "/", request.project_id(), "/", "jobs"));
+                   "projects", "/", request.project_id(), "/", "jobs"),
+      std::move(params));
 }
 
 Status DefaultJobServiceRestStub::DeleteJob(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::DeleteJobRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"location", request.location()});
+
   return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "bigquery", "/",
                    rest_internal::DetermineApiVersion("v2", options), "/",
                    "projects", "/", request.project_id(), "/", "jobs", "/",
                    request.job_id(), "/", "delete"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("location", request.location())}));
+      std::move(params));
 }
 
 StatusOr<google::cloud::bigquery::v2::JobList>
@@ -98,27 +107,20 @@ DefaultJobServiceRestStub::ListJobs(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::ListJobsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"all_users", (request.all_users() ? "1" : "0")});
+  params.push_back(
+      {"min_creation_time", std::to_string(request.min_creation_time())});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"projection", std::to_string(request.projection())});
+  params.push_back({"parent_job_id", request.parent_job_id()});
+
   return rest_internal::Get<google::cloud::bigquery::v2::JobList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "bigquery", "/",
                    rest_internal::DetermineApiVersion("v2", options), "/",
                    "projects", "/", request.project_id(), "/", "jobs"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("all_users", (request.all_users() ? "1" : "0")),
-           std::make_pair("max_results",
-                          (request.has_max_results()
-                               ? std::to_string(request.max_results().value())
-                               : "")),
-           std::make_pair("min_creation_time",
-                          std::to_string(request.min_creation_time())),
-           std::make_pair(
-               "max_creation_time",
-               (request.has_max_creation_time()
-                    ? std::to_string(request.max_creation_time().value())
-                    : "")),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("projection", std::to_string(request.projection())),
-           std::make_pair("parent_job_id", request.parent_job_id())}));
+      std::move(params));
 }
 
 StatusOr<google::cloud::bigquery::v2::GetQueryResultsResponse>
@@ -126,6 +128,10 @@ DefaultJobServiceRestStub::GetQueryResults(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::GetQueryResultsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"location", request.location()});
+
   return rest_internal::Get<
       google::cloud::bigquery::v2::GetQueryResultsResponse>(
       *service_, rest_context, request, false,
@@ -133,21 +139,7 @@ DefaultJobServiceRestStub::GetQueryResults(
                    rest_internal::DetermineApiVersion("v2", options), "/",
                    "projects", "/", request.project_id(), "/", "queries", "/",
                    request.job_id()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("start_index",
-                          (request.has_start_index()
-                               ? std::to_string(request.start_index().value())
-                               : "")),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("max_results",
-                          (request.has_max_results()
-                               ? std::to_string(request.max_results().value())
-                               : "")),
-           std::make_pair("timeout_ms",
-                          (request.has_timeout_ms()
-                               ? std::to_string(request.timeout_ms().value())
-                               : "")),
-           std::make_pair("location", request.location())}));
+      std::move(params));
 }
 
 StatusOr<google::cloud::bigquery::v2::QueryResponse>
@@ -155,11 +147,14 @@ DefaultJobServiceRestStub::Query(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::PostQueryRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<google::cloud::bigquery::v2::QueryResponse>(
       *service_, rest_context, request.query_request(), false,
       absl::StrCat("/", "bigquery", "/",
                    rest_internal::DetermineApiVersion("v2", options), "/",
-                   "projects", "/", request.project_id(), "/", "queries"));
+                   "projects", "/", request.project_id(), "/", "queries"),
+      std::move(params));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

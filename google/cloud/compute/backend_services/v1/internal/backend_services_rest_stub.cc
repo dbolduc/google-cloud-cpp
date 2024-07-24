@@ -103,6 +103,18 @@ DefaultBackendServicesRestStub::AggregatedListBackendServices(
     Options const& options,
     google::cloud::cpp::compute::backend_services::v1::
         AggregatedListBackendServicesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back(
+      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+  params.push_back(
+      {"service_project_number", request.service_project_number()});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::BackendServiceAggregatedList>(
       *service_, rest_context, request, false,
@@ -110,17 +122,7 @@ DefaultBackendServicesRestStub::AggregatedListBackendServices(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "aggregated", "/",
                    "backendServices"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("include_all_scopes",
-                          (request.include_all_scopes() ? "1" : "0")),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")),
-           std::make_pair("service_project_number",
-                          request.service_project_number())}));
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -233,12 +235,15 @@ DefaultBackendServicesRestStub::GetBackendService(
     Options const& options,
     google::cloud::cpp::compute::backend_services::v1::
         GetBackendServiceRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::BackendService>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
-                   "backendServices", "/", request.backend_service()));
+                   "backendServices", "/", request.backend_service()),
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
@@ -247,6 +252,8 @@ DefaultBackendServicesRestStub::GetHealth(
     Options const& options,
     google::cloud::cpp::compute::backend_services::v1::GetHealthRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::BackendServiceGroupHealth>(
       *service_, rest_context, request.resource_group_reference_resource(),
@@ -255,7 +262,8 @@ DefaultBackendServicesRestStub::GetHealth(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "backendServices", "/", request.backend_service(), "/",
-                   "getHealth"));
+                   "getHealth"),
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -264,6 +272,11 @@ DefaultBackendServicesRestStub::GetIamPolicy(
     Options const& options,
     google::cloud::cpp::compute::backend_services::v1::
         GetIamPolicyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back(
+      {"options_requested_policy_version",
+       std::to_string(request.options_requested_policy_version())});
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -271,9 +284,7 @@ DefaultBackendServicesRestStub::GetIamPolicy(
                    "projects", "/", request.project(), "/", "global", "/",
                    "backendServices", "/", request.resource(), "/",
                    "getIamPolicy"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair(
-          "options_requested_policy_version",
-          std::to_string(request.options_requested_policy_version()))}));
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -332,6 +343,14 @@ DefaultBackendServicesRestStub::ListBackendServices(
     Options const& options,
     google::cloud::cpp::compute::backend_services::v1::
         ListBackendServicesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::BackendServiceList>(
       *service_, rest_context, request, false,
@@ -339,13 +358,7 @@ DefaultBackendServicesRestStub::ListBackendServices(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "backendServices"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceListUsable>
@@ -354,6 +367,14 @@ DefaultBackendServicesRestStub::ListUsable(
     Options const& options,
     google::cloud::cpp::compute::backend_services::v1::ListUsableRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::BackendServiceListUsable>(
       *service_, rest_context, request, false,
@@ -361,13 +382,7 @@ DefaultBackendServicesRestStub::ListUsable(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "backendServices", "/", "listUsable"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -481,6 +496,8 @@ DefaultBackendServicesRestStub::SetIamPolicy(
     Options const& options,
     google::cloud::cpp::compute::backend_services::v1::
         SetIamPolicyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.global_set_policy_request_resource(),
       false,
@@ -488,7 +505,8 @@ DefaultBackendServicesRestStub::SetIamPolicy(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "backendServices", "/", request.resource(), "/",
-                   "setIamPolicy"));
+                   "setIamPolicy"),
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -551,6 +569,8 @@ DefaultBackendServicesRestStub::TestIamPermissions(
     Options const& options,
     google::cloud::cpp::compute::backend_services::v1::
         TestIamPermissionsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
@@ -559,7 +579,8 @@ DefaultBackendServicesRestStub::TestIamPermissions(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "backendServices", "/", request.resource(), "/",
-                   "testIamPermissions"));
+                   "testIamPermissions"),
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

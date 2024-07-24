@@ -51,14 +51,16 @@ DefaultInstanceAdminRestStub::ListInstanceConfigs(
     Options const& options,
     google::spanner::admin::instance::v1::ListInstanceConfigsRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"page_size", std::to_string(request.page_size())});
+  params.push_back({"page_token", request.page_token()});
+
   return rest_internal::Get<
       google::spanner::admin::instance::v1::ListInstanceConfigsResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    request.parent(), "/", "instanceConfigs"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("page_size", std::to_string(request.page_size())),
-           std::make_pair("page_token", request.page_token())}));
+      std::move(params));
 }
 
 StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
@@ -67,11 +69,14 @@ DefaultInstanceAdminRestStub::GetInstanceConfig(
     Options const& options,
     google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Get<
       google::spanner::admin::instance::v1::InstanceConfig>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()));
+                   request.name()),
+      std::move(params));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -172,14 +177,15 @@ Status DefaultInstanceAdminRestStub::DeleteInstanceConfig(
     Options const& options,
     google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"etag", request.etag()});
+  params.push_back({"validate_only", (request.validate_only() ? "1" : "0")});
+
   return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    request.name()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("etag", request.etag()),
-           std::make_pair("validate_only",
-                          (request.validate_only() ? "1" : "0"))}));
+      std::move(params));
 }
 
 StatusOr<
@@ -189,15 +195,17 @@ DefaultInstanceAdminRestStub::ListInstanceConfigOperations(
     Options const& options,
     google::spanner::admin::instance::v1::
         ListInstanceConfigOperationsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"page_size", std::to_string(request.page_size())});
+  params.push_back({"page_token", request.page_token()});
+
   return rest_internal::Get<google::spanner::admin::instance::v1::
                                 ListInstanceConfigOperationsResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    request.parent(), "/", "instanceConfigOperations"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("page_size", std::to_string(request.page_size())),
-           std::make_pair("page_token", request.page_token())}));
+      std::move(params));
 }
 
 StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>
@@ -205,15 +213,17 @@ DefaultInstanceAdminRestStub::ListInstances(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::spanner::admin::instance::v1::ListInstancesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"page_size", std::to_string(request.page_size())});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"filter", request.filter()});
+
   return rest_internal::Get<
       google::spanner::admin::instance::v1::ListInstancesResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    request.parent(), "/", "instances"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("page_size", std::to_string(request.page_size())),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("filter", request.filter())}));
+      std::move(params));
 }
 
 StatusOr<google::spanner::admin::instance::v1::ListInstancePartitionsResponse>
@@ -222,14 +232,16 @@ DefaultInstanceAdminRestStub::ListInstancePartitions(
     Options const& options,
     google::spanner::admin::instance::v1::ListInstancePartitionsRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"page_size", std::to_string(request.page_size())});
+  params.push_back({"page_token", request.page_token()});
+
   return rest_internal::Get<
       google::spanner::admin::instance::v1::ListInstancePartitionsResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    request.parent(), "/", "instancePartitions"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("page_size", std::to_string(request.page_size())),
-           std::make_pair("page_token", request.page_token())}));
+      std::move(params));
 }
 
 StatusOr<google::spanner::admin::instance::v1::Instance>
@@ -237,10 +249,13 @@ DefaultInstanceAdminRestStub::GetInstance(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::spanner::admin::instance::v1::GetInstanceRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Get<google::spanner::admin::instance::v1::Instance>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()));
+                   request.name()),
+      std::move(params));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -332,30 +347,39 @@ Status DefaultInstanceAdminRestStub::DeleteInstance(
     Options const& options,
     google::spanner::admin::instance::v1::DeleteInstanceRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()));
+                   request.name()),
+      std::move(params));
 }
 
 StatusOr<google::iam::v1::Policy> DefaultInstanceAdminRestStub::SetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<google::iam::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.resource(), ":setIamPolicy"));
+                   request.resource(), ":setIamPolicy"),
+      std::move(params));
 }
 
 StatusOr<google::iam::v1::Policy> DefaultInstanceAdminRestStub::GetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<google::iam::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.resource(), ":getIamPolicy"));
+                   request.resource(), ":getIamPolicy"),
+      std::move(params));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
@@ -363,10 +387,13 @@ DefaultInstanceAdminRestStub::TestIamPermissions(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<google::iam::v1::TestIamPermissionsResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.resource(), ":testIamPermissions"));
+                   request.resource(), ":testIamPermissions"),
+      std::move(params));
 }
 
 StatusOr<google::spanner::admin::instance::v1::InstancePartition>
@@ -375,11 +402,14 @@ DefaultInstanceAdminRestStub::GetInstancePartition(
     Options const& options,
     google::spanner::admin::instance::v1::GetInstancePartitionRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Get<
       google::spanner::admin::instance::v1::InstancePartition>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()));
+                   request.name()),
+      std::move(params));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -431,12 +461,14 @@ Status DefaultInstanceAdminRestStub::DeleteInstancePartition(
     Options const& options,
     google::spanner::admin::instance::v1::DeleteInstancePartitionRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"etag", request.etag()});
+
   return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    request.name()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("etag", request.etag())}));
+      std::move(params));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -486,15 +518,17 @@ DefaultInstanceAdminRestStub::ListInstancePartitionOperations(
     Options const& options,
     google::spanner::admin::instance::v1::
         ListInstancePartitionOperationsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"page_size", std::to_string(request.page_size())});
+  params.push_back({"page_token", request.page_token()});
+
   return rest_internal::Get<google::spanner::admin::instance::v1::
                                 ListInstancePartitionOperationsResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    request.parent(), "/", "instancePartitionOperations"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("page_size", std::to_string(request.page_size())),
-           std::make_pair("page_token", request.page_token())}));
+      std::move(params));
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -103,13 +103,16 @@ DefaultRegionAutoscalersRestStub::GetAutoscaler(
     Options const& options,
     google::cloud::cpp::compute::region_autoscalers::v1::
         GetAutoscalerRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::Autoscaler>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "autoscalers", "/",
-                   request.autoscaler()));
+                   request.autoscaler()),
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -168,6 +171,14 @@ DefaultRegionAutoscalersRestStub::ListRegionAutoscalers(
     Options const& options,
     google::cloud::cpp::compute::region_autoscalers::v1::
         ListRegionAutoscalersRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::RegionAutoscalerList>(
       *service_, rest_context, request, false,
@@ -175,13 +186,7 @@ DefaultRegionAutoscalersRestStub::ListRegionAutoscalers(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "autoscalers"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

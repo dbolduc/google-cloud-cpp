@@ -391,6 +391,8 @@ DefaultRegionInstanceGroupManagersRestStub::GetInstanceGroupManager(
     Options const& options,
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         GetInstanceGroupManagerRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceGroupManager>(
       *service_, rest_context, request, false,
@@ -398,7 +400,8 @@ DefaultRegionInstanceGroupManagersRestStub::GetInstanceGroupManager(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "instanceGroupManagers", "/",
-                   request.instance_group_manager()));
+                   request.instance_group_manager()),
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -458,6 +461,14 @@ DefaultRegionInstanceGroupManagersRestStub::ListRegionInstanceGroupManagers(
     Options const& options,
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         ListRegionInstanceGroupManagersRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::RegionInstanceGroupManagerList>(
       *service_, rest_context, request, false,
@@ -465,13 +476,7 @@ DefaultRegionInstanceGroupManagersRestStub::ListRegionInstanceGroupManagers(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "instanceGroupManagers"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::
@@ -481,6 +486,14 @@ DefaultRegionInstanceGroupManagersRestStub::ListErrors(
     Options const& options,
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         ListErrorsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::
                                 RegionInstanceGroupManagersListErrorsResponse>(
       *service_, rest_context, request, false,
@@ -489,13 +502,7 @@ DefaultRegionInstanceGroupManagersRestStub::ListErrors(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "instanceGroupManagers", "/",
                    request.instance_group_manager(), "/", "listErrors"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::
@@ -505,6 +512,8 @@ DefaultRegionInstanceGroupManagersRestStub::ListManagedInstances(
     Options const& options,
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         ListManagedInstancesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::
           RegionInstanceGroupManagersListInstancesResponse>(
@@ -515,13 +524,7 @@ DefaultRegionInstanceGroupManagersRestStub::ListManagedInstances(
                    request.region(), "/", "instanceGroupManagers", "/",
                    request.instance_group_manager(), "/",
                    "listManagedInstances"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::
@@ -531,6 +534,8 @@ DefaultRegionInstanceGroupManagersRestStub::ListPerInstanceConfigs(
     Options const& options,
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         ListPerInstanceConfigsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::
           RegionInstanceGroupManagersListInstanceConfigsResp>(
@@ -541,13 +546,7 @@ DefaultRegionInstanceGroupManagersRestStub::ListPerInstanceConfigs(
                    request.region(), "/", "instanceGroupManagers", "/",
                    request.instance_group_manager(), "/",
                    "listPerInstanceConfigs"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

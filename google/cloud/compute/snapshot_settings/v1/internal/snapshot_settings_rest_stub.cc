@@ -52,12 +52,15 @@ DefaultSnapshotSettingsRestStub::GetSnapshotSettings(
     Options const& options,
     google::cloud::cpp::compute::snapshot_settings::v1::
         GetSnapshotSettingsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::SnapshotSettings>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
-                   "snapshotSettings"));
+                   "snapshotSettings"),
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

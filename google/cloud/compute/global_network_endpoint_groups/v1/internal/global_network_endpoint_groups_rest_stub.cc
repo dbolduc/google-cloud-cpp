@@ -221,6 +221,8 @@ DefaultGlobalNetworkEndpointGroupsRestStub::GetNetworkEndpointGroup(
     Options const& options,
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
         GetNetworkEndpointGroupRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkEndpointGroup>(
       *service_, rest_context, request, false,
@@ -228,7 +230,8 @@ DefaultGlobalNetworkEndpointGroupsRestStub::GetNetworkEndpointGroup(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "networkEndpointGroups", "/",
-                   request.network_endpoint_group()));
+                   request.network_endpoint_group()),
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -287,6 +290,14 @@ DefaultGlobalNetworkEndpointGroupsRestStub::ListGlobalNetworkEndpointGroups(
     Options const& options,
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
         ListGlobalNetworkEndpointGroupsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkEndpointGroupList>(
       *service_, rest_context, request, false,
@@ -294,13 +305,7 @@ DefaultGlobalNetworkEndpointGroupsRestStub::ListGlobalNetworkEndpointGroups(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "networkEndpointGroups"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(params));
 }
 
 StatusOr<
@@ -310,6 +315,8 @@ DefaultGlobalNetworkEndpointGroupsRestStub::ListNetworkEndpoints(
     Options const& options,
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
         ListNetworkEndpointsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<google::cloud::cpp::compute::v1::
                                  NetworkEndpointGroupsListNetworkEndpoints>(
       *service_, rest_context, request, false,
@@ -318,13 +325,7 @@ DefaultGlobalNetworkEndpointGroupsRestStub::ListNetworkEndpoints(
           rest_internal::DetermineApiVersion("v1", options), "/", "projects",
           "/", request.project(), "/", "global", "/", "networkEndpointGroups",
           "/", request.network_endpoint_group(), "/", "listNetworkEndpoints"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

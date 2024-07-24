@@ -102,12 +102,15 @@ DefaultTargetSslProxiesRestStub::GetTargetSslProxy(
     Options const& options,
     google::cloud::cpp::compute::target_ssl_proxies::v1::
         GetTargetSslProxyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetSslProxy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
-                   "targetSslProxies", "/", request.target_ssl_proxy()));
+                   "targetSslProxies", "/", request.target_ssl_proxy()),
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -166,6 +169,14 @@ DefaultTargetSslProxiesRestStub::ListTargetSslProxies(
     Options const& options,
     google::cloud::cpp::compute::target_ssl_proxies::v1::
         ListTargetSslProxiesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetSslProxyList>(
       *service_, rest_context, request, false,
@@ -173,13 +184,7 @@ DefaultTargetSslProxiesRestStub::ListTargetSslProxies(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "targetSslProxies"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -45,12 +45,15 @@ DefaultLicenseCodesRestStub::GetLicenseCode(
     Options const& options,
     google::cloud::cpp::compute::license_codes::v1::GetLicenseCodeRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::LicenseCode>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
-                   "licenseCodes", "/", request.license_code()));
+                   "licenseCodes", "/", request.license_code()),
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -59,6 +62,8 @@ DefaultLicenseCodesRestStub::TestIamPermissions(
     Options const& options,
     google::cloud::cpp::compute::license_codes::v1::
         TestIamPermissionsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
@@ -67,7 +72,8 @@ DefaultLicenseCodesRestStub::TestIamPermissions(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "licenseCodes", "/", request.resource(), "/",
-                   "testIamPermissions"));
+                   "testIamPermissions"),
+      std::move(params));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

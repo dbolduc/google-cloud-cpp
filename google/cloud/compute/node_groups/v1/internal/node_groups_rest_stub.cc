@@ -104,6 +104,18 @@ DefaultNodeGroupsRestStub::AggregatedListNodeGroups(
     Options const& options,
     google::cloud::cpp::compute::node_groups::v1::
         AggregatedListNodeGroupsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back(
+      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+  params.push_back(
+      {"service_project_number", request.service_project_number()});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NodeGroupAggregatedList>(
       *service_, rest_context, request, false,
@@ -111,17 +123,7 @@ DefaultNodeGroupsRestStub::AggregatedListNodeGroups(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "aggregated", "/",
                    "nodeGroups"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("include_all_scopes",
-                          (request.include_all_scopes() ? "1" : "0")),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")),
-           std::make_pair("service_project_number",
-                          request.service_project_number())}));
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -234,13 +236,16 @@ DefaultNodeGroupsRestStub::GetNodeGroup(
     Options const& options,
     google::cloud::cpp::compute::node_groups::v1::GetNodeGroupRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::NodeGroup>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "nodeGroups", "/",
-                   request.node_group()));
+                   request.node_group()),
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -249,6 +254,11 @@ DefaultNodeGroupsRestStub::GetIamPolicy(
     Options const& options,
     google::cloud::cpp::compute::node_groups::v1::GetIamPolicyRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back(
+      {"options_requested_policy_version",
+       std::to_string(request.options_requested_policy_version())});
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -256,9 +266,7 @@ DefaultNodeGroupsRestStub::GetIamPolicy(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "nodeGroups", "/", request.resource(),
                    "/", "getIamPolicy"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair(
-          "options_requested_policy_version",
-          std::to_string(request.options_requested_policy_version()))}));
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -321,19 +329,21 @@ DefaultNodeGroupsRestStub::ListNodeGroups(
     Options const& options,
     google::cloud::cpp::compute::node_groups::v1::ListNodeGroupsRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::NodeGroupList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "nodeGroups"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroupsListNodes>
@@ -342,6 +352,8 @@ DefaultNodeGroupsRestStub::ListNodes(
     Options const& options,
     google::cloud::cpp::compute::node_groups::v1::ListNodesRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::NodeGroupsListNodes>(
       *service_, rest_context, request, false,
@@ -350,13 +362,7 @@ DefaultNodeGroupsRestStub::ListNodes(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "nodeGroups", "/", request.node_group(),
                    "/", "listNodes"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -471,6 +477,8 @@ DefaultNodeGroupsRestStub::SetIamPolicy(
     Options const& options,
     google::cloud::cpp::compute::node_groups::v1::SetIamPolicyRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.zone_set_policy_request_resource(),
       false,
@@ -478,7 +486,8 @@ DefaultNodeGroupsRestStub::SetIamPolicy(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "nodeGroups", "/", request.resource(),
-                   "/", "setIamPolicy"));
+                   "/", "setIamPolicy"),
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -596,6 +605,8 @@ DefaultNodeGroupsRestStub::TestIamPermissions(
     Options const& options,
     google::cloud::cpp::compute::node_groups::v1::
         TestIamPermissionsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
@@ -604,7 +615,8 @@ DefaultNodeGroupsRestStub::TestIamPermissions(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "nodeGroups", "/", request.resource(),
-                   "/", "testIamPermissions"));
+                   "/", "testIamPermissions"),
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

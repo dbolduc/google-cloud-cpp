@@ -47,14 +47,16 @@ Status DefaultGlobalOrganizationOperationsRestStub::DeleteOperation(
     Options const& options,
     google::cloud::cpp::compute::global_organization_operations::v1::
         DeleteOperationRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"parent_id", request.parent_id()});
+
   return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "locations", "/", "global", "/", "operations", "/",
                    request.operation()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("parent_id", request.parent_id())}));
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
@@ -63,14 +65,16 @@ DefaultGlobalOrganizationOperationsRestStub::GetOperation(
     Options const& options,
     google::cloud::cpp::compute::global_organization_operations::v1::
         GetOperationRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"parent_id", request.parent_id()});
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "locations", "/", "global", "/", "operations", "/",
                    request.operation()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("parent_id", request.parent_id())}));
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::OperationList>
@@ -79,19 +83,21 @@ DefaultGlobalOrganizationOperationsRestStub::ListGlobalOrganizationOperations(
     Options const& options,
     google::cloud::cpp::compute::global_organization_operations::v1::
         ListGlobalOrganizationOperationsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"parent_id", request.parent_id()});
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::OperationList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "locations", "/", "global", "/", "operations"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("parent_id", request.parent_id()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(params));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

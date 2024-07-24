@@ -45,13 +45,16 @@ Status DefaultRegionOperationsRestStub::DeleteOperation(
     Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         DeleteOperationRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "operations", "/",
-                   request.operation()));
+                   request.operation()),
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
@@ -60,13 +63,16 @@ DefaultRegionOperationsRestStub::GetOperation(
     Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         GetOperationRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "operations", "/",
-                   request.operation()));
+                   request.operation()),
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::OperationList>
@@ -75,19 +81,21 @@ DefaultRegionOperationsRestStub::ListRegionOperations(
     Options const& options,
     google::cloud::cpp::compute::region_operations::v1::
         ListRegionOperationsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::OperationList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "operations"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
@@ -96,13 +104,16 @@ DefaultRegionOperationsRestStub::Wait(
     Options const& options,
     google::cloud::cpp::compute::region_operations::v1::WaitRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "operations", "/",
-                   request.operation(), "/", "wait"));
+                   request.operation(), "/", "wait"),
+      std::move(params));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

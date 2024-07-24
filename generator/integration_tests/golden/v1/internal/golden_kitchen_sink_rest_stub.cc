@@ -46,9 +46,11 @@ DefaultGoldenKitchenSinkRestStub::GenerateAccessToken(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<google::test::admin::database::v1::GenerateAccessTokenResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.name(), ":generateAccessToken"));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.name(), ":generateAccessToken"), std::move(params));
 }
 
 StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
@@ -56,12 +58,11 @@ DefaultGoldenKitchenSinkRestStub::GenerateIdToken(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<google::test::admin::database::v1::GenerateIdTokenResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "token", ":generate"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair("name", request.name()),
-        std::make_pair("audience", request.audience()),
-        std::make_pair("include_email", (request.include_email() ? "1" : "0"))}));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "token", ":generate"), std::move(params));
 }
 
 StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
@@ -69,10 +70,11 @@ DefaultGoldenKitchenSinkRestStub::WriteLogEntries(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<google::test::admin::database::v1::WriteLogEntriesResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "entries", ":write"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair("log_name", request.log_name())}));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "entries", ":write"), std::move(params));
 }
 
 StatusOr<google::test::admin::database::v1::ListLogsResponse>
@@ -80,11 +82,13 @@ DefaultGoldenKitchenSinkRestStub::ListLogs(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::ListLogsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+    params.push_back({"page_size", std::to_string(request.page_size())});
+    params.push_back({"page_token", request.page_token()});
+
   return rest_internal::Get<google::test::admin::database::v1::ListLogsResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.parent(), "/", "logs"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair("page_size", std::to_string(request.page_size())),
-        std::make_pair("page_token", request.page_token())}));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.parent(), "/", "logs"), std::move(params));
 }
 
 StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
@@ -92,40 +96,44 @@ DefaultGoldenKitchenSinkRestStub::ListServiceAccountKeys(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Get<google::test::admin::database::v1::ListServiceAccountKeysResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.name(), "/", "keys"));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.name(), "/", "keys"), std::move(params));
 }
 
 Status DefaultGoldenKitchenSinkRestStub::DoNothing(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::protobuf::Empty const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "doNothing"));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "doNothing"), std::move(params));
 }
 
 Status DefaultGoldenKitchenSinkRestStub::ExplicitRouting1(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.table_name(), ":explicitRouting1"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair("app_profile_id", request.app_profile_id()),
-        std::make_pair("no_regex_needed", request.no_regex_needed())}));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.table_name(), ":explicitRouting1"), std::move(params));
 }
 
 Status DefaultGoldenKitchenSinkRestStub::ExplicitRouting2(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.table_name(), ":explicitRouting2"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair("app_profile_id", request.app_profile_id()),
-        std::make_pair("no_regex_needed", request.no_regex_needed())}));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.table_name(), ":explicitRouting2"), std::move(params));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

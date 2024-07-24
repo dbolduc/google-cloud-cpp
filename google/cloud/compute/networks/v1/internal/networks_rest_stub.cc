@@ -152,12 +152,15 @@ DefaultNetworksRestStub::GetNetwork(
     Options const& options,
     google::cloud::cpp::compute::networks::v1::GetNetworkRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::Network>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
-                   "networks", "/", request.network()));
+                   "networks", "/", request.network()),
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse>
@@ -166,6 +169,8 @@ DefaultNetworksRestStub::GetEffectiveFirewalls(
     Options const& options,
     google::cloud::cpp::compute::networks::v1::
         GetEffectiveFirewallsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse>(
       *service_, rest_context, request, false,
@@ -173,7 +178,8 @@ DefaultNetworksRestStub::GetEffectiveFirewalls(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "networks", "/", request.network(), "/",
-                   "getEffectiveFirewalls"));
+                   "getEffectiveFirewalls"),
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -231,19 +237,21 @@ DefaultNetworksRestStub::ListNetworks(
     Options const& options,
     google::cloud::cpp::compute::networks::v1::ListNetworksRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::NetworkList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "networks"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ExchangedPeeringRoutesList>
@@ -252,6 +260,17 @@ DefaultNetworksRestStub::ListPeeringRoutes(
     Options const& options,
     google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"direction", request.direction()});
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"peering_name", request.peering_name()});
+  params.push_back({"region", request.region()});
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ExchangedPeeringRoutesList>(
       *service_, rest_context, request, false,
@@ -260,16 +279,7 @@ DefaultNetworksRestStub::ListPeeringRoutes(
                    "projects", "/", request.project(), "/", "global", "/",
                    "networks", "/", request.network(), "/",
                    "listPeeringRoutes"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("direction", request.direction()),
-           std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("peering_name", request.peering_name()),
-           std::make_pair("region", request.region()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
