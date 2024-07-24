@@ -18,12 +18,123 @@
 #include "generator/internal/longrunning.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/algorithm.h"
+#include "google/cloud/log.h"
 #include "absl/strings/str_split.h"
+#include <google/protobuf/compiler/cpp/names.h>
 #include <google/protobuf/descriptor.h>
+
+using ::google::protobuf::compiler::cpp::FieldName;
 
 namespace google {
 namespace cloud {
 namespace generator_internal {
+namespace {
+
+std::string AdaptValue(std::string accessor,
+                       protobuf::FieldDescriptor::CppType type) {
+  if (type == protobuf::FieldDescriptor::CPPTYPE_STRING) return accessor;
+  if (type == protobuf::FieldDescriptor::CPPTYPE_BOOL) {
+    return "(" + accessor + R"""( ? "1" : "0"))""";
+  }
+  return "std::to_string(" + accessor + ")";
+}
+
+std::string QueryParameterCode(
+    protobuf::FieldDescriptor::CppType type,
+    google::protobuf::Descriptor const* proto, std::string const& name,
+    std::string const& value, int depth,
+    std::vector<std::string> const& param_field_names,
+    std::string const& body) {
+  auto const indent = std::string(2 * ++depth, ' ');
+  if (internal::Contains(param_field_names, name)) {
+    return {};
+    // TODO : Clean up.
+    return indent + "// DEBUG : Skipping known field name: " + name + "\n";
+  }
+
+  if (depth >= 10) {
+    return indent + "// Cutting off recursion...\n";
+  }
+  if (type != google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE) {
+    return indent + "params.push_back({\"" + name + "\", " +
+           AdaptValue(value, type) + "});\n";
+  }
+
+  std::string code;
+  for (auto i = 0; i != proto->field_count(); ++i) {
+    auto const* field = proto->field(i);
+    auto const type = field->cpp_type();
+    std::string const sep = name.empty() ? "" : ".";
+    std::string next_value = "v" + std::to_string(depth);
+    auto const next_name = name + sep + field->name();
+    if (next_name == body) {
+      // This field is already sent in the body of the payload. We should not
+      // include it or any subfields as query parameters.
+      continue;
+    }
+    auto const accessor = FieldName(field) + "()";
+    auto const* next_proto = field->message_type();
+    if (field->options().deprecated()) {
+      code += indent + "// Skipping deprecated field: " + next_name + "\n";
+      continue;
+    }
+
+    std::string pre_code;
+    std::string inner_code;
+    std::string post_code;
+    if (field->is_repeated()) {
+      // TODO(#10176): Consider adding support for repeated simple fields.
+      // TODO : Darren : if I want to split up the PR into a refactor, feature.
+      continue;
+      pre_code += indent + "for (auto const& " + next_value + " : " + value +
+                  "." + accessor + ") {\n";
+      post_code += indent + "}\n";
+    } else if (type == google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE) {
+      // TODO : Darren : if I want to split up the PR into a refactor, feature.
+      continue;
+      pre_code += indent + "if (" + value + ".has_" + accessor + ") {\n";
+      pre_code += indent + "  auto const& " + next_value + " = " + value + "." +
+                  accessor + ";\n";
+      post_code += indent + "}\n";
+    } else {
+      next_value = value + "." + accessor;
+    }
+    code += pre_code;
+    code += QueryParameterCode(type, next_proto, next_name, next_value, depth,
+                               param_field_names, body);
+    code += post_code;
+  }
+  return code;
+}
+
+std::string QueryParameterCode(
+    google::protobuf::MethodDescriptor const& method) {
+  std::string code;
+  code += "  std::vector<std::pair<std::string, std::string>> params;\n";
+
+  auto info = ParseHttpExtension(method);
+  // All request fields are included in the body of the HTTP request. None of
+  // them should be query parameters.
+  if (info.body == "*") return code;
+  // TODO : seems like we do not go by verb, we go by http body.
+  // We do not send payloads in GET requests. We send request fields either via
+  // the path or via query parameters.
+  // if (info.http_verb != "Get") return code;
+
+  std::vector<std::string> param_field_names;
+  param_field_names.reserve(info.field_substitutions.size());
+  for (auto const& p : info.field_substitutions) {
+    param_field_names.push_back(p.first);
+  }
+
+  return code + QueryParameterCode(protobuf::FieldDescriptor::CPPTYPE_MESSAGE,
+                                   method.input_type(), "", "request", 0,
+                                   param_field_names, info.body);
+}
+
+}  // namespace
 
 StubRestGenerator::StubRestGenerator(
     google::protobuf::ServiceDescriptor const* service_descriptor,
@@ -384,26 +495,32 @@ Default$stub_rest_class_name$::$method_name$(
 
     } else {
       if (IsResponseTypeEmpty(method)) {
-        CcPrintMethod(method, __FILE__, __LINE__, R"""(
+        CcPrintMethod(method, __FILE__, __LINE__,
+                      R"""(
 Status Default$stub_rest_class_name$::$method_name$(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       $request_type$ const& request) {
+)""" + QueryParameterCode(method) +
+                          R"""(
   return rest_internal::$method_http_verb$<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
-      $method_rest_path$$method_http_query_parameters$);
+      $method_rest_path$, std::move(params));
 }
 )""");
       } else {
-        CcPrintMethod(method, __FILE__, __LINE__, R"""(
+        CcPrintMethod(method, __FILE__, __LINE__,
+                      R"""(
 StatusOr<$response_type$>
 Default$stub_rest_class_name$::$method_name$(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       $request_type$ const& request) {
+)""" + QueryParameterCode(method) +
+                          R"""(
   return rest_internal::$method_http_verb$<$response_type$>(
       *service_, rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
-      $method_rest_path$$method_http_query_parameters$);
+      $method_rest_path$, std::move(params));
 }
 )""");
       }

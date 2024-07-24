@@ -77,7 +77,10 @@ absl::optional<QueryParameterInfo> DetermineQueryParameterInfo(
 
 /**
  * Sets the "method_http_query_parameters" value in method_vars based on the
- * parsed_http_info.
+ * parsed google.api.http extension.
+ *
+ * The rules are extremely well documented:
+ * https://github.com/googleapis/googleapis/blob/a91d1a37cb86a0e49fdc21d8b4416eb1c2a083ec/google/api/http.proto#L201-L218
  */
 void SetHttpQueryParameters(HttpExtensionInfo const& info,
                             google::protobuf::MethodDescriptor const& method,
