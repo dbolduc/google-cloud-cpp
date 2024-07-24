@@ -47,6 +47,9 @@ DefaultRoutineServiceRestStub::GetRoutine(
   std::vector<std::pair<std::string, std::string>> params;
   if (request.has_read_mask()) {
     auto const& v1 = request.read_mask();
+    for (auto const& v2 : v1.paths()) {
+      params.push_back({"read_mask.paths", v2});
+    }
   }
 
   return rest_internal::Get<google::cloud::bigquery::v2::Routine>(
@@ -121,6 +124,9 @@ DefaultRoutineServiceRestStub::ListRoutines(
   params.push_back({"page_token", request.page_token()});
   if (request.has_read_mask()) {
     auto const& v1 = request.read_mask();
+    for (auto const& v2 : v1.paths()) {
+      params.push_back({"read_mask.paths", v2});
+    }
   }
   params.push_back({"filter", request.filter()});
 

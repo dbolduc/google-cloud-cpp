@@ -121,6 +121,9 @@ DefaultJobServiceRestStub::ListJobs(
   }
   params.push_back({"page_token", request.page_token()});
   params.push_back({"projection", std::to_string(request.projection())});
+  for (auto const& v1 : request.state_filter()) {
+    params.push_back({"state_filter", std::to_string(v1)});
+  }
   params.push_back({"parent_job_id", request.parent_job_id()});
 
   return rest_internal::Get<google::cloud::bigquery::v2::JobList>(

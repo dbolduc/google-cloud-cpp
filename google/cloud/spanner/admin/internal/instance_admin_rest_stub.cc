@@ -265,6 +265,9 @@ DefaultInstanceAdminRestStub::GetInstance(
   std::vector<std::pair<std::string, std::string>> params;
   if (request.has_field_mask()) {
     auto const& v1 = request.field_mask();
+    for (auto const& v2 : v1.paths()) {
+      params.push_back({"field_mask.paths", v2});
+    }
   }
 
   return rest_internal::Get<google::spanner::admin::instance::v1::Instance>(

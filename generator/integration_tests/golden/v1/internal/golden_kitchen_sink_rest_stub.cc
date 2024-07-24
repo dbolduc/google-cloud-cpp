@@ -85,6 +85,9 @@ DefaultGoldenKitchenSinkRestStub::ListLogs(
   std::vector<std::pair<std::string, std::string>> params;
     params.push_back({"page_size", std::to_string(request.page_size())});
     params.push_back({"page_token", request.page_token()});
+  for (auto const& v1 : request.resource_names()) {
+    params.push_back({"resource_names", v1});
+  }
 
   return rest_internal::Get<google::test::admin::database::v1::ListLogsResponse>(
       *service_, rest_context, request, false,
@@ -97,6 +100,9 @@ DefaultGoldenKitchenSinkRestStub::ListServiceAccountKeys(
       Options const& options,
       google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
   std::vector<std::pair<std::string, std::string>> params;
+  for (auto const& v1 : request.key_types()) {
+    params.push_back({"key_types", std::to_string(v1)});
+  }
 
   return rest_internal::Get<google::test::admin::database::v1::ListServiceAccountKeysResponse>(
       *service_, rest_context, request, false,
