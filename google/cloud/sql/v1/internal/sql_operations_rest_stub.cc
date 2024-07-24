@@ -45,6 +45,12 @@ DefaultSqlOperationsServiceRestStub::Get(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlOperationsGetRequest const& request) {
+  // param_field_name: project
+  // param_field_name: operation
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: operation
+  // DEBUG : Skipping known field name: project
+
   return rest_internal::Get<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -57,6 +63,13 @@ DefaultSqlOperationsServiceRestStub::List(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlOperationsListRequest const& request) {
+  // param_field_name: project
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"instance", request.instance()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"page_token", request.page_token()});
+  // DEBUG : Skipping known field name: project
+
   return rest_internal::Get<google::cloud::sql::v1::OperationsListResponse>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",

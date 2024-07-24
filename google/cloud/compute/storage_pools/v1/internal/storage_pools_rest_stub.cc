@@ -51,6 +51,20 @@ DefaultStoragePoolsRestStub::AggregatedListStoragePools(
     Options const& options,
     google::cloud::cpp::compute::storage_pools::v1::
         AggregatedListStoragePoolsRequest const& request) {
+  // param_field_name: project
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back(
+      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  // DEBUG : Skipping known field name: project
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+  params.push_back(
+      {"service_project_number", request.service_project_number()});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::StoragePoolAggregatedList>(
       *service_, rest_context, request, false,
@@ -128,6 +142,14 @@ DefaultStoragePoolsRestStub::GetStoragePool(
     Options const& options,
     google::cloud::cpp::compute::storage_pools::v1::GetStoragePoolRequest const&
         request) {
+  // param_field_name: project
+  // param_field_name: zone
+  // param_field_name: storage_pool
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: project
+  // DEBUG : Skipping known field name: storage_pool
+  // DEBUG : Skipping known field name: zone
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::StoragePool>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -143,6 +165,17 @@ DefaultStoragePoolsRestStub::GetIamPolicy(
     Options const& options,
     google::cloud::cpp::compute::storage_pools::v1::GetIamPolicyRequest const&
         request) {
+  // param_field_name: project
+  // param_field_name: zone
+  // param_field_name: resource
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back(
+      {"options_requested_policy_version",
+       std::to_string(request.options_requested_policy_version())});
+  // DEBUG : Skipping known field name: project
+  // DEBUG : Skipping known field name: resource
+  // DEBUG : Skipping known field name: zone
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -210,6 +243,18 @@ DefaultStoragePoolsRestStub::ListStoragePools(
     Options const& options,
     google::cloud::cpp::compute::storage_pools::v1::
         ListStoragePoolsRequest const& request) {
+  // param_field_name: project
+  // param_field_name: zone
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  // DEBUG : Skipping known field name: project
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+  // DEBUG : Skipping known field name: zone
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::StoragePoolList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -231,6 +276,20 @@ DefaultStoragePoolsRestStub::ListDisks(
     Options const& options,
     google::cloud::cpp::compute::storage_pools::v1::ListDisksRequest const&
         request) {
+  // param_field_name: project
+  // param_field_name: zone
+  // param_field_name: storage_pool
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  // DEBUG : Skipping known field name: project
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+  // DEBUG : Skipping known field name: storage_pool
+  // DEBUG : Skipping known field name: zone
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::StoragePoolListDisks>(
       *service_, rest_context, request, false,

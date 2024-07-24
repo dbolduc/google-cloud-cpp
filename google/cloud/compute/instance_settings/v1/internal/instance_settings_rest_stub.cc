@@ -52,6 +52,12 @@ DefaultInstanceSettingsRestStub::GetInstanceSettings(
     Options const& options,
     google::cloud::cpp::compute::instance_settings::v1::
         GetInstanceSettingsRequest const& request) {
+  // param_field_name: project
+  // param_field_name: zone
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: project
+  // DEBUG : Skipping known field name: zone
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceSettings>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",

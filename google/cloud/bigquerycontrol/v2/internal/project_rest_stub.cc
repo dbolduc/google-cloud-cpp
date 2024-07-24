@@ -44,6 +44,10 @@ DefaultProjectServiceRestStub::GetServiceAccount(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::GetServiceAccountRequest const& request) {
+  // param_field_name: project_id
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: project_id
+
   return rest_internal::Get<
       google::cloud::bigquery::v2::GetServiceAccountResponse>(
       *service_, rest_context, request, false,

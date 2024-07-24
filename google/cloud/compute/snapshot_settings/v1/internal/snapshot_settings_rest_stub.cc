@@ -52,6 +52,10 @@ DefaultSnapshotSettingsRestStub::GetSnapshotSettings(
     Options const& options,
     google::cloud::cpp::compute::snapshot_settings::v1::
         GetSnapshotSettingsRequest const& request) {
+  // param_field_name: project
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: project
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::SnapshotSettings>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",

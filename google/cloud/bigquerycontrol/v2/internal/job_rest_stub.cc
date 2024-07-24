@@ -58,6 +58,13 @@ StatusOr<google::cloud::bigquery::v2::Job> DefaultJobServiceRestStub::GetJob(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::GetJobRequest const& request) {
+  // param_field_name: project_id
+  // param_field_name: job_id
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: project_id
+  // DEBUG : Skipping known field name: job_id
+  params.push_back({"location", request.location()});
+
   return rest_internal::Get<google::cloud::bigquery::v2::Job>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "bigquery", "/",
@@ -98,6 +105,27 @@ DefaultJobServiceRestStub::ListJobs(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::ListJobsRequest const& request) {
+  // param_field_name: project_id
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: project_id
+  params.push_back({"all_users", (request.all_users() ? "1" : "0")});
+  if (request.has_max_results()) {
+    auto const& v1 = request.max_results();
+    params.push_back({"max_results.value", std::to_string(v1.value())});
+  }
+  params.push_back(
+      {"min_creation_time", std::to_string(request.min_creation_time())});
+  if (request.has_max_creation_time()) {
+    auto const& v1 = request.max_creation_time();
+    params.push_back({"max_creation_time.value", std::to_string(v1.value())});
+  }
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"projection", std::to_string(request.projection())});
+  for (auto const& v1 : request.state_filter()) {
+    params.push_back({"state_filter", std::to_string(v1)});
+  }
+  params.push_back({"parent_job_id", request.parent_job_id()});
+
   return rest_internal::Get<google::cloud::bigquery::v2::JobList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "bigquery", "/",
@@ -126,6 +154,31 @@ DefaultJobServiceRestStub::GetQueryResults(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::GetQueryResultsRequest const& request) {
+  // param_field_name: project_id
+  // param_field_name: job_id
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: project_id
+  // DEBUG : Skipping known field name: job_id
+  if (request.has_start_index()) {
+    auto const& v1 = request.start_index();
+    params.push_back({"start_index.value", std::to_string(v1.value())});
+  }
+  params.push_back({"page_token", request.page_token()});
+  if (request.has_max_results()) {
+    auto const& v1 = request.max_results();
+    params.push_back({"max_results.value", std::to_string(v1.value())});
+  }
+  if (request.has_timeout_ms()) {
+    auto const& v1 = request.timeout_ms();
+    params.push_back({"timeout_ms.value", std::to_string(v1.value())});
+  }
+  params.push_back({"location", request.location()});
+  if (request.has_format_options()) {
+    auto const& v1 = request.format_options();
+    params.push_back({"format_options.use_int64_timestamp",
+                      (v1.use_int64_timestamp() ? "1" : "0")});
+  }
+
   return rest_internal::Get<
       google::cloud::bigquery::v2::GetQueryResultsResponse>(
       *service_, rest_context, request, false,

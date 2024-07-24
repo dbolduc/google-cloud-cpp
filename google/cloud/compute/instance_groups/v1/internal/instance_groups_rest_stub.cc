@@ -105,6 +105,20 @@ DefaultInstanceGroupsRestStub::AggregatedListInstanceGroups(
     Options const& options,
     google::cloud::cpp::compute::instance_groups::v1::
         AggregatedListInstanceGroupsRequest const& request) {
+  // param_field_name: project
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back(
+      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  // DEBUG : Skipping known field name: project
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+  params.push_back(
+      {"service_project_number", request.service_project_number()});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>(
       *service_, rest_context, request, false,
@@ -182,6 +196,14 @@ DefaultInstanceGroupsRestStub::GetInstanceGroup(
     Options const& options,
     google::cloud::cpp::compute::instance_groups::v1::
         GetInstanceGroupRequest const& request) {
+  // param_field_name: project
+  // param_field_name: zone
+  // param_field_name: instance_group
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: instance_group
+  // DEBUG : Skipping known field name: project
+  // DEBUG : Skipping known field name: zone
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceGroup>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -248,6 +270,18 @@ DefaultInstanceGroupsRestStub::ListInstanceGroups(
     Options const& options,
     google::cloud::cpp::compute::instance_groups::v1::
         ListInstanceGroupsRequest const& request) {
+  // param_field_name: project
+  // param_field_name: zone
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  // DEBUG : Skipping known field name: project
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+  // DEBUG : Skipping known field name: zone
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceGroupList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",

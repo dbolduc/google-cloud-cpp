@@ -44,6 +44,20 @@ DefaultRoutineServiceRestStub::GetRoutine(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::GetRoutineRequest const& request) {
+  // param_field_name: project_id
+  // param_field_name: dataset_id
+  // param_field_name: routine_id
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: project_id
+  // DEBUG : Skipping known field name: dataset_id
+  // DEBUG : Skipping known field name: routine_id
+  if (request.has_read_mask()) {
+    auto const& v1 = request.read_mask();
+    for (auto const& v2 : v1.paths()) {
+      params.push_back({"read_mask.paths", v2});
+    }
+  }
+
   return rest_internal::Get<google::cloud::bigquery::v2::Routine>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "bigquery", "/",
@@ -98,6 +112,24 @@ DefaultRoutineServiceRestStub::ListRoutines(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::ListRoutinesRequest const& request) {
+  // param_field_name: project_id
+  // param_field_name: dataset_id
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: project_id
+  // DEBUG : Skipping known field name: dataset_id
+  if (request.has_max_results()) {
+    auto const& v1 = request.max_results();
+    params.push_back({"max_results.value", std::to_string(v1.value())});
+  }
+  params.push_back({"page_token", request.page_token()});
+  if (request.has_read_mask()) {
+    auto const& v1 = request.read_mask();
+    for (auto const& v2 : v1.paths()) {
+      params.push_back({"read_mask.paths", v2});
+    }
+  }
+  params.push_back({"filter", request.filter()});
+
   return rest_internal::Get<google::cloud::bigquery::v2::ListRoutinesResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "bigquery", "/",

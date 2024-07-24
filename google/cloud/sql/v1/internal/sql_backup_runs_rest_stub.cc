@@ -57,6 +57,14 @@ DefaultSqlBackupRunsServiceRestStub::Get(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlBackupRunsGetRequest const& request) {
+  // param_field_name: project
+  // param_field_name: instance
+  // param_field_name: id
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: id
+  // DEBUG : Skipping known field name: instance
+  // DEBUG : Skipping known field name: project
+
   return rest_internal::Get<google::cloud::sql::v1::BackupRun>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -81,6 +89,14 @@ DefaultSqlBackupRunsServiceRestStub::List(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlBackupRunsListRequest const& request) {
+  // param_field_name: project
+  // param_field_name: instance
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: instance
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"page_token", request.page_token()});
+  // DEBUG : Skipping known field name: project
+
   return rest_internal::Get<google::cloud::sql::v1::BackupRunsListResponse>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",

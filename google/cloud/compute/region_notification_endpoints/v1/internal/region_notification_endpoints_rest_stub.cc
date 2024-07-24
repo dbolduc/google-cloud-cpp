@@ -106,6 +106,14 @@ DefaultRegionNotificationEndpointsRestStub::GetNotificationEndpoint(
     Options const& options,
     google::cloud::cpp::compute::region_notification_endpoints::v1::
         GetNotificationEndpointRequest const& request) {
+  // param_field_name: project
+  // param_field_name: region
+  // param_field_name: notification_endpoint
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: notification_endpoint
+  // DEBUG : Skipping known field name: project
+  // DEBUG : Skipping known field name: region
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NotificationEndpoint>(
       *service_, rest_context, request, false,
@@ -173,6 +181,18 @@ DefaultRegionNotificationEndpointsRestStub::ListRegionNotificationEndpoints(
     Options const& options,
     google::cloud::cpp::compute::region_notification_endpoints::v1::
         ListRegionNotificationEndpointsRequest const& request) {
+  // param_field_name: project
+  // param_field_name: region
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  // DEBUG : Skipping known field name: project
+  // DEBUG : Skipping known field name: region
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NotificationEndpointList>(
       *service_, rest_context, request, false,

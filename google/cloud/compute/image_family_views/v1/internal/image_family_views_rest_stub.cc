@@ -46,6 +46,14 @@ DefaultImageFamilyViewsRestStub::GetImageFamilyView(
     Options const& options,
     google::cloud::cpp::compute::image_family_views::v1::
         GetImageFamilyViewRequest const& request) {
+  // param_field_name: project
+  // param_field_name: zone
+  // param_field_name: family
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: family
+  // DEBUG : Skipping known field name: project
+  // DEBUG : Skipping known field name: zone
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::ImageFamilyView>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",

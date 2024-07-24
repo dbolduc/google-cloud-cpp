@@ -165,6 +165,16 @@ DefaultInstanceGroupManagerResizeRequestsRestStub::
         Options const& options,
         google::cloud::cpp::compute::instance_group_manager_resize_requests::
             v1::GetInstanceGroupManagerResizeRequestRequest const& request) {
+  // param_field_name: project
+  // param_field_name: zone
+  // param_field_name: instance_group_manager
+  // param_field_name: resize_request
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: instance_group_manager
+  // DEBUG : Skipping known field name: project
+  // DEBUG : Skipping known field name: resize_request
+  // DEBUG : Skipping known field name: zone
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceGroupManagerResizeRequest>(
       *service_, rest_context, request, false,
@@ -240,6 +250,20 @@ DefaultInstanceGroupManagerResizeRequestsRestStub::
         Options const& options,
         google::cloud::cpp::compute::instance_group_manager_resize_requests::
             v1::ListInstanceGroupManagerResizeRequestsRequest const& request) {
+  // param_field_name: project
+  // param_field_name: zone
+  // param_field_name: instance_group_manager
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  // DEBUG : Skipping known field name: instance_group_manager
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  // DEBUG : Skipping known field name: project
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+  // DEBUG : Skipping known field name: zone
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::
                                 InstanceGroupManagerResizeRequestsListResponse>(
       *service_, rest_context, request, false,

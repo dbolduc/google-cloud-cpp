@@ -105,6 +105,14 @@ DefaultRegionInstanceTemplatesRestStub::GetInstanceTemplate(
     Options const& options,
     google::cloud::cpp::compute::region_instance_templates::v1::
         GetInstanceTemplateRequest const& request) {
+  // param_field_name: project
+  // param_field_name: region
+  // param_field_name: instance_template
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: instance_template
+  // DEBUG : Skipping known field name: project
+  // DEBUG : Skipping known field name: region
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceTemplate>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -171,6 +179,18 @@ DefaultRegionInstanceTemplatesRestStub::ListRegionInstanceTemplates(
     Options const& options,
     google::cloud::cpp::compute::region_instance_templates::v1::
         ListRegionInstanceTemplatesRequest const& request) {
+  // param_field_name: project
+  // param_field_name: region
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  // DEBUG : Skipping known field name: project
+  // DEBUG : Skipping known field name: region
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceTemplateList>(
       *service_, rest_context, request, false,

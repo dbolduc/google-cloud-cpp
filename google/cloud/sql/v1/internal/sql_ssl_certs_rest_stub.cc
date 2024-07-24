@@ -58,6 +58,14 @@ DefaultSqlSslCertsServiceRestStub::Get(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlSslCertsGetRequest const& request) {
+  // param_field_name: project
+  // param_field_name: instance
+  // param_field_name: sha1_fingerprint
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: instance
+  // DEBUG : Skipping known field name: project
+  // DEBUG : Skipping known field name: sha1_fingerprint
+
   return rest_internal::Get<google::cloud::sql::v1::SslCert>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -83,6 +91,12 @@ DefaultSqlSslCertsServiceRestStub::List(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlSslCertsListRequest const& request) {
+  // param_field_name: project
+  // param_field_name: instance
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: instance
+  // DEBUG : Skipping known field name: project
+
   return rest_internal::Get<google::cloud::sql::v1::SslCertsListResponse>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",

@@ -44,6 +44,16 @@ DefaultTableServiceRestStub::GetTable(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::GetTableRequest const& request) {
+  // param_field_name: project_id
+  // param_field_name: dataset_id
+  // param_field_name: table_id
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: project_id
+  // DEBUG : Skipping known field name: dataset_id
+  // DEBUG : Skipping known field name: table_id
+  params.push_back({"selected_fields", request.selected_fields()});
+  params.push_back({"view", std::to_string(request.view())});
+
   return rest_internal::Get<google::cloud::bigquery::v2::Table>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "bigquery", "/",
@@ -119,6 +129,17 @@ DefaultTableServiceRestStub::ListTables(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::ListTablesRequest const& request) {
+  // param_field_name: project_id
+  // param_field_name: dataset_id
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: project_id
+  // DEBUG : Skipping known field name: dataset_id
+  if (request.has_max_results()) {
+    auto const& v1 = request.max_results();
+    params.push_back({"max_results.value", std::to_string(v1.value())});
+  }
+  params.push_back({"page_token", request.page_token()});
+
   return rest_internal::Get<google::cloud::bigquery::v2::TableList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "bigquery", "/",

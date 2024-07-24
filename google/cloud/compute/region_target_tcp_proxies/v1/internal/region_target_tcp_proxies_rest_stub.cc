@@ -105,6 +105,14 @@ DefaultRegionTargetTcpProxiesRestStub::GetTargetTcpProxy(
     Options const& options,
     google::cloud::cpp::compute::region_target_tcp_proxies::v1::
         GetTargetTcpProxyRequest const& request) {
+  // param_field_name: project
+  // param_field_name: region
+  // param_field_name: target_tcp_proxy
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: project
+  // DEBUG : Skipping known field name: region
+  // DEBUG : Skipping known field name: target_tcp_proxy
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetTcpProxy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -171,6 +179,18 @@ DefaultRegionTargetTcpProxiesRestStub::ListRegionTargetTcpProxies(
     Options const& options,
     google::cloud::cpp::compute::region_target_tcp_proxies::v1::
         ListRegionTargetTcpProxiesRequest const& request) {
+  // param_field_name: project
+  // param_field_name: region
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  // DEBUG : Skipping known field name: project
+  // DEBUG : Skipping known field name: region
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetTcpProxyList>(
       *service_, rest_context, request, false,

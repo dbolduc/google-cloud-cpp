@@ -141,6 +141,12 @@ DefaultSqlInstancesServiceRestStub::Get(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlInstancesGetRequest const& request) {
+  // param_field_name: project
+  // param_field_name: instance
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: instance
+  // DEBUG : Skipping known field name: project
+
   return rest_internal::Get<google::cloud::sql::v1::DatabaseInstance>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -176,6 +182,13 @@ DefaultSqlInstancesServiceRestStub::List(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlInstancesListRequest const& request) {
+  // param_field_name: project
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"page_token", request.page_token()});
+  // DEBUG : Skipping known field name: project
+
   return rest_internal::Get<google::cloud::sql::v1::InstancesListResponse>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -191,6 +204,12 @@ DefaultSqlInstancesServiceRestStub::ListServerCas(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlInstancesListServerCasRequest const& request) {
+  // param_field_name: project
+  // param_field_name: instance
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: instance
+  // DEBUG : Skipping known field name: project
+
   return rest_internal::Get<
       google::cloud::sql::v1::InstancesListServerCasResponse>(
       *service_, rest_context, request, true,
@@ -423,6 +442,12 @@ DefaultSqlInstancesServiceRestStub::GetDiskShrinkConfig(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&
         request) {
+  // param_field_name: project
+  // param_field_name: instance
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: instance
+  // DEBUG : Skipping known field name: project
+
   return rest_internal::Get<
       google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigResponse>(
       *service_, rest_context, request, true,
@@ -450,6 +475,12 @@ DefaultSqlInstancesServiceRestStub::GetLatestRecoveryTime(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
         request) {
+  // param_field_name: project
+  // param_field_name: instance
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: instance
+  // DEBUG : Skipping known field name: project
+
   return rest_internal::Get<
       google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeResponse>(
       *service_, rest_context, request, true,

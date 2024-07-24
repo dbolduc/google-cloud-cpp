@@ -103,6 +103,12 @@ DefaultExternalVpnGatewaysRestStub::GetExternalVpnGateway(
     Options const& options,
     google::cloud::cpp::compute::external_vpn_gateways::v1::
         GetExternalVpnGatewayRequest const& request) {
+  // param_field_name: project
+  // param_field_name: external_vpn_gateway
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: external_vpn_gateway
+  // DEBUG : Skipping known field name: project
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ExternalVpnGateway>(
       *service_, rest_context, request, false,
@@ -168,6 +174,16 @@ DefaultExternalVpnGatewaysRestStub::ListExternalVpnGateways(
     Options const& options,
     google::cloud::cpp::compute::external_vpn_gateways::v1::
         ListExternalVpnGatewaysRequest const& request) {
+  // param_field_name: project
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  // DEBUG : Skipping known field name: project
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ExternalVpnGatewayList>(
       *service_, rest_context, request, false,

@@ -44,6 +44,14 @@ DefaultModelServiceRestStub::GetModel(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::GetModelRequest const& request) {
+  // param_field_name: project_id
+  // param_field_name: dataset_id
+  // param_field_name: model_id
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: project_id
+  // DEBUG : Skipping known field name: dataset_id
+  // DEBUG : Skipping known field name: model_id
+
   return rest_internal::Get<google::cloud::bigquery::v2::Model>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "bigquery", "/",
@@ -58,6 +66,17 @@ DefaultModelServiceRestStub::ListModels(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::ListModelsRequest const& request) {
+  // param_field_name: project_id
+  // param_field_name: dataset_id
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: project_id
+  // DEBUG : Skipping known field name: dataset_id
+  if (request.has_max_results()) {
+    auto const& v1 = request.max_results();
+    params.push_back({"max_results.value", std::to_string(v1.value())});
+  }
+  params.push_back({"page_token", request.page_token()});
+
   return rest_internal::Get<google::cloud::bigquery::v2::ListModelsResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "bigquery", "/",

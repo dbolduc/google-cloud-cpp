@@ -50,6 +50,12 @@ DefaultDatabaseAdminRestStub::ListDatabases(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::spanner::admin::database::v1::ListDatabasesRequest const& request) {
+  // param_field_name: parent
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: parent
+  params.push_back({"page_size", std::to_string(request.page_size())});
+  params.push_back({"page_token", request.page_token()});
+
   return rest_internal::Get<
       google::spanner::admin::database::v1::ListDatabasesResponse>(
       *service_, rest_context, request, false,
@@ -116,6 +122,10 @@ DefaultDatabaseAdminRestStub::GetDatabase(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::spanner::admin::database::v1::GetDatabaseRequest const& request) {
+  // param_field_name: name
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: name
+
   return rest_internal::Get<google::spanner::admin::database::v1::Database>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -225,6 +235,10 @@ DefaultDatabaseAdminRestStub::GetDatabaseDdl(
     Options const& options,
     google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
         request) {
+  // param_field_name: database
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: database
+
   return rest_internal::Get<
       google::spanner::admin::database::v1::GetDatabaseDdlResponse>(
       *service_, rest_context, request, false,
@@ -354,6 +368,10 @@ DefaultDatabaseAdminRestStub::GetBackup(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::spanner::admin::database::v1::GetBackupRequest const& request) {
+  // param_field_name: name
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: name
+
   return rest_internal::Get<google::spanner::admin::database::v1::Backup>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -386,6 +404,13 @@ DefaultDatabaseAdminRestStub::ListBackups(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::spanner::admin::database::v1::ListBackupsRequest const& request) {
+  // param_field_name: parent
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: parent
+  params.push_back({"filter", request.filter()});
+  params.push_back({"page_size", std::to_string(request.page_size())});
+  params.push_back({"page_token", request.page_token()});
+
   return rest_internal::Get<
       google::spanner::admin::database::v1::ListBackupsResponse>(
       *service_, rest_context, request, false,
@@ -449,6 +474,13 @@ DefaultDatabaseAdminRestStub::ListDatabaseOperations(
     Options const& options,
     google::spanner::admin::database::v1::ListDatabaseOperationsRequest const&
         request) {
+  // param_field_name: parent
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: parent
+  params.push_back({"filter", request.filter()});
+  params.push_back({"page_size", std::to_string(request.page_size())});
+  params.push_back({"page_token", request.page_token()});
+
   return rest_internal::Get<
       google::spanner::admin::database::v1::ListDatabaseOperationsResponse>(
       *service_, rest_context, request, false,
@@ -466,6 +498,13 @@ DefaultDatabaseAdminRestStub::ListBackupOperations(
     Options const& options,
     google::spanner::admin::database::v1::ListBackupOperationsRequest const&
         request) {
+  // param_field_name: parent
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: parent
+  params.push_back({"filter", request.filter()});
+  params.push_back({"page_size", std::to_string(request.page_size())});
+  params.push_back({"page_token", request.page_token()});
+
   return rest_internal::Get<
       google::spanner::admin::database::v1::ListBackupOperationsResponse>(
       *service_, rest_context, request, false,
@@ -483,6 +522,12 @@ DefaultDatabaseAdminRestStub::ListDatabaseRoles(
     Options const& options,
     google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
         request) {
+  // param_field_name: parent
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: parent
+  params.push_back({"page_size", std::to_string(request.page_size())});
+  params.push_back({"page_token", request.page_token()});
+
   return rest_internal::Get<
       google::spanner::admin::database::v1::ListDatabaseRolesResponse>(
       *service_, rest_context, request, false,
@@ -514,6 +559,10 @@ DefaultDatabaseAdminRestStub::GetBackupSchedule(
     Options const& options,
     google::spanner::admin::database::v1::GetBackupScheduleRequest const&
         request) {
+  // param_field_name: name
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: name
+
   return rest_internal::Get<
       google::spanner::admin::database::v1::BackupSchedule>(
       *service_, rest_context, request, false,
@@ -551,6 +600,12 @@ DefaultDatabaseAdminRestStub::ListBackupSchedules(
     Options const& options,
     google::spanner::admin::database::v1::ListBackupSchedulesRequest const&
         request) {
+  // param_field_name: parent
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: parent
+  params.push_back({"page_size", std::to_string(request.page_size())});
+  params.push_back({"page_token", request.page_token()});
+
   return rest_internal::Get<
       google::spanner::admin::database::v1::ListBackupSchedulesResponse>(
       *service_, rest_context, request, false,

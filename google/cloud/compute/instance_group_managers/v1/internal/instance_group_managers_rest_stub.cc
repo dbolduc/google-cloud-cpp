@@ -110,6 +110,20 @@ DefaultInstanceGroupManagersRestStub::AggregatedListInstanceGroupManagers(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         AggregatedListInstanceGroupManagersRequest const& request) {
+  // param_field_name: project
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back(
+      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  // DEBUG : Skipping known field name: project
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+  params.push_back(
+      {"service_project_number", request.service_project_number()});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceGroupManagerAggregatedList>(
       *service_, rest_context, request, false,
@@ -409,6 +423,14 @@ DefaultInstanceGroupManagersRestStub::GetInstanceGroupManager(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         GetInstanceGroupManagerRequest const& request) {
+  // param_field_name: project
+  // param_field_name: zone
+  // param_field_name: instance_group_manager
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: instance_group_manager
+  // DEBUG : Skipping known field name: project
+  // DEBUG : Skipping known field name: zone
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceGroupManager>(
       *service_, rest_context, request, false,
@@ -476,6 +498,18 @@ DefaultInstanceGroupManagersRestStub::ListInstanceGroupManagers(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         ListInstanceGroupManagersRequest const& request) {
+  // param_field_name: project
+  // param_field_name: zone
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  // DEBUG : Skipping known field name: project
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+  // DEBUG : Skipping known field name: zone
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceGroupManagerList>(
       *service_, rest_context, request, false,
@@ -499,6 +533,20 @@ DefaultInstanceGroupManagersRestStub::ListErrors(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         ListErrorsRequest const& request) {
+  // param_field_name: project
+  // param_field_name: zone
+  // param_field_name: instance_group_manager
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  // DEBUG : Skipping known field name: instance_group_manager
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  // DEBUG : Skipping known field name: project
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+  // DEBUG : Skipping known field name: zone
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceGroupManagersListErrorsResponse>(
       *service_, rest_context, request, false,

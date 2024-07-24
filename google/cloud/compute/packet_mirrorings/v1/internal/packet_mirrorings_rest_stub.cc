@@ -52,6 +52,20 @@ DefaultPacketMirroringsRestStub::AggregatedListPacketMirrorings(
     Options const& options,
     google::cloud::cpp::compute::packet_mirrorings::v1::
         AggregatedListPacketMirroringsRequest const& request) {
+  // param_field_name: project
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back(
+      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  // DEBUG : Skipping known field name: project
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+  params.push_back(
+      {"service_project_number", request.service_project_number()});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>(
       *service_, rest_context, request, false,
@@ -130,6 +144,14 @@ DefaultPacketMirroringsRestStub::GetPacketMirroring(
     Options const& options,
     google::cloud::cpp::compute::packet_mirrorings::v1::
         GetPacketMirroringRequest const& request) {
+  // param_field_name: project
+  // param_field_name: region
+  // param_field_name: packet_mirroring
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: packet_mirroring
+  // DEBUG : Skipping known field name: project
+  // DEBUG : Skipping known field name: region
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::PacketMirroring>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -196,6 +218,18 @@ DefaultPacketMirroringsRestStub::ListPacketMirrorings(
     Options const& options,
     google::cloud::cpp::compute::packet_mirrorings::v1::
         ListPacketMirroringsRequest const& request) {
+  // param_field_name: project
+  // param_field_name: region
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  // DEBUG : Skipping known field name: project
+  // DEBUG : Skipping known field name: region
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::PacketMirroringList>(
       *service_, rest_context, request, false,

@@ -101,6 +101,12 @@ DefaultInterconnectsRestStub::GetInterconnect(
     Options const& options,
     google::cloud::cpp::compute::interconnects::v1::
         GetInterconnectRequest const& request) {
+  // param_field_name: project
+  // param_field_name: interconnect
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: interconnect
+  // DEBUG : Skipping known field name: project
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::Interconnect>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -115,6 +121,12 @@ DefaultInterconnectsRestStub::GetDiagnostics(
     Options const& options,
     google::cloud::cpp::compute::interconnects::v1::GetDiagnosticsRequest const&
         request) {
+  // param_field_name: project
+  // param_field_name: interconnect
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: interconnect
+  // DEBUG : Skipping known field name: project
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>(
       *service_, rest_context, request, false,
@@ -131,6 +143,12 @@ DefaultInterconnectsRestStub::GetMacsecConfig(
     Options const& options,
     google::cloud::cpp::compute::interconnects::v1::
         GetMacsecConfigRequest const& request) {
+  // param_field_name: project
+  // param_field_name: interconnect
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: interconnect
+  // DEBUG : Skipping known field name: project
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectsGetMacsecConfigResponse>(
       *service_, rest_context, request, false,
@@ -196,6 +214,16 @@ DefaultInterconnectsRestStub::ListInterconnects(
     Options const& options,
     google::cloud::cpp::compute::interconnects::v1::
         ListInterconnectsRequest const& request) {
+  // param_field_name: project
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  // DEBUG : Skipping known field name: project
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::InterconnectList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",

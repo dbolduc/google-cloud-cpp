@@ -56,6 +56,20 @@ DefaultNetworkEdgeSecurityServicesRestStub::
         Options const& options,
         google::cloud::cpp::compute::network_edge_security_services::v1::
             AggregatedListNetworkEdgeSecurityServicesRequest const& request) {
+  // param_field_name: project
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back(
+      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  // DEBUG : Skipping known field name: project
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+  params.push_back(
+      {"service_project_number", request.service_project_number()});
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::
                                 NetworkEdgeSecurityServiceAggregatedList>(
       *service_, rest_context, request, false,
@@ -135,6 +149,14 @@ DefaultNetworkEdgeSecurityServicesRestStub::GetNetworkEdgeSecurityService(
     Options const& options,
     google::cloud::cpp::compute::network_edge_security_services::v1::
         GetNetworkEdgeSecurityServiceRequest const& request) {
+  // param_field_name: project
+  // param_field_name: region
+  // param_field_name: network_edge_security_service
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: network_edge_security_service
+  // DEBUG : Skipping known field name: project
+  // DEBUG : Skipping known field name: region
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>(
       *service_, rest_context, request, false,

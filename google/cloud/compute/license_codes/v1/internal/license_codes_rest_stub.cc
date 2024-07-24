@@ -45,6 +45,12 @@ DefaultLicenseCodesRestStub::GetLicenseCode(
     Options const& options,
     google::cloud::cpp::compute::license_codes::v1::GetLicenseCodeRequest const&
         request) {
+  // param_field_name: project
+  // param_field_name: license_code
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: license_code
+  // DEBUG : Skipping known field name: project
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::LicenseCode>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",

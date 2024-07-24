@@ -51,6 +51,12 @@ DefaultInstanceAdminRestStub::ListInstanceConfigs(
     Options const& options,
     google::spanner::admin::instance::v1::ListInstanceConfigsRequest const&
         request) {
+  // param_field_name: parent
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: parent
+  params.push_back({"page_size", std::to_string(request.page_size())});
+  params.push_back({"page_token", request.page_token()});
+
   return rest_internal::Get<
       google::spanner::admin::instance::v1::ListInstanceConfigsResponse>(
       *service_, rest_context, request, false,
@@ -67,6 +73,10 @@ DefaultInstanceAdminRestStub::GetInstanceConfig(
     Options const& options,
     google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
         request) {
+  // param_field_name: name
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: name
+
   return rest_internal::Get<
       google::spanner::admin::instance::v1::InstanceConfig>(
       *service_, rest_context, request, false,
@@ -189,6 +199,13 @@ DefaultInstanceAdminRestStub::ListInstanceConfigOperations(
     Options const& options,
     google::spanner::admin::instance::v1::
         ListInstanceConfigOperationsRequest const& request) {
+  // param_field_name: parent
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: parent
+  params.push_back({"filter", request.filter()});
+  params.push_back({"page_size", std::to_string(request.page_size())});
+  params.push_back({"page_token", request.page_token()});
+
   return rest_internal::Get<google::spanner::admin::instance::v1::
                                 ListInstanceConfigOperationsResponse>(
       *service_, rest_context, request, false,
@@ -205,6 +222,19 @@ DefaultInstanceAdminRestStub::ListInstances(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::spanner::admin::instance::v1::ListInstancesRequest const& request) {
+  // param_field_name: parent
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: parent
+  params.push_back({"page_size", std::to_string(request.page_size())});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"filter", request.filter()});
+  if (request.has_instance_deadline()) {
+    auto const& v1 = request.instance_deadline();
+    params.push_back(
+        {"instance_deadline.seconds", std::to_string(v1.seconds())});
+    params.push_back({"instance_deadline.nanos", std::to_string(v1.nanos())});
+  }
+
   return rest_internal::Get<
       google::spanner::admin::instance::v1::ListInstancesResponse>(
       *service_, rest_context, request, false,
@@ -222,6 +252,19 @@ DefaultInstanceAdminRestStub::ListInstancePartitions(
     Options const& options,
     google::spanner::admin::instance::v1::ListInstancePartitionsRequest const&
         request) {
+  // param_field_name: parent
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: parent
+  params.push_back({"page_size", std::to_string(request.page_size())});
+  params.push_back({"page_token", request.page_token()});
+  if (request.has_instance_partition_deadline()) {
+    auto const& v1 = request.instance_partition_deadline();
+    params.push_back(
+        {"instance_partition_deadline.seconds", std::to_string(v1.seconds())});
+    params.push_back(
+        {"instance_partition_deadline.nanos", std::to_string(v1.nanos())});
+  }
+
   return rest_internal::Get<
       google::spanner::admin::instance::v1::ListInstancePartitionsResponse>(
       *service_, rest_context, request, false,
@@ -237,6 +280,16 @@ DefaultInstanceAdminRestStub::GetInstance(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::spanner::admin::instance::v1::GetInstanceRequest const& request) {
+  // param_field_name: name
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: name
+  if (request.has_field_mask()) {
+    auto const& v1 = request.field_mask();
+    for (auto const& v2 : v1.paths()) {
+      params.push_back({"field_mask.paths", v2});
+    }
+  }
+
   return rest_internal::Get<google::spanner::admin::instance::v1::Instance>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -375,6 +428,10 @@ DefaultInstanceAdminRestStub::GetInstancePartition(
     Options const& options,
     google::spanner::admin::instance::v1::GetInstancePartitionRequest const&
         request) {
+  // param_field_name: name
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: name
+
   return rest_internal::Get<
       google::spanner::admin::instance::v1::InstancePartition>(
       *service_, rest_context, request, false,
@@ -486,6 +543,20 @@ DefaultInstanceAdminRestStub::ListInstancePartitionOperations(
     Options const& options,
     google::spanner::admin::instance::v1::
         ListInstancePartitionOperationsRequest const& request) {
+  // param_field_name: parent
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: parent
+  params.push_back({"filter", request.filter()});
+  params.push_back({"page_size", std::to_string(request.page_size())});
+  params.push_back({"page_token", request.page_token()});
+  if (request.has_instance_partition_deadline()) {
+    auto const& v1 = request.instance_partition_deadline();
+    params.push_back(
+        {"instance_partition_deadline.seconds", std::to_string(v1.seconds())});
+    params.push_back(
+        {"instance_partition_deadline.nanos", std::to_string(v1.nanos())});
+  }
+
   return rest_internal::Get<google::spanner::admin::instance::v1::
                                 ListInstancePartitionOperationsResponse>(
       *service_, rest_context, request, false,

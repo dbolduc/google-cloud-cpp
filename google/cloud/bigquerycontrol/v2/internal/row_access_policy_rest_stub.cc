@@ -45,6 +45,16 @@ DefaultRowAccessPolicyServiceRestStub::ListRowAccessPolicies(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::ListRowAccessPoliciesRequest const& request) {
+  // param_field_name: project_id
+  // param_field_name: dataset_id
+  // param_field_name: table_id
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: project_id
+  // DEBUG : Skipping known field name: dataset_id
+  // DEBUG : Skipping known field name: table_id
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"page_size", std::to_string(request.page_size())});
+
   return rest_internal::Get<
       google::cloud::bigquery::v2::ListRowAccessPoliciesResponse>(
       *service_, rest_context, request, false,

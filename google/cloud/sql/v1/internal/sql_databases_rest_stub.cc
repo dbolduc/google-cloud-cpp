@@ -58,6 +58,14 @@ DefaultSqlDatabasesServiceRestStub::Get(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlDatabasesGetRequest const& request) {
+  // param_field_name: project
+  // param_field_name: instance
+  // param_field_name: database
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: database
+  // DEBUG : Skipping known field name: instance
+  // DEBUG : Skipping known field name: project
+
   return rest_internal::Get<google::cloud::sql::v1::Database>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -83,6 +91,12 @@ DefaultSqlDatabasesServiceRestStub::List(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlDatabasesListRequest const& request) {
+  // param_field_name: project
+  // param_field_name: instance
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: instance
+  // DEBUG : Skipping known field name: project
+
   return rest_internal::Get<google::cloud::sql::v1::DatabasesListResponse>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",

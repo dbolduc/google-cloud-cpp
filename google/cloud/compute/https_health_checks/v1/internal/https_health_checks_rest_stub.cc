@@ -102,6 +102,12 @@ DefaultHttpsHealthChecksRestStub::GetHttpsHealthCheck(
     Options const& options,
     google::cloud::cpp::compute::https_health_checks::v1::
         GetHttpsHealthCheckRequest const& request) {
+  // param_field_name: project
+  // param_field_name: https_health_check
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: https_health_check
+  // DEBUG : Skipping known field name: project
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::HttpsHealthCheck>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -166,6 +172,16 @@ DefaultHttpsHealthChecksRestStub::ListHttpsHealthChecks(
     Options const& options,
     google::cloud::cpp::compute::https_health_checks::v1::
         ListHttpsHealthChecksRequest const& request) {
+  // param_field_name: project
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  // DEBUG : Skipping known field name: project
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::HttpsHealthCheckList>(
       *service_, rest_context, request, false,

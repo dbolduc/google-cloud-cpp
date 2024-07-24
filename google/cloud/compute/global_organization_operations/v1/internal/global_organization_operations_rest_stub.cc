@@ -63,6 +63,11 @@ DefaultGlobalOrganizationOperationsRestStub::GetOperation(
     Options const& options,
     google::cloud::cpp::compute::global_organization_operations::v1::
         GetOperationRequest const& request) {
+  // param_field_name: operation
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: operation
+  params.push_back({"parent_id", request.parent_id()});
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -79,6 +84,15 @@ DefaultGlobalOrganizationOperationsRestStub::ListGlobalOrganizationOperations(
     Options const& options,
     google::cloud::cpp::compute::global_organization_operations::v1::
         ListGlobalOrganizationOperationsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  params.push_back({"parent_id", request.parent_id()});
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::OperationList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",

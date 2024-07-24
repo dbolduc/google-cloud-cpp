@@ -52,6 +52,20 @@ DefaultResourcePoliciesRestStub::AggregatedListResourcePolicies(
     Options const& options,
     google::cloud::cpp::compute::resource_policies::v1::
         AggregatedListResourcePoliciesRequest const& request) {
+  // param_field_name: project
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back(
+      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  // DEBUG : Skipping known field name: project
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+  params.push_back(
+      {"service_project_number", request.service_project_number()});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList>(
       *service_, rest_context, request, false,
@@ -130,6 +144,14 @@ DefaultResourcePoliciesRestStub::GetResourcePolicy(
     Options const& options,
     google::cloud::cpp::compute::resource_policies::v1::
         GetResourcePolicyRequest const& request) {
+  // param_field_name: project
+  // param_field_name: region
+  // param_field_name: resource_policy
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: project
+  // DEBUG : Skipping known field name: region
+  // DEBUG : Skipping known field name: resource_policy
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::ResourcePolicy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -145,6 +167,17 @@ DefaultResourcePoliciesRestStub::GetIamPolicy(
     Options const& options,
     google::cloud::cpp::compute::resource_policies::v1::
         GetIamPolicyRequest const& request) {
+  // param_field_name: project
+  // param_field_name: region
+  // param_field_name: resource
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back(
+      {"options_requested_policy_version",
+       std::to_string(request.options_requested_policy_version())});
+  // DEBUG : Skipping known field name: project
+  // DEBUG : Skipping known field name: region
+  // DEBUG : Skipping known field name: resource
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -214,6 +247,18 @@ DefaultResourcePoliciesRestStub::ListResourcePolicies(
     Options const& options,
     google::cloud::cpp::compute::resource_policies::v1::
         ListResourcePoliciesRequest const& request) {
+  // param_field_name: project
+  // param_field_name: region
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  // DEBUG : Skipping known field name: project
+  // DEBUG : Skipping known field name: region
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ResourcePolicyList>(
       *service_, rest_context, request, false,

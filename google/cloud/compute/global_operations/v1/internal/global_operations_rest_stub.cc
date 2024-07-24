@@ -46,6 +46,20 @@ DefaultGlobalOperationsRestStub::AggregatedListGlobalOperations(
     Options const& options,
     google::cloud::cpp::compute::global_operations::v1::
         AggregatedListGlobalOperationsRequest const& request) {
+  // param_field_name: project
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back(
+      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  // DEBUG : Skipping known field name: project
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+  params.push_back(
+      {"service_project_number", request.service_project_number()});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::OperationAggregatedList>(
       *service_, rest_context, request, false,
@@ -85,6 +99,12 @@ DefaultGlobalOperationsRestStub::GetOperation(
     Options const& options,
     google::cloud::cpp::compute::global_operations::v1::
         GetOperationRequest const& request) {
+  // param_field_name: project
+  // param_field_name: operation
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: operation
+  // DEBUG : Skipping known field name: project
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -99,6 +119,16 @@ DefaultGlobalOperationsRestStub::ListGlobalOperations(
     Options const& options,
     google::cloud::cpp::compute::global_operations::v1::
         ListGlobalOperationsRequest const& request) {
+  // param_field_name: project
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  // DEBUG : Skipping known field name: project
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::OperationList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",

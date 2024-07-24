@@ -51,6 +51,12 @@ DefaultGoldenThingAdminRestStub::ListDatabases(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::ListDatabasesRequest const& request) {
+  // param_field_name: parent
+  std::vector<std::pair<std::string, std::string>> params;
+    // DEBUG : Skipping known field name: parent
+    params.push_back({"page_size", std::to_string(request.page_size())});
+    params.push_back({"page_token", request.page_token()});
+
   return rest_internal::Get<google::test::admin::database::v1::ListDatabasesResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.parent(), "/", "databases"),
@@ -100,6 +106,10 @@ DefaultGoldenThingAdminRestStub::GetDatabase(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::GetDatabaseRequest const& request) {
+  // param_field_name: name
+  std::vector<std::pair<std::string, std::string>> params;
+    // DEBUG : Skipping known field name: name
+
   return rest_internal::Get<google::test::admin::database::v1::Database>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.name()));
@@ -146,6 +156,7 @@ Status DefaultGoldenThingAdminRestStub::DropDatabase(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::DropDatabaseRequest const& request) {
+
   return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.database()));
@@ -156,6 +167,10 @@ DefaultGoldenThingAdminRestStub::GetDatabaseDdl(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::GetDatabaseDdlRequest const& request) {
+  // param_field_name: database
+  std::vector<std::pair<std::string, std::string>> params;
+    // DEBUG : Skipping known field name: database
+
   return rest_internal::Get<google::test::admin::database::v1::GetDatabaseDdlResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.database(), "/", "ddl"));
@@ -166,6 +181,7 @@ DefaultGoldenThingAdminRestStub::SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) {
+
   return rest_internal::Post<google::iam::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.resource(), ":setIamPolicy"));
@@ -176,6 +192,7 @@ DefaultGoldenThingAdminRestStub::GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) {
+
   return rest_internal::Post<google::iam::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.resource(), ":getIamPolicy"));
@@ -186,6 +203,7 @@ DefaultGoldenThingAdminRestStub::TestIamPermissions(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) {
+
   return rest_internal::Post<google::iam::v1::TestIamPermissionsResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.resource(), ":testIamPermissions"));
@@ -233,6 +251,10 @@ DefaultGoldenThingAdminRestStub::GetBackup(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::GetBackupRequest const& request) {
+  // param_field_name: name
+  std::vector<std::pair<std::string, std::string>> params;
+    // DEBUG : Skipping known field name: name
+
   return rest_internal::Get<google::test::admin::database::v1::Backup>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.name()));
@@ -243,6 +265,7 @@ DefaultGoldenThingAdminRestStub::UpdateBackup(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::UpdateBackupRequest const& request) {
+
   return rest_internal::Patch<google::test::admin::database::v1::Backup>(
       *service_, rest_context, request.backup(), false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.backup().name()));
@@ -252,6 +275,7 @@ Status DefaultGoldenThingAdminRestStub::DeleteBackup(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::DeleteBackupRequest const& request) {
+
   return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.name()));
@@ -262,6 +286,13 @@ DefaultGoldenThingAdminRestStub::ListBackups(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::ListBackupsRequest const& request) {
+  // param_field_name: parent
+  std::vector<std::pair<std::string, std::string>> params;
+    // DEBUG : Skipping known field name: parent
+    params.push_back({"filter", request.filter()});
+    params.push_back({"page_size", std::to_string(request.page_size())});
+    params.push_back({"page_token", request.page_token()});
+
   return rest_internal::Get<google::test::admin::database::v1::ListBackupsResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.parent(), "/", "backups"),
@@ -314,6 +345,13 @@ DefaultGoldenThingAdminRestStub::ListDatabaseOperations(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) {
+  // param_field_name: parent
+  std::vector<std::pair<std::string, std::string>> params;
+    // DEBUG : Skipping known field name: parent
+    params.push_back({"filter", request.filter()});
+    params.push_back({"page_size", std::to_string(request.page_size())});
+    params.push_back({"page_token", request.page_token()});
+
   return rest_internal::Get<google::test::admin::database::v1::ListDatabaseOperationsResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.parent(), "/", "databaseOperations"),
@@ -327,6 +365,13 @@ DefaultGoldenThingAdminRestStub::ListBackupOperations(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::ListBackupOperationsRequest const& request) {
+  // param_field_name: parent
+  std::vector<std::pair<std::string, std::string>> params;
+    // DEBUG : Skipping known field name: parent
+    params.push_back({"filter", request.filter()});
+    params.push_back({"page_size", std::to_string(request.page_size())});
+    params.push_back({"page_token", request.page_token()});
+
   return rest_internal::Get<google::test::admin::database::v1::ListBackupOperationsResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.parent(), "/", "backupOperations"),

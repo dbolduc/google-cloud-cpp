@@ -101,6 +101,14 @@ DefaultRegionUrlMapsRestStub::GetUrlMap(
     Options const& options,
     google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest const&
         request) {
+  // param_field_name: project
+  // param_field_name: region
+  // param_field_name: url_map
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: project
+  // DEBUG : Skipping known field name: region
+  // DEBUG : Skipping known field name: url_map
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::UrlMap>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -164,6 +172,18 @@ DefaultRegionUrlMapsRestStub::ListRegionUrlMaps(
     Options const& options,
     google::cloud::cpp::compute::region_url_maps::v1::
         ListRegionUrlMapsRequest const& request) {
+  // param_field_name: project
+  // param_field_name: region
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  // DEBUG : Skipping known field name: project
+  // DEBUG : Skipping known field name: region
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::UrlMapList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",

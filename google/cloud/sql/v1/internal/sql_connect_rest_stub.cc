@@ -45,6 +45,17 @@ DefaultSqlConnectServiceRestStub::GetConnectSettings(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::GetConnectSettingsRequest const& request) {
+  // param_field_name: project
+  // param_field_name: instance
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: instance
+  // DEBUG : Skipping known field name: project
+  if (request.has_read_time()) {
+    auto const& v1 = request.read_time();
+    params.push_back({"read_time.seconds", std::to_string(v1.seconds())});
+    params.push_back({"read_time.nanos", std::to_string(v1.nanos())});
+  }
+
   return rest_internal::Get<google::cloud::sql::v1::ConnectSettings>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",

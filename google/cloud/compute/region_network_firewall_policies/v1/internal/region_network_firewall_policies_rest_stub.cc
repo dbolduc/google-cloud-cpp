@@ -282,6 +282,14 @@ DefaultRegionNetworkFirewallPoliciesRestStub::GetFirewallPolicy(
     Options const& options,
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
         GetFirewallPolicyRequest const& request) {
+  // param_field_name: project
+  // param_field_name: region
+  // param_field_name: firewall_policy
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: firewall_policy
+  // DEBUG : Skipping known field name: project
+  // DEBUG : Skipping known field name: region
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::FirewallPolicy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -297,6 +305,15 @@ DefaultRegionNetworkFirewallPoliciesRestStub::GetAssociation(
     Options const& options,
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
         GetAssociationRequest const& request) {
+  // param_field_name: project
+  // param_field_name: region
+  // param_field_name: firewall_policy
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: firewall_policy
+  params.push_back({"name", request.name()});
+  // DEBUG : Skipping known field name: project
+  // DEBUG : Skipping known field name: region
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::FirewallPolicyAssociation>(
       *service_, rest_context, request, false,
@@ -316,6 +333,13 @@ DefaultRegionNetworkFirewallPoliciesRestStub::GetEffectiveFirewalls(
     Options const& options,
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
         GetEffectiveFirewallsRequest const& request) {
+  // param_field_name: project
+  // param_field_name: region
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"network", request.network()});
+  // DEBUG : Skipping known field name: project
+  // DEBUG : Skipping known field name: region
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::
           RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponse>(
@@ -335,6 +359,17 @@ DefaultRegionNetworkFirewallPoliciesRestStub::GetIamPolicy(
     Options const& options,
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
         GetIamPolicyRequest const& request) {
+  // param_field_name: project
+  // param_field_name: region
+  // param_field_name: resource
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back(
+      {"options_requested_policy_version",
+       std::to_string(request.options_requested_policy_version())});
+  // DEBUG : Skipping known field name: project
+  // DEBUG : Skipping known field name: region
+  // DEBUG : Skipping known field name: resource
+
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -353,6 +388,15 @@ DefaultRegionNetworkFirewallPoliciesRestStub::GetRule(
     Options const& options,
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
         GetRuleRequest const& request) {
+  // param_field_name: project
+  // param_field_name: region
+  // param_field_name: firewall_policy
+  std::vector<std::pair<std::string, std::string>> params;
+  // DEBUG : Skipping known field name: firewall_policy
+  params.push_back({"priority", std::to_string(request.priority())});
+  // DEBUG : Skipping known field name: project
+  // DEBUG : Skipping known field name: region
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::FirewallPolicyRule>(
       *service_, rest_context, request, false,
@@ -422,6 +466,18 @@ DefaultRegionNetworkFirewallPoliciesRestStub::ListRegionNetworkFirewallPolicies(
     Options const& options,
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
         ListRegionNetworkFirewallPoliciesRequest const& request) {
+  // param_field_name: project
+  // param_field_name: region
+  std::vector<std::pair<std::string, std::string>> params;
+  params.push_back({"filter", request.filter()});
+  params.push_back({"max_results", std::to_string(request.max_results())});
+  params.push_back({"order_by", request.order_by()});
+  params.push_back({"page_token", request.page_token()});
+  // DEBUG : Skipping known field name: project
+  // DEBUG : Skipping known field name: region
+  params.push_back({"return_partial_success",
+                    (request.return_partial_success() ? "1" : "0")});
+
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::FirewallPolicyList>(
       *service_, rest_context, request, false,

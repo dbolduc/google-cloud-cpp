@@ -46,6 +46,7 @@ DefaultGoldenKitchenSinkRestStub::GenerateAccessToken(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
+
   return rest_internal::Post<google::test::admin::database::v1::GenerateAccessTokenResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.name(), ":generateAccessToken"));
@@ -56,6 +57,7 @@ DefaultGoldenKitchenSinkRestStub::GenerateIdToken(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
+
   return rest_internal::Post<google::test::admin::database::v1::GenerateIdTokenResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "token", ":generate"),
@@ -69,6 +71,7 @@ DefaultGoldenKitchenSinkRestStub::WriteLogEntries(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
+
   return rest_internal::Post<google::test::admin::database::v1::WriteLogEntriesResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "entries", ":write"),
@@ -80,6 +83,15 @@ DefaultGoldenKitchenSinkRestStub::ListLogs(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::ListLogsRequest const& request) {
+  // param_field_name: parent
+  std::vector<std::pair<std::string, std::string>> params;
+    // DEBUG : Skipping known field name: parent
+    params.push_back({"page_size", std::to_string(request.page_size())});
+    params.push_back({"page_token", request.page_token()});
+  for (auto const& v1 : request.resource_names()) {
+    params.push_back({"resource_names", v1});
+  }
+
   return rest_internal::Get<google::test::admin::database::v1::ListLogsResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.parent(), "/", "logs"),
@@ -92,6 +104,13 @@ DefaultGoldenKitchenSinkRestStub::ListServiceAccountKeys(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
+  // param_field_name: name
+  std::vector<std::pair<std::string, std::string>> params;
+    // DEBUG : Skipping known field name: name
+  for (auto const& v1 : request.key_types()) {
+    params.push_back({"key_types", std::to_string(v1)});
+  }
+
   return rest_internal::Get<google::test::admin::database::v1::ListServiceAccountKeysResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.name(), "/", "keys"));
@@ -101,6 +120,7 @@ Status DefaultGoldenKitchenSinkRestStub::DoNothing(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::protobuf::Empty const& request) {
+
   return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "doNothing"));
@@ -110,6 +130,7 @@ Status DefaultGoldenKitchenSinkRestStub::ExplicitRouting1(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+
   return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.table_name(), ":explicitRouting1"),
@@ -121,6 +142,7 @@ Status DefaultGoldenKitchenSinkRestStub::ExplicitRouting2(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+
   return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.table_name(), ":explicitRouting2"),
