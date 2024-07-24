@@ -262,7 +262,7 @@ std::string MakeQueryParams(Request request) {
   }
 
   if (request.has_a()) {
-    auto const& v0 = a;
+    auto const& v0 = request.a();
     if (v0.has_b()) {
       auto const& v1 = v0.b();
       if (v1.has_c()) {

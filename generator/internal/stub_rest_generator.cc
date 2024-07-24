@@ -18,6 +18,9 @@
 #include "generator/internal/longrunning.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/algorithm.h"
+#include "google/cloud/log.h"
 #include "absl/strings/str_split.h"
 #include <google/protobuf/compiler/cpp/names.h>
 #include <google/protobuf/descriptor.h>
@@ -29,7 +32,193 @@ namespace cloud {
 namespace generator_internal {
 namespace {
 
+std::string FormatFieldAccessorCall(
+    google::protobuf::MethodDescriptor const& method,
+    std::string const& field_name) {
+  std::vector<std::string> chunks;
+  auto const* input_type = method.input_type();
+  for (auto const& sv : absl::StrSplit(field_name, '.')) {
+    auto const chunk = std::string(sv);
+    auto const* chunk_descriptor = input_type->FindFieldByName(chunk);
+    chunks.push_back(FieldName(chunk_descriptor));
+    input_type = chunk_descriptor->message_type();
+  }
+  return absl::StrJoin(chunks, "().");
+}
+
+std::string AdaptValue(std::string accessor,
+                       protobuf::FieldDescriptor::CppType type) {
+  if (type == protobuf::FieldDescriptor::CPPTYPE_STRING) return accessor;
+  if (type == protobuf::FieldDescriptor::CPPTYPE_BOOL) {
+    return "(" + accessor + R"""( ? "1" : "0"))""";
+  }
+  return "std::to_string(" + accessor + ")";
+}
+
+std::string QueryParameterCodeLeaf(std::string const& name,
+                                   std::string accessor,
+                                   protobuf::FieldDescriptor::CppType type) {
+  // TODO : Clean up?
+  accessor = AdaptValue(std::move(accessor), type);
+  return "params.push_back({\"" + name + "\", " + accessor + "});\n";
+}
+
+std::string Darren(protobuf::FieldDescriptor::CppType type,
+                   google::protobuf::Descriptor const* proto,
+                   std::string const& name, std::string const& value, int depth,
+                   std::vector<std::string> const& param_field_names) {
+  auto const indent = std::string(2 * ++depth, ' ');
+  if (internal::Contains(param_field_names, name)) {
+    return indent + "// DEBUG : Skipping known field name: " + name + "\n";
+  }
+
+  if (depth >= 10) {
+    return indent + "// Cutting off recursion...\n";
+  }
+  if (type != google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE) {
+    return indent + "params.push_back({\"" + name + "\", " +
+           AdaptValue(value, type) + "});\n";
+  }
+
+  std::string code;
+  for (auto i = 0; i != proto->field_count(); ++i) {
+    auto const* field = proto->field(i);
+    auto const type = field->cpp_type();
+    std::string const sep = name.empty() ? "" : ".";
+    std::string next_value = "v" + std::to_string(depth);
+    auto const next_name = name + sep + field->name();
+    auto const accessor = FieldName(field) + "()";
+    auto const* next_proto = field->message_type();
+    if (field->options().deprecated()) {
+      code += indent + "// Skipping deprecated field: " + name + "\n";
+      continue;
+    }
+    std::string pre_code;
+    std::string inner_code;
+    std::string post_code;
+
+    if (field->is_repeated()) {
+      pre_code += indent + "for (auto const& " + next_value + " : " + value +
+                  "." + accessor + ") {\n";
+      post_code += indent + "}\n";
+    } else if (type == google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE) {
+      pre_code += indent + "if (" + value + ".has_" + accessor + ") {\n";
+      pre_code += indent + "  auto const& " + next_value + " = " + value + "." +
+                  accessor + ";\n";
+      post_code += indent + "}\n";
+    } else {
+      next_value = value + "." + accessor;
+    }
+    code += pre_code;
+    code += Darren(type, next_proto, next_name, next_value, depth,
+                   param_field_names);
+    code += post_code;
+  }
+  return code;
+}
+
+// TODO : skip fields already included in the path.
+std::string QueryParameterCodeImpl(google::protobuf::Descriptor const& proto,
+                                   std::string const& parent_name,
+                                   std::string const& parent_msg,
+                                   int depth = 0) {
+  std::string code;
+  auto const indent = std::string(2 * ++depth, ' ');
+
+  if (depth >= 10) {
+    return indent + "// Cutting off recursion...\n";
+  }
+
+  for (auto i = 0; i != proto.field_count(); ++i) {
+    auto const* field = proto.field(i);
+    std::string const sep = parent_name.empty() ? "" : ".";
+    std::string const msg = "v" + std::to_string(depth);
+    auto const name = parent_name + sep + field->name();
+    auto const accessor = FieldName(field) + "()";
+    if (field->options().deprecated()) {
+      code += indent + "// Skipping deprecated field: " + name + "\n";
+      continue;
+    }
+    std::string pre_code;
+    std::string inner_code;
+    std::string post_code;
+
+    if (field->is_repeated()) {
+      pre_code += indent + "for (auto const& " + msg + " : " + parent_msg +
+                  "." + accessor + ") {\n";
+      post_code += indent + "}\n";
+
+      if (field->cpp_type() == protobuf::FieldDescriptor::CPPTYPE_MESSAGE) {
+        inner_code =
+            QueryParameterCodeImpl(*field->message_type(), name, msg, depth);
+      } else {
+        // TODO : this isn't necessarily a msg. In this case, it's a value.
+        inner_code = indent + "params.push_back({\"" + name + "\", " +
+                     AdaptValue(msg, field->cpp_type()) + "});\n";
+      }
+      // code += indent + "// Skipping repeated field: " + name + "\n";
+      // code += indent + "for (auto const& " + msg + " : " + parent_msg + "." +
+      // accessor + ") {\n"; code += indent + "}\n"; continue;
+    } else {
+      if (field->cpp_type() == protobuf::FieldDescriptor::CPPTYPE_MESSAGE) {
+        pre_code += indent + "if (" + parent_msg + ".has_" + accessor + ") {\n";
+        pre_code += indent + "  auto const& " + msg + " = " + parent_msg + "." +
+                    accessor + ";\n";
+        inner_code =
+            QueryParameterCodeImpl(*field->message_type(), name, msg, depth);
+        post_code += indent + "}\n";
+
+        // code += indent + "// Skipping message field: " + name + "\n";
+        // code += indent + "if (" + parent_msg + ".has_" + accessor + ") {\n";
+        // code += indent + "  auto const& " + msg + " = " + parent_msg + "." +
+        //        accessor + ";\n";
+        // code += QueryParameterCodeImpl(*field->message_type(), name, msg,
+        // depth); code += indent + "}\n";
+        // continue;
+      } else {
+        inner_code =
+            indent + "params.push_back({\"" + name + "\", " +
+            AdaptValue(parent_msg + "." + accessor, field->cpp_type()) +
+            "});\n";
+      }
+    }
+    // code += indent + QueryParameterCodeLeaf(name, parent_msg + "." +
+    // accessor,
+    //                                         field->cpp_type());
+    // code += indent + "params.push_back({\"" + name + "\", " +
+    //         AdaptValue(parent_msg + "." + accessor, field->cpp_type()) +
+    //         "});\n";
+    code += pre_code + inner_code + post_code;
+  }
+  return code;
+}
+
 std::string QueryParameterCode(
+    google::protobuf::MethodDescriptor const& method) {
+  std::string code;
+
+  auto info = ParseHttpExtension(method);
+  if (info.http_verb != "Get") return code;
+
+  std::vector<std::string> param_field_names;
+  param_field_names.reserve(info.field_substitutions.size());
+  for (auto const& p : info.field_substitutions) {
+    param_field_names.push_back(p.first);
+    code += "  // param_field_name: " + p.first + "\n";
+  }
+
+  code += "  std::vector<std::pair<std::string, std::string>> params;\n";
+  // code += "  auto const& v0 = request;\n";
+  // auto qp_code = QueryParameterCodeImpl(*method.input_type(), "", "v0", 0);
+
+  auto qp_code =
+      Darren(protobuf::FieldDescriptor::CPPTYPE_MESSAGE, method.input_type(),
+             "", "request", 0, param_field_names);
+  if (qp_code.empty()) return {};
+  return code + qp_code;
+}
+
+std::string QueryParameterCode2(
     google::protobuf::MethodDescriptor const& method) {
   std::string code;
 
@@ -44,6 +233,7 @@ std::string QueryParameterCode(
     // string, that the generator might emit.
     std::string accessor;
   };
+
   std::deque<State> todo = {State{*method.input_type(), "", "request"}};
   while (!todo.empty()) {
     auto const current = std::move(todo.front());
@@ -453,25 +643,29 @@ Default$stub_rest_class_name$::$method_name$(
 
     } else {
       if (IsResponseTypeEmpty(method)) {
-        CcPrintMethod(method, __FILE__, __LINE__, R"""(
+        CcPrintMethod(method, __FILE__, __LINE__,
+                      R"""(
 Status Default$stub_rest_class_name$::$method_name$(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       $request_type$ const& request) {
-)""" + QueryParameterCode(method) + R"""(
+)""" + QueryParameterCode(method) +
+                          R"""(
   return rest_internal::$method_http_verb$<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
       $method_rest_path$$method_http_query_parameters$);
 }
 )""");
       } else {
-        CcPrintMethod(method, __FILE__, __LINE__, R"""(
+        CcPrintMethod(method, __FILE__, __LINE__,
+                      R"""(
 StatusOr<$response_type$>
 Default$stub_rest_class_name$::$method_name$(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       $request_type$ const& request) {
-)""" + QueryParameterCode(method) + R"""(
+)""" + QueryParameterCode(method) +
+                          R"""(
   return rest_internal::$method_http_verb$<$response_type$>(
       *service_, rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
       $method_rest_path$$method_http_query_parameters$);
