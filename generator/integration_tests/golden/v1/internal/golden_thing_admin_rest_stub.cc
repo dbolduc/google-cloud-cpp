@@ -260,6 +260,9 @@ DefaultGoldenThingAdminRestStub::UpdateBackup(
       Options const& options,
       google::test::admin::database::v1::UpdateBackupRequest const& request) {
   std::vector<std::pair<std::string, std::string>> params;
+  if (request.has_update_mask()) {
+    auto const& v1 = request.update_mask();
+  }
 
   return rest_internal::Patch<google::test::admin::database::v1::Backup>(
       *service_, rest_context, request.backup(), false,

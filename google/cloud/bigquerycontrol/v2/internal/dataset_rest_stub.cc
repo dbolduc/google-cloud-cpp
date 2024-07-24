@@ -126,6 +126,10 @@ DefaultDatasetServiceRestStub::ListDatasets(
     Options const& options,
     google::cloud::bigquery::v2::ListDatasetsRequest const& request) {
   std::vector<std::pair<std::string, std::string>> params;
+  if (request.has_max_results()) {
+    auto const& v1 = request.max_results();
+    params.push_back({"max_results.value", std::to_string(v1.value())});
+  }
   params.push_back({"page_token", request.page_token()});
   params.push_back({"all", (request.all() ? "1" : "0")});
   params.push_back({"filter", request.filter()});

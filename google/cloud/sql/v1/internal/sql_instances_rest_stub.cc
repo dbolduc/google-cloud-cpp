@@ -274,6 +274,11 @@ DefaultSqlInstancesServiceRestStub::Switchover(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesSwitchoverRequest const& request) {
   std::vector<std::pair<std::string, std::string>> params;
+  if (request.has_db_timeout()) {
+    auto const& v1 = request.db_timeout();
+    params.push_back({"db_timeout.seconds", std::to_string(v1.seconds())});
+    params.push_back({"db_timeout.nanos", std::to_string(v1.nanos())});
+  }
 
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,

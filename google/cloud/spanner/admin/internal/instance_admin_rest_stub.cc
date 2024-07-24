@@ -217,6 +217,12 @@ DefaultInstanceAdminRestStub::ListInstances(
   params.push_back({"page_size", std::to_string(request.page_size())});
   params.push_back({"page_token", request.page_token()});
   params.push_back({"filter", request.filter()});
+  if (request.has_instance_deadline()) {
+    auto const& v1 = request.instance_deadline();
+    params.push_back(
+        {"instance_deadline.seconds", std::to_string(v1.seconds())});
+    params.push_back({"instance_deadline.nanos", std::to_string(v1.nanos())});
+  }
 
   return rest_internal::Get<
       google::spanner::admin::instance::v1::ListInstancesResponse>(
@@ -235,6 +241,13 @@ DefaultInstanceAdminRestStub::ListInstancePartitions(
   std::vector<std::pair<std::string, std::string>> params;
   params.push_back({"page_size", std::to_string(request.page_size())});
   params.push_back({"page_token", request.page_token()});
+  if (request.has_instance_partition_deadline()) {
+    auto const& v1 = request.instance_partition_deadline();
+    params.push_back(
+        {"instance_partition_deadline.seconds", std::to_string(v1.seconds())});
+    params.push_back(
+        {"instance_partition_deadline.nanos", std::to_string(v1.nanos())});
+  }
 
   return rest_internal::Get<
       google::spanner::admin::instance::v1::ListInstancePartitionsResponse>(
@@ -250,6 +263,9 @@ DefaultInstanceAdminRestStub::GetInstance(
     Options const& options,
     google::spanner::admin::instance::v1::GetInstanceRequest const& request) {
   std::vector<std::pair<std::string, std::string>> params;
+  if (request.has_field_mask()) {
+    auto const& v1 = request.field_mask();
+  }
 
   return rest_internal::Get<google::spanner::admin::instance::v1::Instance>(
       *service_, rest_context, request, false,
@@ -522,6 +538,13 @@ DefaultInstanceAdminRestStub::ListInstancePartitionOperations(
   params.push_back({"filter", request.filter()});
   params.push_back({"page_size", std::to_string(request.page_size())});
   params.push_back({"page_token", request.page_token()});
+  if (request.has_instance_partition_deadline()) {
+    auto const& v1 = request.instance_partition_deadline();
+    params.push_back(
+        {"instance_partition_deadline.seconds", std::to_string(v1.seconds())});
+    params.push_back(
+        {"instance_partition_deadline.nanos", std::to_string(v1.nanos())});
+  }
 
   return rest_internal::Get<google::spanner::admin::instance::v1::
                                 ListInstancePartitionOperationsResponse>(

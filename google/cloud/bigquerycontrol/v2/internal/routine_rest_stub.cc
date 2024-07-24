@@ -45,6 +45,9 @@ DefaultRoutineServiceRestStub::GetRoutine(
     Options const& options,
     google::cloud::bigquery::v2::GetRoutineRequest const& request) {
   std::vector<std::pair<std::string, std::string>> params;
+  if (request.has_read_mask()) {
+    auto const& v1 = request.read_mask();
+  }
 
   return rest_internal::Get<google::cloud::bigquery::v2::Routine>(
       *service_, rest_context, request, false,
@@ -111,7 +114,14 @@ DefaultRoutineServiceRestStub::ListRoutines(
     Options const& options,
     google::cloud::bigquery::v2::ListRoutinesRequest const& request) {
   std::vector<std::pair<std::string, std::string>> params;
+  if (request.has_max_results()) {
+    auto const& v1 = request.max_results();
+    params.push_back({"max_results.value", std::to_string(v1.value())});
+  }
   params.push_back({"page_token", request.page_token()});
+  if (request.has_read_mask()) {
+    auto const& v1 = request.read_mask();
+  }
   params.push_back({"filter", request.filter()});
 
   return rest_internal::Get<google::cloud::bigquery::v2::ListRoutinesResponse>(

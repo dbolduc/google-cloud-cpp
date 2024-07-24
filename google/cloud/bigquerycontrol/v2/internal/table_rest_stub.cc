@@ -134,6 +134,10 @@ DefaultTableServiceRestStub::ListTables(
     Options const& options,
     google::cloud::bigquery::v2::ListTablesRequest const& request) {
   std::vector<std::pair<std::string, std::string>> params;
+  if (request.has_max_results()) {
+    auto const& v1 = request.max_results();
+    params.push_back({"max_results.value", std::to_string(v1.value())});
+  }
   params.push_back({"page_token", request.page_token()});
 
   return rest_internal::Get<google::cloud::bigquery::v2::TableList>(
