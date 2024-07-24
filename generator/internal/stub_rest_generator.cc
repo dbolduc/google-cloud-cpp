@@ -50,7 +50,7 @@ std::string QueryParameterCode(
   auto const indent = std::string(2 * ++depth, ' ');
   if (internal::Contains(param_field_names, name)) {
     return {};
-    // TODO : Clean up.
+    // TODO(dbolduc) : Clean up.
     return indent + "// DEBUG : Skipping known field name: " + name + "\n";
   }
 
@@ -86,14 +86,13 @@ std::string QueryParameterCode(
     std::string post_code;
     if (field->is_repeated()) {
       // TODO(#10176): Consider adding support for repeated simple fields.
-      // TODO : Darren : if I want to split up the PR into a refactor, feature.
+      // TODO(dbolduc) : Consider `continue`-ing here to break up the PR.
       continue;
       pre_code += indent + "for (auto const& " + next_value + " : " + value +
                   "." + accessor + ") {\n";
       post_code += indent + "}\n";
     } else if (type == google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE) {
-      // TODO : Darren : if I want to split up the PR into a refactor, feature.
-      continue;
+      // TODO(dbolduc) : Consider `continue`-ing here to break up the PR.
       pre_code += indent + "if (" + value + ".has_" + accessor + ") {\n";
       pre_code += indent + "  auto const& " + next_value + " = " + value + "." +
                   accessor + ";\n";
@@ -118,10 +117,6 @@ std::string QueryParameterCode(
   // All request fields are included in the body of the HTTP request. None of
   // them should be query parameters.
   if (info.body == "*") return code;
-  // TODO : seems like we do not go by verb, we go by http body.
-  // We do not send payloads in GET requests. We send request fields either via
-  // the path or via query parameters.
-  // if (info.http_verb != "Get") return code;
 
   std::vector<std::string> param_field_names;
   param_field_names.reserve(info.field_substitutions.size());
