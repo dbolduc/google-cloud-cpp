@@ -459,10 +459,11 @@ Default$stub_rest_class_name$::Async$method_name$(
   future<StatusOr<$response_type$>> f = p.get_future();
   std::thread t{[](
           auto p, auto service, auto request, auto rest_context, auto options) {
+)""" + QueryParameterCode(method) + R"""(
       p.set_value(rest_internal::$method_http_verb$<$response_type$>(
           *service, *rest_context, $request_resource$,
           $preserve_proto_field_names_in_json$,
-          $method_rest_path_async$$method_http_query_parameters$));
+          $method_rest_path_async$, std::move(params)));
     },
     std::move(p), service_, request, std::move(rest_context),
     std::move(options)};
@@ -481,9 +482,10 @@ Default$stub_rest_class_name$::$method_name$(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       $request_type$ const& request) {
+)""" + QueryParameterCode(method) + R"""(
   return rest_internal::$method_http_verb$<$response_type$>(
       *service_, rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
-      $method_rest_path$$method_http_query_parameters$);
+      $method_rest_path$, std::move(params));
 }
 )""");
 
@@ -495,8 +497,7 @@ Status Default$stub_rest_class_name$::$method_name$(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       $request_type$ const& request) {
-)""" + QueryParameterCode(method) +
-                          R"""(
+)""" + QueryParameterCode(method) + R"""(
   return rest_internal::$method_http_verb$<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
       $method_rest_path$, std::move(params));
@@ -537,9 +538,10 @@ Default$stub_rest_class_name$::Async$method_name$(
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](
           auto p, auto service, auto request, auto rest_context, auto options) {
+)""" + QueryParameterCode(method) + R"""(
       p.set_value(rest_internal::$method_http_verb$<google::protobuf::Empty>(
           *service, *rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
-          $method_rest_path_async$$method_http_query_parameters$));
+          $method_rest_path_async$, std::move(params)));
     },
     std::move(p), service_, request, std::move(rest_context),
     std::move(options)};
@@ -563,9 +565,10 @@ Default$stub_rest_class_name$::Async$method_name$(
   future<StatusOr<$response_type$>> f = p.get_future();
   std::thread t{[](
           auto p, auto service, auto request, auto rest_context, auto options) {
+)""" + QueryParameterCode(method) + R"""(
       p.set_value(rest_internal::$method_http_verb$<$response_type$>(
           *service, *rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
-          $method_rest_path_async$$method_http_query_parameters$));
+          $method_rest_path_async$, std::move(params)));
     },
     std::move(p), service_, request, std::move(rest_context),
     std::move(options)};
