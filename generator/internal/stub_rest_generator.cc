@@ -87,7 +87,6 @@ std::string QueryParameterCode(
     if (field->is_repeated()) {
       // TODO(#10176): Consider adding support for repeated simple fields.
       // TODO(dbolduc) : Consider `continue`-ing here to break up the PR.
-      continue;
       pre_code += indent + "for (auto const& " + next_value + " : " + value +
                   "." + accessor + ") {\n";
       post_code += indent + "}\n";
