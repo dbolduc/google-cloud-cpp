@@ -44,7 +44,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class Credentials {
  public:
   virtual ~Credentials() = default;
-
   /**
    * Obtains an access token.
    *
@@ -107,6 +106,9 @@ class Credentials {
 
   /// @copydoc project_id()
   virtual StatusOr<std::string> project_id(Options const&) const;
+
+  /// Returns an API key, if available, or the empty string if not.
+  virtual std::string ApiKey() const { return std::string{}; }
 };
 
 /**

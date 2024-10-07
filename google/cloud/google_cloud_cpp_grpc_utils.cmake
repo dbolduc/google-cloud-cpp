@@ -72,6 +72,8 @@ add_library(
     internal/extract_long_running_result.h
     internal/grpc_access_token_authentication.cc
     internal/grpc_access_token_authentication.h
+    internal/grpc_api_key_authentication.cc
+    internal/grpc_api_key_authentication.h
     internal/grpc_async_access_token_cache.cc
     internal/grpc_async_access_token_cache.h
     internal/grpc_channel_credentials_authentication.cc

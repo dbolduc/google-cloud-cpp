@@ -50,17 +50,29 @@ StatusOr<std::pair<std::string, std::string>> AuthorizationHeader(
     Credentials& credentials, std::chrono::system_clock::time_point tp) {
   auto token = credentials.GetToken(tp);
   if (!token) return std::move(token).status();
-  if (token->token.empty()) return std::make_pair(std::string{}, std::string{});
-  return std::make_pair(std::string{"Authorization"},
-                        absl::StrCat("Bearer ", token->token));
+  if (!token->token.empty()) {
+    return std::make_pair(std::string{"Authorization"},
+                          absl::StrCat("Bearer ", token->token));
+  }
+  auto api_key = credentials.ApiKey();
+  if (!api_key.empty()) {
+    return std::make_pair(std::string{"x-goog-api-key"}, std::move(api_key));
+  }
+  return std::make_pair(std::string{}, std::string{});
 }
 
 StatusOr<std::string> AuthorizationHeaderJoined(
     Credentials& credentials, std::chrono::system_clock::time_point tp) {
   auto token = credentials.GetToken(tp);
   if (!token) return std::move(token).status();
-  if (token->token.empty()) return std::string{};
-  return absl::StrCat("Authorization: Bearer ", token->token);
+  if (!token->token.empty()) {
+    return absl::StrCat("Authorization: Bearer ", token->token);
+  }
+  auto api_key = credentials.ApiKey();
+  if (!api_key.empty()) {
+    return absl::StrCat("x-goog-api-key: ", std::move(api_key));
+  }
+  return std::string{};
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
