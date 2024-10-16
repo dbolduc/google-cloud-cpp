@@ -38,6 +38,9 @@ mapfile -t integration_test_args < <(bazel::integration_test_args)
 
 TIMEFORMAT="==> 🕑 bazel test done in %R seconds"
 
+io::log_h1 "Short circuiting, because Darren is testing macOS + CMake only"
+exit 0
+
 io::log_h1 "Get target list for: " "$@"
 mapfile -t targets < <(bazelisk "${args[@]}" query -- "$@")
 

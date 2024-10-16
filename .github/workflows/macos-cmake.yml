@@ -269,6 +269,9 @@ jobs:
         curl -fsSL "https://github.com/microsoft/vcpkg/archive/${{ steps.dynamic.outputs.vcpkg-version }}.tar.gz" |
             tar -C vcpkg --strip-components=1 -zxf -
         vcpkg/bootstrap-vcpkg.sh -disableMetrics
+    - name: Install six
+      # Workaround build errors in vcpkg's gsutil
+      run: pip install --ignore-installed six
     - name: Build google-cloud-cpp
       run: |
         export VCPKG_ROOT="${{ runner.temp }}/vcpkg"

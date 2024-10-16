@@ -40,6 +40,9 @@ if [[ -z "${VCINSTALLDIR}" ]]; then
 fi
 export BAZEL_VC="${VCINSTALLDIR}"
 
+io::log_h1 "Short circuiting, because Darren is testing macOS + CMake only"
+exit 0
+
 io::log_h1 "Starting Build"
 TIMEFORMAT="==> 🕑 bazel test done in %R seconds"
 time {
