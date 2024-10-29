@@ -45,9 +45,11 @@ MinimalIamCredentialsRestStub::MinimalIamCredentialsRestStub(
 StatusOr<google::cloud::AccessToken>
 MinimalIamCredentialsRestStub::GenerateAccessToken(
     GenerateAccessTokenRequest const& request) {
+  std::cout << "\nGenerateAccessToken\n";
   auto auth_header =
       credentials_->AuthenticationHeader(std::chrono::system_clock::now());
   if (!auth_header) return std::move(auth_header).status();
+  std::cout << "\nGenerateAccessToken - have auth header\n";
 
   rest_internal::RestRequest rest_request;
   rest_request.AddHeader(auth_header.value());

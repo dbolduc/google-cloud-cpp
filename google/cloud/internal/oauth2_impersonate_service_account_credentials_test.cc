@@ -30,7 +30,47 @@ using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::StatusIs;
 using ::std::chrono::minutes;
 using ::std::chrono::seconds;
+using ::testing::AllOf;
+using ::testing::ElementsAre;
+using ::testing::HasSubstr;
+using ::testing::Optional;
 using ::testing::Return;
+
+TEST(ParseImpersonatedServiceAccountCredentials, Success) {
+  std::string config = R"""({
+  "service_account_impersonation_url": "https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/sa3@developer.gserviceaccount.com:generateAccessToken",
+  "delegates": [
+    "sa1@developer.gserviceaccount.com",
+    "sa2@developer.gserviceaccount.com"
+  ],
+  "quota_project_id": "my-project",
+  "source_credentials": {
+    "type": "authorized_user"
+  },
+  "type": "impersonated_service_account"
+})""";
+
+  auto actual = ParseImpersonatedServiceAccountCredentials(config, "test-data");
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ(
+      actual->service_account_impersonation_url,
+      "https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/"
+      "sa3@developer.gserviceaccount.com:generateAccessToken");
+  EXPECT_THAT(actual->delegates,
+              ElementsAre("sa1@developer.gserviceaccount.com",
+                          "sa2@developer.gserviceaccount.com"));
+  EXPECT_THAT(actual->quota_project_id, Optional<std::string>("my-project"));
+  EXPECT_THAT(actual->source_credentials,
+              AllOf(HasSubstr("type"), HasSubstr("authorized_user")));
+}
+
+TEST(ParseImpersonatedServiceAccountCredentials, MissingFields) {
+  // missing service_account_impersonation_url
+  // missing source_credentials
+
+  // success no quota_project_id
+  // success no delegates
+}
 
 class MockMinimalIamCredentialsRest : public MinimalIamCredentialsRest {
  public:

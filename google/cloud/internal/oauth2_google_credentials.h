@@ -41,6 +41,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
     Options const& options, HttpClientFactory client_factory);
 
+/**
+ * Produces a Credentials type based on a string (in json format).
+ *
+ * This is an implementation detail of `GoogleDefaultCredentials(...)`, factored
+ * out for testing purposes.
+ */
+//StatusOr<std::unique_ptr<Credentials>> LoadCredsFromString(
+//    std::string const& contents, nlohmann::json const& cred_json,
+//    std::string const& path, Options const& options,
+//    HttpClientFactory client_factory) {
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal
 }  // namespace cloud
