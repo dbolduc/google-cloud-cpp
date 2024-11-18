@@ -14,53 +14,60 @@
 
 //! [all]
 #include "google/cloud/opentelemetry/configure_basic_tracing.h"
-#include "google/cloud/storage/client.h"
+#include "google/cloud/speech/v2/speech_client.h"
 #include "google/cloud/opentelemetry_options.h"
+#include "google/cloud/project.h"
 #include <iostream>
 
-int main(int argc, char* argv[]) {
-  if (argc != 3) {
-    std::cerr << "Usage: " << argv[0] << " <bucket-name> <project-id>\n";
+// Configure a simple recognizer for en-US.
+void ConfigureRecognizer(google::cloud::speech::v2::RecognizeRequest& request) {
+  *request.mutable_config()->add_language_codes() = "en-US";
+  request.mutable_config()->set_model("short");
+  *request.mutable_config()->mutable_auto_decoding_config() = {};
+}
+
+int main(int argc, char* argv[]) try {
+  auto constexpr kDefaultUri = "gs://cloud-samples-data/speech/hello.wav";
+  if (argc != 3 && argc != 4) {
+    std::cerr << "Usage: " << argv[0] << " project <region>|global [gcs-uri]\n"
+              << "  Specify the region desired or \"global\"\n"
+              << "  The gcs-uri must be in gs://... format. It defaults to "
+              << kDefaultUri << "\n";
     return 1;
   }
-  std::string const bucket_name = argv[1];
-  std::string const project_id = argv[2];
-
-  // Create aliases to make the code easier to read.
+  std::string location = argv[2];
+  auto const uri = std::string{argc == 4 ? argv[3] : kDefaultUri};
   namespace gc = ::google::cloud;
-  namespace gcs = ::google::cloud::storage;
+  namespace speech = ::google::cloud::speech_v2;
 
   // Instantiate a basic tracing configuration which exports traces to Cloud
   // Trace. By default, spans are sent in batches and always sampled.
-  auto project = gc::Project(project_id);
+  auto project = gc::Project(argv[1]);
   auto configuration = gc::otel::ConfigureBasicTracing(project);
+
+  google::cloud::speech::v2::RecognizeRequest request;
+  ConfigureRecognizer(request);
+  request.set_uri(uri);
+  request.set_recognizer(project.FullName() + "/locations/" + location +
+                         "/recognizers/_");
+
+  if (location == "global") {
+    // An empty location string indicates that the global endpoint of the
+    // service should be used.
+    location = "";
+  }
 
   // Create a client with OpenTelemetry tracing enabled.
   auto options = gc::Options{}.set<gc::OpenTelemetryTracingOption>(true);
-  auto client = gcs::Client(options);
-
-  auto writer = client.WriteObject(bucket_name, "quickstart.txt");
-  writer << "Hello World!";
-  writer.Close();
-  if (!writer.metadata()) {
-    std::cerr << "Error creating object: " << writer.metadata().status()
-              << "\n";
-    return 1;
-  }
-  std::cout << "Successfully created object: " << *writer.metadata() << "\n";
-
-  auto reader = client.ReadObject(bucket_name, "quickstart.txt");
-  if (!reader) {
-    std::cerr << "Error reading object: " << reader.status() << "\n";
-    return 1;
-  }
-
-  std::string contents{std::istreambuf_iterator<char>{reader}, {}};
-  std::cout << contents << "\n";
-
-  // The basic tracing configuration object goes out of scope. The collected
-  // spans are flushed to Cloud Trace.
+  auto client =
+      speech::SpeechClient(speech::MakeSpeechConnection(location, options));
+  auto response = client.Recognize(request);
+  if (!response) throw std::move(response).status();
+  std::cout << response->DebugString() << "\n";
 
   return 0;
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
+  return 1;
 }
 //! [all]

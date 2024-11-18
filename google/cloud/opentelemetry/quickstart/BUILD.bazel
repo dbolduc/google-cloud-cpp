@@ -23,6 +23,6 @@ cc_binary(
     ],
     deps = [
         "@google_cloud_cpp//:opentelemetry",
-        "@google_cloud_cpp//:storage",
+        "@google_cloud_cpp//:speech",
     ],
 )

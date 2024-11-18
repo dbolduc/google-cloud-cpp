@@ -159,7 +159,7 @@ endforeach ()
 
 # This quickstart depends on the storage library. So only build the quickstart
 # runner if storage is enabled.
-if (NOT storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+if (NOT speech IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
     return()
 endif ()
 
@@ -167,13 +167,14 @@ include(CTest)
 add_executable(opentelemetry_quickstart "quickstart/quickstart.cc")
 target_link_libraries(
     opentelemetry_quickstart PRIVATE google-cloud-cpp::opentelemetry
-                                     google-cloud-cpp::storage)
+                                     google-cloud-cpp::speech)
 google_cloud_cpp_add_common_options(opentelemetry_quickstart)
 add_test(
     NAME opentelemetry_quickstart
     COMMAND
         cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
         $<TARGET_FILE:opentelemetry_quickstart>
-        GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME GOOGLE_CLOUD_PROJECT)
+            GOOGLE_CLOUD_PROJECT
+            GOOGLE_CLOUD_CPP_TEST_REGION)
 set_tests_properties(opentelemetry_quickstart
                      PROPERTIES LABELS "integration-test;quickstart")

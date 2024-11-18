@@ -18,7 +18,7 @@
 cmake_minimum_required(VERSION 3.10...3.24)
 project(google-cloud-cpp-opentelemetry-quickstart CXX)
 
-find_package(google_cloud_cpp_storage REQUIRED)
+find_package(google_cloud_cpp_speech REQUIRED)
 find_package(google_cloud_cpp_opentelemetry REQUIRED)
 
 # MSVC requires some additional code to select the correct runtime library
@@ -31,4 +31,4 @@ endif ()
 # Once the packages are found, define the targets.
 add_executable(quickstart quickstart.cc)
 target_link_libraries(quickstart google-cloud-cpp::opentelemetry
-                      google-cloud-cpp::storage)
+                      google-cloud-cpp::speech)

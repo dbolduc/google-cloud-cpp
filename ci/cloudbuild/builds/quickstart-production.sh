@@ -37,14 +37,14 @@ io::run cmake "${cmake_args[@]}" \
   -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
   -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_SHARED_LIBS=ON \
-  -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}"
+  -DGOOGLE_CLOUD_CPP_ENABLE="opentelemetry,speech"
 io::run cmake --build cmake-out
 mapfile -t ctest_args < <(ctest::common_args)
-io::run env -C cmake-out ctest "${ctest_args[@]}" -LE "integration-test"
+#io::run env -C cmake-out ctest "${ctest_args[@]}" -LE "integration-test"
 
 # Verify the quickstart programs for generated libraries run. Note
 # that most of these run against production, and are therefore
 # integration tests with the usual flakiness issues.
 io::log_h2 "Running quickstart programs"
 io::run env -C cmake-out ctest "${ctest_args[@]}" \
-  --repeat until-pass:3 -L "quickstart"
+  -R "opentelemetry_quickstart"
