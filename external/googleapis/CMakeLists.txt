@@ -229,6 +229,7 @@ set(external_googleapis_installed_libraries_list
     google_cloud_cpp_iam_v1_iam_policy_protos
     google_cloud_cpp_iam_v1_options_protos
     google_cloud_cpp_iam_v1_policy_protos
+    google_cloud_cpp_iam_v1_resource_policy_member_protos
     google_cloud_cpp_longrunning_operations_protos)
 
 # These proto files cannot be added in the foreach() loop because they have
