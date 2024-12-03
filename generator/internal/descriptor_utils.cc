@@ -259,7 +259,7 @@ ParameterCommentSubstitution substitutions[] = {
 
     // Extra closed quote in dialogflow
     //{R"""(`projects/<Project ID>/locations/<Location
-    //ID>`/generators/<Generator ID>`)""",
+    // ID>`/generators/<Generator ID>`)""",
     // R"""(`projects/<Project ID>/locations/<Location ID>/generators/<Generator
     // ID>`)"""},
 
