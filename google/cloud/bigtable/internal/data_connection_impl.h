@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/data_connection.h"
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
+#include "google/cloud/bigtable/internal/metrics.h"
 #include "google/cloud/bigtable/internal/mutate_rows_limiter.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/options.h"
@@ -39,7 +40,7 @@ class DataConnectionImpl : public bigtable::DataConnection {
   DataConnectionImpl(std::unique_ptr<BackgroundThreads> background,
                      std::shared_ptr<BigtableStub> stub,
                      std::shared_ptr<MutateRowsLimiter> limiter,
-                     Options options);
+                     std::shared_ptr<Metrics> metrics, Options options);
 
   Options options() override { return options_; }
 
@@ -97,6 +98,8 @@ class DataConnectionImpl : public bigtable::DataConnection {
   std::unique_ptr<BackgroundThreads> background_;
   std::shared_ptr<BigtableStub> stub_;
   std::shared_ptr<MutateRowsLimiter> limiter_;
+  std::shared_ptr<Metrics> metrics_;
+  std::string client_uid_;
   Options options_;
 };
 

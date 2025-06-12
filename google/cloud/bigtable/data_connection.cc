@@ -17,6 +17,7 @@
 #include "google/cloud/bigtable/internal/data_connection_impl.h"
 #include "google/cloud/bigtable/internal/data_tracing_connection.h"
 #include "google/cloud/bigtable/internal/defaults.h"
+#include "google/cloud/bigtable/internal/metrics.h"
 #include "google/cloud/bigtable/internal/mutate_rows_limiter.h"
 #include "google/cloud/bigtable/internal/row_reader_impl.h"
 #include "google/cloud/bigtable/options.h"
@@ -170,10 +171,12 @@ std::shared_ptr<DataConnection> MakeDataConnection(Options options) {
                                                     background->cq(), options);
   auto limiter =
       bigtable_internal::MakeMutateRowsLimiter(background->cq(), options);
+  // TODO : only create if metrics are enabled.
+  auto metrics = bigtable_internal::MakeMetrics();
   std::shared_ptr<DataConnection> conn =
       std::make_shared<bigtable_internal::DataConnectionImpl>(
           std::move(background), std::move(stub), std::move(limiter),
-          std::move(options));
+          std::move(metrics), std::move(options));
   if (google::cloud::internal::TracingEnabled(conn->options())) {
     conn = bigtable_internal::MakeDataTracingConnection(std::move(conn));
   }

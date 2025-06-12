@@ -173,6 +173,7 @@ google::cloud::StatusOr<long> RunBenchmark(  // NOLINT(google-runtime-int)
     partial.operations.emplace_back(op_result);
     ++partial.row_count;
     op_result = RunOneApply(table, benchmark, generator);
+
     if (!op_result.status.ok()) {
       return op_result.status;
     }

@@ -15,8 +15,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_RETRY_CONTEXT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_RETRY_CONTEXT_H
 
+#include "google/cloud/bigtable/internal/metrics.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/status.h"
 #include <grpcpp/grpcpp.h>
+#include <chrono>
 #include <map>
 #include <string>
 #include <unordered_map>
@@ -39,30 +42,48 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @code
  * Result Connection::Foo() {
  *   RetryContext retry_context;
- *   return RetryLoop(...,
+ *   auto result = RetryLoop(...,
  *     [retry_context, &stub] (auto& context, auto const& request) {
  *       retry_context.PreCall(context);
  *       auto result = stub.Foo(context, request);
  *       retry_context.PostCall(context);
  *       return result;
  *     }, ...);
+ *   retry_context.OnDone(result.status());
+ *   return result;
  * }
  * @endcode
  */
 class RetryContext {
  public:
+  // TODO : remove when all RPCs are instrumented.
+  RetryContext() = default;
+
+  RetryContext(std::shared_ptr<Metrics> metrics, std::string const& client_uid,
+               std::string const& method, std::string const& streaming,
+               std::string const& table_name, std::string const& app_profile);
+
   // Adds stored bigtable cookies as client metadata.
   void PreCall(grpc::ClientContext& context);
   // Stores bigtable cookies returned as server metadata.
   void PostCall(grpc::ClientContext const& context);
+  // TODO : Add status argument
+  // A hook that executes at the end of a client operation.
+  void OnDone();
 
  private:
   // Adds cookies that start with "x-goog-cbt-cookie" to the cookie jar.
   void ProcessMetadata(
       std::multimap<grpc::string_ref, grpc::string_ref> const& metadata);
 
+  std::shared_ptr<Metrics> metrics_;
+  MetricLabels labels_ = {};
+
   std::unordered_map<std::string, std::string> cookies_;
   int attempt_number_ = 0;
+  std::chrono::system_clock::time_point operation_start_ =
+      std::chrono::system_clock::now();
+  std::chrono::system_clock::time_point attempt_start_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
