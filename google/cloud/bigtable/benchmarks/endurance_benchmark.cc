@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/bigtable/internal/metrics.h"
 #include "google/cloud/bigtable/benchmarks/benchmark.h"
 #include "google/cloud/bigtable/benchmarks/random_mutation.h"
 #include <future>
@@ -59,9 +60,11 @@ using bigtable::benchmarks::kNumFields;
 using bigtable::benchmarks::MakeRandomMutation;
 using bigtable::benchmarks::OperationResult;
 using bigtable::benchmarks::ParseArgs;
+using google::cloud::bigtable_internal::MetricCollector;
 
 /// Run an iteration of the test, returns the number of operations.
 google::cloud::StatusOr<long> RunBenchmark(  // NOLINT(google-runtime-int)
+    std::shared_ptr<MetricCollector> collector,
     bigtable::benchmarks::Benchmark const& benchmark,
     std::chrono::seconds test_duration);
 
@@ -79,6 +82,8 @@ int main(int argc, char* argv[]) {
   // Create and populate the table for the benchmark.
   benchmark.CreateTable();
 
+  auto collector = std::make_shared<MetricCollector>();
+
   // Start the threads running the latency test.
   std::cout << "# Running Endurance Benchmark:\n";
   auto latency_test_start = std::chrono::steady_clock::now();
@@ -91,6 +96,7 @@ int main(int argc, char* argv[]) {
       launch_policy = std::launch::deferred;
     }
     tasks.emplace_back(std::async(launch_policy, RunBenchmark,
+          collector,
                                   std::ref(benchmark), options->test_duration));
   }
 
@@ -148,6 +154,7 @@ OperationResult RunOneReadRow(bigtable::Table& table,
 }
 
 google::cloud::StatusOr<long> RunBenchmark(  // NOLINT(google-runtime-int)
+    std::shared_ptr<MetricCollector> collector,
     bigtable::benchmarks::Benchmark const& benchmark,
     std::chrono::seconds test_duration) {
   BenchmarkResult partial = {};
@@ -158,6 +165,20 @@ google::cloud::StatusOr<long> RunBenchmark(  // NOLINT(google-runtime-int)
 
   auto start = std::chrono::steady_clock::now();
   auto end = start + test_duration;
+
+  // TODO : hacking
+  auto labels = google::cloud::bigtable_internal::MetricLabels {};
+  labels.method = "MutateRow";
+  labels.streaming = "false";
+  labels.client_name = "Bigtable-C++";
+  labels.project_id = "dbolduc-test";
+  labels.instance = "test-instance";
+  labels.table = "endurance";
+  labels.app_profile = "";
+  labels.cluster = "test-cluster";
+  labels.zone = "us-east4-a";
+  labels.status = "OK";
+  auto label_map = google::cloud::bigtable_internal::IntoMap(labels);
 
   for (auto now = start; now < end; now = std::chrono::steady_clock::now()) {
     auto op_result = RunOneReadRow(table, benchmark, generator);
@@ -173,6 +194,14 @@ google::cloud::StatusOr<long> RunBenchmark(  // NOLINT(google-runtime-int)
     partial.operations.emplace_back(op_result);
     ++partial.row_count;
     op_result = RunOneApply(table, benchmark, generator);
+
+
+    // TODO : hacking
+    if (op_result.status.ok()) {
+      collector->RecordAttemptLatency(op_result.latency.count()/1000.0, label_map);
+    }
+
+
     if (!op_result.status.ok()) {
       return op_result.status;
     }

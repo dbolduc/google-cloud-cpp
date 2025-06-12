@@ -33,13 +33,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 // It will be convenient to have one struct
 struct MetricLabels {
   // TODO : consider avoiding copies in the no-CSM case with references
-  std::string method_name;
-  std::string streaming_operation;
+  std::string method;
+  std::string streaming;
   std::string client_name;
+  //std::string client_uid;
   std::string project_id;
-  std::string instance_id;
-  std::string table_id;
-  std::string app_profile_id;
+  std::string instance;
+  std::string table;
+  std::string app_profile;
   std::string cluster;
   std::string zone;
   // TODO : what is the format of status? "UNAVAILABLE"? Or an int? who knows.
@@ -57,7 +58,7 @@ class MetricCollector {
  public:
    MetricCollector();
 
-   void RecordAttemptLatency(double value, LabelMap const& labels);
+   void RecordAttemptLatency(double value, LabelMap const& labels) const;
 
  private:
    // NOTE : probably don't need to hold the provider.
